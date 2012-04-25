@@ -1,0 +1,174 @@
+h4 {
+	clear: both;
+	margin: 2em 0 0 0;	
+}
+
+h4.big {
+	font-size: 120%;
+	margin: 2em 0 0 0;
+	padding: 0;
+}
+
+td.yst_desc {
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 12px;
+	color:#777;	
+}
+
+tr.yst_row {
+	padding: 5px 0 0 0;
+	margin: 5px 0 0 0;
+}
+tr.yst_row.even {
+	background-color: #f6f6f6;
+}
+
+div.inside ul {
+	margin-left: 20px;
+}
+
+.postbox {
+	margin: 10px 10px 0 0;	
+}
+
+.postbox .inside p, .postbox .inside label, .postbox .inside li, .postbox .inside a {
+	font-size: 12px;
+}
+
+.textinput, .select, .checkbox, label {
+	float: left;
+	margin: 5px 10px 5px 0;
+	line-height: 12px;
+}
+
+.textinput, .select {
+	width: 400px;
+}
+
+.textinput.metadesc {
+	height: 50px;	
+}
+
+textarea.import {
+	width: 500px;
+	height: 100px;
+}
+
+label.textinput, label.select {
+	width: 200px;
+}
+
+label.radio {
+	margin-right: 20px;
+}
+
+.postbox form {
+	line-height: 150%;	
+}
+
+div.inside ul li {
+	list-style: square;
+	line-height:16px;
+	font-size: 11px;
+}
+
+div.inside a, div.inside a.rsswidget {
+	font-family: 'Lucida Grande', Verdana, Arial, 'Bitstream Vera Sans', sans-serif;
+	text-decoration: none;
+	font-size: 11px;
+}
+div.inside a:hover, div.inside a.rsswidget:hover {
+	text-decoration: underline;
+}
+div.inside ul li.rss {
+	list-style-image: url(../images/rss.png);
+}
+
+div.inside ul li.twitter {
+	list-style-image: url(../images/twitter-icon.png);
+}
+
+div.inside ul li.facebook {
+	list-style-image: url(../images/facebook-icon.png);
+}
+
+div.inside ul li.googleplus {
+	list-style-image: url(../images/google-plus-icon.png);
+}
+
+div.inside ul li.email {
+	list-style-image: url(../images/email_sub.png);
+}
+
+div.inside ul li.yoast {
+	list-style-image: url(../images/yoast-16x16.png); 
+}
+
+.text {
+	width: 250px;
+}
+
+.side .postbox p, .side .postbox a, .side .postbox a.rsswidget {
+	font-size: 11px;
+}
+
+div.inside .button:hover, div.inside .button-primary:hover {
+	text-decoration: none;
+}
+
+.button, .button-primary {
+	margin-top: 10px;
+}
+
+table.yoast_help, table.yoast_help th, table.yoast_help td {
+	border: 1px solid #ddd;
+	border-collapse: collapse;
+	font-size: 11px;
+}
+table.yoast_help th, table.yoast_help td {
+	vertical-align: text-top;
+	text-align: left;
+	padding: 5px 10px;
+}
+table.yoast_help tr:hover {
+	background-color: #ddd;
+}
+
+.correct {
+	background-color: green;
+	color: white;
+	padding: 5px;
+}
+
+.wrong {
+	background-color: red;
+	color: white;
+	padding: 5px;
+}
+
+.wrong code {
+	padding: 3px 8px;
+	color: #000;
+}
+
+.button.fixit {
+	padding: 5px 8px;
+	margin: 0 5px;
+	float: right;
+}
+
+.button {
+	color: #000 !important;
+}
+
+strong.red {
+	color: green;
+	font-weight: bold;
+	font-size: 105%;
+}
+
+.postbox#donate {
+	border-color: green;
+	border-width: 2px;
+}
