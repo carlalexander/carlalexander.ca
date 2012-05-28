@@ -32,7 +32,7 @@ class WPSEO_Metabox {
 				continue;
 			if ( isset($options['hideeditbox-'.$posttype]) && $options['hideeditbox-'.$posttype] )
 				continue;
-			add_meta_box( 'wpseo_meta', __( 'WordPress SEO by Yoast', 'wordpress-seo' ), array( $this, 'meta_box' ), $posttype, 'normal', 'high' );
+			add_meta_box( 'wpseo_meta', __( 'WordPress SEO by Yoast', 'wordpress-seo' ), array( $this, 'meta_box' ), $posttype, 'normal', apply_filters( 'wpseo_metabox_prio', 'high' ) );
 		}
 	}
 	
@@ -431,6 +431,8 @@ class WPSEO_Metabox {
 
 		if ( !empty($date) )
 			$datestr = '<span style="color: #666;">'.$date.'</span> – ';
+		else
+			$datestr = '';
 		$content = '<div id="wpseosnippet">
 			<a class="title" href="#">'.$title.'</a><br/>
 		<a href="#" style="font-size: 13px; color: #282; line-height: 15px;" class="url">'.str_replace('http://','',get_bloginfo('url')).'/'.$slug.'/</a> - <a href="#" class="util">Cached</a>

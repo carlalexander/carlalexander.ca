@@ -336,8 +336,8 @@ if ( !class_exists('Yoast_WPSEO_Plugin_Admin') ) {
 		 * Info box with link to the support forums.
 		 */
 		function plugin_support() {
-			$content = '<p>'.__('If you are having problems with this plugin, please talk about them in the', 'wordpress-seo' ).' <a href="http://wordpress.org/tags/'.$this->hook.'">'.__("Support forums", 'wordpress-seo' ).'</a>.</p>';
-			$content .= '<p>'.sprintf( __("If you're sure you've found a bug, or have a feature request, please submit it in the %1$sbug tracker%2$s.", "wordpress-seo"), "<a href='http://yoast.com/bugs/wordpress-seo/'>","</a>")."</p>";
+			$content = '<p>'.__('If you are having problems with this plugin, please talk about them in the', 'wordpress-seo' ).' <a href="http://wordpress.org/support/plugin/'.$this->hook.'">'.__("Support forums", 'wordpress-seo' ).'</a>.</p>';
+			$content .= '<p>'.sprintf( __('If you\'re sure you\'ve found a bug, or have a feature request, please submit it in the %1$sbug tracker%2$s.', "wordpress-seo"), '<a href="http://yoast.com/bugs/wordpress-seo/">','</a>').'</p>';
 			$this->postbox($this->hook.'support', __('Need support?', 'wordpress-seo' ), $content);
 		}
 
@@ -389,7 +389,7 @@ if ( !class_exists('Yoast_WPSEO_Plugin_Admin') ) {
 					$content .= '</li>';
 			    }
 			}						
-			$content .= '<li class="facebook"><a href="https://www.facebook.com/yoastcom">'.__( 'Like Yoast on Facebook', 'wordpress-seo' ).'</a></li>';
+			$content .= '<li class="facebook"><a href="https://www.facebook.com/yoast">'.__( 'Like Yoast on Facebook', 'wordpress-seo' ).'</a></li>';
 			$content .= '<li class="twitter"><a href="http://twitter.com/yoast">'.__( 'Follow Yoast on Twitter', 'wordpress-seo' ).'</a></li>';
 			$content .= '<li class="googleplus"><a href="https://plus.google.com/115369062315673853712/posts">'.__( 'Circle Yoast on Google+', 'wordpress-seo' ).'</a></li>';
 			$content .= '<li class="rss"><a href="'.$this->feed.'">'.__( 'Subscribe with RSS', 'wordpress-seo' ).'</a></li>';

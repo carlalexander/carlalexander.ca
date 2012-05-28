@@ -489,7 +489,7 @@ if ( ! class_exists( 'WPSEO_Admin' ) ) {
 			}
 			$content .= '<br/>';
 			$content .= '<h4 class="big">'.__('Special pages', 'wordpress-seo' ).'</h4>';
-			$content .= '<h4>'.__('Author Archives').'</h4>';
+			$content .= '<h4>'.__('Author Archives', 'wordpress-seo').'</h4>';
 			$content .= $this->textinput('title-author',__('Title template', 'wordpress-seo' ));
 			$content .= $this->textarea('metadesc-author',__('Meta description template', 'wordpress-seo' ), '', 'metadesc' );
 			if ( isset($options['usemetakeywords']) && $options['usemetakeywords'] )
@@ -636,6 +636,10 @@ if ( ! class_exists( 'WPSEO_Admin' ) ) {
 							<th>%%focuskw%%</th>
 							<td>'.__('Replaced with the posts focus keyword', 'wordpress-seo' ).'</td>
 						</tr>
+						<tr>
+							<th>%%cf_&lt;custom-field-name&gt;%%</th>
+							<td>'.__('Replaced with a posts custom field value', 'wordpress-seo' ).'</td>
+						</tr>
 					</table>';
 			$this->postbox('titleshelp',__('Help on Title Settings', 'wordpress-seo'), $content); 
 			
@@ -684,7 +688,7 @@ if ( ! class_exists( 'WPSEO_Admin' ) ) {
 		}
 		
 		function internallinks_page() {
-			$this->admin_header(__('Internal Links'), false, true, 'yoast_wpseo_internallinks_options', 'wpseo_internallinks');
+			$this->admin_header(__('Internal Links','wordpress-seo'), false, true, 'yoast_wpseo_internallinks_options', 'wpseo_internallinks');
 
 			$content = $this->checkbox('breadcrumbs-enable',__('Enable Breadcrumbs', 'wordpress-seo' ));
 			$content .= '<br/>';
@@ -940,7 +944,7 @@ if ( ! class_exists( 'WPSEO_Admin' ) ) {
 
 			$content = $this->checkbox('enablexmlsitemap',__('Check this box to enable XML sitemap functionality.', 'wordpress-seo' ), false);
 			$content .= '<div id="sitemapinfo">';
-			if ( $options['enablexmlsitemap'] )
+			if ( isset($options['enablexmlsitemap']) && $options['enablexmlsitemap'] )
 				$content .= '<p>'.sprintf(__('You can find your XML Sitemap here: %sXML Sitemap%s', 'wordpress-seo' ), '<a target="_blank" class="button-secondary" href="'.home_url($base.'sitemap_index.xml').'">', '</a>').'<br/><br/>'.__( 'You do <strong>not</strong> need to generate the XML sitemap, nor will it take up time to generate after publishing a post.', 'wordpress-seo' ).'</p>';
 			else
 				$content .= '<p>'.__('Save your settings to activate XML Sitemaps.', 'wordpress-seo' ).'</p>';
@@ -1078,7 +1082,7 @@ if ( ! class_exists( 'WPSEO_Admin' ) ) {
 			if ( isset( $_GET['fbclearall'] ) ) {
 				if ( wp_verify_nonce($_GET['nonce'], 'fbclearall') != 1 )
 					die("I don't think that's really nice of you!.");
-				unset( $options['fb_admins'], $options['fbpages'], $options['fbapps'], $options['fbadminapp'], $options['fbadminpage'] );
+				unset( $options['fb_admins'], $options['fbapps'], $options['fbadminapp'], $options['fbadminpage'] );
 				update_option('wpseo_social', $options);
 				add_settings_error('yoast_wpseo_social_options','success',sprintf(__('Successfully cleared all Facebook Data','wordpress-seo'), $fbadmin), 'updated');
 			}
@@ -1097,14 +1101,6 @@ if ( ! class_exists( 'WPSEO_Admin' ) ) {
 					$options['fb_admins'][$id]['link'] = urldecode($_GET['link']);
 					update_option('wpseo_social', $options);
 					add_settings_error('yoast_wpseo_social_options','success',sprintf( __('Successfully added %s as a Facebook Admin!','wordpress-seo'), '<a href="'.$options['fb_admins'][$id]['link'].'">'.$options['fb_admins'][$id]['name'].'</a>') , 'updated');
-				} else if ( isset( $_GET['pages'] ) ) {
-					$pages = json_decode( stripslashes( $_GET['pages'] ) );
-					$options['fbpages'] = array( '0' => __('Do not use a Facebook Page as Admin', 'wordpress-seo') );
-					foreach ($pages as $page) {
-						$options['fbpages'][$page->page_id] = $page->name;
-					}
-					update_option('wpseo_social', $options);
-					add_settings_error('yoast_wpseo_social_options','success', __('Successfully retrieved your pages from Facebook, now select a page to use as admin.','wordpress-seo') , 'updated');
 				} else if ( isset( $_GET['apps'] ) ) {
 					$apps = json_decode( stripslashes( $_GET['apps'] ) );
 					$options['fbapps'] = array( '0' => __('Do not use a Facebook App as Admin','wordpress-seo') );
@@ -1124,32 +1120,11 @@ if ( ! class_exists( 'WPSEO_Admin' ) ) {
 				$clearall = true;
 			}
 
-			if ( isset($options['fbpages']) && is_array($options['fbpages']) ) {
-				foreach($options['fbpages'] as $id => $page) {
-					$fbconnect .= '<input type="hidden" name="wpseo_social[fbpages]['.$id.']" value="'.$page.'"/>';
-				}
-				$clearall = true;
-			}
-
 			if ( isset($options['fbapps']) && is_array($options['fbapps']) ) {
 				foreach($options['fbapps'] as $id => $page) {
 					$fbconnect .= '<input type="hidden" name="wpseo_social[fbapps]['.$id.']" value="'.$page.'"/>';
 				}
 				$clearall = true;
-			}
-			
-			$page_button_text = __('Use a Facebook Page as Admin','wordpress-seo');
-			if ( isset($options['fbpages']) && is_array($options['fbpages']) ) {
-				$fbconnect .= '<p>'.__('Select a page to use as Facebook admin:', 'wordpress-seo' ).'</p>';
-				$fbconnect .= '<select name="wpseo_social[fbadminpage]" id="fbadminpage">';
-				foreach($options['fbpages'] as $id => $page) {
-					$sel = '';
-					if ( $id == $options['fbadminpage'] )
-						$sel = 'selected="selected"';
-					$fbconnect .= '<option '.$sel.' value="'.$id.'">'.$page.'</option>';
-				}
-				$fbconnect .= '</select>';
-				$page_button_text = __('Update Facebook Pages','wordpress-seo');
 			}
 			
 			$app_button_text = __('Use a Facebook App as Admin','wordpress-seo');
@@ -1166,10 +1141,10 @@ if ( ! class_exists( 'WPSEO_Admin' ) ) {
 				$app_button_text = __('Update Facebook Apps','wordpress-seo');
 			}
 			
-			if ( (!isset($options['fbadminpage']) || $options['fbadminpage'] == 0) && (!isset($options['fbadminapp']) || $options['fbadminapp'] == 0) ) {
+			if ( !isset($options['fbadminapp']) || $options['fbadminapp'] == 0 ) {
 				$button_text = __( 'Add Facebook Admin', 'wordpress-seo' );
 				$primary = true;
-				if ( is_array($options['fb_admins']) && count($options['fb_admins']) > 0 ) {
+				if ( isset($options['fb_admins']) && is_array($options['fb_admins']) && count($options['fb_admins']) > 0 ) {
 					$fbconnect .= '<p>'.__( 'Currently connected Facebook admins:', 'wordpress-seo' ).'</p>';
 					$fbconnect .= '<ul>';
 					$nonce = wp_create_nonce('delfbadmin');
@@ -1187,9 +1162,6 @@ if ( ! class_exists( 'WPSEO_Admin' ) ) {
 					$but_primary = '-primary';
 				$fbconnect .= '<p><a class="button'.$but_primary.'" href="https://yoast.com/fb-connect/?key='.$options['fbconnectkey'].'&redirect='.urlencode(admin_url('admin.php?page=wpseo_social')).'">'.$button_text.'</a></p>';	
 			}
-
-			$fbconnect .= '<br><p>';
-			$fbconnect .= '<a class="button" href="https://yoast.com/fb-connect/?key='.$options['fbconnectkey'].'&type=page&redirect='.urlencode(admin_url('admin.php?page=wpseo_social')).'">'.$page_button_text.'</a> ';
 
 			$fbconnect .= '<a class="button" href="https://yoast.com/fb-connect/?key='.$options['fbconnectkey'].'&type=app&redirect='.urlencode(admin_url('admin.php?page=wpseo_social')).'">'.$app_button_text.'</a> ';
 			if ($clearall) {

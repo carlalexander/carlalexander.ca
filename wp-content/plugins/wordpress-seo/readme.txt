@@ -1,10 +1,12 @@
 === WordPress SEO by Yoast ===
 Contributors: joostdevalk
 Donate link: http://yoast.com/
+License: GPLv2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: seo, SEO, google, meta, meta description, search engine optimization, xml sitemap, xml sitemaps, google sitemap, sitemap, sitemaps, robots meta, rss, rss footer, yahoo, bing, news sitemaps, XML News Sitemaps, WordPress SEO, WordPress SEO by Yoast, yoast, multisite, canonical, nofollow, noindex, keywords, meta keywords, description, webmaster tools, google webmaster tools, seo pack
 Requires at least: 3.1
 Tested up to: 3.3
-Stable tag: 1.1.5
+Stable tag: 1.1.9
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the WordPress SEO plugin by Yoast.
 
@@ -77,7 +79,7 @@ For more info, check out the following articles:
 * Once you have great SEO, you'll need the [best WordPress Hosting](http://yoast.com/articles/wordpress-hosting/).
 * The [WordPress SEO Plugin](http://yoast.com/wordpress/seo/) official homepage.
 * Other [WordPress Plugins](http://yoast.com/wordpress/) by the same author.
-* Follow Yoast on [Facebook](https://facebook.com/yoastcom) & [Twitter](http://twitter.com/yoast).
+* Follow Yoast on [Facebook](https://facebook.com/yoast) & [Twitter](http://twitter.com/yoast).
 
 == Installation ==
 
@@ -131,6 +133,59 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 7. The advanced section of the WordPress SEO meta box.
 
 == Changelog ==
+
+= 1.1.9 =
+
+* Sigh... Sorry about that.
+
+= 1.1.8 =
+
+* Bugs fixed / Changes:
+	* Fix the clean slug function to not freak people out and remove chars.
+	* Fixed a couple of notices.
+	* Allow '+' in focus keyword.
+	* A *load* of i18n fixes (including a new POT file).
+	
+= 1.1.7 =
+
+* Bugs fixed / Changes:
+	* Fixes issue with un-paginated canonicals for paged single posts / pages.
+	* Fixes %%page%% variable to work in title & description template on paginated singular post(type)s.
+	* Allow - in focus keyword.
+	* Removed the option to use a Facebook page as an admin in the Facebook OpenGraph, as Facebook deprecated that.
+	* Force OpenGraph locale to lowercase.
+	* Catch some weird locales and convert them to proper Facebook supported iso_country versions.
+	* Now adding _all_ the images in a post with an og:image tag, so people can more easily share the right image.
+	* Allow regex specific characters in the focus keyword for the Page Analysis checks.
+	* Add proper (and i18n compatible) [stop word](http://en.wikipedia.org/wiki/Stop_words) removal.
+	* Removed code to add noindex to login page as that's now in core for long enough.
+	* Fixed several notices.
+	* When a static homepage has no SEO title, default to the site's name + description.
+	* Only show images once in OpenGraph tags.
+	* Prevent a timeout on retrieving term meta.
+	* Don't do next / prev links on the homepage for Genesis based themes as that leads to trouble.
+	* XML Sitemaps & feeds:
+		* Properly fix featured image showing up in XML Sitemap.
+		* Optimized the main query for XML sitemaps per [this thread](http://wordpress.org/support/topic/plugin-wordpress-seo-by-yoast-performance-suggestion).
+		* Switch feed noindexing from `xhtml:meta` tags to X-Robots-Tag HTTP headers to prevent feed display issues.
+		* Force XML Sitemap descriptions for images to be clean to prevent XML parse errors.
+		* Tiny change in CSS for explanatory text in XSL.
+* New filters:
+	* Add filter `wpseo_locale` for the locale in the opengraph settings. 
+	* Add filter `wpseo_metabox_prio` to allow WP SEO metabox priority to be changed.
+* Documentation:
+	* Removed the "Other Notes" tab from the plugin page, enough tabs there already.
+	* Added %%cf_ options to config page for titles.
+	* Fixed the Yoast Facebook URL.
+	* Changed plugin support link to [the new support URL format](http://wordpress.org/support/plugin/wordpress-seo).
+
+= 1.1.6 =
+
+* Tiny fix to showing meta description on posts page.
+* Fix for showing proper link to bug tracker.
+* Fix for redirecting attachment pages when they don't have a parent.
+* Fix for titles of custom post type pages.
+* Dozens more tiny bugfixes.
 
 = 1.1.5 =
 
@@ -802,16 +857,6 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 = 0.1 =
 
 * Initial beta release.
-
-== Other Notes ==
-
-= Usage guides =
-
-* WP Beginner has written a good guide on [how to install and setup WordPress SEO](http://www.wpbeginner.com/plugins/how-to-install-and-setup-wordpress-seo-plugin-by-yoast/)
-
-= Press Mentions =
-
-* I was recently [interview by Mashable](http://mashable.com/2011/02/17/wordpress-seo-interview/) about this plugin, talking about what the plugin does and why I think my plugin is superior to All in One SEO.
 
 == Upgrade Notice ==
 

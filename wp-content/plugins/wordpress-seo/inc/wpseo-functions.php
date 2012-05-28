@@ -75,14 +75,6 @@ function wpseo_replace_vars($string, $args, $omit = array() ) {
 		'term_id' => '',
 	);
 	
-	$pagenum = get_query_var('paged');
-	if ($pagenum === 0) {
-		if ($wp_query->max_num_pages > 1)
-			$pagenum = 1;
-		else
-			$pagenum = '';
-	}
-	
 	if ( isset( $args['post_content'] ) )
 		$args['post_content'] = wpseo_strip_shortcode( $args['post_content'] );
 	if ( isset( $args['post_excerpt'] ) )
@@ -94,7 +86,25 @@ function wpseo_replace_vars($string, $args, $omit = array() ) {
 	if ( is_singular() || ( is_front_page() && 'posts' != get_option('show_on_front') ) ) {
 		global $post;
 	}
-	
+
+	$pagenum = 0;
+	$max_num_pages = 0;
+	if ( !is_single() ) {
+		$pagenum = get_query_var('paged');
+		if ($pagenum === 0) {
+			if ($wp_query->max_num_pages > 1)
+				$pagenum = 1;
+			else
+				$pagenum = '';
+		}
+		$max_num_pages = $wp_query->max_num_pages;
+	} else {
+		$pagenum = get_query_var('page');
+		$max_num_pages = substr_count( $post->post_content, '<!--nextpage-->' );
+		if ( $max_num_pages >= 1 )
+			$max_num_pages++;
+	}
+		
 	// Let's do date first as it's a bit more work to get right.
 	if ( $r->post_date != '' ) {
 		$date = mysql2date( get_option('date_format'), $r->post_date );
@@ -129,8 +139,8 @@ function wpseo_replace_vars($string, $args, $omit = array() ) {
 		'%%name%%'					=> get_the_author_meta('display_name', !empty($r->post_author) ? $r->post_author : get_query_var('author')),
 		'%%userid%%'				=> !empty($r->post_author) ? $r->post_author : get_query_var('author'),
 		'%%searchphrase%%'			=> esc_html(get_query_var('s')),
-		'%%page%%'		 			=> ( get_query_var('paged') != 0 ) ? 'Page '.get_query_var('paged').' of '.$wp_query->max_num_pages : '', 
-		'%%pagetotal%%'	 			=> ( $wp_query->max_num_pages > 1 ) ? $wp_query->max_num_pages : '', 
+		'%%page%%'		 			=> ( $max_num_pages != 0 ) ? 'Page '.$pagenum.' of '.$max_num_pages : '', 
+		'%%pagetotal%%'	 			=> ( $max_num_pages > 1 ) ? $max_num_pages : '', 
 		'%%pagenumber%%' 			=> $pagenum,
 		'%%caption%%'				=> $r->post_excerpt,
 	);
@@ -181,6 +191,8 @@ function wpseo_get_term_meta( $term, $taxonomy, $meta ) {
 
 	if ( is_object( $term ) )
 		$term = $term->term_id;
+	else
+		return false;
 	
 	$tax_meta = get_option( 'wpseo_taxonomy_meta' );
 	if ( isset($tax_meta[$taxonomy][$term]) )
@@ -226,3 +238,44 @@ function wpseo_strtolower_utf8($string){
 
 	return str_replace($convert_from, $convert_to, $string);
 }
+
+/**
+ * Returns the stopwords for the current language
+ *
+ * @since 1.1.7
+ *
+ * @return array $stopwords array of stop words to check and / or remove from slug
+ */
+function wpseo_stopwords() {
+	/* translators: this should be an array of stopwords for your language, separated by comma's. */
+	return explode( ',', __( "a,about,above,after,again,against,all,am,an,and,any,are,aren't,as,at,be,because,been,before,being,below,between,both,but,by,can't,cannot,could,couldn't,did,didn't,do,does,doesn't,doing,don't,down,during,each,few,for,from,further,had,hadn't,has,hasn't,have,haven't,having,he,he'd,he'll,he's,her,here,here's,hers,herself,him,himself,his,how,how's,i,i'd,i'll,i'm,i've,if,in,into,is,isn't,it,it's,its,itself,let's,me,more,most,mustn't,my,myself,no,nor,not,of,off,on,once,only,or,other,ought,our,ours , ourselves,out,over,own,same,shan't,she,she'd,she'll,she's,should,shouldn't,so,some,such,than,that,that's,the,their,theirs,them,themselves,then,there,there's,these,they,they'd,they'll,they're,they've,this,those,through,to,too,under,until,up,very,was,wasn't,we,we'd,we'll,we're,we've,were,weren't,what,what's,when,when's,where,where's,which,while,who,who's,whom,why,why's,with,won't,would,wouldn't,you,you'd,you'll,you're,you've,your,yours,yourself,yourselves", "wordpress-seo" ) );
+}
+
+/**
+ * Cleans stopwords out of the slug, if the slug hasn't been set yet.
+ *
+ * @since 1.1.7
+ *
+ * @param string $slug if this isn't empty, the function will return an unaltered slug.
+ * @return string $clean_slug cleaned slug
+ */
+function wpseo_remove_stopwords_from_slug( $slug ) {
+    // Don't to change an existing slug
+	if ( $slug ) 
+		return $slug;
+
+	if ( isset( $_POST['post_title'] ) )
+		return $slug;
+		
+	// Clean the slug of weirdness
+	$clean_slug = sanitize_title( stripslashes( $_POST['post_title'] ) );
+
+    // Turn it to an array and strip stopwords by comparing against an array of stopwords
+    $clean_slug_array = array_diff ( split( " ", $clean_slug ), wpseo_stopwords() );
+
+    // Turn the sanitized array into a string
+    $clean_slug = join( "-", $clean_slug_array );
+
+	return $clean_slug;
+}
+add_filter( 'name_save_pre', 'wpseo_remove_stopwords_from_slug', 0 );

@@ -21,7 +21,7 @@ class WPSEO_Sitemaps {
 		if ( !isset($options['enablexmlsitemap']) || !$options['enablexmlsitemap'] )
 			return;
 
-		add_action( 'init', array( $this, 'init' ) );
+		add_action( 'init', array( $this, 'init' ), 1 );
 		add_action( 'template_redirect', array( $this, 'redirect' ) );
 		add_filter( 'redirect_canonical', array( $this, 'canonical' ) );
 		add_action( 'transition_post_status', array( $this, 'status_transition' ), 10, 3 );
@@ -273,19 +273,33 @@ class WPSEO_Sitemaps {
 		// We grab post_date, post_name, post_author and post_status too so we can throw these objects into get_permalink, which saves a get_post call for each permalink.
 		while( $total > $offset ) {
 			
-			$join_filter = '';
-			$join_filter = apply_filters('wpseo_posts_join', $join_filter, $post_type);
-			$where_filter = '';
-			$where_filter = apply_filters('wpseo_posts_where', $where_filter, $post_type);
+			$join_filter = apply_filters('wpseo_posts_join', '', $post_type);
+			$where_filter = apply_filters('wpseo_posts_where', '', $post_type);
 			
-			$posts = $wpdb->get_results("SELECT ID, post_content, post_name, post_author, post_parent, post_modified_gmt, post_date, post_date_gmt
+			// Optimized query per this thread: http://wordpress.org/support/topic/plugin-wordpress-seo-by-yoast-performance-suggestion
+			// Also see http://explainextended.com/2009/10/23/mysql-order-by-limit-performance-late-row-lookups/
+
+			$posts = $wpdb->get_results("SELECT l.ID, post_content, post_name, post_author, post_parent, post_modified_gmt, post_date, post_date_gmt
+			FROM ( 
+				SELECT ID FROM $wpdb->posts {$join_filter}
+						WHERE post_status = 'publish'
+						AND	post_password = ''
+						AND post_type = '$post_type'
+						{$where_filter}
+						ORDER BY post_modified ASC
+						LIMIT $steps OFFSET $offset ) o
+			JOIN $wpdb->posts l
+				ON l.ID = o.ID
+				ORDER BY l.ID");
+			
+/*			$posts = $wpdb->get_results("SELECT ID, post_content, post_name, post_author, post_parent, post_modified_gmt, post_date, post_date_gmt
 			FROM $wpdb->posts {$join_filter}
 			WHERE post_status = 'publish'
 			AND	post_password = ''
 			AND post_type = '$post_type'
 			{$where_filter}
 			ORDER BY post_modified ASC
-			LIMIT $steps OFFSET $offset");
+			LIMIT $steps OFFSET $offset"); */
 			
 			$offset = $offset + $steps;
 
@@ -330,9 +344,14 @@ class WPSEO_Sitemaps {
 					$url['pri'] = 1.0;
 
 				$url['images'] = array();
-				if ( preg_match_all( '/<img [^>]+>/', $p->post_content, $matches ) ) {
+				
+				$content = $p->post_content;
+				if ( function_exists('get_the_post_thumbnail') ) {
+					$content .= '<p>' . get_the_post_thumbnail( $p->ID, 'full' ) . '</p>';
+				}
+				
+				if ( preg_match_all( '/<img [^>]+>/', $content, $matches ) ) {
 					foreach ( $matches[0] as $img ) {
-						// FIXME: get true caption instead of alt / title
 						if ( preg_match( '/src=("|\')([^"|\']+)("|\')/', $img, $match ) ) {
 							$src = $match[2];
 							if ( strpos($src, 'http') !== 0 ) {
@@ -358,6 +377,7 @@ class WPSEO_Sitemaps {
 						}
 					}
 				}
+				
 				if ( preg_match_all( '/\[gallery/', $p->post_content, $matches ) ) {
 					$attachments = get_children( array('post_parent' => $p->ID, 'post_status' => 'inherit', 'post_type' => 'attachment', 'post_mime_type' => 'image' ) );
 					foreach( $attachments as $att_id => $attachment ) {
@@ -506,9 +526,9 @@ class WPSEO_Sitemaps {
 				$output .= "\t\t<image:image>\n";
 				$output .= "\t\t\t<image:loc>".htmlspecialchars( $src )."</image:loc>\n";
 				if ( isset($img['title']) )
-					$output .= "\t\t\t<image:title>".htmlspecialchars( $img['title'] )."</image:title>\n";
+					$output .= "\t\t\t<image:title>".ereg_replace( "[^A-Za-z0-9\s\.]", "", $img['title'] )."</image:title>\n";
 				if ( isset($img['alt']) )
-					$output .= "\t\t\t<image:caption>".htmlspecialchars( $img['alt'] )."</image:caption>\n";
+					$output .= "\t\t\t<image:caption>".ereg_replace( "[^A-Za-z0-9\s\.]", "", $img['alt'] )."</image:caption>\n";
 				$output .= "\t\t</image:image>\n";
 			}
 		}

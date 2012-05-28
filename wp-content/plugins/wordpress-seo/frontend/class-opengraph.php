@@ -36,8 +36,6 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 	public function id() {
 		if ( isset( $this->options['fbadminapp'] ) && 0 != $this->options['fbadminapp'] ) {
 			echo "<meta property='fb:app_id' content='".esc_attr( $this->options['fbadminapp'] )."' />\n";
-		} else if ( isset( $this->options['fbadminpage'] ) && 0 != $this->options['fbadminpage'] ) {
-			echo "<meta property='fb:page_id' content='".esc_attr( $this->options['fbadminpage'] )."'/>\n";
 		} else if ( isset( $this->options['fb_admins'] ) && is_array( $this->options['fb_admins'] ) && ( count( $this->options['fb_admins'] ) > 0 )  ) {
 			foreach ( $this->options['fb_admins'] as $admin_id => $admin ) {
 				if ( isset($adminstr) )
@@ -49,7 +47,7 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 		}
 	}
 	
-	public function title( ) {
+	public function title() {
 		global $post, $wp_query;
 		if ( empty($post) && is_singular() ) {
 			$post = $wp_query->get_queried_object();
@@ -112,7 +110,7 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 			if ( isset($this->options['title-search']) && !empty($this->options['title-search']) )
 				$title = wpseo_replace_vars($this->options['title-search'], (array) $wp_query->get_queried_object() );	
 			else
-				$title = __('Search for "').get_search_query().'"';
+				$title = __('Search for "','wordpress-seo').get_search_query().'"';
 		} else if ( is_author() ) {
 			$author_id = get_query_var('author');
 			$title = get_the_author_meta('wpseo_title', $author_id);
@@ -134,14 +132,14 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 		 	if ( isset($this->options['title-archive']) && !empty($this->options['title-archive']) )
 				$title = wpseo_replace_vars($this->options['title-archive'], array('post_title' => $title) );
 			else if ( is_month() ) 
-				$title = single_month_title(' ', false).' '.__('Archives'); 
+				$title = single_month_title(' ', false).' '.__('Archives','wordpress-seo'); 
 			else if ( is_year() )
-				$title = get_query_var('year').' '.__('Archives'); 
+				$title = get_query_var('year').' '.__('Archives','wordpress-seo'); 
 		} else if ( is_404() ) {
 		 	if ( isset($this->options['title-404']) && !empty($this->options['title-404']) )
 				$title = wpseo_replace_vars($this->options['title-404'], array('post_title' => $title) );
 			else
-				$title = __('Page not found');
+				$title = __('Page not found','wordpress-seo');
 		} 
 		echo "<meta property='og:title' content='".esc_attr( strip_tags( stripslashes( $title ) ) )."'/>\n";
 		// echo "<meta itemprop='name' content='".esc_attr( strip_tags( stripslashes( $title ) ) )."'/>\n";
@@ -153,7 +151,27 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 	}
 	
 	public function locale() {
-		echo "<meta property='og:locale' content='".esc_attr( get_locale() )."'/>\n";
+		$locale = apply_filters( 'wpseo_locale', strtolower( get_locale() ) );
+		
+		// catch some weird locales served out by WP.
+		$locales = array(
+			'ar'=> 'ar_ar',
+			'ca'=> 'ca_es',
+			'en'=> 'en_us',
+			'el'=> 'el_gr',
+			'et'=> 'et_ee',
+			'fi'=> 'fi_fi',
+			'ja'=> 'ja_jp',
+			'sq'=> 'sq_al',
+			'uk'=> 'uk_ua',
+			'vi'=> 'vi_vn',
+			'zh'=> 'zh_cn'
+		);
+		
+		if ( isset( $locales[ $locale ] ) ) 
+			$locale = $locales[$locale];
+		
+		echo "<meta property='og:locale' content='".esc_attr( $locale )."'/>\n";
 	}
 	
 	public function type() {
@@ -169,42 +187,61 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 	}
 		
 	public function image( $image = '' ) {
-		global $post;
-		// Grab the featured image
 		if ( is_singular() ) {
-			if ( empty( $image ) && function_exists('has_post_thumbnail') && has_post_thumbnail( $post->ID ) ) {
-				$thumbnail = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'thumbnail' );
-				if ( $thumbnail )
-					$image = $thumbnail[0];
-			// If that's not there, grab the first attached image
-			} else {
-				$files = get_children( 
-							array( 
-							'post_parent' => $post->ID,
-							'post_type' => 'attachment',
-							'post_mime_type' => 'image',
-							) 
-						);
-			    if ( $files ) {
-			        $keys = array_reverse( array_keys( $files ) );
-			        $image = image_downsize( $keys[0], 'thumbnail' );
-			        $image = $image[0];
-			    }
+			global $post;
+			
+			$shown_images = array();
+			
+			if ( function_exists('has_post_thumbnail') && has_post_thumbnail( $post->ID ) ) {
+				$featured_img = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), 'full' );
+				
+				if ( $featured_img ) {
+					$img = apply_filters( 'wpseo_opengraph_image', $featured_img[0] );
+					echo "<meta property='og:image' content='".esc_attr( $img )."'/>\n";
+					$shown_images[] = $img;
+				}
+			} 
+			
+			if ( preg_match_all( '/<img [^>]+>/', $post->post_content, $matches ) ) {
+				foreach ( $matches[0] as $img ) {
+					if ( preg_match( '/src=("|\')([^"|\']+)("|\')/', $img, $match ) ) {
+						$img = $match[2];
+						
+						if ( in_array( $img, $shown_images ) )
+							continue;
+							
+						if ( strpos($img, 'http') !== 0 ) {
+							if ( $img[0] != '/' )
+								continue;
+							$img = get_bloginfo('url') . $img;
+						}
+
+						if ( $img != esc_url( $img ) )
+							continue;
+
+						$img = apply_filters( 'wpseo_opengraph_image', $img );
+						
+						echo "<meta property='og:image' content='".esc_attr( $img )."'/>\n";
+						
+						$shown_images[] = $img;
+					}
+				}
 			}
-			$og_image = $gp_image = $image;
-		} else if ( is_front_page() ) {
-			if ( isset( $this->options['og_frontpage_image'] ) )
-				$og_image = $this->options['og_frontpage_image'];
-			if ( isset( $this->options['gp_frontpage_image'] ) )
-				$gp_image = $this->options['gp_frontpage_image'];
+		} else {
+			if ( is_front_page() ) {
+				if ( isset( $this->options['og_frontpage_image'] ) )
+					$og_image = $this->options['og_frontpage_image'];
+				if ( isset( $this->options['gp_frontpage_image'] ) )
+					$gp_image = $this->options['gp_frontpage_image'];
+			}
+			if ( ( !isset( $og_image ) || $og_image == '' ) && isset( $this->options['og_default_image'] ) )
+				$og_image = $this->options['og_default_image'];
+		
+			$og_image = apply_filters( 'wpseo_opengraph_image', $og_image );
+		
+			if ( isset( $og_image ) && $og_image != '' ) 
+				echo "<meta property='og:image' content='".esc_attr( $og_image )."'/>\n";
 		}
-		if ( ( !isset( $og_image ) || $og_image == '' ) && isset( $this->options['og_default_image'] ) )
-			$og_image = $this->options['og_default_image'];
-		
-		$og_image = apply_filters( 'wpseo_opengraph_image', $og_image );
-		
-		if ( isset( $og_image ) && $og_image != '' ) 
-			echo "<meta property='og:image' content='".esc_attr( $og_image )."'/>\n";
 	}
 		
 	public function description() {

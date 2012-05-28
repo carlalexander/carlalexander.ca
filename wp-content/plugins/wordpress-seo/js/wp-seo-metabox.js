@@ -4,7 +4,7 @@ function yst_clean( str, cleanalphanumeric ) {
 	
 	try {
 		if ( cleanalphanumeric == true )
-			str = str.replace(/[^a-zA-Z0-9\s]/, '');
+			str = str.replace(/[^a-zA-Z0-9\s-\+]/, '');
 		str = str.replace(/<\/?[^>]+>/gi, ''); 
 		str = str.replace(/\[(.+?)\](.+?\[\/\\1\])?/, '');
 	} catch(e) {}
@@ -215,7 +215,6 @@ jQuery(document).ready(function(){
 			lastXhr = jQuery.getJSON( ajaxurl, request, function( data, status, xhr ) {
 				cache[ term ] = data;
 				if ( xhr === lastXhr ) {
-					console.log(data);
 					response( data );
 				}
 			});

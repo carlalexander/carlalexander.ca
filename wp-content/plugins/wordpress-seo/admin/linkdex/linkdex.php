@@ -129,7 +129,7 @@ class Linkdex {
 		}
 		$output .= '</table>';
 		$output .= '<hr/>';
-		$output .= '<p style="font-size: 13px;"><a href="http://yoa.st/linkdex"><img class="alignleft" style="margin: 0 10px 5px 0;" src="'.WPSEO_URL.'images/linkdex-logo.png" alt="Linkdex"/></a>'.sprintf(__( 'This page analysis brought to you by the collaboration of Yoast and %sLinkdex%s. Linkdex is an SEO suite that helps you optimize your site and offers you all the SEO tools you\'ll need. Yoast uses %sLinkdex%s and highly recommends you do too!', 'wordpress-seo' ),'<a href="http://yoa.st/linkdex">','</a>', '<a href="http://yoa.st/linkdex">','</a>').'</p>';
+		$output .= '<p style="font-size: 13px;"><a href="http://yoast.com/out/linkdex/"><img class="alignleft" style="margin: 0 10px 5px 0;" src="'.WPSEO_URL.'images/linkdex-logo.png" alt="Linkdex"/></a>'.sprintf(__( 'This page analysis brought to you by the collaboration of Yoast and %sLinkdex%s. Linkdex is an SEO suite that helps you optimize your site and offers you all the SEO tools you\'ll need. Yoast uses %sLinkdex%s and highly recommends you do too!', 'wordpress-seo' ),'<a href="http://yoast.com/out/linkdex/">','</a>', '<a href="http://yoast.com/out/linkdex/">','</a>').'</p>';
 	
 		unset($results);
 		unset($job);
@@ -473,7 +473,7 @@ class Linkdex {
 		
 		// Keyword Density check
 		if ( $wordCount > 0 ) {
-			$keywordCount 		= preg_match_all("/".$job["keyword"]."/msiU", $body, $res);
+			$keywordCount 		= preg_match_all("/".preg_quote($job["keyword"])."/msiU", $body, $res);
 			$keywordWordCount 	= str_word_count( $job["keyword"] );
 			$keywordDensity 	= number_format( ( ($keywordCount / ($wordCount - (($keywordCount -1) * $keywordWordCount))) * 100 ) , 2 );
 		}
@@ -502,27 +502,27 @@ class Linkdex {
 
 			$note = '';
 			if ( $flesch >= 90 ) {
-				$level = __('very easy');
+				$level = __('very easy','wordpress-seo');
 				$score = 9;
 			} else if ( $flesch >= 80 ) {
-				$level = __('easy');
+				$level = __('easy','wordpress-seo');
 				$score = 8;
 			} else if ( $flesch >= 70 ) {
-				$level = __('fairly easy');
+				$level = __('fairly easy','wordpress-seo');
 				$score = 7;
 			} else if ( $flesch >= 60 ) {
-				$level = __('OK');
+				$level = __('OK','wordpress-seo');
 				$score = 7;
 			} else if ( $flesch >= 50 ) {
-				$level = __('fairly difficult');
+				$level = __('fairly difficult','wordpress-seo');
 				$note = __('Try to make shorter sentences to improve readability.', 'wordpress-seo' );
 				$score = 6;
 			} else if ( $flesch >= 30 ) {
-				$level = __('difficult');
+				$level = __('difficult','wordpress-seo');
 				$note = __('Try to make shorter sentences, using less difficult words to improve readability.', 'wordpress-seo' );
 				$score = 5;
 			} else if ( $flesch >= 0 ) {
-				$level = __('very difficult');
+				$level = __('very difficult','wordpress-seo');
 				$note = __('Try to make shorter sentences, using less difficult words to improve readability.', 'wordpress-seo' );
 				$score = 4;
 			}

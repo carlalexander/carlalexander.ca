@@ -12,16 +12,10 @@ class WPSEO_Rewrite {
 			add_filter( 'request', array(&$this, 'no_category_base_request') );
 			add_filter( 'category_rewrite_rules', array(&$this, 'category_rewrite_rules') );
 			
-			add_action('created_category', array(&$this, 'flush_rules') );
-			add_action('edited_category', array(&$this, 'flush_rules') );
-			add_action('delete_category', array(&$this, 'flush_rules') );
+			add_action('created_category', 'flush_rewrite_rules' );
+			add_action('edited_category', 'flush_rewrite_rules' );
+			add_action('delete_category', 'flush_rewrite_rules' );
 		}
-	}
-	
-	// FIXME: could use flush_rewrite_rules() instead.
-	function flush_rules() {
-		global $wp_rewrite;
-		$wp_rewrite->flush_rules();
 	}
 	
 	function no_category_base($catlink, $category_id) {
