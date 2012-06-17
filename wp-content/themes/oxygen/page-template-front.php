@@ -30,7 +30,7 @@ get_header(); // Loads the header.php template. ?>
 	
 			<div class="hfeed">
 				
-				<h4 class="section-title">Recent Articles</h4>
+				<h4 class="section-title"><?php _e( 'Recent Articles', 'oxygen' ); ?></h4>
 				
 				<?php $args = array( 'post__not_in' => get_option( 'sticky_posts' ), 'posts_per_page' => 3, 'meta_key' => '_oxygen_post_location', 'meta_value' => 'primary' ); ?>
 				
@@ -56,25 +56,25 @@ get_header(); // Loads the header.php template. ?>
 										
 									<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
 									
-									<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-published]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+									<?php echo apply_atomic_shortcode( 'byline_date', '<div class="byline byline-date">' . __( '[entry-published]', 'oxygen' ) . '</div>' ); ?>
 				
-									<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( 'by [entry-author]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+									<?php echo apply_atomic_shortcode( 'byline_author', '<div class="byline byline-author">' . __( 'by [entry-author]', 'oxygen' ) . '</div>' ); ?>
 				
-									<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-edit-link]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+									<?php echo apply_atomic_shortcode( 'byline_edit', '<div class="byline byline-edit">' . __( '[entry-edit-link]', 'oxygen' ) . '</div>' ); ?>
 			
 								</div>
 								
-								<?php echo apply_atomic_shortcode( 'byline', '<div class="byline-cat">' . __( '[entry-terms taxonomy="category" before=""]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+								<?php echo apply_atomic_shortcode( 'byline_category', '<div class="byline byline-cat">' . __( '[entry-terms taxonomy="category" before=""]', 'oxygen' ) . '</div>' ); ?>
 								
 								<div class="entry-summary">
 									
 									<?php the_excerpt(); ?>
 									
-									<?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', hybrid_get_parent_textdomain() ), 'after' => '</p>' ) ); ?>
+									<?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', 'oxygen' ), 'after' => '</p>' ) ); ?>
 									
 								</div>
 									
-								<a class="read-more" href="<?php the_permalink(); ?>">Read Article &rarr;</a>
+								<a class="read-more" href="<?php the_permalink(); ?>"><?php _e( 'Read Article', 'oxygen' ); ?> &rarr;</a>
 	
 								<?php do_atomic( 'close_entry' ); // oxygen_close_entry ?>
 	
@@ -90,7 +90,7 @@ get_header(); // Loads the header.php template. ?>
 	
 				<?php endif; ?>
 				
-				<h4 class="section-title">More Articles</h4>
+				<h4 class="section-title"><?php _e( 'More Articles', 'oxygen' ); ?></h4>
 				
 				<div class="hfeed-more">				
 					
@@ -106,7 +106,7 @@ get_header(); // Loads the header.php template. ?>
 										
 								<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
 									
-								<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-published] / by [entry-author] / in [entry-terms taxonomy="category"] [entry-edit-link before=" / "]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+								<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-published] / by [entry-author] / in [entry-terms taxonomy="category"] [entry-edit-link before=" / "]', 'oxygen' ) . '</div>' ); ?>
 	
 							</div><!-- .hentry -->
 		

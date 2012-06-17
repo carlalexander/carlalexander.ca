@@ -17,7 +17,7 @@ if ( !class_exists('Yoast_WPSEO_Plugin_Admin') ) {
 		var $homepage	= '';
 		var $feed		= 'http://yoast.com/feed/';
 		var $accesslvl	= 'manage_options';
-		var $adminpages = array( 'wpseo_dashboard', 'wpseo_rss', 'wpseo_indexation', 'wpseo_files', 'wpseo_permalinks', 'wpseo_internal-links', 'wpseo_import', 'wpseo_titles', 'wpseo_xml', 'wpseo_social');
+		var $adminpages = array( 'wpseo_dashboard', 'wpseo_rss', 'wpseo_files', 'wpseo_permalinks', 'wpseo_internal-links', 'wpseo_import', 'wpseo_titles', 'wpseo_xml', 'wpseo_social');
 		
 		function __construct() {
 		}
@@ -45,8 +45,7 @@ if ( !class_exists('Yoast_WPSEO_Plugin_Admin') ) {
 		
 		function register_settings_page() {
 			add_menu_page($this->longname, $this->shortname, $this->accesslvl, 'wpseo_dashboard', array(&$this,'config_page'), WPSEO_URL.'images/yoast-icon.png');
-			add_submenu_page('wpseo_dashboard',__( 'Titles', 'wordpress-seo' ),__( 'Titles', 'wordpress-seo' ),$this->accesslvl, 'wpseo_titles', array(&$this,'titles_page'));
-			add_submenu_page('wpseo_dashboard',__( 'Indexation', 'wordpress-seo' ),__( 'Indexation', 'wordpress-seo' ),$this->accesslvl, 'wpseo_indexation', array(&$this,'indexation_page'));
+			add_submenu_page('wpseo_dashboard',__( 'Titles &amp; Metas', 'wordpress-seo' ),__( 'Titles &amp; Metas', 'wordpress-seo' ),$this->accesslvl, 'wpseo_titles', array(&$this,'titles_page'));
 			add_submenu_page('wpseo_dashboard',__( 'Social', 'wordpress-seo' ),__( 'Social', 'wordpress-seo' ),$this->accesslvl, 'wpseo_social', array(&$this,'social_page'));
 			add_submenu_page('wpseo_dashboard',__( 'XML Sitemaps', 'wordpress-seo' ),__( 'XML Sitemaps', 'wordpress-seo' ),$this->accesslvl, 'wpseo_xml', array(&$this,'xml_sitemaps_page'));
 			add_submenu_page('wpseo_dashboard',__( 'Permalinks', 'wordpress-seo' ),__( 'Permalinks', 'wordpress-seo' ),$this->accesslvl, 'wpseo_permalinks', array(&$this,'permalinks_page'));
@@ -102,7 +101,7 @@ if ( !class_exists('Yoast_WPSEO_Plugin_Admin') ) {
 		 * Create a Checkbox input field
 		 */
 		function checkbox($id, $label, $label_left = false, $option = '') {
-			if ( $option == '') {
+			if ( $option == '' ) {
 				$options = get_wpseo_options();
 				$option = !empty($option) ? $option : $this->currentoption;
 			} else {
@@ -115,12 +114,21 @@ if ( !class_exists('Yoast_WPSEO_Plugin_Admin') ) {
 
 			if (!isset($options[$id]))
 				$options[$id] = false;
-				
-			$output_label = '<label for="'.$id.'">'.$label.'</label>';
-			$output_input = '<input class="checkbox" type="checkbox" id="'.$id.'" name="'.$option.'['.$id.']"'. checked($options[$id],'on',false).'/> ';
 			
-			if( $label_left ) {
-				$output = $output_label . $output_input;
+			if ( $label_left !== false ) {
+				if ( !empty( $label_left ) )
+					$label_left .= ':';
+				$output_label = '<label class="checkbox" for="'.$id.'">'.$label_left.'</label>';
+				$class 		  = 'checkbox';
+			} else {
+				$output_label = '<label for="'.$id.'">'.$label.'</label>';
+				$class 		  = 'checkbox double';
+			}
+			
+			$output_input = '<input class="'.$class.'" type="checkbox" id="'.$id.'" name="'.$option.'['.$id.']"'. checked($options[$id],'on',false).'/>';
+			
+			if( $label_left !== false ) {
+				$output = $output_label . $output_input . '<label class="checkbox" for="'.$id.'">'.$label.'</label>';
 			} else {
 				$output = $output_input . $output_label;
 			}
@@ -300,12 +308,9 @@ if ( !class_exists('Yoast_WPSEO_Plugin_Admin') ) {
 		 */
 		function postbox($id, $title, $content) {
 		?>
-			<div id="<?php echo $id; ?>" class="postbox">
-				<div class="handlediv" title="Click to toggle"><br /></div>
-				<h3 class="hndle"><span><?php echo $title; ?></span></h3>
-				<div class="inside">
-					<?php echo $content; ?>
-				</div>
+			<div id="<?php echo $id; ?>" class="yoastbox">
+				<h2><?php echo $title; ?></h2>
+				<?php echo $content; ?>
 			</div>
 		<?php
 		}
@@ -337,7 +342,6 @@ if ( !class_exists('Yoast_WPSEO_Plugin_Admin') ) {
 		 */
 		function plugin_support() {
 			$content = '<p>'.__('If you are having problems with this plugin, please talk about them in the', 'wordpress-seo' ).' <a href="http://wordpress.org/support/plugin/'.$this->hook.'">'.__("Support forums", 'wordpress-seo' ).'</a>.</p>';
-			$content .= '<p>'.sprintf( __('If you\'re sure you\'ve found a bug, or have a feature request, please submit it in the %1$sbug tracker%2$s.', "wordpress-seo"), '<a href="http://yoast.com/bugs/wordpress-seo/">','</a>').'</p>';
 			$this->postbox($this->hook.'support', __('Need support?', 'wordpress-seo' ), $content);
 		}
 
@@ -376,7 +380,7 @@ if ( !class_exists('Yoast_WPSEO_Plugin_Admin') ) {
 		 * Box with latest news from Yoast.com for sidebar
 		 */
 		function news() {
-			$rss_items = $this->fetch_rss_items( 5 );
+			$rss_items = $this->fetch_rss_items( 3 );
 			
 			$content = '<ul>';
 			if ( !$rss_items ) {
@@ -392,7 +396,6 @@ if ( !class_exists('Yoast_WPSEO_Plugin_Admin') ) {
 			$content .= '<li class="facebook"><a href="https://www.facebook.com/yoast">'.__( 'Like Yoast on Facebook', 'wordpress-seo' ).'</a></li>';
 			$content .= '<li class="twitter"><a href="http://twitter.com/yoast">'.__( 'Follow Yoast on Twitter', 'wordpress-seo' ).'</a></li>';
 			$content .= '<li class="googleplus"><a href="https://plus.google.com/115369062315673853712/posts">'.__( 'Circle Yoast on Google+', 'wordpress-seo' ).'</a></li>';
-			$content .= '<li class="rss"><a href="'.$this->feed.'">'.__( 'Subscribe with RSS', 'wordpress-seo' ).'</a></li>';
 			$content .= '<li class="email"><a href="http://yoast.com/wordpress-newsletter/">'.__( 'Subscribe by email', 'wordpress-seo' ).'</a></li>';
 			$content .= '</ul>';
 			$this->postbox('yoastlatest', __( 'Latest news from Yoast', 'wordpress-seo' ), $content);

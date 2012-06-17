@@ -12,7 +12,7 @@ class WPSEO_Social_Admin {
 	}
 
 	public function tab_header() {
-		echo '<li class="wpseo-social"><a href="javascript:void(null);">'.__('Social', 'wordpress-seo' ).'</a></li>';
+		echo '<li class="social"><a class="wpseo_tablink" href="#wpseo_social">'.__('Social', 'wordpress-seo' ).'</a></li>';
 	}
 
 	public function tab_content() {
@@ -22,7 +22,7 @@ class WPSEO_Social_Admin {
 		foreach( $this->get_meta_boxes() as $meta_box ) {
 			$content .= $wpseo_metabox->do_meta_box( $meta_box );
 		}
-		$wpseo_metabox->do_tab( 'wpseo-social', __('Social', 'wordpress-seo' ), $content );
+		$wpseo_metabox->do_tab( 'social', __('Social', 'wordpress-seo' ), $content );
 	}
 	
 	public function get_meta_boxes( ) {

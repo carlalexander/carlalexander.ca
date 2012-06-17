@@ -27,6 +27,7 @@ class WPSEO_Sitemaps {
 		add_action( 'transition_post_status', array( $this, 'status_transition' ), 10, 3 );
 		add_action( 'admin_init', array( $this, 'delete_sitemaps' ) );
 		add_action( 'wpseo_hit_sitemap_index', array( $this, 'hit_sitemap_index' ) );
+		add_action( 'wpseo_ping_search_engines', array( $this, 'ping_search_engines' ) );
 
 		// default stylesheet
 		$this->stylesheet = '<?xml-stylesheet type="text/xsl" href="'.WPSEO_FRONT_URL.'css/xml-sitemap-xsl.php"?>';
@@ -216,7 +217,7 @@ class WPSEO_Sitemaps {
 		$output = '';
 
 		$front_id = get_option('page_on_front');
-		if ( ! $front_id && $post_type == 'post' ) {
+		if ( ! $front_id && ( $post_type == 'post' || $post_type == 'page' ) ) {
 			$output .= $this->sitemap_url( array(
 				'loc' => home_url('/'),
 				'pri' => 1,
@@ -347,8 +348,10 @@ class WPSEO_Sitemaps {
 				
 				$content = $p->post_content;
 				if ( function_exists('get_the_post_thumbnail') ) {
-					$content .= '<p>' . get_the_post_thumbnail( $p->ID, 'full' ) . '</p>';
+					$content = '<p>' . get_the_post_thumbnail( $p->ID, 'full' ) . '</p>'.$content;
 				}
+				
+				$host = str_replace( 'www.', '', parse_url( get_bloginfo('url'), PHP_URL_HOST ) );
 				
 				if ( preg_match_all( '/<img [^>]+>/', $content, $matches ) ) {
 					foreach ( $matches[0] as $img ) {
@@ -360,12 +363,17 @@ class WPSEO_Sitemaps {
 								$src = get_bloginfo('url') . $src;
 							}
 
+							if ( strpos( $src, $host ) === false )
+								continue;
+
 							if ( $src != esc_url( $src ) )
 								continue;
 
 							if ( isset( $url['images'][$src] ) )
 								continue;
-
+							
+							$src = apply_filters( 'wpseo_xml_sitemap_img_src', $src );
+							
 							$image = array();
 							if ( preg_match( '/title=("|\')([^"\']+)("|\')/', $img, $match ) )
 								$image['title'] = str_replace( array('-','_'), ' ', $match[2] );
@@ -415,7 +423,13 @@ class WPSEO_Sitemaps {
 		$this->sitemap = '<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" ';
 		$this->sitemap .= 'xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" ';
 		$this->sitemap .= 'xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'."\n";
-		$this->sitemap .= $output . '</urlset>';
+		$this->sitemap .= $output;
+
+		// Filter to allow adding extra URLs, only do this on the first XML sitemap, not on all.
+		if ( $n == 0 ) 
+			$this->sitemap .= apply_filters( 'wpseo_sitemap_'.$post_type.'_content', '' );
+			
+		$this->sitemap .= '</urlset>';
 	}
 
 	/**
@@ -526,9 +540,9 @@ class WPSEO_Sitemaps {
 				$output .= "\t\t<image:image>\n";
 				$output .= "\t\t\t<image:loc>".htmlspecialchars( $src )."</image:loc>\n";
 				if ( isset($img['title']) )
-					$output .= "\t\t\t<image:title>".ereg_replace( "[^A-Za-z0-9\s\.]", "", $img['title'] )."</image:title>\n";
+					$output .= "\t\t\t<image:title>".preg_replace( "[^A-Za-z0-9\s\.]", "", $img['title'] )."</image:title>\n";
 				if ( isset($img['alt']) )
-					$output .= "\t\t\t<image:caption>".ereg_replace( "[^A-Za-z0-9\s\.]", "", $img['alt'] )."</image:caption>\n";
+					$output .= "\t\t\t<image:caption>".preg_replace( "[^A-Za-z0-9\s\.]", "", $img['alt'] )."</image:caption>\n";
 				$output .= "\t\t</image:image>\n";
 			}
 		}
@@ -540,7 +554,7 @@ class WPSEO_Sitemaps {
 	 * Notify search engines of the updated sitemap.
 	 */
 	function ping_search_engines() {
-		$options = get_wpseo_options();
+		$options = get_option('wpseo_xml');
 		$base = $GLOBALS['wp_rewrite']->using_index_permalinks() ? 'index.php/' : '';
 		$sitemapurl = urlencode( home_url( $base . 'sitemap_index.xml' ) );
 
@@ -575,8 +589,9 @@ class WPSEO_Sitemaps {
 		if ( WP_CACHE )
 			wp_schedule_single_event( time(), 'wpseo_hit_sitemap_index' );
 
+		// Allow the pinging to happen slightly after the hit sitemap index so the sitemap is fully regenerated when the ping happens.
 		if ( wpseo_get_value( 'sitemap-include', $post->ID ) != 'never' )
-			$this->ping_search_engines();
+			wp_schedule_single_event( ( time() + 10 ), 'wpseo_ping_search_engines' );
 	}
 
 	/**

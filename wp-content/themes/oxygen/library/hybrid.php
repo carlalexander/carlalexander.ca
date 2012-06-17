@@ -24,9 +24,9 @@
  * to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @package HybridCore
- * @version 1.3.0-beta-1
+ * @version 1.3.1
  * @author Justin Tadlock <justin@justintadlock.com>
- * @copyright Copyright (c) 2008 - 2011, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2012, Justin Tadlock
  * @link http://themehybrid.com/hybrid-core
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -89,7 +89,7 @@ class Hybrid {
 	function constants() {
 
 		/* Sets the framework version number. */
-		define( 'HYBRID_VERSION', '1.3.0' );
+		define( 'HYBRID_VERSION', '1.3.1' );
 
 		/* Sets the path to the parent theme directory. */
 		define( 'THEME_DIR', get_template_directory() );
@@ -162,16 +162,20 @@ class Hybrid {
 	 * @since 1.2.0
 	 */
 	function i18n() {
+		global $hybrid;
+
+		/* Get parent and child theme textdomains. */
+		$parent_textdomain = hybrid_get_parent_textdomain();
+		$child_textdomain = hybrid_get_child_textdomain();
 
 		/* Load the framework textdomain. */
-		hybrid_load_framework_textdomain( 'hybrid-core' );
+		$hybrid->textdomain_loaded['hybrid-core'] = hybrid_load_framework_textdomain( 'hybrid-core' );
 
 		/* Load theme textdomain. */
-		load_theme_textdomain( hybrid_get_parent_textdomain() );
+		$hybrid->textdomain_loaded[$parent_textdomain] = load_theme_textdomain( $parent_textdomain );
 
 		/* Load child theme textdomain. */
-		if ( is_child_theme() )
-			load_child_theme_textdomain( hybrid_get_child_textdomain() );
+		$hybrid->textdomain_loaded[$child_textdomain] = is_child_theme() ? load_child_theme_textdomain( $child_textdomain ) : false;
 
 		/* Get the user's locale. */
 		$locale = get_locale();
@@ -235,7 +239,7 @@ class Hybrid {
 		/* Load the menus functions if supported. */
 		require_if_theme_supports( 'hybrid-core-menus', trailingslashit( HYBRID_FUNCTIONS ) . 'menus.php' );
 
-		/* Load the core SEO component if supported and WPSEO_VERSION isn't defined. */
+		/* Load the core SEO component if supported. */
 		require_if_theme_supports( 'hybrid-core-seo', trailingslashit( HYBRID_FUNCTIONS ) . 'core-seo.php' );
 
 		/* Load the shortcodes if supported. */
@@ -264,13 +268,13 @@ class Hybrid {
 	 */
 	function extensions() {
 
-		/* Load the Breadcrumb Trail extension if supported and the plugin isn't active. */
+		/* Load the Breadcrumb Trail extension if supported. */
 		require_if_theme_supports( 'breadcrumb-trail', trailingslashit( HYBRID_EXTENSIONS ) . 'breadcrumb-trail.php' );
 
-		/* Load the Cleaner Gallery extension if supported and the plugin isn't active. */
+		/* Load the Cleaner Gallery extension if supported. */
 		require_if_theme_supports( 'cleaner-gallery', trailingslashit( HYBRID_EXTENSIONS ) . 'cleaner-gallery.php' );
 
-		/* Load the Get the Image extension if supported and the plugin isn't active. */
+		/* Load the Get the Image extension if supported. */
 		require_if_theme_supports( 'get-the-image', trailingslashit( HYBRID_EXTENSIONS ) . 'get-the-image.php' );
 
 		/* Load the Cleaner Caption extension if supported. */

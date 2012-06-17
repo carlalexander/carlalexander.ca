@@ -49,21 +49,21 @@ get_header(); // Loads the header.php template. ?>
 										
 								<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
 								
-								<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-published]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+								<?php echo apply_atomic_shortcode( 'byline_date', '<div class="byline byline-date">' . __( '[entry-published]', 'oxygen' ) . '</div>' ); ?>
 			
-								<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( 'by [entry-author]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+								<?php echo apply_atomic_shortcode( 'byline_author', '<div class="byline byline-author">' . __( 'by [entry-author]', 'oxygen' ) . '</div>' ); ?>
 			
-								<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-edit-link]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+								<?php echo apply_atomic_shortcode( 'byline_edit', '<div class="byline byline-edit">' . __( '[entry-edit-link]', 'oxygen' ) . '</div>' ); ?>
 		
 							</div>
 
-							<?php echo apply_atomic_shortcode( 'byline', '<div class="byline-cat">' . __( '[entry-terms taxonomy="category" before=""]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+							<?php echo apply_atomic_shortcode( 'byline', '<div class="byline-cat">' . __( '[entry-terms taxonomy="category" before=""]', 'oxygen' ) . '</div>' ); ?>
 							
 							<div class="entry-summary">
 								
 								<?php the_excerpt(); ?>
 								
-								<?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', hybrid_get_parent_textdomain() ), 'after' => '</p>' ) ); ?>
+								<?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', 'oxygen' ), 'after' => '</p>' ) ); ?>
 								
 							</div>
 								

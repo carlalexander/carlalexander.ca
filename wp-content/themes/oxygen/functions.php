@@ -2,7 +2,7 @@
 /**
  * @package Oxygen
  * @subpackage Functions
- * @version 0.2.2
+ * @version 0.2.5
  * @author DevPress
  * @link http://devpress.com
  * @license http://www.gnu.org/licenses/gpl-2.0.html
@@ -29,7 +29,7 @@ function oxygen_theme_setup() {
 	add_theme_support( 'hybrid-core-menus', array( 'primary', 'secondary', 'subsidiary' ) );
 	add_theme_support( 'hybrid-core-sidebars', array( 'primary', 'secondary', 'subsidiary', 'after-singular', 'header' ) );
 	add_theme_support( 'hybrid-core-widgets' );
-	add_theme_support( 'hybrid-core-theme-settings', array( 'footer' ) );
+	add_theme_support( 'hybrid-core-theme-settings', array( 'about', 'footer' ) );
 	add_theme_support( 'hybrid-core-meta-box-footer' );
 	add_theme_support( 'hybrid-core-shortcodes' );
 	add_theme_support( 'hybrid-core-drop-downs' );
@@ -186,8 +186,8 @@ function oxygen_scripts() {
  */
 function oxygen_pagination_args( $args ) {
 	
-	$args['prev_text'] = __( '&larr; Previous', hybrid_get_parent_textdomain() );
-	$args['next_text'] = __( 'Next &rarr;', hybrid_get_parent_textdomain() );
+	$args['prev_text'] = __( '&larr; Previous', 'oxygen' );
+	$args['next_text'] = __( 'Next &rarr;', 'oxygen' );
 
 	return $args;
 }
@@ -258,36 +258,33 @@ function oxygen_commentform_args( $args ) {
 	
 	global $user_identity;
 
-	/* Get the theme textdomain. */
-	$domain = hybrid_get_parent_textdomain();
-
 	/* Get the current commenter. */
 	$commenter = wp_get_current_commenter();
 
 	/* Create the required <span> and <input> element class. */
-	$req = ( ( get_option( 'require_name_email' ) ) ? ' <span class="required">' . __( '*', $domain ) . '</span> ' : '' );
+	$req = ( ( get_option( 'require_name_email' ) ) ? ' <span class="required">' . __( '*', 'oxygen' ) . '</span> ' : '' );
 	$input_class = ( ( get_option( 'require_name_email' ) ) ? ' req' : '' );
 	
 	
 	$fields = array(
-		'author' => '<p class="form-author' . $input_class . '"><input type="text" class="text-input" name="author" id="author" value="' . esc_attr( $commenter['comment_author'] ) . '" size="40" /><label for="author">' . __( 'Name', $domain ) . $req . '</label></p>',
-		'email' => '<p class="form-email' . $input_class . '"><input type="text" class="text-input" name="email" id="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="40" /><label for="email">' . __( 'Email', $domain ) . $req . '</label></p>',
-		'url' => '<p class="form-url"><input type="text" class="text-input" name="url" id="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="40" /><label for="url">' . __( 'Website', $domain ) . '</label></p>'
+		'author' => '<p class="form-author' . $input_class . '"><input type="text" class="text-input" name="author" id="author" value="' . esc_attr( $commenter['comment_author'] ) . '" size="40" /><label for="author">' . __( 'Name', 'oxygen' ) . $req . '</label></p>',
+		'email' => '<p class="form-email' . $input_class . '"><input type="text" class="text-input" name="email" id="email" value="' . esc_attr( $commenter['comment_author_email'] ) . '" size="40" /><label for="email">' . __( 'Email', 'oxygen' ) . $req . '</label></p>',
+		'url' => '<p class="form-url"><input type="text" class="text-input" name="url" id="url" value="' . esc_attr( $commenter['comment_author_url'] ) . '" size="40" /><label for="url">' . __( 'Website', 'oxygen' ) . '</label></p>'
 	);
 	
 	$args = array(
 		'fields' => apply_filters( 'comment_form_default_fields', $fields ),
-		'comment_field' => '<p class="form-textarea req"><!--<label for="comment">' . __( 'Comment', $domain ) . '</label>--><textarea name="comment" id="comment" cols="60" rows="10"></textarea></p>',
-		'must_log_in' => '<p class="alert">' . sprintf( __( 'You must be <a href="%1$s" title="Log in">logged in</a> to post a comment.', $domain ), wp_login_url( get_permalink() ) ) . '</p><!-- .alert -->',
-		'logged_in_as' => '<p class="log-in-out">' . sprintf( __( 'Logged in as <a href="%1$s" title="%2$s">%2$s</a>.', $domain ), admin_url( 'profile.php' ), esc_attr( $user_identity ) ) . ' <a href="' . wp_logout_url( get_permalink() ) . '" title="' . esc_attr__( 'Log out of this account', $domain ) . '">' . __( 'Log out &rarr;', $domain ) . '</a></p><!-- .log-in-out -->',
+		'comment_field' => '<p class="form-textarea req"><!--<label for="comment">' . __( 'Comment', 'oxygen' ) . '</label>--><textarea name="comment" id="comment" cols="60" rows="10"></textarea></p>',
+		'must_log_in' => '<p class="alert">' . sprintf( __( 'You must be <a href="%1$s" title="Log in">logged in</a> to post a comment.', 'oxygen' ), wp_login_url( get_permalink() ) ) . '</p><!-- .alert -->',
+		'logged_in_as' => '<p class="log-in-out">' . sprintf( __( 'Logged in as <a href="%1$s" title="%2$s">%2$s</a>.', 'oxygen' ), admin_url( 'profile.php' ), esc_attr( $user_identity ) ) . ' <a href="' . wp_logout_url( get_permalink() ) . '" title="' . esc_attr__( 'Log out of this account', 'oxygen' ) . '">' . __( 'Log out &rarr;', 'oxygen' ) . '</a></p><!-- .log-in-out -->',
 		'comment_notes_before' => '',
 		'comment_notes_after' => '',
 		'id_form' => 'commentform',
 		'id_submit' => 'submit',
-		'title_reply' => __( 'Leave a Reply', $domain ),
-		'title_reply_to' => __( 'Leave a Reply to %s', $domain ),
-		'cancel_reply_link' => __( 'Click here to cancel reply.', $domain ),
-		'label_submit' => __( 'Post Comment &rarr;', $domain ),
+		'title_reply' => __( 'Leave a Reply', 'oxygen' ),
+		'title_reply_to' => __( 'Leave a Reply to %s', 'oxygen' ),
+		'cancel_reply_link' => __( 'Click here to cancel reply.', 'oxygen' ),
+		'label_submit' => __( 'Post Comment &rarr;', 'oxygen' ),
 	);
 	
 	return $args;
@@ -312,7 +309,7 @@ function oxygen_breadcrumb_trail_args( $args ) {
  */
 function oxygen_default_footer_settings( $settings ) {
     
-    $settings['footer_insert'] = '<p class="copyright">' . __( 'Copyright &#169; [the-year] [site-link]', hybrid_get_parent_textdomain() ) . '</p>' . "\n\n" . '<p class="credit">' . __( 'Powered by [wp-link] and [theme-link]', hybrid_get_parent_textdomain() ) . '</p>';
+    $settings['footer_insert'] = '<p class="copyright">' . __( 'Copyright &#169; [the-year] [site-link]', 'oxygen' ) . '</p>' . "\n\n" . '<p class="credit">' . __( 'Powered by [wp-link] and [theme-link]', 'oxygen' ) . '</p>';
     
     return $settings;
 }
@@ -322,7 +319,7 @@ function oxygen_default_footer_settings( $settings ) {
  *
  */
 function oxygen_create_metabox() {
-    add_meta_box( 'oxygen_metabox', __( 'Location', hybrid_get_parent_textdomain() ), 'oxygen_metabox', 'post', 'side', 'low' );            
+    add_meta_box( 'oxygen_metabox', __( 'Location', 'oxygen' ), 'oxygen_metabox', 'post', 'side', 'low' );            
 }
              
 function oxygen_metabox() {
@@ -332,12 +329,12 @@ function oxygen_metabox() {
 	/* Retrieve metadata values if they already exist. */
 	$oxygen_post_location = get_post_meta( $post->ID, '_oxygen_post_location', true ); ?>	
 	
-	<p><label><input type="radio" name="oxygen_post_location" value="featured" <?php echo esc_attr( $oxygen_post_location ) == 'featured' ? 'checked="checked"' : '' ?> /> <?php echo __( 'Featured', hybrid_get_parent_textdomain() ) ?></label></p>
-	<p><label><input type="radio" name="oxygen_post_location" value="primary" <?php echo esc_attr( $oxygen_post_location ) == 'primary' ? 'checked="checked"' : '' ?> /> <?php echo __( 'Primary', hybrid_get_parent_textdomain() ) ?></label></p>
-	<p><label><input type="radio" name="oxygen_post_location" value="secondary" <?php echo esc_attr( $oxygen_post_location ) == 'secondary' ? 'checked="checked"' : '' ?> /> <?php echo __( 'Secondary', hybrid_get_parent_textdomain() ) ?></label></p>
-	<p><label><input type="radio" name="oxygen_post_location" value="no-display" <?php echo esc_attr( $oxygen_post_location ) == 'no-display' ? 'checked="checked"' : '' ?> /> <?php echo __( 'Do not display', hybrid_get_parent_textdomain() ) ?></label></p>	
+	<p><label><input type="radio" name="oxygen_post_location" value="featured" <?php echo esc_attr( $oxygen_post_location ) == 'featured' ? 'checked="checked"' : '' ?> /> <?php echo __( 'Featured', 'oxygen' ) ?></label></p>
+	<p><label><input type="radio" name="oxygen_post_location" value="primary" <?php echo esc_attr( $oxygen_post_location ) == 'primary' ? 'checked="checked"' : '' ?> /> <?php echo __( 'Primary', 'oxygen' ) ?></label></p>
+	<p><label><input type="radio" name="oxygen_post_location" value="secondary" <?php echo esc_attr( $oxygen_post_location ) == 'secondary' ? 'checked="checked"' : '' ?> /> <?php echo __( 'Secondary', 'oxygen' ) ?></label></p>
+	<p><label><input type="radio" name="oxygen_post_location" value="no-display" <?php echo esc_attr( $oxygen_post_location ) == 'no-display' ? 'checked="checked"' : '' ?> /> <?php echo __( 'Do not display', 'oxygen' ) ?></label></p>	
 		
-	<span class="description"><?php _e( 'Post location on the home page', hybrid_get_parent_textdomain() ); ?>
+	<span class="description"><?php _e( 'Post location on the home page', 'oxygen' ); ?>
 	<?php           
 }
 
@@ -359,10 +356,13 @@ function oxygen_google_fonts() {
 		switch ( hybrid_get_setting( 'oxygen_font_family' ) ) {
 			case 'Abel':
 				wp_enqueue_style( 'font-abel', 'http://fonts.googleapis.com/css?family=Abel', false, 1.0, 'screen' );
+				break;
 			case 'Oswald':
 				wp_enqueue_style( 'font-oswald', 'http://fonts.googleapis.com/css?family=Oswald', false, 1.0, 'screen' );
+				break;
 			case 'Terminal Dosis':
-				wp_enqueue_style( 'font-terminal-dosis', 'http://fonts.googleapis.com/css?family=Terminal+Dosis', false, 1.0, 'screen' );				
+				wp_enqueue_style( 'font-terminal-dosis', 'http://fonts.googleapis.com/css?family=Terminal+Dosis', false, 1.0, 'screen' );
+				break;
 			case 'Droid Serif':
 				wp_enqueue_style( 'font-droid-serif', 'http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic', false, 1.0, 'screen' );
 				break;			

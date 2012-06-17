@@ -3,17 +3,14 @@ h4 {
 	margin: 2em 0 0 0;	
 }
 
-h4.big {
-	font-size: 120%;
-	margin: 2em 0 0 0;
-	padding: 0;
+p.desc {
+	padding: 0 0 8px 22px;
+	margin: 6px 0 10px 0;
+	border-bottom: 1px solid #ddd;
 }
-
-td.yst_desc {
-	font-weight: normal;
-	font-size: 12px;
-	line-height: 12px;
-	color:#777;	
+p.desc.label {
+	padding: 2px 0 10px 180px;
+	margin-bottom: 20px;
 }
 
 tr.yst_row {
@@ -24,7 +21,7 @@ tr.yst_row.even {
 	background-color: #f6f6f6;
 }
 
-div.inside ul {
+div.yoastbox ul {
 	margin-left: 20px;
 }
 
@@ -32,18 +29,23 @@ div.inside ul {
 	margin: 10px 10px 0 0;	
 }
 
-.postbox .inside p, .postbox .inside label, .postbox .inside li, .postbox .inside a {
-	font-size: 12px;
-}
-
-.textinput, .select, .checkbox, label {
+label {
 	float: left;
-	margin: 5px 10px 5px 0;
-	line-height: 12px;
+	margin-left: 6px;
 }
 
-.textinput, .select {
+input.textinput, textarea, select {
 	width: 400px;
+}
+
+input.textinput, textarea.textinput, select.select, input.checkbox {
+	float: left;
+	margin: 12px 3px 0 0;
+	padding: 5px;
+}
+
+input.checkbox.double {
+	margin-top: 2px;
 }
 
 .textinput.metadesc {
@@ -55,8 +57,10 @@ textarea.import {
 	height: 100px;
 }
 
-label.textinput, label.select {
-	width: 200px;
+label.textinput, label.select, label.checkbox {
+	width: 180px;
+	background-color: transparent;
+	margin: 10px 0 5px 0;
 }
 
 label.radio {
@@ -67,41 +71,40 @@ label.radio {
 	line-height: 150%;	
 }
 
-div.inside ul li {
+div.yoastbox ul li {
 	list-style: square;
 	line-height:16px;
 	font-size: 11px;
 }
 
-div.inside a, div.inside a.rsswidget {
-	font-family: 'Lucida Grande', Verdana, Arial, 'Bitstream Vera Sans', sans-serif;
-	text-decoration: none;
-	font-size: 11px;
+div.yoastbox a, div.yoastbox a.rsswidget {
+	font-family: sans-serif;
+	font-size: 12px;
 }
-div.inside a:hover, div.inside a.rsswidget:hover {
+div.yoastbox a:hover, div.yoastbox a.rsswidget:hover {
 	text-decoration: underline;
 }
-div.inside ul li.rss {
+div.yoastbox ul li.rss {
 	list-style-image: url(../images/rss.png);
 }
 
-div.inside ul li.twitter {
+div.yoastbox ul li.twitter {
 	list-style-image: url(../images/twitter-icon.png);
 }
 
-div.inside ul li.facebook {
+div.yoastbox ul li.facebook {
 	list-style-image: url(../images/facebook-icon.png);
 }
 
-div.inside ul li.googleplus {
+div.yoastbox ul li.googleplus {
 	list-style-image: url(../images/google-plus-icon.png);
 }
 
-div.inside ul li.email {
+div.yoastbox ul li.email {
 	list-style-image: url(../images/email_sub.png);
 }
 
-div.inside ul li.yoast {
+div.yoastbox ul li.yoast {
 	list-style-image: url(../images/yoast-16x16.png); 
 }
 
@@ -109,11 +112,7 @@ div.inside ul li.yoast {
 	width: 250px;
 }
 
-.side .postbox p, .side .postbox a, .side .postbox a.rsswidget {
-	font-size: 11px;
-}
-
-div.inside .button:hover, div.inside .button-primary:hover {
+div.yoastbox .button:hover, div.yoastbox .button-primary:hover {
 	text-decoration: none;
 }
 
@@ -124,7 +123,7 @@ div.inside .button:hover, div.inside .button-primary:hover {
 table.yoast_help, table.yoast_help th, table.yoast_help td {
 	border: 1px solid #ddd;
 	border-collapse: collapse;
-	font-size: 11px;
+	font-size: 12px;
 }
 table.yoast_help th, table.yoast_help td {
 	vertical-align: text-top;
@@ -162,13 +161,44 @@ table.yoast_help tr:hover {
 	color: #000 !important;
 }
 
-strong.red {
-	color: green;
-	font-weight: bold;
-	font-size: 105%;
-}
-
 .postbox#donate {
 	border-color: green;
 	border-width: 2px;
+}
+
+.wpseotab {
+	display: none;
+	max-width: 600px !important;
+}
+.wpseotab.active {
+	display: block;
+}
+
+#sidebar .yoastbox {
+	border: 1px solid #CCC;
+	border-radius: 5px 25px;
+	margin: 0 0 10px 0;
+	padding: 10px 15px;
+}
+
+#sidebar .yoastbox h2 {
+	font-size: 16px;
+}
+
+#sidebar .promo {
+	color: #000;
+}
+#donate.yoastbox, #sitereview.yoastbox {
+	border-color: green;
+	background-color: #cfc;
+}
+h2 {
+	margin-bottom: 20px;
+}
+h2 code {
+	font-size: 23px;
+}
+
+#wpseo-conf {
+	max-width: 600px;
 }

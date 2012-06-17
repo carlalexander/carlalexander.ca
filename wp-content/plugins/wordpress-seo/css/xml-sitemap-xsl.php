@@ -1,9 +1,7 @@
 <?php 
-// 
-header("Content-Type: text/xsl");
+header("Content-Type: text/xml");
 echo '<?xml version="1.0" encoding="UTF-8"?>'; 
-?>
-<xsl:stylesheet version="2.0" 
+?><xsl:stylesheet version="2.0" 
                 xmlns:html="http://www.w3.org/TR/REC-html40"
 				xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
                 xmlns:sitemap="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -24,10 +22,10 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 						border: none;
 						border-collapse: collapse;
 					}
-					#sitemap tr.odd {
-						background-color: #eee;
+					#sitemap tr.odd td {
+						background-color: #eee !important;
 					}
-					#sitemap tbody tr:hover {
+					#sitemap tbody tr:hover td {
 						background-color: #ccc;
 					}
 					#sitemap tbody tr:hover td, #sitemap tbody tr:hover td a {
@@ -39,7 +37,7 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
 					}
 					.expl {
 						margin: 18px 3px;
-						line-height: 0.7em;
+						line-height: 1.2em;
 					}
 					.expl a {
 						color: #da3114;

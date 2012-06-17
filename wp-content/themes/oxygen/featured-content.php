@@ -23,7 +23,7 @@ if ( $loop->have_posts() ) : ?>
 						
 						<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
 						
-						<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-published]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+						<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-published]', 'oxygen' ) . '</div>' ); ?>
 					
 					</div> <!-- .featured-post -->
 					

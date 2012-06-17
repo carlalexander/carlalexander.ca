@@ -28,3 +28,4 @@
 .logo_url p { max-width: 200px; }
 #oxygen_theme_settings-oxygen_slider_timeout { width: 85px; }
 #oxygen_theme_settings-oxygen_custom_css { width: 98%; }
+#wp-oxygen_theme_settings-footer_insert-editor-tools { display: none; }

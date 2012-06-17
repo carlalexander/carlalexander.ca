@@ -6,7 +6,7 @@
  * @package HybridCore
  * @subpackage Functions
  * @author Justin Tadlock <justin@justintadlock.com>
- * @copyright Copyright (c) 2008 - 2011, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2012, Justin Tadlock
  * @link http://themehybrid.com/hybrid-core
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -20,6 +20,9 @@ add_action( 'wp_enqueue_scripts', 'hybrid_enqueue_scripts' );
 /* Load the development stylsheet in script debug mode. */
 add_filter( 'stylesheet_uri', 'hybrid_debug_stylesheet', 10, 2 );
 
+/* Add all image sizes to the image editor to insert into post. */
+add_filter( 'image_size_names_choose', 'hybrid_image_size_names_choose' );
+
 /**
  * Registers JavaScript files for the framework.  This function merely registers scripts with WordPress using
  * the wp_register_script() function.  It does not load any script files on the site.  If a theme wants to register 
@@ -31,12 +34,15 @@ add_filter( 'stylesheet_uri', 'hybrid_debug_stylesheet', 10, 2 );
  */
 function hybrid_register_scripts() {
 
+	/* Supported JavaScript. */
+	$supports = get_theme_support( 'hybrid-core-javascript' );
+
 	/* Register the 'drop-downs' script if the current theme supports 'hybrid-core-drop-downs'. */
-	if ( current_theme_supports( 'hybrid-core-drop-downs' ) )
+	if ( current_theme_supports( 'hybrid-core-drop-downs' ) || ( isset( $supports[0] ) && in_array( 'drop-downs', $supports[0] ) ) )
 		wp_register_script( 'drop-downs', esc_url( apply_atomic( 'drop_downs_script', trailingslashit( HYBRID_JS ) . 'drop-downs.js' ) ), array( 'jquery' ), '20110920', true );
 
 	/* Register the 'nav-bar' script if the current theme supports 'hybrid-core-nav-bar'. */
-	if ( current_theme_supports( 'hybrid-core-nav-bar' ) )
+	if ( isset( $supports[0] ) && in_array( 'nav-bar', $supports[0] ) )
 		wp_register_script( 'nav-bar', esc_url( apply_atomic( 'nav_bar_script', trailingslashit( HYBRID_JS ) . 'nav-bar.js' ) ), array( 'jquery' ), '20111008', true );
 }
 
@@ -49,16 +55,19 @@ function hybrid_register_scripts() {
  */
 function hybrid_enqueue_scripts() {
 
+	/* Supported JavaScript. */
+	$supports = get_theme_support( 'hybrid-core-javascript' );
+
 	/* Load the comment reply script on singular posts with open comments if threaded comments are supported. */
 	if ( is_singular() && get_option( 'thread_comments' ) && comments_open() )
 		wp_enqueue_script( 'comment-reply' );
 
 	/* Load the 'drop-downs' script if the current theme supports 'hybrid-core-drop-downs'. */
-	if ( current_theme_supports( 'hybrid-core-drop-downs' ) )
+	if ( current_theme_supports( 'hybrid-core-drop-downs' ) || ( isset( $supports[0] ) && in_array( 'drop-downs', $supports[0] ) ) )
 		wp_enqueue_script( 'drop-downs' );
 
 	/* Load the 'nav-bar' script if the current theme supports 'hybrid-core-nav-bar'. */
-	if ( current_theme_supports( 'hybrid-core-nav-bar' ) )
+	if ( isset( $supports[0] ) && in_array( 'nav-bar', $supports[0] ) )
 		wp_enqueue_script( 'nav-bar' );
 }
 
@@ -85,12 +94,38 @@ function hybrid_debug_stylesheet( $stylesheet_uri, $stylesheet_dir_uri ) {
 		$stylesheet = str_replace( '.css', '.dev.css', $stylesheet );
 
 		/* If the stylesheet exists in the stylesheet directory, set the stylesheet URI to the dev stylesheet. */
-		if ( file_exists( trailingslashit( STYLESHEETPATH ) . $stylesheet ) )
+		if ( file_exists( trailingslashit( get_stylesheet_directory() ) . $stylesheet ) )
 			$stylesheet_uri = trailingslashit( $stylesheet_dir_uri ) . $stylesheet;
 	}
 
 	/* Return the theme stylesheet. */
 	return $stylesheet_uri;
+}
+
+/**
+ * Adds theme/plugin custom images sizes added with add_image_size() to the image uploader/editor.  This 
+ * allows users to insert these images within their post content editor.
+ *
+ * @since 1.3.0
+ * @access private
+ * @param array $sizes Selectable image sizes.
+ * @return array $sizes
+ */
+function hybrid_image_size_names_choose( $sizes ) {
+
+	/* Get all intermediate image sizes. */
+	$intermediate_sizes = get_intermediate_image_sizes();
+	$add_sizes = array();
+
+	/* Loop through each of the intermediate sizes, adding them to the $add_sizes array. */
+	foreach ( $intermediate_sizes as $size )
+		$add_sizes[$size] = $size;
+
+	/* Merge the original array, keeping it intact, with the new array of image sizes. */
+	$sizes = array_merge( $add_sizes, $sizes );
+
+	/* Return the new sizes plus the old sizes back. */
+	return $sizes;
 }
 
 /**

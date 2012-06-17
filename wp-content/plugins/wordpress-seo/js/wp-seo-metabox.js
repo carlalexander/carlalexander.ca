@@ -1,18 +1,17 @@
-function yst_clean( str, cleanalphanumeric ) { 
+function yst_clean( str ) { 
 	if ( str == '' || str == undefined )
 		return '';
 	
 	try {
-		if ( cleanalphanumeric == true )
-			str = str.replace(/[^a-zA-Z0-9\s-\+]/, '');
 		str = str.replace(/<\/?[^>]+>/gi, ''); 
 		str = str.replace(/\[(.+?)\](.+?\[\/\\1\])?/, '');
 	} catch(e) {}
+	
 	return str;
 }
 
 function ptest(str, p) {
-	str = yst_clean( str, true );
+	str = yst_clean( str );
 	str = str.toLowerCase();
 	var r = str.match(p);
 	if (r != null)
@@ -28,9 +27,9 @@ function testFocusKw() {
 	
 	var postname = jQuery('#editable-post-name-full').text();
 	var url	= wpseo_permalink_template.replace('%postname%', postname).replace('http://','');
-
-	var p = new RegExp("(^\|[ \n\r\t.,'\"\+!?:-]+)"+focuskw+"($\|[ \n\r\t.,'\"\+!?:-]+)",'gim');
-	var p2 = new RegExp(focuskw.replace(/\s+/g,"[-_\\\//]"),'gim');
+	
+	p = new RegExp("(^|[ \s\n\r\t\.,'\(\"\+;!?:\-])"+focuskw+"($|[ \s\n\r\t.,'\)\"\+!?:;\-])",'gim');
+	p2 = new RegExp(focuskw.replace(/\s+/g,"[-_\\\//]"),'gim');
 	if (focuskw != '') {
 		var html = '<p>Your focus keyword was found in:<br/>';
 		html += 'Article Heading: ' + ptest( jQuery('#title').val(), p ) + '<br/>';
@@ -49,8 +48,11 @@ function updateTitle( force ) {
 	} else {
 		var title = wpseo_title_template.replace('%%title%%', jQuery('#title').val() );
 	}
-	if ( title == '' )
+	if ( title == '' ) {
+		jQuery('#wpseosnippet .title').html( '' );
+		jQuery('#yoast_wpseo_title-length').html( '' );
 		return;
+	}
 
 	title = jQuery('<div />').html(title).text();
 
@@ -94,10 +96,11 @@ function updateDesc( desc ) {
 		if ( desc == '' ) {
 			desc = jQuery("#content").val();
 			desc = yst_clean( desc );
+			
 			var focuskw = jQuery.trim( jQuery('#yoast_wpseo_focuskw').val() );
 			if ( focuskw != '' ) {
 				var descsearch = new RegExp( focuskw, 'gim');
-				if ( desc.search(descsearch) != -1 ) {
+				if ( desc.search(descsearch) != -1 && desc.length > wpseo_meta_desc_length ) {
 					desc = desc.substr( desc.search(descsearch), wpseo_meta_desc_length );
 				} else {
 					desc = desc.substr( 0, wpseo_meta_desc_length );
@@ -121,7 +124,10 @@ function updateDesc( desc ) {
 		len = '<span class="good">'+len+'</span>';
 
 	if ( autogen || desc.length > wpseo_meta_desc_length ) {
-		var space = desc.lastIndexOf( " ", ( wpseo_meta_desc_length - 3 ) );
+		if ( desc.length > wpseo_meta_desc_length )
+			var space = desc.lastIndexOf( " ", ( wpseo_meta_desc_length - 3 ) );
+		else
+			var space = wpseo_meta_desc_length;
 		desc = desc.substring( 0, space ).concat( ' <strong>...</strong>' );
 	}
 
@@ -158,7 +164,7 @@ function boldKeywords( str, url ) {
 			var kw 	= kw.replace(' ','-').toLowerCase();
 			kwregex = new RegExp( "([-/])("+kw+")([-/])?" );
 		} else {
-			kwregex = new RegExp( "(^\|[ \n\r\t.,'\"\+!?:-]+)("+kw+")($\|[ \n\r\t.,'\"\+!?:-]+)", 'gim' );
+			kwregex = new RegExp( "(^|[ \s\n\r\t\.,'\(\"\+;!?:\-]+)("+kw+")($|[ \s\n\r\t\.,'\)\"\+;!?:\-]+)", 'gim' );
 		}
 		str 	= str.replace( kwregex, "$1<strong>$2</strong>$3" );
 	}
@@ -172,26 +178,29 @@ function updateSnippet() {
 }
 
 jQuery(document).ready(function(){	
-	// Tabs, based on code by Pete Mall - https://github.com/PeteMall/Metabox-Tabs
-	jQuery('.wpseo-metabox-tabs li a').each(function(i) {
-		var thisTab = jQuery(this).parent().attr('class').replace(/active /, '');
+	var active_tab = window.location.hash;
+	if ( active_tab == '' || active_tab.search('wpseo') == -1 )
+		active_tab = 'general';
+	else
+		active_tab = active_tab.replace('#wpseo_','');
+				
+	jQuery('.'+active_tab).addClass('active');
 
-		if ( 'active' != jQuery(this).attr('class') )
-			jQuery('div.' + thisTab).hide();
-
-		jQuery('div.' + thisTab).addClass('wpseo-tab-content');
-
-		jQuery(this).click(function(){
-			// hide all child content
-			jQuery(this).parent().parent().parent().children('div').hide();
-
-			// remove all active tabs
-			jQuery(this).parent().parent('ul').find('li.active').removeClass('active');
-
-			// show selected content
-			jQuery(this).parent().parent().parent().find('div.'+thisTab).show();
-			jQuery(this).parent().parent().parent().find('li.'+thisTab).addClass('active');
-		});
+	
+	jQuery('a.wpseo_tablink').click( function($) {
+		jQuery('.wpseo-metabox-tabs li').removeClass('active');
+		jQuery('.wpseotab').removeClass('active');
+	
+		var id = jQuery(this).attr('href').replace('#wpseo_','');
+		jQuery('.'+id).addClass('active');
+		jQuery(this).parent().addClass('active');
+		
+		if ( jQuery(this).hasClass('scroll') ) {
+			var scrollto = jQuery(this).attr('href').replace('wpseo_','');
+			jQuery( "html, body" ).animate({
+				scrollTop: jQuery( scrollto ).offset().top
+			}, 500);
+		}
 	});
 
 	jQuery('.wpseo-heading').hide();
@@ -201,8 +210,12 @@ jQuery(document).ready(function(){
 	jQuery('#related_keywords_heading').hide();
 	
 	var cache = {}, lastXhr;
+		
 	jQuery('#yoast_wpseo_focuskw').autocomplete({
 		minLength: 3,
+		formatResult: function(row) {
+			return jQuery('<div/>').html(row).html();
+		},
 		source: function( request, response ) {
 			var term = request.term;
 			if ( term in cache ) {

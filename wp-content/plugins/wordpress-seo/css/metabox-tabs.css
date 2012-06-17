@@ -47,18 +47,24 @@ ul.wpseo-metabox-tabs li {
 	padding-left: 10px;
 }
 
-.wpseo-tab-content {
-	overflow: auto;
-	padding: 0.5em 0.9em;
-	border-style: solid;
-	border-width: 1px;
+.wpseotab {
+	display: none;
 }
 
-#wpseo_meta .postbox .inside .wpseo-tab-content {
+.wpseotab.active {
+	display: block;
+	overflow: auto;
+	padding: 0.5em 0.9em;
+	border: 1px solid #ddd;
+	background-color: #fff;
+	border-radius: 0 3px 3px 3px;
+}
+
+#wpseo_meta .postbox .inside .wpseotab {
 	font-size: 13px !important;
 }
 
-.inside .wpseo-tab-content .form-table th {
+.inside .wpseotab .form-table th {
 	font-size: 13px;
 	width: 140px !important;
 }
@@ -178,8 +184,8 @@ table.wpseoanalysis td {
 }
 
 table.wpseoanalysis td.score {
-	width: 40px;
-	height: 30px;
+	width: 20px;
+	height: 18px;
 	padding-left: 10px;
 }
 
@@ -266,4 +272,32 @@ table.wpseoanalysis td.score {
 .ui-menu .ui-menu-item a.ui-state-active {
 	color: #000;
 	margin: -1px;
+}
+
+.wpseo_score_img {
+	display: inline-block;
+	margin: 3px 0 0 0;
+	width: 16px;
+	height: 16px;
+	background-image: url(../images/score_buttons.png);
+	background-repeat: no-repeat;
+	padding: 0 0 0 0;
+}
+.wpseo_score_img.good {
+	background-position: -2px -2px;
+}
+.wpseo_score_img.ok {
+	background-position: -25px -2px;
+}
+.wpseo_score_img.poor {
+	background-position: -121px -2px;
+}
+.wpseo_score_img.bad {
+	background-position: -49px -2px;
+}
+.wpseo_score_img.na {
+	background-position: -74px -2px;
+}
+.wpseo_score_img.noindex {
+	background-position: -146px -2px;
 }

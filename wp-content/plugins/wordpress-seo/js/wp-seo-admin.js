@@ -1,11 +1,4 @@
 jQuery(document).ready(function () {
-	jQuery("#disableexplanation").change(function() {
-		if (jQuery("#disableexplanation").is(':checked')) {
-			jQuery("p.desc").css("display","none");
-		} else {
-			jQuery("p.desc").css("display","block");
-		}
-	}).change();
 	jQuery("#enablexmlsitemap").change(function() {
 		if (jQuery("#enablexmlsitemap").is(':checked')) {
 			jQuery("#sitemapinfo").css("display","block");
@@ -58,3 +51,20 @@ function wpseo_killBlockingFiles( nonce ) {
 			jQuery('#block_files').html(data);
 	});
 }
+
+jQuery(document).ready(function(){	
+	var active_tab = window.location.hash.replace('#top#','');
+	if ( active_tab == '' )
+		active_tab = 'general';
+	jQuery('#'+active_tab).addClass('active');
+	jQuery('#'+active_tab+'-tab').addClass('nav-tab-active');
+	
+	jQuery('#wpseo-tabs a').click(function() {
+		jQuery('#wpseo-tabs a').removeClass('nav-tab-active');
+		jQuery('.wpseotab').removeClass('active');
+	
+		var id = jQuery(this).attr('id').replace('-tab','');
+		jQuery('#'+id).addClass('active');
+		jQuery(this).addClass('nav-tab-active');
+	});
+});

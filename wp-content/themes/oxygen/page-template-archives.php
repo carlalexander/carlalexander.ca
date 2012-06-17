@@ -42,17 +42,17 @@ get_header(); // Loads the header.php template. ?>
 	
 							<div class="entry-content">
 								
-								<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', hybrid_get_parent_textdomain() ) ); ?>
+								<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'oxygen' ) ); ?>
 	
-								<h2><?php _e( 'Archives by category', hybrid_get_parent_textdomain() ); ?></h2>
+								<h2><?php _e( 'Archives by category', 'oxygen' ); ?></h2>
 	
 								<ul class="xoxo category-archives">
 									
-									<?php wp_list_categories( array( 'feed' => __( 'RSS', hybrid_get_parent_textdomain() ), 'show_count' => true, 'use_desc_for_title' => false, 'title_li' => false ) ); ?>
+									<?php wp_list_categories( array( 'feed' => __( 'RSS', 'oxygen' ), 'show_count' => true, 'use_desc_for_title' => false, 'title_li' => false ) ); ?>
 									
 								</ul><!-- .xoxo .category-archives -->
 	
-								<h2><?php _e( 'Archives by month', hybrid_get_parent_textdomain() ); ?></h2>
+								<h2><?php _e( 'Archives by month', 'oxygen' ); ?></h2>
 	
 								<ul class="xoxo monthly-archives">
 									
@@ -60,7 +60,7 @@ get_header(); // Loads the header.php template. ?>
 									
 								</ul><!-- .xoxo .monthly-archives -->
 	
-								<?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', hybrid_get_parent_textdomain() ), 'after' => '</p>' ) ); ?>
+								<?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', 'oxygen' ), 'after' => '</p>' ) ); ?>
 								
 							</div><!-- .entry-content -->
 	

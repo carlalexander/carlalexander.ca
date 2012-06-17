@@ -20,7 +20,7 @@ function wpseo_set_value( $meta, $val, $postid ) {
 }
 
 function get_wpseo_options_arr() {
-	$optarr = array('wpseo','wpseo_indexation', 'wpseo_permalinks', 'wpseo_titles', 'wpseo_rss', 'wpseo_internallinks', 'wpseo_xml', 'wpseo_social');
+	$optarr = array('wpseo', 'wpseo_permalinks', 'wpseo_titles', 'wpseo_rss', 'wpseo_internallinks', 'wpseo_xml', 'wpseo_social');
 	return apply_filters( 'wpseo_options', $optarr );
 }
 
@@ -40,9 +40,14 @@ function wpseo_replace_vars($string, $args, $omit = array() ) {
 	
 	// Let's see if we can bail super early.
 	if ( strpos( $string, '%%' ) === false )
-		return trim( preg_replace('/\s+/',' ', $string) );
+		return trim( preg_replace('/\s+/u',' ', $string) );
 
+	global $sep;
+	if ( !isset( $sep ) || empty( $sep ) )
+		$sep = '-';
+		
 	$simple_replacements = array(
+		'%%sep%%'					=> $sep,
 		'%%sitename%%'				=> get_bloginfo('name'),
 		'%%sitedesc%%'				=> get_bloginfo('description'),
 		'%%currenttime%%'			=> date('H:i'),
@@ -57,7 +62,7 @@ function wpseo_replace_vars($string, $args, $omit = array() ) {
 	
 	// Let's see if we can bail early.
 	if ( strpos( $string, '%%' ) === false )
-		return trim( preg_replace('/\s+/',' ', $string) );
+		return trim( preg_replace('/\s+/u',' ', $string) );
 
 	global $wp_query;
 	
@@ -88,16 +93,14 @@ function wpseo_replace_vars($string, $args, $omit = array() ) {
 	}
 
 	$pagenum = 0;
-	$max_num_pages = 0;
+	$max_num_pages = 1;
 	if ( !is_single() ) {
 		$pagenum = get_query_var('paged');
-		if ($pagenum === 0) {
-			if ($wp_query->max_num_pages > 1)
-				$pagenum = 1;
-			else
-				$pagenum = '';
-		}
-		$max_num_pages = $wp_query->max_num_pages;
+		if ($pagenum === 0) 
+			$pagenum = 1;
+
+		if ( isset( $wp_query->max_num_pages ) && $wp_query->max_num_pages != '' && $wp_query->max_num_pages != 0 )
+			$max_num_pages = $wp_query->max_num_pages;
 	} else {
 		$pagenum = get_query_var('page');
 		$max_num_pages = substr_count( $post->post_content, '<!--nextpage-->' );
@@ -139,8 +142,8 @@ function wpseo_replace_vars($string, $args, $omit = array() ) {
 		'%%name%%'					=> get_the_author_meta('display_name', !empty($r->post_author) ? $r->post_author : get_query_var('author')),
 		'%%userid%%'				=> !empty($r->post_author) ? $r->post_author : get_query_var('author'),
 		'%%searchphrase%%'			=> esc_html(get_query_var('s')),
-		'%%page%%'		 			=> ( $max_num_pages != 0 ) ? 'Page '.$pagenum.' of '.$max_num_pages : '', 
-		'%%pagetotal%%'	 			=> ( $max_num_pages > 1 ) ? $max_num_pages : '', 
+		'%%page%%'		 			=> ( $max_num_pages > 1) ? sprintf( $sep . ' ' . __('Page %d of %d','wordpress-seo'), $pagenum, $max_num_pages) : '', 
+		'%%pagetotal%%'	 			=> $max_num_pages, 
 		'%%pagenumber%%' 			=> $pagenum,
 		'%%caption%%'				=> $r->post_excerpt,
 	);
@@ -151,22 +154,42 @@ function wpseo_replace_vars($string, $args, $omit = array() ) {
 	}
 	
 	if ( strpos( $string, '%%' ) === false ) {
-		$string = preg_replace( '/\s\s+/',' ', $string );
+		$string = preg_replace( '/\s+/u',' ', $string );
 		return trim( $string );
 	}
 
-	if ( preg_match_all( '/%%cf_([^%]+)%%/', $string, $matches, PREG_SET_ORDER ) ) {
+	if ( preg_match_all( '/%%cf_([^%]+)%%/u', $string, $matches, PREG_SET_ORDER ) ) {
 		global $post;
 		foreach ($matches as $match) {
 			$string = str_replace( $match[0], get_post_meta( $post->ID, $match[1], true), $string );
 		}
 	}
+
+	if ( preg_match_all( '/%%ct_desc_([^%]+)?%%/u', $string, $matches, PREG_SET_ORDER ) ) {
+		global $post;
+		foreach ($matches as $match) {
+			$terms = get_the_terms( $post->ID, $match[1] );
+			$string = str_replace( $match[0], get_term_field( 'description', $terms[0]->term_id, $match[1] ), $string );
+		}
+	}
+
+	if ( preg_match_all( '/%%ct_([^%]+)%%(single%%)?/u', $string, $matches, PREG_SET_ORDER ) ) {
+		global $post;
+		foreach ($matches as $match) {
+			$single = false;
+			if ( isset($match[2]) && $match[2] == 'single%%' )
+				$single = true;
+			$ct_terms = wpseo_get_terms( $r->ID, $match[1], $single );
+
+			$string = str_replace( $match[0], $ct_terms, $string );
+		}
+	}
 	
-	$string = preg_replace( '/\s\s+/',' ', $string );
+	$string = preg_replace( '/\s+/u',' ', $string );
 	return trim( $string );
 }
 
-function wpseo_get_terms($id, $taxonomy) {
+function wpseo_get_terms($id, $taxonomy, $return_single = false ) {
 	// If we're on a specific tag, category or taxonomy page, return that and bail.
 	if ( is_category() || is_tag() || is_tax() ) {
 		global $wp_query;
@@ -174,10 +197,15 @@ function wpseo_get_terms($id, $taxonomy) {
 		return $term->name;
 	}
 	
+	if ( empty($id) || empty($taxonomy) )
+		return '';
+		
 	$output = '';
 	$terms = get_the_terms($id, $taxonomy);
 	if ( $terms ) {
 		foreach ($terms as $term) {
+			if ( $return_single )
+				return $term->name;
 			$output .= $term->name.', ';
 		}
 		return rtrim( trim($output), ',' );
@@ -263,12 +291,15 @@ function wpseo_remove_stopwords_from_slug( $slug ) {
     // Don't to change an existing slug
 	if ( $slug ) 
 		return $slug;
-
-	if ( isset( $_POST['post_title'] ) )
+	
+	if ( !isset( $_POST['post_title'] ) )
 		return $slug;
 		
-	// Clean the slug of weirdness
-	$clean_slug = sanitize_title( stripslashes( $_POST['post_title'] ) );
+	// Lowercase the slug and strip slashes
+	$clean_slug = strtolower( stripslashes( $_POST['post_title'] ) );
+
+	// Remove all weird HTML entities
+	$clean_slug = remove_accents( $_POST['post_title'] );
 
     // Turn it to an array and strip stopwords by comparing against an array of stopwords
     $clean_slug_array = array_diff ( split( " ", $clean_slug ), wpseo_stopwords() );
@@ -279,3 +310,97 @@ function wpseo_remove_stopwords_from_slug( $slug ) {
 	return $clean_slug;
 }
 add_filter( 'name_save_pre', 'wpseo_remove_stopwords_from_slug', 0 );
+
+function wpseo_maybe_upgrade() {
+	$options = get_option( 'wpseo' );
+	$current_version = isset($options['version']) ? $options['version'] : 0;
+
+	if ( version_compare( $current_version, WPSEO_VERSION, '==' ) )
+		return;
+
+	// <= 0.3.5: flush rewrite rules for new XML sitemaps
+	if ( $current_version == 0 ) {
+		flush_rewrite_rules();
+	}
+
+	if ( version_compare( $current_version, '0.4.2', '<' ) ) {
+		$xml_opt = array();
+		// Move XML Sitemap settings from general array to XML specific array, general settings first
+		foreach ( array('enablexmlsitemap', 'xml_include_images', 'xml_ping_google', 'xml_ping_bing', 'xml_ping_yahoo', 'xml_ping_ask', 'xmlnews_posttypes') as $opt ) {
+			if ( isset( $options[$opt] ) ) {
+				$xml_opt[$opt] = $options[$opt];
+				unset( $options[$opt] );
+			}
+		}
+		// Per post type settings
+		foreach ( get_post_types() as $post_type ) {
+			if ( in_array( $post_type, array('revision','nav_menu_item','attachment') ) ) 
+				continue;
+
+			if ( isset( $options['post_types-'.$post_type.'-not_in_sitemap'] ) ) {
+				$xml_opt['post_types-'.$post_type.'-not_in_sitemap'] = $options['post_types-'.$post_type.'-not_in_sitemap'];
+				unset( $options['post_types-'.$post_type.'-not_in_sitemap'] );
+			}
+		}
+		// Per taxonomy settings
+		foreach ( get_taxonomies() as $taxonomy ) {
+			if ( in_array( $taxonomy, array('nav_menu','link_category','post_format') ) )
+				continue;
+
+			if ( isset( $options['taxonomies-'.$taxonomy.'-not_in_sitemap'] ) ) {
+				$xml_opt['taxonomies-'.$taxonomy.'-not_in_sitemap'] = $options['taxonomies-'.$taxonomy.'-not_in_sitemap'];
+				unset( $options['taxonomies-'.$taxonomy.'-not_in_sitemap'] );
+			}
+		}
+		if ( get_option('wpseo_xml') === false )
+			update_option( 'wpseo_xml', $xml_opt );
+		unset( $xml_opt );
+
+		// Clean up other no longer used settings
+		unset( $options['wpseodir'], $options['wpseourl'] );
+	}
+
+	if ( version_compare( $current_version, '1.0.2.2', '<' ) ) {
+		$opt = (array) get_option( 'wpseo_indexation' );		
+		unset( $opt['hideindexrel'], $opt['hidestartrel'], $opt['hideprevnextpostlink'], $opt['hidewpgenerator'] );
+		update_option( 'wpseo_indexation', $opt );
+	}
+
+	if ( version_compare( $current_version, '1.0.4', '<' ) ) {
+		$opt = (array) get_option( 'wpseo_indexation' );
+		$newopt = array(
+			'opengraph' => isset( $opt['opengraph'] ) ? $opt['opengraph'] : '',
+			'fb_adminid' => isset( $opt['fb_adminid'] ) ? $opt['fb_adminid'] : '',
+			'fb_appid' => isset( $opt['fb_appid'] ) ? $opt['fb_appid'] : '',
+		);
+		update_option('wpseo_social', $newopt);
+		unset($opt['opengraph'], $opt['fb_pageid'], $opt['fb_adminid'], $opt['fb_appid']);
+		update_option('wpseo_indexation', $opt);
+	}
+	
+	if ( version_compare( $current_version, '1.2', '<' ) ) {
+		$opt = get_option( 'wpseo_indexation' );
+		$metaopt = get_option('wpseo_titles');
+
+		$metaopt['noindex-author'] 			= isset( $opt['noindexauthor'] ) 		? $opt['noindexauthor'] 		: '';
+		$metaopt['disable-author'] 			= isset( $opt['disableauthor'] ) 		? $opt['disableauthor'] 		: '';
+		$metaopt['noindex-archive'] 		= isset( $opt['noindexdate'] ) 			? $opt['noindexdate'] 			: '';
+		$metaopt['noindex-category'] 		= isset( $opt['noindexcat'] ) 			? $opt['noindexcat'] 			: '';
+		$metaopt['noindex-post_tag'] 		= isset( $opt['noindextag'] ) 			? $opt['noindextag'] 			: '';
+		$metaopt['noindex-post_format'] 	= isset( $opt['noindexpostformat'] ) 	? $opt['noindexpostformat'] 	: '';
+		$metaopt['noindex-subpages']		= isset( $opt['noindexsubpages'] ) 		? $opt['noindexsubpages'] 		: '';
+		$metaopt['hide-rsdlink']			= isset( $opt['hidersdlink'] ) 			? $opt['hidersdlink'] 			: '';
+		$metaopt['hide-feedlinks']			= isset( $opt['hidefeedlinks'] ) 		? $opt['hidefeedlinks'] 		: '';
+		$metaopt['hide-wlwmanifest']		= isset( $opt['hidewlwmanifest'] ) 		? $opt['hidewlwmanifest'] 		: '';
+		$metaopt['hide-shortlink']			= isset( $opt['hideshortlink'] ) 		? $opt['hideshortlink'] 		: '';
+		   
+		update_option('wpseo_titles', $metaopt);
+
+		delete_option('wpseo_indexation');
+	}
+	
+	wpseo_title_test();
+	
+	$options['version'] = WPSEO_VERSION;
+	update_option( 'wpseo', $options );
+}

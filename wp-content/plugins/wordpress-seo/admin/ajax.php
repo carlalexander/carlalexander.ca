@@ -54,9 +54,14 @@ function wpseo_get_suggest() {
 	$term = urlencode( $_GET['term'] );
 	$result = wp_remote_get( 'http://www.google.com/complete/search?output=toolbar&q='.$term );
 	
-	preg_match_all( '/suggestion data="([^"]+)"\/>/', $result['body'], $matches);
+	preg_match_all( '/suggestion data="([^"]+)"\/>/u', $result['body'], $matches);
 	
-	echo json_encode( $matches[1] );
+	$return_arr = array();
+
+	foreach ( $matches[1] as $match ) {
+		$return_arr[] = html_entity_decode( $match, ENT_COMPAT, "UTF-8" );
+	}
+	echo json_encode( $return_arr );
 	die(); 
 }
 add_action('wp_ajax_wpseo_get_suggest', 'wpseo_get_suggest');

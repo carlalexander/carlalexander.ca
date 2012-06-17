@@ -38,11 +38,6 @@ class WPSEO_Pointers {
 							   .__( "The templates are built using variables, see <a href='#titleshelp'>the bottom of this page</a> for all the different variables available to you to use in these.", 'wordpress-seo' )."</p>"
 							   ."<p><strong>".__( "Trouble?", 'wordpress-seo' )."</strong><br/>".__( "Be sure to check if your titles are displaying correctly once you've set this up. If you're experiencing trouble with how titles display, be sure to check the 'Force rewrite' checkbox on the left and check again, or follow the instructions on this page on how to modify your theme.", 'wordpress-seo' )."</p>",
 				'button2'  => __( 'Next', 'wordpress-seo' ),
-				'function' => 'window.location="'.admin_url('admin.php?page=wpseo_indexation').'";'
-			),
-			'wpseo_indexation' => array(
-				'content'  => '<h3>'.__( 'Indexation settings', 'wordpress-seo' ).'</h3><p>'.__( 'There are options here to do a whole lot of things, feel free to read through them and set them appropriately, or skip them entirely: WordPress SEO will do the most important things by default.', 'wordpress-seo' ).'</p>',
-				'button2'  => __( 'Next', 'wordpress-seo' ),
 				'function' => 'window.location="'.admin_url('admin.php?page=wpseo_xml').'";'
 			),
 			'wpseo_xml' => array(

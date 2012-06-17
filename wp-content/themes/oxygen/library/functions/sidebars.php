@@ -8,7 +8,7 @@
  * @package HybridCore
  * @subpackage Functions
  * @author Justin Tadlock <justin@justintadlock.com>
- * @copyright Copyright (c) 2008 - 2011, Justin Tadlock
+ * @copyright Copyright (c) 2008 - 2012, Justin Tadlock
  * @link http://themehybrid.com/hybrid-core
  * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
@@ -91,15 +91,15 @@ function hybrid_get_sidebars() {
 		),
 		'header' => array(
 			'name' =>	_x( 'Header', 'sidebar', 'hybrid-core' ),
-			'description' =>	__( 'Displayed within the site\'s header area.', 'hybrid-core' ),
+			'description' =>	__( "Displayed within the site's header area.", 'hybrid-core' ),
 		),
 		'before-content' => array(
 			'name' =>	_x( 'Before Content', 'sidebar', 'hybrid-core' ),
-			'description' =>	__( 'Loaded before the page\'s main content area.', 'hybrid-core' ),
+			'description' =>	__( "Loaded before the page's main content area.", 'hybrid-core' ),
 		),
 		'after-content' => array(
 			'name' =>	_x( 'After Content', 'sidebar', 'hybrid-core' ),
-			'description' =>	__( 'Loaded after the page\'s main content area.', 'hybrid-core' ),
+			'description' =>	__( "Loaded after the page's main content area.", 'hybrid-core' ),
 		),
 		'after-singular' => array(
 			'name' =>	_x( 'After Singular', 'sidebar', 'hybrid-core' ),

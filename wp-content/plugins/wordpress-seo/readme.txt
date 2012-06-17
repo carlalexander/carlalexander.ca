@@ -5,8 +5,8 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: seo, SEO, google, meta, meta description, search engine optimization, xml sitemap, xml sitemaps, google sitemap, sitemap, sitemaps, robots meta, rss, rss footer, yahoo, bing, news sitemaps, XML News Sitemaps, WordPress SEO, WordPress SEO by Yoast, yoast, multisite, canonical, nofollow, noindex, keywords, meta keywords, description, webmaster tools, google webmaster tools, seo pack
 Requires at least: 3.1
-Tested up to: 3.3
-Stable tag: 1.1.9
+Tested up to: 3.4
+Stable tag: 1.2.2
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the WordPress SEO plugin by Yoast.
 
@@ -133,6 +133,77 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 7. The advanced section of the WordPress SEO meta box.
 
 == Changelog ==
+
+= 1.2.2 =
+
+* Some small bug fixes.
+* Made loading the TextStatistics class conditional on the existence of said class.
+* Added a posts filter option for SEO quality in the edit posts / pages overview.
+* Added a filter `wpseo_use_page_analysis` that disables the page analysis functionality when false is returned.
+* Added a filter `wpseo_show_date_in_snippet` that disables the date in the preview snippet when false is returned.
+
+= 1.2.1 =
+
+* Bugs fixed:
+	* Trim the focus keyword before running page analysis tests.
+	* Title's should be (and now is) Titles.
+	* Fixes to Theme integrations for Woo, Genesis and Thematic.
+	* Enhancement to force rewrite title test.
+	
+= 1.2 =
+
+* Bugs fixed:
+	* ereg_replace != preg_replace ; in other words: alt and title tags for images in xml sitemap fixed.
+	* Image size for OpenGraph now defaults to medium for thumbnail image.
+	* Selecting a Facebook App as the admin of your site now actually works.
+	* Saving the SEO -> Dashboard settings no longer makes you loose the SEO -> Social settings.
+	* Tweaks to clean slug functionality.
+	* Fix for UTF-8 terms in titles and descriptions.
+	* Fixed bug where empty but saved title template settings could lead to empty homepage title on blogs with a static front page.
+	* Fixed several bugs around page numbers in titles and descriptions.
+	* Prevented an error in the opendir functionality for WP SEO modules.
+	* Allow ';' in focus keyword.
+	* Don't double encode characters in suggest functionality.
+	* Don't remove non-alphanumeric values for keyword checks.
+	* Fixed a bug in snippet preview occurring when content was shorter than max snippet length.
+	* Fixed keyword count in content for cases where keyword was surrounded by parentheses and some other characters.
+	* Loads of Regex Fu to improve keyword bolding.
+	* Activation and deactivation handlers properly specified.
+	* WP Super Cache now properly emptied on update of settings.
+	* Fixes to OpenGraph images for homepage.
+	* Fixed a notice in OpenGraph class on 404 pages.
+	* Fixed notices in OpenGraph admin when selecting Facebook app as admin.
+	* Fixed a bug where half the Linkdex analyses wouldn't work when the visual editor is disabled.
+	* Changed the mime type of the XSL file for XML sitemaps to text/xml, so Firefox will display them properly.
+	* Made sure the default OpenGraph image will always show up when there's no other image.
+	* Updated tablesorting JS used in XML Sitemaps.
+* Enhancements:
+	* Added a page level "score" for the site analysis functionality.
+	* Allow sitewide noindexing of post types and taxonomies with post- and term-level overrides.
+	* Automatically check whether force rewrite needs to be enabled.
+	* Upon activation, XML sitemaps are automatically enabled.
+	* Upon activation, title templates are pre-filled with sensible defaults.
+	* Plugin now auto-detects whether titles need to be force-rewritten (using output buffering) or not.
+	* Redesign of the admin, removal of the indexations page and renaming the Titles page into Metas & Titles page.
+	* Allow noindex-following per custom taxonomy and custom post type.
+	* No longer show non-public post types on the Titles & Metas page.
+	* On activation, W3 Total Cache or WP Super Cache cache gets cleared automatically.
+	* Added an uninstall handler, deleting the plugin through the WP backend will now delete options from the DB too.
+	* Added the option to display custom taxonomy in titles and descriptions, use `%%ct_<custom-taxname>%%` for a comma separated list or `%%ct_<custom-taxname>%%single%%` for only one taxonomy term.
+	* Added the option to display custom taxonomy descriptions in post description fields, use `%%ct_desc_<custom-taxname>%%`.
+	* Allow for 'Page x of x' to be localized too.
+	* Force the query for the current page to be used instead of the query that a bad plugin or even theme was using by calling `wp_reset_query` before the header functionality.
+	* If you're a Woothemes user and you activate WordPress SEO, the "use 3rd party plugins data" checkbox will be checked on upon activation.
+	* Non front page blog pages now have a title template: `%%title%% %%page%% - %%sitename%%` if they don't have a specific SEO title and there is no page template.
+	* Pinging search engines on post of new content now moved to cron to prevent lag.
+	* Only embed images in the XML sitemap that match the main domain, subdomains should not matter but images from other domains are now ignored.
+	* Fixed a bug where homepage wouldn't be in the XML sitemap when there are no posts, yet the homepage is set to display recent posts.
+* API Improvements:
+	* Added a filter to allow adding URLs to specific XML sitemaps, see [this thread](http://wordpress.org/support/topic/plugin-wordpress-seo-by-yoast-how-to-add-a-non-wordpress-page-to-the-sitemap). The filter is `wpseo_sitemap_<$post_type>_content`.
+	* Added a filter for the meta keywords, `wpseo_metakey`.
+	* Added a filter to allow disabling `rel="next"` and `rel="prev"` links, use `wpseo_<prev|next>_rel_link`.
+	* Added a filter `wpseo_xml_sitemap_img_src` to allow changing the hostname of images, most common use case is to force them to the CDN.
+	* See the new [WordPress SEO API docs](http://yoast.com/wordpress/seo/api-docs/).
 
 = 1.1.9 =
 

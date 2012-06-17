@@ -45,17 +45,17 @@ get_header(); // Loads the header.php template. ?>
 								
 								<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
 	
-								<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-published] &middot; by [entry-author] &middot; in [entry-terms taxonomy="category" before=""] [entry-edit-link before=" &middot; "]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+								<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-published] &middot; by [entry-author] &middot; in [entry-terms taxonomy="category" before=""] [entry-edit-link before=" &middot; "]', 'oxygen' ) . '</div>' ); ?>
 	
 								<div class="entry-content">
 									
-									<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', hybrid_get_parent_textdomain() ) ); ?>
+									<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'oxygen' ) ); ?>
 									
-									<?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', hybrid_get_parent_textdomain() ), 'after' => '</p>' ) ); ?>
+									<?php wp_link_pages( array( 'before' => '<p class="page-links">' . __( 'Pages:', 'oxygen' ), 'after' => '</p>' ) ); ?>
 									
 								</div><!-- .entry-content -->
 	
-								<?php echo apply_atomic_shortcode( 'entry_meta', '<div class="entry-meta">' . __( '[entry-terms taxonomy="post_tag" before="Tags: "]', hybrid_get_parent_textdomain() ) . '</div>' ); ?>
+								<?php echo apply_atomic_shortcode( 'entry_meta', '<div class="entry-meta">' . __( '[entry-terms taxonomy="post_tag" before="Tags: "]', 'oxygen' ) . '</div>' ); ?>
 	
 								<?php do_atomic( 'close_entry' ); // oxygen_close_entry ?>
 							

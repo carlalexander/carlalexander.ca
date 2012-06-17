@@ -1,24 +1,26 @@
 <?php
 
 function wpseo_load_plugins( $path ) {
-	$allowed_plugins = array('wpseo-local', 'wpseo-video', 'wpseo-news');
+	$allowed_plugins = array('wpseo-local', 'wpseo-news');
 	
-	$dir = @opendir( $path );
-	if ($dir) {
-		while (($entry = @readdir($dir)) !== false) {
-			$full_dir_path = $path . "/" . $entry;
-			if( in_array($entry, $allowed_plugins) && is_readable($full_dir_path) && is_dir($full_dir_path) ) {
-				$module_dir = @opendir( $full_dir_path );
-				if ($module_dir) {
-					while (($module_entry = @readdir($module_dir)) !== false) {
-						if (strrchr($module_entry, '.') === '.php') {
-							require $full_dir_path . '/' . $module_entry;
+	if ( is_dir( $path ) ) {
+		$dir = @opendir( $path );
+		if ($dir) {
+			while (($entry = @readdir($dir)) !== false) {
+				$full_dir_path = $path . "/" . $entry;
+				if( in_array($entry, $allowed_plugins) && is_readable($full_dir_path) && is_dir($full_dir_path) ) {
+					$module_dir = @opendir( $full_dir_path );
+					if ($module_dir) {
+						while (($module_entry = @readdir($module_dir)) !== false) {
+							if (strrchr($module_entry, '.') === '.php') {
+								require $full_dir_path . '/' . $module_entry;
+							}
 						}
 					}
 				}
 			}
+			@closedir($dir);
 		}
-		@closedir($dir);
 	}
 }
 
@@ -35,19 +37,97 @@ function wpseo_get_country_arr(){
 }
 
 function wpseo_flush_rules() {
-	global $wpseo_rewrite;
-	$wpseo_rewrite->flush_rules();
+	global $wp_rewrite;
+	$wp_rewrite->flush_rules();
+}
+
+function wpseo_activate() {
+	wpseo_defaults();
+	
+	wpseo_flush_rules();
+		
+	// Clear cache so the changes are obvious.
+	if ( function_exists('w3tc_pgcache_flush') ) {
+		w3tc_pgcache_flush();
+	} else if (function_exists('wp_cache_clear_cache')) {
+		wp_cache_clear_cache();
+	}
+	
+	wpseo_title_test();
+}
+
+function wpseo_reset_defaults() {
+	foreach ( get_wpseo_options_arr() as $opt ) {
+		delete_option( $opt );
+	}
+	wpseo_defaults();
+	
+	wpseo_title_test();
+}
+
+function wpseo_defaults() {
+	if ( !is_array( get_option('wpseo') ) ) {
+		$opt = array(
+			'disableadvanced_meta' => 'on',
+			'version' => WPSEO_VERSION,
+		);
+		update_option( 'wpseo', $opt );
+	}
+	
+	if ( !is_array( get_option('wpseo_titles') ) ) {
+		$opt = array (
+			'title-post' => '%%title%% %%sep%% %%sitename%%',
+			'title-page' => '%%title%% %%sep%% %%sitename%%',
+			'title-attachment' => '%%title%% %%sep%% %%sitename%%',
+			'title-category' => '%%term_title%% '.__('Archives','wordpress-seo').' %%sep%% %%page%% %%sitename%%',
+			'title-post_tag' => '%%term_title%% '.__('Archives','wordpress-seo').' %%sep%% %%page%% %%sitename%%',
+			'title-author' => '%%name%% %%sep%% '.__('Author at','wordpress-seo').' %%sitename%%',
+			'title-archive' => '%%date%% %%sep%% %%sitename%%',
+			'title-search' => sprintf( __('You searched for %s', 'wordpress-seo'), '%%searchphrase%%' ).' %%sep%% %%sitename%%',
+			'title-404' => __('Page Not Found', 'wordpress-seo').' %%sep%% %%sitename%%',
+			'noindex-archive' => 'on',
+			'noindex-post_format' => 'on',
+		);
+		update_option( 'wpseo_titles', $opt );
+	}
+	
+	if ( !is_array( get_option('wpseo_xml') ) ) {
+		$opt = array (
+			'enablexmlsitemap' => 'on',
+		);
+		update_option( 'wpseo_xml', $opt );
+	} 
+
+	if ( !is_array( get_option('wpseo_social') ) ) {
+		$opt = array (
+			'opengraph' => 'on',
+		);
+		update_option( 'wpseo_social', $opt );
+	} 
+
+	if ( !is_array( get_option('wpseo_rss') ) ) {
+		$opt = array (
+			'rssafter' => sprintf( __( 'The post %s appeared first on %s.', 'wordpress-seo' ), '%%POSTLINK%%', '%%BLOGLINK%%' ),
+		);
+		update_option( 'wpseo_rss', $opt );
+	} 
+	
+	// Force WooThemes to use WordPress SEO data.
+	if ( function_exists( 'woo_version_init' ) ) {
+		update_option( 'seo_woo_use_third_party_data', 'true' );
+	}
 }
 
 function wpseo_deactivate() {
 	wpseo_flush_rules();
-}
-register_deactivation_hook(__FILE__,'wpseo_deactivate');
 
-function wpseo_activate() {
-	wpseo_flush_rules();
+	// Clear cache so the changes are obvious.
+	if ( function_exists('w3tc_pgcache_flush') ) {
+		w3tc_pgcache_flush();
+	} else if (function_exists('wp_cache_clear_cache')) {
+		wp_cache_clear_cache();
+	}
 }
-register_activation_hook( __FILE__, 'wpseo_activate' );
 
 function wpseo_export_settings( $include_taxonomy ) {
     $content = "; ".__( "This is a settings export file for the WordPress SEO plugin by Yoast.com", 'wordpress-seo' )." - http://yoast.com/wordpress/seo/ \r\n"; 
@@ -105,7 +185,7 @@ function wpseo_admin_bar_menu() {
 	if ( !current_user_can('edit_posts') )
 		return;
 		
-	global $wp_admin_bar, $wpseo_front, $post;
+	global $wp_admin_bar, $wpseo_front, $post, $pagenow;
 
 	if ( is_object($wpseo_front) ) {
 		$url = $wpseo_front->canonical( false );
@@ -113,16 +193,22 @@ function wpseo_admin_bar_menu() {
 		$url = '';
 	}
 	
-	if ( isset($post) && is_object($post) ) {
-		$focuskw 	= wpseo_get_value('focuskw', $post->ID);
-	} else {
-		$focuskw = '';
+	$focuskw = '';
+	$score = '';
+	$seo_url = get_admin_url('admin.php?page=wpseo_dashboard');
+	
+	if ( is_singular()  && isset($post) && is_object($post) ) {
+		$focuskw  = wpseo_get_value('focuskw', $post->ID);
+		$perc_score = wpseo_get_value('linkdex', $post->ID);
+		$txtscore = wpseo_translate_score( round( $perc_score / 10 ) );
+		$score 	  = '<div alt="'.ucfirst($txtscore).'" title="'.ucfirst($txtscore).'" class="wpseo_score_img '.$txtscore.' '.$perc_score.'"></div>';
+		$seo_url  = get_edit_post_link( $post->ID );
+		if ( $txtscore != 'na' )
+			$seo_url .= '#wpseo_linkdex';
 	}
 
-	$wp_admin_bar->add_menu( array( 'id' => 'wpseo-menu', 'title' => __( 'SEO', 'wordpress-seo' ), 'href' => get_admin_url('admin.php?page=wpseo_dashboard'), ) );
-
+	$wp_admin_bar->add_menu( array( 'id' => 'wpseo-menu', 'title' => __( 'SEO', 'wordpress-seo' ).$score, 'href' => $seo_url, ) );
 	$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-menu', 'id' => 'wpseo-kwresearch', 'title' => __( 'Keyword Research', 'wordpress-seo' ), '#', ) );
-
 	$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-kwresearch', 'id' => 'wpseo-adwordsexternal', 'title' => __( 'AdWords External','wordpress-seo' ), 'href' => 'https://adwords.google.com/select/KeywordToolExternal', 'meta' => array('target' => '_blank') ) );
 	$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-kwresearch', 'id' => 'wpseo-googleinsights', 'title' => __( 'Google Insights','wordpress-seo' ), 'href' => 'http://www.google.com/insights/search/#q='.urlencode($focuskw).'&cmpt=q', 'meta' => array('target' => '_blank') ) );
 	$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-kwresearch', 'id' => 'wpseo-wordtracker', 'title' => __( 'SEO Book','wordpress-seo' ), 'href' => 'http://tools.seobook.com/keyword-tools/seobook/?keyword='.urlencode($focuskw), 'meta' => array('target' => '_blank') ) );
@@ -157,10 +243,8 @@ function wpseo_admin_bar_menu() {
 	
 	if ( $admin_menu ) {
 		$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-menu', 'id' => 'wpseo-settings', 'title' => __( 'SEO Settings', 'wordpress-seo'  ), 'href' => admin_url('admin.php?page=wpseo_titles'), ) );
-
-		$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-settings', 'id' => 'wpseo-titles', 'title' => __( 'Titles', 'wordpress-seo'  ), 'href' => admin_url('admin.php?page=wpseo_titles'), ) );
+		$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-settings', 'id' => 'wpseo-titles', 'title' => __( "Titles & Metas", 'wordpress-seo'  ), 'href' => admin_url('admin.php?page=wpseo_titles'), ) );
 		$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-settings', 'id' => 'wpseo-social', 'title' => __( 'Social', 'wordpress-seo'  ), 'href' => admin_url('admin.php?page=wpseo_social'), ) );
-		$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-settings', 'id' => 'wpseo-indexation', 'title' => __( 'Indexation', 'wordpress-seo'  ), 'href' => admin_url('admin.php?page=wpseo_indexation'), ) );
 		$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-settings', 'id' => 'wpseo-xml', 'title' => __( 'XML Sitemaps', 'wordpress-seo'  ), 'href' => admin_url('admin.php?page=wpseo_xml'), ) );
 		$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-settings', 'id' => 'wpseo-permalinks', 'title' => __( 'Permalinks', 'wordpress-seo'  ), 'href' => admin_url('admin.php?page=wpseo_permalinks'), ) );
 		$wp_admin_bar->add_menu( array( 'parent' => 'wpseo-settings', 'id' => 'wpseo-internal-links', 'title' => __( 'Internal Links', 'wordpress-seo'  ), 'href' => admin_url('admin.php?page=wpseo_internal-links'), ) );
@@ -168,6 +252,12 @@ function wpseo_admin_bar_menu() {
 	}	
 }
 add_action( 'admin_bar_menu', 'wpseo_admin_bar_menu', 95 );
+
+function wpseo_admin_bar_css() {
+	if ( is_admin_bar_showing() )
+		wp_enqueue_style( 'boxes', WPSEO_URL.'css/adminbar.css', WPSEO_VERSION );
+}
+add_action( 'wp_enqueue_scripts', 'wpseo_admin_bar_css' );
 
 function wpseo_stopwords_check( $haystack, $checkingUrl = false ) {
 	$stopWords = wpseo_stopwords();
@@ -178,10 +268,83 @@ function wpseo_stopwords_check( $haystack, $checkingUrl = false ) {
 			$stopWord = str_replace( "'", "", $stopWord );
 
 		// Check whether the stopword appears as a whole word
-		$res = preg_match( "/\b". preg_quote( $stopWord ) ."\b/i", $haystack, $match );
+		$res = preg_match( "/(^|[ \n\r\t\.,'\(\)\"\+;!?:])". preg_quote( $stopWord ) ."($|[ \n\r\t\.,'\(\)\"\+;!?:])/i", $haystack, $match );
 		if ( $res > 0 )
 			return $stopWord;
 	}
 	
 	return false;
+}
+
+function wpseo_title_test() {
+	$options = get_option('wpseo_titles');
+	
+	if ( isset( $options['forcerewritetitle'] ) ) {
+		unset( $options['forcerewritetitle'] ); 
+		update_option('wpseo_titles', $options);
+	}
+	
+	if ( isset( $options['title-home'] ) )
+		$old_home_setting = $options['title-home'];
+	
+	$options['title-home'] = '%%sitename%% - %%sitedesc%% - 12345';
+	update_option('wpseo_titles', $options);
+
+	if ( 'page' != get_option('show_on_front') ) {
+		$expected_title = wpseo_replace_vars( $options['title-home'], array() );
+	} else {
+		$page = get_post( get_option('page_on_front') );
+		$expected_title = wpseo_replace_vars( $options['title-page'], $page );
+	}
+
+	$resp = wp_remote_get( get_bloginfo('url') );
+	if ( $resp && !is_wp_error( $resp ) && 200 == $resp['response']['code'] ) {
+		$res = preg_match('/<title>([^<]+)<\/title>/im', $resp['body'], $matches);
+	
+		if ( $res && $matches[1] != $expected_title ) {
+			$options['forcerewritetitle'] = 'on';
+			update_option('wpseo_titles', $options);
+
+			$resp = wp_remote_get( get_bloginfo('url') );
+			preg_match('/<title>([^>]+)<\/title>/im', $resp['body'], $matches);
+		}
+
+		if ( !$res || $matches[1] != $expected_title ) {
+			unset( $options['forcerewritetitle'] ); 
+			update_option('wpseo_titles', $options);
+		}
+	} else {
+		// If that dies, let's make sure the titles are correct and force the output.
+		$options['forcerewritetitle'] = 'on';
+		update_option('wpseo_titles', $options);
+	}
+	
+	if ( isset($old_home_setting) ) {
+		$options['title-home'] = $old_home_setting;
+		update_option('wpseo_titles', $options);
+	}
+}
+add_filter( 'switch_theme', 'wpseo_title_test', 0 );
+
+function wpseo_translate_score( $val ) {
+	$score = 'bad';
+	switch ( $val ) {
+		case 0:
+			$score = 'na';
+			break;
+		case 4:
+		case 5:
+			$score = 'poor';
+			break;
+		case 6:
+		case 7:
+			$score = 'ok';
+			break;
+		case 8:
+		case 9:
+		case 10:
+			$score = 'good';
+			break;
+	}
+	return $score;
 }

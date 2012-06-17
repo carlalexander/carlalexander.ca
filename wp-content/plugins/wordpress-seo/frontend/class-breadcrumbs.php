@@ -217,8 +217,6 @@ class WPSEO_Breadcrumbs {
 				$output = $homelink.' '.$sep.' ';
 			}
 			
-			// echo '<pre>'.print_r($wp_query,1).'</pre>';
-			
 			if ( function_exists('is_post_type_archive') && is_post_type_archive() ) {
 				$post_type = get_post_type();
 				if ( isset($options['bctitle-ptarchive-'.$post_type]) && '' != $options['bctitle-ptarchive-'.$post_type] ) {
