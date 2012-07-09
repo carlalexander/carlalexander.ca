@@ -6,7 +6,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: seo, SEO, google, meta, meta description, search engine optimization, xml sitemap, xml sitemaps, google sitemap, sitemap, sitemaps, robots meta, rss, rss footer, yahoo, bing, news sitemaps, XML News Sitemaps, WordPress SEO, WordPress SEO by Yoast, yoast, multisite, canonical, nofollow, noindex, keywords, meta keywords, description, webmaster tools, google webmaster tools, seo pack
 Requires at least: 3.1
 Tested up to: 3.4
-Stable tag: 1.2.2
+Stable tag: 1.2.5
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the WordPress SEO plugin by Yoast.
 
@@ -133,6 +133,69 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 7. The advanced section of the WordPress SEO meta box.
 
 == Changelog ==
+
+= 1.2.5 =
+
+* Bug fixes:
+    * Make sure html entities are decoded and if needed re-encoded to XML entities for the XML sitemap.
+    * Fix infinite loop in sub-category or other sub-taxonomy archive page breadcrumbs.
+    * Fix breaking rewrite for categories when strip category is enabled.
+    * Fix non-global classes that should be global.
+* i18n:
+	* Updated French translation.
+	* Updated Bosnian language code and deleted unused Bosnian version.
+	* Updated Bulgarian and deleted unused Bulgarian `bul` version.
+	* Updated and completed it_IT and pt_BR translations.
+
+= 1.2.4 =
+
+* Bug fixes:
+	* Properly restore $wp_query after running header functionality, so we're not breaking badly built themes.
+	* Make the title test helper function only return the test title to the right WordPress user-agent.
+	* Fix for slug saving that should help interoperability with other slug-enhancing / changing functions.
+	* Fix wrong homepage titles with 12345 in them because of bug in 1.2.2.
+	* Added text domains on some strings that were missing it.
+	* Replace `split` with `explode` as `split` is deprecated in newer PHP versions.
+	* Properly deal with shortcodes with text inbetween.
+	* Remove several functions that are no longer used.
+	* `%%page%%` only outputs '`%%sep%%` Page 2 of X' when not on page 1. If you want it to show up on Page 1 you can use `%%pagetotal%%` and `%%pagenumber%%`. This both works for paginated posts & pages too.
+	* Allow for rel=author on sites with static frontpage too.
+* Enhancements:
+	* Massive updates to how parts of the plugin are loaded, leading to a reduction of memory usage in WordPress admin of 1~2 MB.
+	* Respect `DISALLOW_FILE_MODS` and `DISALLOW_FILE_EDIT` constants. When set to true, edit files menu option won't show.
+	* Added support for image galleries in the page analysis functionality, alt tags from images in galleries are now parsed too.
+	* Add an option to remove the `replytocom` variables from comment links (they're bloody stupid).
+	* Added variables `%%pt_single%%` and `%%pt_plural%%` which output the single and plural label of the current post type (useful for post type archives).
+	* Made the default settings smarter, they'll now use better titles _and_ will set titles for each public post type, post type archive and taxonomy.
+	* Updates to introductory tour.
+	* Added PHPdoc to the entire plugins codebase.
+	* Refactored all of the code not using WordPress code style.
+	* Breadcrumbs now use [RDFA](http://support.google.com/webmasters/bin/answer.py?hl=en&answer=185417) and have been completely rewritten for speed and more filter options.
+* i18n:
+	* Updated Russian translation.
+	* Better language codes for Hungarian and Bulgarian added.
+	* Updated .pot file.
+
+= 1.2.3 =
+
+* Bug fixes:
+	* Fixed possible bug on multi site.
+	* Fixed a bug in alt & title elements for XML sitemaps.
+	* Fix to force title rewrites in two places: call `wp_reset_query` for stupid themes and plugins.
+	* Fixed bug in saving some options.
+	* Fixed OpenGraph bug where default image wouldn't be used for post without images.
+	* Prevent error on division by zero when swapping around text.
+	* Prevent notice in title_test and also fix possible bugs.
+	* Properly escape the delimiter too in all `preg_quote` calls.
+	* Don't show SEO filter on upload.php.
+	* Only count alt tags in keyword density and word count calculations, leave out title attributes.
+	* Rewrote the force rewrite test to be simpler and better.
+* Enhancements:
+	* New icons for the analysis functionality.
+	* Twitter card functionality.
+	* Removed 200 lines of code from OpenGraph class because I could just inherit it from the parent class. d0h!
+	* Added a *bunch* of translations; bg, bos, bs, bul, es_ES, hu, hun, id_ID, pl_PL, pt_BR.
+	* Updated another bunch: de_DE, fr_FR, he_IL, it_IT, nl_NL, ru_RU, sv_SE.
 
 = 1.2.2 =
 

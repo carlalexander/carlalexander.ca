@@ -15,18 +15,6 @@ jQuery(document).ready(function () {
 	}).change();		
 });
 
-function wpseo_exportSettings() {
-	jQuery.post(ajaxurl, { 
-			action: 'wpseo_export_settings', 
-		}, function(data) { 
-			if (data) {
-				jQuery('#exportbutton').attr('href', data);
-				jQuery('#exportbutton').text('Download export file');
-			}
-		}
-	);
-}
-
 function setWPOption( option, newval, hide, nonce ) {
 	jQuery.post(ajaxurl, { 
 			action: 'wpseo_set_option', 

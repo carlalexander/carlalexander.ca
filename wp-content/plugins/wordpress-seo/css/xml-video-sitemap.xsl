@@ -86,7 +86,7 @@
 			<p class="expl">
 				This sitemap contains <xsl:value-of select="count(sitemap:urlset/sitemap:url)"/> URLs.
 			</p>			
-			<div id="content">
+			<div>
 				<table id="sitemap">
 				<thead>
 					<tr>
