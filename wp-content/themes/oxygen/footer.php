@@ -31,7 +31,7 @@
 
 			<?php do_atomic( 'open_footer' ); // oxygen_open_footer ?>
 			
-			<div id="footer-content">
+			<div id="footer-content" class="footer-content">
 				
 				<?php echo apply_atomic_shortcode( 'footer_content', hybrid_get_setting( 'footer_insert' ) ); ?>
 				

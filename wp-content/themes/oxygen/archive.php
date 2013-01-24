@@ -66,7 +66,7 @@ get_header(); // Loads the header.php template. ?>
 								
 							</div>
 								
-							<a class="read-more" href="<?php the_permalink(); ?>">Read Article &rarr;</a>
+							<a class="read-more" href="<?php the_permalink(); ?>"><?php _e( 'Read Article', 'oxygen' ); ?> &rarr;</a>
 	
 							<?php do_atomic( 'close_entry' ); // oxygen_close_entry ?>
 	

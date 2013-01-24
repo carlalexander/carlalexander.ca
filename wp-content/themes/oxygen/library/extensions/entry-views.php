@@ -19,14 +19,14 @@
  * @link http://core.trac.wordpress.org/ticket/14568
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License version 2, as published by the Free Software Foundation.  You may NOT assume 
- * that you can use any other version of the GPL.
+ * General Public License as published by the Free Software Foundation; either version 2 of the License, 
+ * or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @package EntryViews
- * @version 0.2.1
+ * @version 0.2.2
  * @author Justin Tadlock <justin@justintadlock.com>
  * @copyright Copyright (c) 2010 - 2012, Justin Tadlock
  * @link http://justintadlock.com
@@ -75,7 +75,7 @@ function entry_views_post_type_support() {
  * @return void
  */
 function entry_views_load() {
-	global $entry_views;
+	global $_entry_views_post_id;
 
 	/* Check if we're on a singular post view. */
 	if ( is_singular() ) {
@@ -87,7 +87,7 @@ function entry_views_load() {
 		if ( post_type_supports( $post->post_type, 'entry-views' ) ) {
 
 			/* Set the post ID for later use because we wouldn't want a custom query to change this. */
-			$entry_views->post_id = get_queried_object_id();
+			$_entry_views_post_id = get_queried_object_id();
 
 			/* Enqueue the jQuery library. */
 			wp_enqueue_script( 'jquery' );
@@ -182,13 +182,13 @@ function entry_views_update_ajax() {
  * @return void
  */
 function entry_views_load_scripts() {
-	global $entry_views;
+	global $_entry_views_post_id;
 
 	/* Create a nonce for the AJAX request. */
 	$nonce = wp_create_nonce( 'entry_views_ajax' );
 
 	/* Display the JavaScript needed. */
-	echo '<script type="text/javascript">/* <![CDATA[ */ jQuery(document).ready( function() { jQuery.post( "' . admin_url( 'admin-ajax.php' ) . '", { action : "entry_views", _ajax_nonce : "' . $nonce . '", post_id : ' . $entry_views->post_id . ' } ); } ); /* ]]> */</script>' . "\n";
+	echo '<script type="text/javascript">/* <![CDATA[ */ jQuery(document).ready( function() { jQuery.post( "' . admin_url( 'admin-ajax.php' ) . '", { action : "entry_views", _ajax_nonce : "' . $nonce . '", post_id : ' . $_entry_views_post_id . ' } ); } ); /* ]]> */</script>' . "\n";
 }
 
 ?>

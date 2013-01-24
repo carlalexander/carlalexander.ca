@@ -1,0 +1,9 @@
+== Changelog ==
+
+= 0.3.6 =
+* Added changelog.txt file.
+* Updated Hybrid Core to 1.4.3.
+* Tuned the Theme Settings page to adhere to the core WordPress admin styles.
+* Fixed a jQuery bug preventing the Media Tools button from functioning in the Theme Settings.
+* Improved Theme Settings - escaped option values and used selected() for select lists.
+* Removed oxygen_entry_title_shortcode() from functions.php (not needed anymore).

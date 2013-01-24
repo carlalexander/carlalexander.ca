@@ -36,7 +36,7 @@ get_header(); // Loads the header.php template. ?>
 	
 							<?php do_atomic( 'open_entry' ); // oxygen_open_entry ?>
 	
-							<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
+							<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title permalink="0"]' ); ?>
 	
 							<div class="entry-content">
 								

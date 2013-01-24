@@ -8,14 +8,14 @@
  * galleries within their themes.
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License version 2, as published by the Free Software Foundation.  You may NOT assume 
- * that you can use any other version of the GPL.
+ * General Public License as published by the Free Software Foundation; either version 2 of the License, 
+ * or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
  * @package CleanerGallery
- * @version 0.9.3
+ * @version 0.9.4
  * @author Justin Tadlock <justin@justintadlock.com>
  * @copyright Copyright (c) 2008 - 2012, Justin Tadlock
  * @link http://justintadlock.com/archives/2008/04/13/cleaner-wordpress-gallery-plugin
@@ -138,7 +138,7 @@ function cleaner_gallery( $output, $attr ) {
 		$output .= "</{$icontag}>";
 
 		/* Get the caption. */
-		$caption = apply_filters( 'cleaner_gallery_caption', wptexturize( esc_html( $attachment->post_excerpt ) ), $id, $attr, $cleaner_gallery_instance );
+		$caption = apply_filters( 'cleaner_gallery_caption', wptexturize( $attachment->post_excerpt ), $id, $attr, $cleaner_gallery_instance );
 
 		/* If image caption is set. */
 		if ( !empty( $caption ) )

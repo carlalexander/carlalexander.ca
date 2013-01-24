@@ -2,9 +2,9 @@
 /**
  * @package Oxygen
  * @subpackage Functions
- * @version 0.2.5
- * @author DevPress
- * @link http://devpress.com
+ * @version 0.3.6
+ * @author Galin Simeonov
+ * @link http://alienwp.com
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  */
 
@@ -61,9 +61,6 @@ function oxygen_theme_setup() {
         
 	/* Filter the pagination trail arguments. */
 	add_filter( 'loop_pagination_args', 'oxygen_pagination_args' );
-        
-	/* Remove links from entry titles (shortcodes) for singular */
-	add_filter( "{$prefix}_entry_title", 'oxygen_entry_title_shortcode' );
 	
 	/* Filter the comments arguments */
 	add_filter( "{$prefix}_list_comments_args", 'oxygen_comments_args' );	
@@ -87,7 +84,7 @@ function oxygen_theme_setup() {
 	add_filter( 'breadcrumb_trail_args', 'oxygen_breadcrumb_trail_args' );
 	
 	/* Add support for custom backgrounds */
-	add_custom_background();
+	add_theme_support( 'custom-background' );
 	
 	/* Add theme settings */
 	if ( is_admin() )
@@ -190,32 +187,6 @@ function oxygen_pagination_args( $args ) {
 	$args['next_text'] = __( 'Next &rarr;', 'oxygen' );
 
 	return $args;
-}
-
-
-/**
- * Remove links from entry titles (shortcodes) 
- *
- */
-function oxygen_entry_title_shortcode( $title ) {
-	
-	global $post;
-
-	if ( is_front_page() && !is_home() ) {   
-		$title = the_title( '<h2 class="' . esc_attr( $post->post_type ) . '-title entry-title"><a href="' . get_permalink() . '" title="' . the_title_attribute( 'echo=0' ) . '" rel="bookmark">', '</a></h2>', false );	
-	} elseif ( is_singular() ) {
-		$title = the_title( '<h1 class="' . esc_attr( $post->post_type ) . '-title entry-title">', '</h1>', false );
-	} elseif ( 'link_category' == get_query_var( 'taxonomy' ) ) {
-		$title = false;	
-	} else {
-		$title = the_title( '<h2 class="entry-title"><a href="' . get_permalink() . '" title="' . the_title_attribute( 'echo=0' ) . '" rel="bookmark">', '</a></h2>', false );
-	}
-	
-	/* If there's no post title, return a clickable '(Untitled)'. */
-	if ( empty( $title ) && !is_singular() && 'link_category' !== get_query_var( 'taxonomy' ) )
-		$title = '<h2 class="entry-title no-entry-title"><a href="' . get_permalink() . '" rel="bookmark">' . __( '(Untitled)', 'origin' ) . '</a></h2>';		
-	
-	return $title;
 }
 
 /**
@@ -420,6 +391,29 @@ function oxygen_slider_settings() {
 	$settings = array( 'timeout' => $timeout );
 	wp_localize_script( 'oxygen_footer_scripts', 'slider_settings', $settings );
 	wp_localize_script( 'oxygen_footer_scripts_light', 'slider_settings', $settings );
+}
+
+/**
+ * Oxygen site title.
+ * 
+ */
+function oxygen_site_title() {
+	
+	if ( hybrid_get_setting( 'oxygen_logo_url' ) ) {	
+	
+		$tag = ( is_front_page() ) ? 'h1' : 'div';	
+			
+		echo '<' . $tag . ' id="site-title">' . "\n";
+			echo '<a href="' . get_home_url() . '" title="' . get_bloginfo( 'name' ) . '" rel="Home">' . "\n";
+				echo '<img class="logo" src="' . esc_url( hybrid_get_setting( 'oxygen_logo_url' ) ) . '" alt="' . get_bloginfo( 'name' ) . '" />' . "\n";
+			echo '</a>' . "\n";
+		echo '</' . $tag . '>' . "\n";
+	
+	} else {
+	
+		hybrid_site_title();
+	
+	}
 }
 
 ?>

@@ -7,18 +7,18 @@
  * possibly be using.  Instead, they can simply build pagination right into their themes.
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License version 2, as published by the Free Software Foundation.  You may NOT assume 
- * that you can use any other version of the GPL.
+ * General Public License as published by the Free Software Foundation; either version 2 of the License, 
+ * or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  *
- * @package LoopPagination
- * @version 0.1.4
- * @author Justin Tadlock <justin@justintadlock.com>
+ * @package   LoopPagination
+ * @version   0.1.6
+ * @author    Justin Tadlock <justin@justintadlock.com>
  * @copyright Copyright (c) 2010 - 2012, Justin Tadlock
- * @link http://devpress.com/blog/loop-pagination-for-theme-developers
- * @license http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
+ * @link      http://themehybrid.com/docs/tutorials/loop-pagination
+ * @license   http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  */
 
 /**
@@ -46,33 +46,37 @@ function loop_pagination( $args = array() ) {
 
 	/* Set up some default arguments for the paginate_links() function. */
 	$defaults = array(
-		'base' => add_query_arg( 'paged', '%#%' ),
-		'format' => '',
-		'total' => $max_num_pages,
-		'current' => $current,
-		'prev_next' => true,
-		//'prev_text' => __( '&laquo; Previous' ), // This is the WordPress default.
-		//'next_text' => __( 'Next &raquo;' ), // This is the WordPress default.
-		'show_all' => false,
-		'end_size' => 1,
-		'mid_size' => 1,
+		'base'         => add_query_arg( 'paged', '%#%' ),
+		'format'       => '',
+		'total'        => $max_num_pages,
+		'current'      => $current,
+		'prev_next'    => true,
+		//'prev_text'  => __( '&laquo; Previous' ), // This is the WordPress default.
+		//'next_text'  => __( 'Next &raquo;' ), // This is the WordPress default.
+		'show_all'     => false,
+		'end_size'     => 1,
+		'mid_size'     => 1,
 		'add_fragment' => '',
-		'type' => 'plain',
-		'before' => '<div class="pagination loop-pagination">', // Begin loop_pagination() arguments.
-		'after' => '</div>',
-		'echo' => true,
+		'type'         => 'plain',
+
+		// Begin loop_pagination() arguments.
+		'before'       => '<div class="pagination loop-pagination">',
+		'after'        => '</div>',
+		'echo'         => true,
 	);
 
 	/* Add the $base argument to the array if the user is using permalinks. */
-	if( $wp_rewrite->using_permalinks() )
+	if ( $wp_rewrite->using_permalinks() && !is_search() )
 		$defaults['base'] = user_trailingslashit( trailingslashit( get_pagenum_link() ) . 'page/%#%' );
 
-	/* If we're on a search results page, we need to change this up a bit. */
+	/* @todo Find a way to make pretty links work for search in all cases. */
+	/**
 	if ( is_search() ) {
 		$search_permastruct = $wp_rewrite->get_search_permastruct();
 		if ( !empty( $search_permastruct ) )
 			$defaults['base'] = user_trailingslashit( trailingslashit( get_search_link() ) . 'page/%#%' );
 	}
+	/**/
 
 	/* Allow developers to overwrite the arguments with a filter. */
 	$args = apply_filters( 'loop_pagination_args', $args );

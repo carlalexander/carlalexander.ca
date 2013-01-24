@@ -1,0 +1,394 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Oxygen\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-10 15:02+0200\n"
+"PO-Revision-Date: 2012-08-10 15:10+0200\n"
+"Last-Translator: Galin Simeonov <galin@alienwp.com>\n"
+"Language-Team: hakaner <hakanerwptr@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;esc_attr__;esc_attr_e;esc_html__;esc_html_e;_n;_x;_x:1,2c\n"
+"X-Poedit-Basepath: ../\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: 404.php:37
+msgid "Not Found"
+msgstr "Bulunamadı"
+
+#: 404.php:42
+#, php-format
+msgid "You tried going to %1$s, and it doesn't exist. All is not lost! You can search for what you're looking for."
+msgstr "%1$s içeriğine gitmeye çalışıyorsunuz fakat mevcut değil. Tümü kayıp değil! Arama yaparak bulabilirsiniz."
+
+#: archive.php:51
+#: featured-content.php:26
+#: index.php:52
+msgid "[entry-published]"
+msgstr "[entry-published]"
+
+#: archive.php:53
+#: index.php:54
+msgid "by [entry-author]"
+msgstr "[entry-author] tarafından"
+
+#: archive.php:55
+#: index.php:56
+msgid "[entry-edit-link]"
+msgstr "[entry-edit-link]"
+
+#: archive.php:59
+#: index.php:60
+msgid "[entry-terms taxonomy=\"category\" before=\"\"]"
+msgstr "[entry-terms taxonomy=\"category\" before=\"\"]"
+
+#: archive.php:65
+#: attachment.php:60
+#: index.php:66
+#: page-template-archives.php:63
+msgid "Pages:"
+msgstr "Sayfalar:"
+
+#: archive.php:69
+#: index.php:70
+msgid "Read Article"
+msgstr "Yazıyı Oku"
+
+#: attachment.php:54
+#, php-format
+msgid "Download &quot;%1$s&quot;"
+msgstr "&quot;%1$s&quot; İndir"
+
+#: attachment.php:59
+#: page-template-archives.php:45
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Devamını oku <span class=\"meta-nav\">&rarr;</span>"
+
+#: comment.php:32
+msgid "Your comment is awaiting moderation."
+msgstr "Yorumunuz onay için beklemede."
+
+#: comments.php:14
+msgid "Please do not load this page directly. Thanks!"
+msgstr "Lütfen bu sayfayı doğrudan yüklemeyin. Teşekkürler!"
+
+#: comments.php:29
+msgid "No Responses"
+msgstr "Yorum Yok"
+
+#: comments.php:29
+msgid "One Response"
+msgstr "Bir Yorum"
+
+#: comments.php:29
+msgid "% Responses"
+msgstr "% Yorum"
+
+#: comments.php:50
+#, php-format
+msgid "Comments are closed, but <a href=\"%1$s\" title=\"Trackback URL for this post\">trackbacks</a> and pingbacks are open."
+msgstr "Yorumlara kapalı, fakat <a href=\"%1$s\" title=\"Trackback URL for this post\">geri izlemeler</a> ve pingback açık."
+
+#: comments.php:56
+msgid "Comments are closed."
+msgstr "Yorumlara kapalı."
+
+#: functions.php:189
+#: loop-nav.php:28
+msgid "&larr; Previous"
+msgstr "&larr; Önceki"
+
+#: functions.php:190
+#: loop-nav.php:28
+msgid "Next &rarr;"
+msgstr "Sonraki &rarr;"
+
+#: functions.php:216
+msgid "(Untitled)"
+msgstr "(Başlıkız)"
+
+#: functions.php:265
+msgid "*"
+msgstr "*"
+
+#: functions.php:270
+msgid "Name"
+msgstr "Ad"
+
+#: functions.php:271
+msgid "Email"
+msgstr "Eposta"
+
+#: functions.php:272
+msgid "Website"
+msgstr "Web site"
+
+#: functions.php:277
+msgid "Comment"
+msgstr "Yorum"
+
+#: functions.php:278
+#, php-format
+msgid "You must be <a href=\"%1$s\" title=\"Log in\">logged in</a> to post a comment."
+msgstr "Yorum yazabilmek için <a href=\"%1$s\" title=\"Log in\">giriş</a> yapmalısınız."
+
+#: functions.php:279
+#, php-format
+msgid "Logged in as <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
+msgstr "<a href=\"%1$s\" title=\"%2$s\">%2$s</a> olarak giriş yapıldı."
+
+#: functions.php:279
+msgid "Log out of this account"
+msgstr "Bu hesaptan çıkış yap"
+
+#: functions.php:279
+msgid "Log out &rarr;"
+msgstr "Çıkış yap &rarr;"
+
+#: functions.php:284
+msgid "Leave a Reply"
+msgstr "Bir Yorum Bırak"
+
+#: functions.php:285
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr "%s için Bir Yorum Bırak"
+
+#: functions.php:286
+msgid "Click here to cancel reply."
+msgstr "Yorumu iptal etmek için buraya tıklayın."
+
+#: functions.php:287
+msgid "Post Comment &rarr;"
+msgstr "Yorum Gönder &rarr;"
+
+#: functions.php:312
+msgid "Copyright &#169; [the-year] [site-link]"
+msgstr "Telif Hakkı &#169; [the-year] [site-link]"
+
+#: functions.php:312
+msgid "Powered by [wp-link] and [theme-link]"
+msgstr "[wp-link] ve [theme-link] tarafından desteklenmektedir."
+
+#: functions.php:322
+msgid "Location"
+msgstr "Konum"
+
+#: functions.php:332
+msgid "Featured"
+msgstr "Öne Çıkan"
+
+#: functions.php:333
+msgid "Primary"
+msgstr "Birincil"
+
+#: functions.php:334
+msgid "Secondary"
+msgstr "İkincil"
+
+#: functions.php:335
+msgid "Do not display"
+msgstr "Gösterme"
+
+#: functions.php:337
+msgid "Post location on the home page"
+msgstr "Anasayfada yazı konumu"
+
+#: loop-error.php:15
+msgid "Apologies, but no entries were found."
+msgstr "Özür dileriz fakat hiçbir kayıt bulamadık."
+
+#: loop-nav.php:16
+msgid "&larr; Return to entry"
+msgstr "&larr; İçeriğe geri dön"
+
+#: loop-nav.php:22
+#: loop-nav.php:23
+msgid "%link"
+msgstr "%link"
+
+#: page-template-archives.php:47
+msgid "Archives by category"
+msgstr "Kategori arşivi"
+
+#: page-template-archives.php:51
+msgid "RSS"
+msgstr "RSS"
+
+#: page-template-archives.php:55
+msgid "Archives by month"
+msgstr "Aylık arşiv"
+
+#: page-template-front.php:33
+msgid "Recent Articles"
+msgstr "Son Yazılar"
+
+#: page-template-front.php:93
+msgid "More Articles"
+msgstr "Daha Fazla Yazı"
+
+#: page-template-front.php:109
+msgid "[entry-published] / by [entry-author] / in [entry-terms taxonomy=\"category\"] [entry-edit-link before=\" / \"]"
+msgstr "[entry-published] / [entry-author] tarafından / [entry-terms taxonomy=\"category\"] [entry-edit-link before=\" / \"]"
+
+#: post.php:48
+msgid "[entry-published] &middot; by [entry-author] &middot; in [entry-terms taxonomy=\"category\" before=\"\"] [entry-edit-link before=\" &middot; \"]"
+msgstr "[entry-published] &middot; [entry-author] tarafından [entry-terms taxonomy=\"category\" before=\"\"] [entry-edit-link before=\" &middot; \"]"
+
+#: post.php:58
+msgid "[entry-terms taxonomy=\"post_tag\" before=\"Tags: \"]"
+msgstr "[entry-terms taxonomy=\"post_tag\" before=\"Tags: \"]"
+
+#: searchform.php:17
+msgid "Search this site..."
+msgstr "Sitede ara..."
+
+#: searchform.php:19
+msgid "Search"
+msgstr "Ara"
+
+#: singular.php:44
+msgid "By [entry-author] on [entry-published] [entry-edit-link before=\" | \"]"
+msgstr "[entry-author] tarafından [entry-published] [entry-edit-link before=\" | \"]"
+
+#: admin/functions-admin.php:38
+msgid "General settings"
+msgstr "Genel ayarlar"
+
+#: admin/functions-admin.php:56
+msgid "Favicon:"
+msgstr "Favicon:"
+
+#: admin/functions-admin.php:62
+msgid "Upload favicon image (recommended max size: 32x32)."
+msgstr "Favicon resmi yükle (tavsiye edilen en büyük boyut: 32x32)."
+
+#: admin/functions-admin.php:74
+msgid "Logo:"
+msgstr "Logo:"
+
+#: admin/functions-admin.php:80
+msgid "Upload logo image."
+msgstr "Logo resmi yükle."
+
+#: admin/functions-admin.php:92
+msgid "Title font family:"
+msgstr "Başlık font ailesi:"
+
+#: admin/functions-admin.php:96
+msgid "Abel"
+msgstr "Abel"
+
+#: admin/functions-admin.php:97
+msgid "Oswald"
+msgstr "Oswald"
+
+#: admin/functions-admin.php:98
+msgid "Terminal Dosis"
+msgstr "Terminal Dosis"
+
+#: admin/functions-admin.php:99
+msgid "Bitter"
+msgstr "Bitter"
+
+#: admin/functions-admin.php:100
+msgid "Georgia"
+msgstr "Georgia"
+
+#: admin/functions-admin.php:101
+msgid "Droid Serif"
+msgstr "Droid Serif"
+
+#: admin/functions-admin.php:102
+msgid "Helvetica"
+msgstr "Helvetica"
+
+#: admin/functions-admin.php:103
+msgid "Arial"
+msgstr "Arial"
+
+#: admin/functions-admin.php:104
+msgid "Droid Sans"
+msgstr "Droid Sans"
+
+#: admin/functions-admin.php:106
+msgid "Choose a font for the titles."
+msgstr "Başlıklar için bir font seç."
+
+#: admin/functions-admin.php:113
+msgid "Font size:"
+msgstr "Font boyutu:"
+
+#: admin/functions-admin.php:117
+msgid "default"
+msgstr "varsayılan"
+
+#: admin/functions-admin.php:118
+msgid "17"
+msgstr "17"
+
+#: admin/functions-admin.php:119
+msgid "16"
+msgstr "16"
+
+#: admin/functions-admin.php:120
+msgid "15"
+msgstr "15"
+
+#: admin/functions-admin.php:121
+msgid "14"
+msgstr "14"
+
+#: admin/functions-admin.php:122
+msgid "13"
+msgstr "13"
+
+#: admin/functions-admin.php:123
+msgid "12"
+msgstr "12"
+
+#: admin/functions-admin.php:125
+msgid "The base font size in pixels."
+msgstr "Piksel boyutunda temel yazı fontu."
+
+#: admin/functions-admin.php:132
+msgid "Link color:"
+msgstr "Link rengi:"
+
+#: admin/functions-admin.php:137
+msgid "Set the theme link color."
+msgstr "Tema link rengini ayarla."
+
+#: admin/functions-admin.php:144
+msgid "Slider Timeout:"
+msgstr "Slayt Zaman Aşımı:"
+
+#: admin/functions-admin.php:148
+msgid "The time interval between slides in milliseconds."
+msgstr "Slaytlar arasında milisaniye cinsinden zaman aralığı."
+
+#: admin/functions-admin.php:155
+msgid "Fancybox:"
+msgstr "Fancybox:"
+
+#: admin/functions-admin.php:159
+msgid "Check to enable the built-in <a href=\"http://fancybox.net/\" target=\"_blank\">Fancybox</a>."
+msgstr "Dahili <a href=\"http://fancybox.net/\" target=\"_blank\">Fancybox</a> etkinleştirmek için seçin."
+
+#: admin/functions-admin.php:166
+msgid "Custom CSS:"
+msgstr "Kişisel CSS:"
+
+#: admin/functions-admin.php:170
+msgid "Add your custom CSS here. It would overwrite any default or custom theme settings."
+msgstr "Kiisel CSS buraya girin. Herhangi bir varsayılan veya özel tema ayarlarının üzerine yazılacaktır."
+
+#: admin/functions-admin.php:206
+msgid "Use this Image"
+msgstr ""
+

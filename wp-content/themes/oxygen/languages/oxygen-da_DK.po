@@ -1,0 +1,385 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Oxygen\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-04-09 22:11+0200\n"
+"PO-Revision-Date: 2012-07-27 14:58+0100\n"
+"Last-Translator: Sune Jakobsen\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;esc_attr__;esc_attr_e;esc_html__;esc_html_e;_n;_x\n"
+"X-Poedit-Basepath: .\n"
+"X-Poedit-SearchPath-0: c:\\wamp\\www\\cell\\wp-content\\themes\\oxygen\n"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/404.php:37
+msgid "Not Found"
+msgstr "Blev ikke fundet"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/404.php:42
+#, php-format
+msgid "You tried going to %1$s, and it doesn't exist. All is not lost! You can search for what you're looking for."
+msgstr "Du prøvede at gå til %1$s, og det findes ikke. Det hele er dog ikke tabt, du kan søge efter det du ledte efter. You tried going to %1$s, and it doesn't exist. All is not lost! You can search for what you're looking for."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/archive.php:51
+#: c:\wamp\www\cell\wp-content\themes\oxygen/featured-content.php:26
+#: c:\wamp\www\cell\wp-content\themes\oxygen/index.php:52
+msgid "[entry-published]"
+msgstr "[entry-published]"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/archive.php:53
+#: c:\wamp\www\cell\wp-content\themes\oxygen/index.php:54
+msgid "by [entry-author]"
+msgstr "af [entry-author]"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/archive.php:55
+#: c:\wamp\www\cell\wp-content\themes\oxygen/index.php:56
+msgid "[entry-edit-link]"
+msgstr "[entry-edit-link]"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/archive.php:59
+#: c:\wamp\www\cell\wp-content\themes\oxygen/index.php:60
+msgid "[entry-terms taxonomy=\"category\" before=\"\"]"
+msgstr "[entry-terms taxonomy=\"category\" before=\"\"]"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/archive.php:65
+#: c:\wamp\www\cell\wp-content\themes\oxygen/attachment.php:60
+#: c:\wamp\www\cell\wp-content\themes\oxygen/index.php:66
+#: c:\wamp\www\cell\wp-content\themes\oxygen/page-template-archives.php:63
+msgid "Pages:"
+msgstr "Sider:"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/attachment.php:54
+#, php-format
+msgid "Download &quot;%1$s&quot;"
+msgstr "Download &quot;%1$s&quot;"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/attachment.php:59
+#: c:\wamp\www\cell\wp-content\themes\oxygen/page-template-archives.php:45
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Læs mere <span class=\"meta-nav\">&rarr;</span>"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/comment.php:32
+msgid "Your comment is awaiting moderation."
+msgstr "Din kommentar afventer godkendelse"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/comments.php:14
+msgid "Please do not load this page directly. Thanks!"
+msgstr "Prøv ikke at vide denne side direkte. Tak!"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/comments.php:29
+msgid "No Responses"
+msgstr "Ingen kommentarer"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/comments.php:29
+msgid "One Response"
+msgstr "1 kommentar"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/comments.php:29
+msgid "% Responses"
+msgstr "% kommentarer"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/comments.php:50
+#, php-format
+msgid "Comments are closed, but <a href=\"%1$s\" title=\"Trackback URL for this post\">trackbacks</a> and pingbacks are open."
+msgstr "Kommentarer er lukket, men  <a href=\"%1$s\" title=\"Trackback URL til dette indlæg\">trackbacks</a> and pingbacks er åbne."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/comments.php:56
+msgid "Comments are closed."
+msgstr "Der er lukket for kommentarer"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:189
+#: c:\wamp\www\cell\wp-content\themes\oxygen/loop-nav.php:28
+msgid "&larr; Previous"
+msgstr "&larr; Forrige"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:190
+#: c:\wamp\www\cell\wp-content\themes\oxygen/loop-nav.php:28
+msgid "Next &rarr;"
+msgstr "Næste &rarr;"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:216
+msgid "(Untitled)"
+msgstr "(ikke navngivet)"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:268
+msgid "*"
+msgstr "*"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:273
+msgid "Name"
+msgstr "Navn"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:274
+msgid "Email"
+msgstr "Email"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:275
+msgid "Website"
+msgstr "Hjemmeside"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:280
+msgid "Comment"
+msgstr "Kommentar"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:281
+#, php-format
+msgid "You must be <a href=\"%1$s\" title=\"Log in\">logged in</a> to post a comment."
+msgstr "Du skal være <a href=\"%1$s\" title=\"Log ind\">logget ind</a> for at tilføje en kommentar."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:282
+#, php-format
+msgid "Logged in as <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
+msgstr "Logget ind som <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:282
+msgid "Log out of this account"
+msgstr "Log ud af denne konto"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:282
+msgid "Log out &rarr;"
+msgstr "Log ud &rarr;"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:287
+msgid "Leave a Reply"
+msgstr "Tilføj en kommentar"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:288
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr "Tilføj en kommentar til %s"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:289
+msgid "Click here to cancel reply."
+msgstr "Klik for at annullere din kommentar"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:290
+msgid "Post Comment &rarr;"
+msgstr "Tilføj kommentar &rarr;"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:315
+msgid "Copyright &#169; [the-year] [site-link]"
+msgstr "Copyright &#169; [the-year] [site-link]"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:315
+msgid "Powered by [wp-link] and [theme-link]"
+msgstr "Powered by [wp-link] and [theme-link]"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:325
+msgid "Location"
+msgstr "Lokation"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:335
+msgid "Featured"
+msgstr "Fremhævet"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:336
+msgid "Primary"
+msgstr "Primær"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:337
+msgid "Secondary"
+msgstr "Sekundær"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:338
+msgid "Do not display"
+msgstr "Skal ikke vises"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/functions.php:340
+msgid "Post location on the home page"
+msgstr "Udgiv lokation på forsiden"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/loop-error.php:15
+msgid "Apologies, but no entries were found."
+msgstr "Vores undskyldning, men der blev ikke fundet nogle indlæg."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/loop-nav.php:16
+msgid "&larr; Return to entry"
+msgstr "&larr; Retur til indlæg"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/loop-nav.php:22
+#: c:\wamp\www\cell\wp-content\themes\oxygen/loop-nav.php:23
+msgid "%link"
+msgstr "%link"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/page-template-archives.php:47
+msgid "Archives by category"
+msgstr "Arkiv sorteret efter kategori"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/page-template-archives.php:51
+msgid "RSS"
+msgstr "RSS"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/page-template-archives.php:55
+msgid "Archives by month"
+msgstr "Arkiv sorteret efter måned"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/page-template-front.php:33
+msgid "Recent Articles"
+msgstr "Seneste indlæg"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/page-template-front.php:77
+msgid "Read Article &rarr;"
+msgstr "Læs indlæg &rarr;"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/page-template-front.php:93
+msgid "More Articles"
+msgstr "Flere indlæg"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/page-template-front.php:109
+msgid "[entry-published] / by [entry-author] / in [entry-terms taxonomy=\"category\"] [entry-edit-link before=\" / \"]"
+msgstr "[entry-published] / af [entry-author] / i [entry-terms taxonomy=\"category\"] [entry-edit-link before=\" / \"]"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/post.php:48
+msgid "[entry-published] &middot; by [entry-author] &middot; in [entry-terms taxonomy=\"category\" before=\"\"] [entry-edit-link before=\" &middot; \"]"
+msgstr "[entry-published] &middot; af [entry-author] &middot; i [entry-terms taxonomy=\"category\" before=\"\"] [entry-edit-link before=\" &middot; \"]"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/post.php:58
+msgid "[entry-terms taxonomy=\"post_tag\" before=\"Tags: \"]"
+msgstr "[entry-terms taxonomy=\"post_tag\" before=\"Tags: \"]"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/searchform.php:17
+msgid "Search this site..."
+msgstr "Søg på denne side..."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/searchform.php:19
+msgid "Search"
+msgstr "Søg"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/singular.php:44
+msgid "By [entry-author] on [entry-published] [entry-edit-link before=\" | \"]"
+msgstr "Af [entry-author] d. [entry-published] [entry-edit-link before=\" | \"]"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:38
+msgid "General settings"
+msgstr "Generelle indstillinger"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:56
+msgid "Favicon:"
+msgstr "Favicon:"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:62
+msgid "Upload favicon image (recommended max size: 32x32)."
+msgstr "Upload favicon billede (anbefalet max størrelse: 32x32)."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:74
+msgid "Logo:"
+msgstr "Logo:"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:80
+msgid "Upload logo image."
+msgstr "Upload logo billede."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:92
+msgid "Title font family:"
+msgstr "Titel skrifttype"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:96
+msgid "Abel"
+msgstr "Abel"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:97
+msgid "Oswald"
+msgstr "Oswald"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:98
+msgid "Terminal Dosis"
+msgstr "Terminal Dosis"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:99
+msgid "Bitter"
+msgstr "Bitter"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:100
+msgid "Georgia"
+msgstr "Georgia"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:101
+msgid "Droid Serif"
+msgstr "Droid Serif"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:102
+msgid "Helvetica"
+msgstr "Helvetica"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:103
+msgid "Arial"
+msgstr "Arial"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:104
+msgid "Droid Sans"
+msgstr "Droid Sans"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:106
+msgid "Choose a font for the titles."
+msgstr "Vælg en font til titlerne."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:113
+msgid "Font size:"
+msgstr "Font størrelse:"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:117
+msgid "default"
+msgstr "Standard"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:118
+msgid "17"
+msgstr "17"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:119
+msgid "16"
+msgstr "16"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:120
+msgid "15"
+msgstr "15"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:121
+msgid "14"
+msgstr "14"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:122
+msgid "13"
+msgstr "13"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:123
+msgid "12"
+msgstr "12"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:125
+msgid "The base font size in pixels."
+msgstr "Den ordinære fontstørrelse i pixels."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:132
+msgid "Link color:"
+msgstr "Link farve:"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:137
+msgid "Set the theme link color."
+msgstr "Indstil temaets link farve."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:144
+msgid "Slider Timeout:"
+msgstr "Timeout for slideren:"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:148
+msgid "The time interval between slides in milliseconds."
+msgstr "Tidsintervallet mellem slides i millisekunder."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:155
+msgid "Fancybox:"
+msgstr "Fancybox:"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:159
+msgid "Check to enable the built-in <a href=\"http://fancybox.net/\" target=\"_blank\">Fancybox</a>."
+msgstr "Marker for bruge at den indbyggede <a href=\"http://fancybox.net/\" target=\"_blank\">Fancybox</a>."
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:166
+msgid "Custom CSS:"
+msgstr "Din egen CSS:"
+
+#: c:\wamp\www\cell\wp-content\themes\oxygen/admin/functions-admin.php:170
+msgid "Add your custom CSS here. It would overwrite any default or custom theme settings."
+msgstr "Tilføj din egen CSS her. Det vil overskrive dine egne og temaets indstillinger."
+

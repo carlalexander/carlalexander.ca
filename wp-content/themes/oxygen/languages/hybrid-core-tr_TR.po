@@ -1,0 +1,902 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: hybrid-core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-03 17:05+0200\n"
+"PO-Revision-Date: 2012-07-30 23:04+0200\n"
+"Last-Translator: hakaner <kazancexpert@gmail.com>\n"
+"Language-Team: hakaner <hakanerwptr@gmail.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;esc_attr__;esc_attr_e;esc_html__;esc_html_e;_n;_x\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-Language: Turkish\n"
+"X-Poedit-Country: TURKEY\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-SearchPath-0: c:\\wamp\\www\\cell\\wp-content\\themes\\ascetica\\library\n"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-seo.php:37
+msgid "SEO"
+msgstr "SEO"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-seo.php:70
+msgid "Document Title:"
+msgstr "Belge Başlığı:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-seo.php:76
+msgid "Meta Description:"
+msgstr "Meta Açıklama:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-seo.php:82
+msgid "Meta Keywords:"
+msgstr "Meta Anahtar kelimeler:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-template.php:36
+msgid "Template"
+msgstr "Şablon"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-template.php:87
+msgid "No templates exist for this post type."
+msgstr "Bu yazı tipi için şablon yok."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:31
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:36
+#, php-format
+msgid "About %1$s"
+msgstr "%1$s Hakkında"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:61
+msgid "Theme:"
+msgstr "Tema:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:69
+msgid "Version:"
+msgstr "Sürüm:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:77
+msgid "Author:"
+msgstr "Yazar:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:85
+msgid "Description:"
+msgstr "Açıklama:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-footer.php:29
+msgid "Footer settings"
+msgstr "Footer ayarları"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-footer.php:52
+msgid "You can add custom <acronym title=\"Hypertext Markup Language\">HTML</acronym> and/or shortcodes, which will be automatically inserted into your theme."
+msgstr "Temanıza otomatik eklenecek kişisel <acronym title=\"Hypertext Markup Language\">HTML</acronym> ve/veya kısakod ekleyebilirsiniz."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:47
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:168
+#, php-format
+msgid "%1$s Theme Settings"
+msgstr "%1$s Tema Ayarları"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:48
+msgid "Theme Settings"
+msgstr "Tema Ayarları"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:185
+msgid "Update Settings"
+msgstr "Ayarları Güncelle"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:236
+msgid "Documentation"
+msgstr "Belgeler"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:240
+msgid "Support"
+msgstr "Destek"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:32
+msgid "An advanced widget that gives you total control over the output of your archives."
+msgstr "Bu gelişmiş widget size arşivlerinizin görünümü üzerinde tam kontrol sağlar."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:141
+msgid "Archives"
+msgstr "Arşivler"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:79
+msgid "Select Year"
+msgstr "Yıl Seç"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:82
+msgid "Select Month"
+msgstr "Ay Seç"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:85
+msgid "Select Week"
+msgstr "Hafta Seç"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:88
+msgid "Select Day"
+msgstr "Gün Seç"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:91
+msgid "Select Post"
+msgstr "Yazı Seç"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Alphabetical"
+msgstr "Alfabetik"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Daily"
+msgstr "Günlük"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Monthly"
+msgstr "Aylık"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Post By Post"
+msgstr "Yazıya Göre"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Weekly"
+msgstr "Haftalık"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Yearly"
+msgstr "Yıllık"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:157
+msgid "Custom"
+msgstr "Kişisel"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:157
+msgid "HTML"
+msgstr "HTML"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:157
+msgid "Option"
+msgstr "Seçenek"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:162
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:143
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:180
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-calendar.php:108
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:168
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-nav-menu.php:133
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:162
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:143
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:180
+msgid "Title:"
+msgstr "Başlık:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:198
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:191
+msgid "Show post count?"
+msgstr "Mesaj sayısı göster?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:32
+msgid "An advanced widget that gives you total control over the output of your author lists."
+msgstr "Bu gelişmiş widget size yazar listelerinizin görünümü üzerinde tam kontrol sağlar."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:119
+msgid "Authors"
+msgstr "Yazarlar"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:136
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:171
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:173
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:160
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:153
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:172
+msgid "Ascending"
+msgstr "Artan "
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:136
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:171
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:173
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:160
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:153
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:172
+msgid "Descending"
+msgstr "Azalan"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Display Name"
+msgstr "Görüntü Adı"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Email"
+msgstr "Eposta"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:172
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:161
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "ID"
+msgstr "ID"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Nice Name"
+msgstr "Takma Ad"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Post Count"
+msgstr "Yazı Sayısı"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Registered"
+msgstr "Kayıtlı"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "URL"
+msgstr "URL"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Login"
+msgstr "Giriş"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:169
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:159
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:171
+msgid "List"
+msgstr "Liste"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:169
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:159
+msgid "None"
+msgstr "Hiçbiri"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:187
+msgid "<acronym title=\"Hypertext Markup Language\">HTML</acronym>?"
+msgstr "<acronym title=\"Hypertext Markup Language\">HTML</acronym>?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:195
+msgid "Exclude admin?"
+msgstr "Yöneticiyi hariç tut?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:199
+msgid "Show full name?"
+msgstr "Tam adı göster?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:203
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:279
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:299
+msgid "Hide empty?"
+msgstr "Boşu gizle?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:32
+msgid "An advanced widget that gives you total control over the output of your bookmarks (links)."
+msgstr "Bu gelişmiş widget size yer imlerinizin (bağlantılar) görümü üzerinde tam kontrol sağlar."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:78
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:141
+msgid "Bookmarks"
+msgstr "Yer imleri"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:172
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:161
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:173
+msgid "Count"
+msgstr "Sayı"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:172
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:161
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:173
+msgid "Name"
+msgstr "İsim"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:172
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:161
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "Slug"
+msgstr "Harf dizisi"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Description"
+msgstr "Açıklama"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Length"
+msgstr "Uzunluk"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Notes"
+msgstr "Notlar"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Owner"
+msgstr "Sahiplik"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:172
+msgid "Random"
+msgstr "Rastgele"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Rating"
+msgstr "Oylama"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Rel"
+msgstr "İlişki"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:162
+msgid "RSS"
+msgstr "RSS"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Target"
+msgstr "Hedef"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Updated"
+msgstr "Güncellenme"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:282
+msgid "Categorize?"
+msgstr "Kategorile?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:286
+msgid "Show description?"
+msgstr "Açıklama göster?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:290
+msgid "Hide invisible?"
+msgstr "Görünmeyeni gizle?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:294
+msgid "Show rating?"
+msgstr "Oylamayı göster?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:298
+msgid "Show updated?"
+msgstr "Güncellemeyi göster?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:302
+msgid "Show images?"
+msgstr "Resimleri göster?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:306
+msgid "Show name?"
+msgstr "Adı göster?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:310
+msgid "Show private?"
+msgstr "Gizliliği göster?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-calendar.php:32
+msgid "An advanced widget that gives you total control over the output of your calendar."
+msgstr "Bu gelişmiş widget size takviminizin görünümü üzerinde tam kontrol sağlar."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-calendar.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-calendar.php:99
+msgid "Calendar"
+msgstr "Takvim"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-calendar.php:113
+msgid "One-letter abbreviation?"
+msgstr "Tek-kelime kısaltma?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:32
+msgid "An advanced widget that gives you total control over the output of your category links."
+msgstr "Bu gelişmiş widget size kategori bağlantılarınızın görünümü üzerinde tam kontrol sağlar."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:131
+msgid "Categories"
+msgstr "Kategoriler"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:161
+msgid "Term Group"
+msgstr "Kavram Grubu"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:162
+msgid "Atom"
+msgstr "Atom"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:162
+msgid "RDF"
+msgstr "RDF"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:162
+msgid "RSS 2.0"
+msgstr "RSS 2.0"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:267
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:265
+msgid "Hierarchical?"
+msgstr "Hiyerarşik?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:271
+msgid "Use description?"
+msgstr "Açıklama kullan?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:275
+msgid "Show count?"
+msgstr "Sayı göster?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-nav-menu.php:32
+msgid "An advanced widget that gives you total control over the output of your menus."
+msgstr "Bu gelişmiş widget size menülerinizin görünümü üzerinde tam kontrol sağlar."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-nav-menu.php:44
+msgid "Navigation Menu"
+msgstr "Navigasyon Menü"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-nav-menu.php:109
+msgid "Navigation"
+msgstr "Navigasyon"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:32
+msgid "An advanced widget that gives you total control over the output of your page links."
+msgstr "Bu gelişmiş widget size sayfa bağlantılarınızın görünümü üzerinde tam kontrol sağlar."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:125
+msgid "Pages"
+msgstr "Sayfalar"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "Author"
+msgstr "Yazar"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "Date"
+msgstr "Tarih"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "Menu Order"
+msgstr "Menü Sıralaması"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:155
+msgid "Modified"
+msgstr "Değiştirme"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "Title"
+msgstr "Başlık"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:155
+msgid "Created"
+msgstr "Oluşturma"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:33
+msgid "An advanced widget that gives you total control over the output of your search form."
+msgstr "Bu gelişmiş widget size arama formunuzun görünümü üzerinde tam kontrol sağlar."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:45
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:131
+msgid "Search"
+msgstr "Ara"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:147
+msgid "Search Label:"
+msgstr "Arama Etiketi:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:151
+msgid "Search Text:"
+msgstr "Arama Metni:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:158
+msgid "Search Submit:"
+msgstr "Arama Kabul:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:163
+msgid "Use theme's <code>searchform.php</code>?"
+msgstr "Tema <code>searchform.php</code> kullan?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:32
+msgid "An advanced widget that gives you total control over the output of your tags."
+msgstr "Bu gelişmiş widget size etiketlerinizin görünümü üzerinde tam kontrol sağlar."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:141
+msgid "Tags"
+msgstr "Etiketler"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:170
+msgid "View"
+msgstr "Görünüm"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:170
+msgid "Edit"
+msgstr "Düzenle"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:171
+msgid "Flat"
+msgstr "Düz"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:295
+msgid "Pad counts?"
+msgstr "Tampon sayısı?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:42
+msgid "Browse:"
+msgstr "Gözat:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:45
+msgid "Home"
+msgstr "Anasayfa"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:296
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:419
+msgid "g:i a"
+msgstr "g:i a"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:299
+#, php-format
+msgid "Minute %1$s"
+msgstr "%1$s Dakika"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:299
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:422
+msgid "i"
+msgstr "i"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:302
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:425
+msgid "g a"
+msgstr "g a"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:313
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:319
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:324
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:329
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:516
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:431
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:437
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/core-seo.php:90
+msgid "Y"
+msgstr "Y"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:314
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:325
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:520
+msgid "F"
+msgstr "F"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:315
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:524
+msgid "d"
+msgstr "d"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:320
+#, php-format
+msgid "Week %1$s"
+msgstr "%1$s Hafta"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:320
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:431
+msgid "W"
+msgstr "W"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:336
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:448
+#, php-format
+msgid "Search results for &quot;%1$s&quot;"
+msgstr "&quot;%1$s&quot; için arama sonuçları"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:340
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:452
+msgid "404 Not Found"
+msgstr "404 Bulunamadı"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:409
+msgid "Split"
+msgstr "Böl"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:413
+msgid "Merge"
+msgstr "Birleştir"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:520
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/core-seo.php:86
+msgid "F Y"
+msgstr "F Y"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:524
+msgid "F j, Y"
+msgstr "F j, Y"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/custom-field-series.php:86
+msgid "Articles in this series"
+msgstr "Bu serideki yazılar"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/custom-field-series.php:212
+msgid "Series"
+msgstr "Seriler"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/post-stylesheets.php:255
+msgid "Stylesheet"
+msgstr "Sayfa stili"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:295
+msgid "Default"
+msgstr "Varsayılan"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:296
+msgid "One Column"
+msgstr "Tek Kolon"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:297
+msgid "Two Columns, Left"
+msgstr "Çift Kolon, Sol"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:298
+msgid "Two Columns, Right"
+msgstr "Çift Kolon, Sağ"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:299
+msgid "Three Columns, Left"
+msgstr "Üç Kolon, Sol"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:300
+msgid "Three Columns, Right"
+msgstr "Üç Kolon, Sağ"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:301
+msgid "Three Columns, Center"
+msgstr "Üç Kolon, Merkez"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:377
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:485
+msgid "Layout"
+msgstr "Düzen"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:404
+msgid "Layout is a theme-specific structure for the single view of the post."
+msgstr "Düzen, yazının sade görünümü için temaya özgü bir yapıdır."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:182
+msgid "*"
+msgstr "*"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:189
+msgid "Website"
+msgstr "Web site"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:195
+msgid "Comment"
+msgstr "Yorum"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:196
+#, php-format
+msgid "You must be <a href=\"%1$s\" title=\"Log in\">logged in</a> to post a comment."
+msgstr "Yorum yazabilmek için <a href=\"%1$s\" title=\"Log in\">giriş</a> yapmalısınız."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:197
+#, php-format
+msgid "Logged in as <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
+msgstr "<a href=\"%1$s\" title=\"%2$s\">%2$s</a> olarak giriş yapıldı."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:197
+msgid "Log out of this account"
+msgstr "Bu hesaptan çıkış yap"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:197
+msgid "Log out &raquo;"
+msgstr "Çıkış yap &raquo;"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:202
+msgid "Leave a Reply"
+msgstr "Bir Yorum Bırak"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:203
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr "%s için Bir Yorum Bırak"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:204
+msgid "Click here to cancel reply."
+msgstr "Yorumu iptal etmek için buraya tıklayın."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:205
+msgid "Post Comment"
+msgstr "Yorum Gönder"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:419
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:425
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:428
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:434
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:437
+#, php-format
+msgid "Archive for %1$s"
+msgstr "%1$s için Arşiv"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:422
+#, php-format
+msgid "Archive for minute %1$s"
+msgstr "%1$s dakika için Arşiv"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:428
+msgid "F jS, Y"
+msgstr "F jS, Y"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:431
+#, php-format
+msgid "Archive for week %1$s of %2$s"
+msgstr "%2$s içinden %1$s hafta için Arşiv"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:456
+#, php-format
+msgid "%1$s Page %2$s"
+msgstr "%2$s Sayfa %1$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/core-seo.php:93
+#, php-format
+msgid "Copyright (c) %1$s"
+msgstr "Telif Hakkı (c) %1$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/core-seo.php:112
+msgid "l, F jS, Y, g:i a"
+msgstr "l, F jS, Y, g:i a"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/deprecated.php:572
+#, php-format
+msgid "<code>%1$s</code> &mdash; This function has been removed or replaced by another function."
+msgstr "<code>%1$s</code> &mdash; Bu işlev başka bir işlev tarafından kaldırılmış veya değiştirilmiştir."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/menus.php:38
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:81
+msgid "Primary"
+msgstr "Birincil"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/menus.php:42
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:85
+msgid "Secondary"
+msgstr "İkincil"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/menus.php:46
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:89
+msgid "Subsidiary"
+msgstr "Alt ek"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/settings.php:76
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/settings.php:80
+msgid "Copyright &#169; [the-year] [site-link]."
+msgstr "Telif Hakkı &#169; [the-year] [site-link]."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/settings.php:76
+msgid "Powered by [wp-link], [theme-link], and [child-link]."
+msgstr "[wp-link], [theme-link] ve [child-link] tarafından desteklenmektedir."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/settings.php:80
+msgid "Powered by [wp-link] and [theme-link]."
+msgstr "[wp-link] ve [theme-link] tarafından desteklenmektedir."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:93
+msgid "State-of-the-art semantic personal publishing platform"
+msgstr "Son teknoloji semantik kişisel yayın platformu"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:93
+msgid "WordPress"
+msgstr "WordPress"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:106
+#, php-format
+msgid "%s WordPress Theme"
+msgstr "%s WordPress Teması"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:134
+msgid "Log out"
+msgstr "Çıkış yap"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:136
+msgid "Log in"
+msgstr "Giriş yap"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:151
+#, php-format
+msgid "This page loaded in %1$s seconds with %2$s database queries."
+msgstr "Bu sayfa %1$s saniyede %2$s veritabanı sorgusu ile yüklendi."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:204
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:443
+#, php-format
+msgid "Edit %1$s"
+msgstr "%1$s Düzenle"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:234
+msgid "Leave a response"
+msgstr "Bir yanıt bırak"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:234
+#, php-format
+msgid "%1$s Response"
+msgstr "%1$s Yanıt"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:234
+#, php-format
+msgid "%1$s Responses"
+msgstr "%1$s Yanıt"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:241
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:243
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:245
+#, php-format
+msgid "Comment on %1$s"
+msgstr "%1$s Yorumları"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:305
+msgid "(Untitled)"
+msgstr "(Başlıksız)"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:321
+msgid "Shortlink"
+msgstr "Kısa bağlantı"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:345
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:422
+msgid "Permalink"
+msgstr "Kalıcı Bağlantı"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:373
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%2$s üzerinde %1$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:422
+#, php-format
+msgid "Permalink to comment %1$s"
+msgstr "%1$s yorumu için kalıcı bağlantı"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:462
+msgid "Reply"
+msgstr "Cevapla"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:463
+msgid "Log in to reply."
+msgstr "Cevaplamak için giriş yap."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:82
+msgid "The main (primary) widget area, most often used as a sidebar."
+msgstr "Ana (birincil) widget alanı, genelde bir kenar çubuğu olarak kullanılır."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:86
+msgid "The second most important widget area, most often used as a secondary sidebar."
+msgstr "İkinci önemli widget alanı, genelde ikinci bir kenar çubuğu olarak kullanılır."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:90
+msgid "A widget area loaded in the footer of the site."
+msgstr "Sitenin footer alanında yüklenen widget alanı."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:93
+msgid "Header"
+msgstr "Header"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:94
+msgid "Displayed within the site's header area."
+msgstr "Sitenin başlık alanı içinde gösterilir."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:97
+msgid "Before Content"
+msgstr "İçerikten Önce"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:98
+msgid "Loaded before the page's main content area."
+msgstr "Sayfanın ana içerik alanından önce yüklenir."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:101
+msgid "After Content"
+msgstr "İçerikten Sonra"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:102
+msgid "Loaded after the page's main content area."
+msgstr "Sayfanın ana içerik alanından sonra yüklenir."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:105
+msgid "After Singular"
+msgstr "İçerikten Sonra"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:106
+msgid "Loaded on singular post (page, attachment, etc.) views before the comments area."
+msgstr "Tekil yazı sonunda (sayfa, ek, vb.) yorum alanı öncesinde yüklenir."
+

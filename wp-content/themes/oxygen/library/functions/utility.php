@@ -116,8 +116,8 @@ function get_atomic_template( $template ) {
  * @return void
  */
 function hybrid_meta_template() {
-	$data = hybrid_get_theme_data();
-	$template = '<meta name="template" content="' . esc_attr( "{$data['Title']} {$data['Version']}" ) . '" />' . "\n";
+	$theme = wp_get_theme( get_template(), get_theme_root( get_template_directory() ) );
+	$template = '<meta name="template" content="' . esc_attr( $theme->get( 'Name' ) . ' ' . $theme->get( 'Version' ) ) . '" />' . "\n";
 	echo apply_atomic( 'meta_template', $template );
 }
 
@@ -161,6 +161,20 @@ function hybrid_site_description() {
 
 	/* Display the site description and apply filters for developers to overwrite. */
 	echo apply_atomic( 'site_description', $desc );
+}
+
+/**
+ * Standardized function for outputting the footer content.
+ *
+ * @since 1.4.0
+ * @access public
+ * @return void
+ */
+function hybrid_footer_content() {
+
+	/* Only run the code if the theme supports the Hybrid Core theme settings. */
+	if ( current_theme_supports( 'hybrid-core-theme-settings' ) )
+		echo apply_atomic_shortcode( 'footer_content', hybrid_get_setting( 'footer_insert' ) );
 }
 
 /**

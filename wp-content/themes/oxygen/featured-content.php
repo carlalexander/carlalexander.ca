@@ -21,7 +21,9 @@ if ( $loop->have_posts() ) : ?>
 	
 						<?php if ( current_theme_supports( 'get-the-image' ) ) get_the_image( array( 'meta_key' => 'Thumbnail', 'size' => 'featured-thumbnail' ) ); ?>
 						
-						<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
+						<h2 class="post-title entry-title">
+							<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+						</h2>
 						
 						<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-published]', 'oxygen' ) . '</div>' ); ?>
 					

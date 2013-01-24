@@ -14,8 +14,8 @@
  * feature using the add_theme_support( $feature ) function within their theme.
  *
  * This program is free software; you can redistribute it and/or modify it under the terms of the GNU 
- * General Public License version 2, as published by the Free Software Foundation.  You may NOT assume 
- * that you can use any other version of the GPL.
+ * General Public License as published by the Free Software Foundation; either version 2 of the License, 
+ * or (at your option) any later version.
  *
  * This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without 
  * even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
@@ -24,7 +24,7 @@
  * to the Free Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA
  *
  * @package HybridCore
- * @version 1.3.1
+ * @version 1.4.3
  * @author Justin Tadlock <justin@justintadlock.com>
  * @copyright Copyright (c) 2008 - 2012, Justin Tadlock
  * @link http://themehybrid.com/hybrid-core
@@ -53,6 +53,10 @@ class Hybrid {
 	 * @since 1.0.0
 	 */
 	function __construct() {
+		global $hybrid;
+
+		/* Set up an empty class for the global $hybrid object. */
+		$hybrid = new stdClass;
 
 		/* Define framework, parent theme, and child theme constants. */
 		add_action( 'after_setup_theme', array( &$this, 'constants' ), 1 );
@@ -89,7 +93,7 @@ class Hybrid {
 	function constants() {
 
 		/* Sets the framework version number. */
-		define( 'HYBRID_VERSION', '1.3.1' );
+		define( 'HYBRID_VERSION', '1.4.3' );
 
 		/* Sets the path to the parent theme directory. */
 		define( 'THEME_DIR', get_template_directory() );
@@ -235,6 +239,9 @@ class Hybrid {
 
 		/* Load the theme settings functions if supported. */
 		require_if_theme_supports( 'hybrid-core-theme-settings', trailingslashit( HYBRID_FUNCTIONS ) . 'settings.php' );
+
+		/* Load the customizer functions if theme settings are supported. */
+		require_if_theme_supports( 'hybrid-core-theme-settings', trailingslashit( HYBRID_FUNCTIONS ) . 'customize.php' );
 
 		/* Load the menus functions if supported. */
 		require_if_theme_supports( 'hybrid-core-menus', trailingslashit( HYBRID_FUNCTIONS ) . 'menus.php' );

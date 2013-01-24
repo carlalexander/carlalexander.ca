@@ -39,7 +39,7 @@ get_header(); // Loads the header.php template. ?>
 	
 							<?php do_atomic( 'open_entry' ); // oxygen_open_entry ?>
 	
-							<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
+							<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title permalink="0"]' ); ?>
 	
 							<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( 'By [entry-author] on [entry-published] [entry-edit-link before=" | "]', 'oxygen' ) . '</div>' ); ?>
 	

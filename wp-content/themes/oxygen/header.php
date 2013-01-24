@@ -54,19 +54,7 @@
 	
 					<div id="branding">
 						
-						<?php if ( hybrid_get_setting( 'oxygen_logo_url' ) ) { ?>			
-							
-							<h1 id="site-title">
-								<a href="<?php echo home_url(); ?>/" title="<?php echo bloginfo( 'name' ); ?>" rel="Home">
-									<img class="logo" src="<?php echo hybrid_get_setting( 'oxygen_logo_url' ); ?>" alt="<?php echo bloginfo( 'name' ); ?>" />
-								</a>
-							</h1>
-						
-						<?php } else { ?>
-						
-							<?php hybrid_site_title(); ?>
-						
-						<?php } ?>
+						<?php oxygen_site_title(); ?>
 						
 						<?php hybrid_site_description(); ?>
 						

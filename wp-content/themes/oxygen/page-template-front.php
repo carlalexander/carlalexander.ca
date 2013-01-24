@@ -54,7 +54,9 @@ get_header(); // Loads the header.php template. ?>
 								
 								<div class="entry-header">
 										
-									<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
+									<h2 class="post-title entry-title">
+										<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+									</h2>
 									
 									<?php echo apply_atomic_shortcode( 'byline_date', '<div class="byline byline-date">' . __( '[entry-published]', 'oxygen' ) . '</div>' ); ?>
 				
@@ -104,7 +106,9 @@ get_header(); // Loads the header.php template. ?>
 		
 							<div id="post-<?php the_ID(); ?>" class="<?php hybrid_entry_class(); ?>">
 										
-								<?php echo apply_atomic_shortcode( 'entry_title', '[entry-title]' ); ?>
+								<h2 class="post-title entry-title">
+									<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+								</h2>
 									
 								<?php echo apply_atomic_shortcode( 'byline', '<div class="byline">' . __( '[entry-published] / by [entry-author] / in [entry-terms taxonomy="category"] [entry-edit-link before=" / "]', 'oxygen' ) . '</div>' ); ?>
 	
