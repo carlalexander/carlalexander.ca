@@ -3,7 +3,7 @@
    Plugin URI: http://wordpress.org/extend/plugins/post-thumbnail-editor/
    Author: sewpafly
    Author URI: http://sewpafly.github.com/post-thumbnail-editor
-   Version: 1.0.5
+   Version: 1.0.7
    Description: Individually manage your post thumbnails
 
     LICENSE
@@ -35,7 +35,7 @@
 define( 'PTE_PLUGINURL', plugins_url(basename( dirname(__FILE__))) . "/");
 define( 'PTE_PLUGINPATH', dirname(__FILE__) . "/");
 define( 'PTE_DOMAIN', "post-thumbnail-editor");
-define( 'PTE_VERSION', "1.0.5");
+define( 'PTE_VERSION', "1.0.7");
 
 /*
  * Option Functionality
@@ -56,6 +56,7 @@ function pte_get_user_options(){
 	$defaults = array( 'pte_tb_width' => 750
 		, 'pte_tb_height' => 550
 		, 'pte_debug' => false
+		, 'pte_thickbox' => true
 	);
 	return array_merge( $defaults, $pte_options );
 }
@@ -65,7 +66,9 @@ function pte_get_site_options(){
 	if ( !is_array( $pte_site_options ) ){
 		$pte_site_options = array();
 	}
-	$defaults = array( 'pte_hidden_sizes' => array() );
+	$defaults = array( 'pte_hidden_sizes' => array()
+		, 'pte_jpeg_compression' => 90
+  	);
 	return array_merge( $defaults, $pte_site_options );
 }
 
@@ -86,24 +89,29 @@ function pte_get_options(){
 
 /* Hook into the Edit Image page */
 function pte_enable_thickbox(){
-	wp_enqueue_style( 'thickbox' );
-	wp_enqueue_script( 'thickbox' );
+	$options = pte_get_options();
+
+	if ( $options['pte_thickbox'] ){
+		wp_enqueue_style( 'thickbox' );
+		wp_enqueue_script( 'thickbox' );
+	}
 }
 
-function pte_admin_media_scripts(){
-	pte_enable_thickbox();
+function pte_admin_media_scripts($post_type){
+   //print("yessir:$post_type:\n");
 	$options = pte_get_options();
+	pte_enable_thickbox();
 
 	if ( $options['pte_debug'] ){
 		wp_enqueue_script( 'pte'
-			, PTE_PLUGINURL . 'js/pte.full.js'
+			, PTE_PLUGINURL . 'js/pte.full.dev.js'
 			, array('jquery')
 			, PTE_VERSION
 		);
 	}
 	else {
 		wp_enqueue_script( 'pte'
-			, PTE_PLUGINURL . 'js/pte.full.min.js'
+			, PTE_PLUGINURL . 'js/pte.full.js'
 			, array('jquery')
 			, PTE_VERSION
 		);
@@ -112,7 +120,13 @@ function pte_admin_media_scripts(){
 		, 'objectL10n'
 		, array('PTE' => __('Post Thumbnail Editor', PTE_DOMAIN))
 	);
-	add_action("admin_head","pte_enable_admin_js",100);
+   if ($post_type == "attachment") {
+      //add_action("admin_footer","pte_enable_admin_js",100);
+      add_action("admin_print_footer_scripts","pte_enable_admin_js",100);
+   }
+   else {
+      add_action("admin_print_footer_scripts","pte_enable_media_js",100);
+   }
 }
 
 function pte_enable_admin_js(){
@@ -121,6 +135,16 @@ function pte_enable_admin_js(){
 		<script type="text/javascript">
 			var options = {$options};
 			jQuery( function(){ pte.admin(); } );
+		</script>
+EOT;
+}
+
+function pte_enable_media_js(){
+	$options = json_encode( pte_get_options() );
+	echo <<<EOT
+		<script type="text/javascript">
+			var options = {$options};
+			jQuery( function(){ pte.media(); } );
 		</script>
 EOT;
 }
@@ -159,11 +183,14 @@ function pte_media_row_actions($actions, $post, $detached){
 		return $actions;
 	}
 	$options = pte_get_options();
+
+	$thickbox = ( $options['pte_thickbox'] ) ? "class='thickbox'" : "";
 	$pte_url = admin_url('admin-ajax.php') 
 		. "?action=pte_ajax&pte-action=launch&id=" 
 		. $post->ID
 		. "&TB_iframe=true&height={$options['pte_tb_height']}&width={$options['pte_tb_width']}";
-	$actions['pte'] = "<a class='thickbox' href='${pte_url}' title='"
+
+	$actions['pte'] = "<a ${thickbox} href='${pte_url}' title='"
 		. __( 'Edit Thumbnails', PTE_DOMAIN )
 		. "'>" . __( 'Thumbnails', PTE_DOMAIN ) . "</a>";
 	return $actions;
@@ -189,15 +216,13 @@ function pte_options(){
 }
 
 /* This is the main admin media page */
-add_action('admin_print_styles-media.php', 'pte_admin_media_scripts');
-
-/* This is for the popup media page */
+/** For the "Edit Image" stuff **/
+//add_action('edit_form_advanced', 'pte_admin_media_scripts');
+add_action('dbx_post_advanced', 'pte_edit_form_hook_redirect');
 /* Slight redirect so this isn't called on all versions of the media upload page */
-function pte_admin_media_upload(){
-	add_action('admin_print_scripts-media-upload-popup', 'pte_admin_media_scripts');
+function pte_edit_form_hook_redirect(){
+   add_action('add_meta_boxes', 'pte_admin_media_scripts');
 }
-add_action('media_upload_gallery', 'pte_admin_media_upload');
-add_action('media_upload_library', 'pte_admin_media_upload');
 
 /* Adds the Thumbnail option to the media library list */
 add_action('admin_print_styles-upload.php', 'pte_enable_thickbox');

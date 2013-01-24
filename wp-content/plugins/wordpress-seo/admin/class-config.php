@@ -3,6 +3,11 @@
  * @package Admin
  */
 
+if ( !defined('WPSEO_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
+
 /**
  * class WPSEO_Admin_Pages
  *
@@ -36,6 +41,8 @@ class WPSEO_Admin_Pages {
 			wp_redirect( admin_url( 'admin.php?page=wpseo_dashboard' ) );
 		}
 
+		$this->adminpages = apply_filters( 'wpseo_admin_pages', $this->adminpages );
+
 		global $wpseo_admin;
 
 		if ( $wpseo_admin->grant_access() ) {
@@ -61,7 +68,7 @@ class WPSEO_Admin_Pages {
 	 */
 	function admin_sidebar() {
 		?>
-	<div class="postbox-container" style="width:25%;max-width:250px;">
+	<div class="postbox-container" style="width:25%;min-width:200px;max-width:350px;">
 		<div id="sidebar">
 			<?php
 			$this->postbox( 'sitereview', '<span class="promo">' . __( 'Improve your Site!', 'wordpress-seo' ) . '</span>', '<p>' . sprintf( __( 'Don\'t know where to start? Order a %1$swebsite review%2$s from Yoast!', 'wordpress-seo' ), '<a href="http://yoast.com/hire-me/website-review/#utm_source=wpadmin&utm_medium=sidebanner&utm_term=link&utm_campaign=wpseoplugin">', '</a>' ) . '</p>' . '<p><a class="button-primary" href="http://yoast.com/hire-me/website-review/#utm_source=wpadmin&utm_medium=sidebanner&utm_term=button&utm_campaign=wpseoplugin">' . __( 'Read more &raquo;', 'wordpress-seo' ) . '</a></p>' );
@@ -75,7 +82,8 @@ class WPSEO_Admin_Pages {
 				. '<ul>'
 				. '<li><a href="http://wordpress.org/extend/plugins/wordpress-seo/">' . __( 'Rate the plugin 5★ on WordPress.org', 'wordpress-seo' ) . '</a></li>'
 				. '<li><a href="http://yoast.com/wordpress/seo/#utm_source=wpadmin&utm_medium=sidebanner&utm_term=link&utm_campaign=wpseoplugin">' . __( 'Blog about it & link to the plugin page', 'wordpress-seo' ) . '</a></li>'
-				. '</ul>' );
+				. '<li><a href="http://amzn.com/w/CBV7CEOJJH98">' . __( 'Buy me something from my wishlist', 'wordpress-seo' ) . '</a></li>'
+			. '</ul>' );
 			$this->news();
 			?>
 			<br/><br/><br/>
@@ -100,19 +108,7 @@ class WPSEO_Admin_Pages {
 		if ( ( isset( $_GET['updated'] ) && $_GET['updated'] == 'true' ) || ( isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] == 'true' ) ) {
 			$msg = __( 'Settings updated', 'wordpress-seo' );
 
-			if ( function_exists( 'w3tc_pgcache_flush' ) ) {
-				w3tc_pgcache_flush();
-				$msg .= __( ' &amp; W3 Total Cache Page Cache flushed', 'wordpress-seo' );
-			} else if ( function_exists( 'wp_cache_clear_cache' ) ) {
-				wp_cache_clear_cache();
-				$msg .= __( ' &amp; WP Super Cache flushed', 'wordpress-seo' );
-			}
-
-			// flush rewrite rules if XML sitemap settings have been updated.
-			if ( isset( $_GET['page'] ) && 'wpseo_xml' == $_GET['page'] )
-				flush_rewrite_rules();
-
-			echo '<div id="message" style="width:94%;" class="message updated"><p><strong>' . $msg . '.</strong></p></div>';
+			echo '<div id="message" style="width:94%;" class="message updated"><p><strong>' . esc_html( $msg ) . '.</strong></p></div>';
 		}
 		?>
 		<a href="http://yoast.com/">
@@ -123,7 +119,7 @@ class WPSEO_Admin_Pages {
 			</div>
 		</a>
 		<h2 id="wpseo-title"><?php _e( "Yoast WordPress SEO: ", 'wordpress-seo' ); echo $title; ?></h2>
-                                <div id="wpseo_content_top" class="postbox-container" style="width:75%;">
+                                <div id="wpseo_content_top" class="postbox-container" style="min-width:400px; max-width:600px; padding: 0 20px 0 0;">
 				<div class="metabox-holder">	
 					<div class="meta-box-sortables">
 		<?php
@@ -156,35 +152,13 @@ class WPSEO_Admin_Pages {
 	}
 
 	/**
-	 * Used for imports, this functions either copies $old_metakey into $new_metakey or just plain replaces $old_metakey with $new_metakey
-	 *
-	 * @param string $old_metakey The old name of the meta value.
-	 * @param string $new_metakey The new name of the meta value, usually the WP SEO name.
-	 * @param bool   $replace     Whether to replace or to copy the values.
-	 */
-	function replace_meta( $old_metakey, $new_metakey, $replace = false ) {
-		global $wpdb;
-		$oldies = $wpdb->get_results( "SELECT * FROM $wpdb->postmeta WHERE meta_key = '$old_metakey'" );
-		foreach ( $oldies as $old ) {
-			// Prevent inserting new meta values for posts that already have a value for that new meta key
-			$check = $wpdb->get_var( "SELECT count(*) FROM $wpdb->postmeta WHERE meta_key = '$new_metakey' AND post_id = " . $old->post_id );
-			if ( $check == 0 )
-				$wpdb->query( "INSERT INTO $wpdb->postmeta (post_id, meta_key, meta_value) VALUES (" . $old->post_id . ",'" . $new_metakey . "','" . addslashes( $old->meta_value ) . "')" );
-		}
-
-		if ( $replace ) {
-			$wpdb->query( "DELETE FROM $wpdb->postmeta WHERE meta_key = '$old_metakey'" );
-		}
-	}
-
-	/**
 	 * Deletes all post meta values with a given meta key from the database
 	 *
 	 * @param string $metakey Key to delete all meta values for.
 	 */
 	function delete_meta( $metakey ) {
 		global $wpdb;
-		$wpdb->query( "DELETE FROM $wpdb->postmeta WHERE meta_key = '$metakey'" );
+		$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->postmeta WHERE meta_key = %s", $metakey ) );
 	}
 
 	/**
@@ -300,20 +274,23 @@ class WPSEO_Admin_Pages {
 		if ( !isset( $options[$var] ) )
 			$options[$var] = false;
 
+		if ( $options[$var] === true )
+			$options[$var] = 'on';
+
 		if ( $label_left !== false ) {
 			if ( !empty( $label_left ) )
 				$label_left .= ':';
-			$output_label = '<label class="checkbox" for="' . $var . '">' . $label_left . '</label>';
+			$output_label = '<label class="checkbox" for="' . esc_attr( $var ) . '">' . $label_left . '</label>';
 			$class        = 'checkbox';
 		} else {
-			$output_label = '<label for="' . $var . '">' . $label . '</label>';
+			$output_label = '<label for="' . esc_attr( $var ) . '">' . $label . '</label>';
 			$class        = 'checkbox double';
 		}
 
-		$output_input = "<input class='$class' type='checkbox' id='${var}' name='${option}[${var}]' " . checked( $options[$var], 'on', false ) . '/>';
+		$output_input = "<input class='$class' type='checkbox' id='".esc_attr( $var )."' name='" . esc_attr( $option ) . "[" . esc_attr( $var ) ."]' " . checked( $options[$var], 'on', false ) . '/>';
 
 		if ( $label_left !== false ) {
-			$output = $output_label . $output_input . '<label class="checkbox" for="' . $var . '">' . $label . '</label>';
+			$output = $output_label . $output_input . '<label class="checkbox" for="' . esc_attr( $var ) . '">' . $label . '</label>';
 		} else {
 			$output = $output_input . $output_label;
 		}
@@ -338,7 +315,7 @@ class WPSEO_Admin_Pages {
 		if ( isset( $options[$var] ) )
 			$val = esc_attr( $options[$var] );
 
-		return '<label class="textinput" for="' . $var . '">' . $label . ':</label><input class="textinput" type="text" id="' . $var . '" name="' . $option . '[' . $var . ']" value="' . $val . '"/>' . '<br class="clear" />';
+		return '<label class="textinput" for="' . esc_attr( $var ) . '">' . $label . ':</label><input class="textinput" type="text" id="' . esc_attr( $var ) . '" name="' . $option . '[' . esc_attr( $var ) . ']" value="' . $val . '"/>' . '<br class="clear" />';
 	}
 
 	/**
@@ -360,7 +337,8 @@ class WPSEO_Admin_Pages {
 		if ( isset( $options[$var] ) )
 			$val = esc_attr( $options[$var] );
 
-		return '<label class="textinput" for="' . $var . '">' . $label . ':</label><textarea class="textinput ' . $class . '" id="' . $var . '" name="' . $option . '[' . $var . ']">' . $val . '</textarea>' . '<br class="clear" />';
+
+		return '<label class="textinput" for="' . esc_attr( $var ) . '">' . esc_html( $label ) . ':</label><textarea class="textinput ' . $class . '" id="' . esc_attr( $var ) . '" name="' . $option . '[' . esc_attr( $var ) . ']">' . $val . '</textarea>' . '<br class="clear" />';
 	}
 
 	/**
@@ -380,7 +358,7 @@ class WPSEO_Admin_Pages {
 		if ( isset( $options[$var] ) )
 			$val = esc_attr( $options[$var] );
 
-		return '<input type="hidden" id="hidden_' . $var . '" name="' . $option . '[' . $var . ']" value="' . $val . '"/>';
+		return '<input type="hidden" id="hidden_' . esc_attr( $var ) . '" name="' . $option . '[' . esc_attr( $var ) . ']" value="' . $val . '"/>';
 	}
 
 	/**
@@ -388,7 +366,7 @@ class WPSEO_Admin_Pages {
 	 *
 	 * @param string $var    The variable within the option to create the select for.
 	 * @param string $label  The label to show for the variable.
-	 * @param string $values The select options to choose from.
+	 * @param array  $values The select options to choose from.
 	 * @param string $option The option the variable belongs to.
 	 * @return string
 	 */
@@ -398,8 +376,9 @@ class WPSEO_Admin_Pages {
 
 		$options = $this->get_option( $option );
 
-		$output = '<label class="select" for="' . $var . '">' . $label . ':</label>';
-		$output .= '<select class="select" name="' . $option . '[' . $var . ']" id="' . $var . '">';
+		$var_esc = esc_attr( $var );
+		$output = '<label class="select" for="' . $var_esc . '">' . $label . ':</label>';
+		$output .= '<select class="select" name="' . $option . '[' . $var_esc . ']" id="' . $var_esc . '">';
 
 		foreach ( $values as $value => $label ) {
 			$sel = '';
@@ -431,14 +410,16 @@ class WPSEO_Admin_Pages {
 		if ( isset( $options[$var] ) && strtolower( gettype( $options[$var] ) ) == 'array' ) {
 			$val = $options[$var]['url'];
 		}
-		$output = '<label class="select" for="' . $var . '">' . $label . ':</label>';
-		$output .= '<input type="file" value="' . $val . '" class="textinput" name="' . $option . '[' . $var . ']" id="' . $var . '"/>';
+
+		$var_esc = esc_attr( $var );
+		$output = '<label class="select" for="' . $var_esc . '">' . esc_html( $label ) . ':</label>';
+		$output .= '<input type="file" value="' . $val . '" class="textinput" name="' . esc_attr( $option ) . '[' . $var_esc . ']" id="' . $var_esc . '"/>';
 
 		// Need to save separate array items in hidden inputs, because empty file inputs type will be deleted by settings API.
 		if ( !empty( $options[$var] ) ) {
-			$output .= '<input class="hidden" type="hidden" id="' . $var . '_file" name="wpseo_local[' . $var . '][file]" value="' . esc_attr( $options[$var]['file'] ) . '"/>';
-			$output .= '<input class="hidden" type="hidden" id="' . $var . '_url" name="wpseo_local[' . $var . '][url]" value="' . esc_attr( $options[$var]['url'] ) . '"/>';
-			$output .= '<input class="hidden" type="hidden" id="' . $var . '_type" name="wpseo_local[' . $var . '][type]" value="' . esc_attr( $options[$var]['type'] ) . '"/>';
+			$output .= '<input class="hidden" type="hidden" id="' . $var_esc . '_file" name="wpseo_local[' . $var_esc . '][file]" value="' . esc_attr( $options[$var]['file'] ) . '"/>';
+			$output .= '<input class="hidden" type="hidden" id="' . $var_esc . '_url" name="wpseo_local[' . $var_esc . '][url]" value="' . esc_attr( $options[$var]['url'] ) . '"/>';
+			$output .= '<input class="hidden" type="hidden" id="' . $var_esc . '_type" name="wpseo_local[' . $var_esc . '][type]" value="' . esc_attr( $options[$var]['type'] ) . '"/>';
 		}
 		$output .= '<br class="clear"/>';
 
@@ -449,7 +430,7 @@ class WPSEO_Admin_Pages {
 	 * Create a Radio input field.
 	 *
 	 * @param string $var    The variable within the option to create the file upload field for.
-	 * @param string $values The radio options to choose from.
+	 * @param array  $values The radio options to choose from.
 	 * @param string $label  The label to show for the variable.
 	 * @param string $option The option the variable belongs to.
 	 * @return string
@@ -463,9 +444,12 @@ class WPSEO_Admin_Pages {
 		if ( !isset( $options[$var] ) )
 			$options[$var] = false;
 
+		$var_esc = esc_attr( $var );
+
 		$output = '<br/><label class="select">' . $label . ':</label>';
 		foreach ( $values as $key => $value ) {
-			$output .= '<input type="radio" class="radio" id="' . $var . '-' . $key . '" name="' . $option . '[' . $var . ']" value="' . $key . '" ' . ( $options[$var] == $key ? ' checked="checked"' : '' ) . ' /> <label class="radio" for="' . $var . '-' . $key . '">' . $value . '</label>';
+			$key = esc_attr( $key );
+			$output .= '<input type="radio" class="radio" id="' . $var_esc . '-' . $key . '" name="' . esc_attr( $option ) . '[' . $var_esc . ']" value="' . $key . '" ' . ( $options[$var] == $key ? ' checked="checked"' : '' ) . ' /> <label class="radio" for="' . $var_esc . '-' . $key . '">' . esc_attr( $value ) . '</label>';
 		}
 		$output .= '<br/>';
 
@@ -473,7 +457,7 @@ class WPSEO_Admin_Pages {
 	}
 
 	/**
-	 * Create a potbox widget.
+	 * Create a postbox widget.
 	 *
 	 * @param string $id      ID of the postbox.
 	 * @param string $title   Title of the postbox.
@@ -481,7 +465,7 @@ class WPSEO_Admin_Pages {
 	 */
 	function postbox( $id, $title, $content ) {
 		?>
-	<div id="<?php echo $id; ?>" class="yoastbox">
+	<div id="<?php echo esc_attr( $id ); ?>" class="yoastbox">
 		<h2><?php echo $title; ?></h2>
 		<?php echo $content; ?>
 	</div>
@@ -500,11 +484,11 @@ class WPSEO_Admin_Pages {
 		foreach ( $rows as $row ) {
 			$content .= '<tr><th valign="top" scrope="row">';
 			if ( isset( $row['id'] ) && $row['id'] != '' )
-				$content .= '<label for="' . $row['id'] . '">' . $row['label'] . ':</label>';
+				$content .= '<label for="' . esc_attr( $row['id'] ) . '">' . esc_html( $row['label'] ) . ':</label>';
 			else
-				$content .= $row['label'];
+				$content .= esc_html( $row['label'] );
 			if ( isset( $row['desc'] ) && $row['desc'] != '' )
-				$content .= '<br/><small>' . $row['desc'] . '</small>';
+				$content .= '<br/><small>' . esc_html( $row['desc'] ) . '</small>';
 			$content .= '</th><td valign="top">';
 			$content .= $row['content'];
 			$content .= '</td></tr>';
@@ -530,7 +514,7 @@ class WPSEO_Admin_Pages {
 	 */
 	function fetch_rss_items( $num, $feed ) {
 		include_once( ABSPATH . WPINC . '/feed.php' );
-		$rss = fetch_feed( $feed );
+		$rss = fetch_feed( esc_url( $feed ) );
 
 		// Bail if feed doesn't work
 		if ( !$rss || is_wp_error( $rss ) )
@@ -543,7 +527,7 @@ class WPSEO_Admin_Pages {
 			$md5 = md5( $feed );
 			delete_transient( 'feed_' . $md5 );
 			delete_transient( 'feed_mod_' . $md5 );
-			$rss       = fetch_feed( $feed );
+			$rss       = fetch_feed( esc_url( $feed ) );
 			$rss_items = $rss->get_items( 0, $rss->get_item_quantity( $num ) );
 		}
 

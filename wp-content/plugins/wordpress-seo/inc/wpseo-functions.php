@@ -3,6 +3,11 @@
  * @package Internals
  */
 
+if ( !defined( 'WPSEO_VERSION' ) ) {
+	header( 'HTTP/1.0 403 Forbidden' );
+	die;
+}
+
 /**
  * Get the value from the post custom values
  *
@@ -11,16 +16,17 @@
  * @return bool|mixed
  */
 function wpseo_get_value( $val, $postid = 0 ) {
+	$postid = absint( $postid );
 	if ( $postid === 0 ) {
 		global $post;
-		if ( isset( $post ) )
+		if ( isset( $post ) && isset( $post->post_status ) && $post->post_status != 'auto-draft')
 			$postid = $post->ID;
 		else
 			return false;
 	}
 	$custom = get_post_custom( $postid );
-	if ( !empty( $custom[ '_yoast_wpseo_' . $val ][ 0 ] ) )
-		return maybe_unserialize( $custom[ '_yoast_wpseo_' . $val ][ 0 ] );
+	if ( !empty( $custom['_yoast_wpseo_' . $val][0] ) )
+		return maybe_unserialize( $custom['_yoast_wpseo_' . $val][0] );
 	else
 		return false;
 }
@@ -78,13 +84,14 @@ function wpseo_replace_vars( $string, $args, $omit = array() ) {
 		$sep = '-';
 
 	$simple_replacements = array(
-		'%%sep%%'                     => $sep,
-		'%%sitename%%'                => get_bloginfo( 'name' ),
-		'%%sitedesc%%'                => get_bloginfo( 'description' ),
-		'%%currenttime%%'             => date( 'H:i' ),
-		'%%currentdate%%'             => date( 'M jS Y' ),
-		'%%currentmonth%%'            => date( 'F' ),
-		'%%currentyear%%'             => date( 'Y' ),
+		'%%sep%%'          => $sep,
+		'%%sitename%%'     => get_bloginfo( 'name' ),
+		'%%sitedesc%%'     => get_bloginfo( 'description' ),
+		'%%currenttime%%'  => date( get_option( 'time_format' ) ),
+		'%%currentdate%%'  => date( get_option( 'date_format' ) ),
+		'%%currentday%%'   => date( 'j' ),
+		'%%currentmonth%%' => date( 'F' ),
+		'%%currentyear%%'  => date( 'Y' ),
 	);
 
 	foreach ( $simple_replacements as $var => $repl ) {
@@ -110,10 +117,10 @@ function wpseo_replace_vars( $string, $args, $omit = array() ) {
 		'term_id'       => '',
 	);
 
-	if ( isset( $args[ 'post_content' ] ) )
-		$args[ 'post_content' ] = wpseo_strip_shortcode( $args[ 'post_content' ] );
-	if ( isset( $args[ 'post_excerpt' ] ) )
-		$args[ 'post_excerpt' ] = wpseo_strip_shortcode( $args[ 'post_excerpt' ] );
+	if ( isset( $args['post_content'] ) )
+		$args['post_content'] = wpseo_strip_shortcode( $args['post_content'] );
+	if ( isset( $args['post_excerpt'] ) )
+		$args['post_excerpt'] = wpseo_strip_shortcode( $args['post_excerpt'] );
 
 	$r = (object) wp_parse_args( $args, $defaults );
 
@@ -128,7 +135,7 @@ function wpseo_replace_vars( $string, $args, $omit = array() ) {
 	} else {
 		global $post;
 		$pagenum       = get_query_var( 'page' );
-		$max_num_pages = substr_count( $post->post_content, '<!--nextpage-->' );
+		$max_num_pages = ( isset( $post->post_content ) ) ? substr_count( $post->post_content, '<!--nextpage-->' ) : 1;
 		if ( $max_num_pages >= 1 )
 			$max_num_pages++;
 	}
@@ -151,27 +158,37 @@ function wpseo_replace_vars( $string, $args, $omit = array() ) {
 	}
 
 	$replacements = array(
-		'%%date%%'                      => $date,
-		'%%title%%'                     => stripslashes( $r->post_title ),
-		'%%excerpt%%'                   => ( !empty( $r->post_excerpt ) ) ? strip_tags( $r->post_excerpt ) : substr( strip_shortcodes( strip_tags( $r->post_content ) ), 0, 155 ),
-		'%%excerpt_only%%'              => strip_tags( $r->post_excerpt ),
-		'%%category%%'                  => wpseo_get_terms( $r->ID, 'category' ),
-		'%%category_description%%'      => !empty( $r->taxonomy ) ? trim( strip_tags( get_term_field( 'description', $r->term_id, $r->taxonomy ) ) ) : '',
-		'%%tag_description%%'           => !empty( $r->taxonomy ) ? trim( strip_tags( get_term_field( 'description', $r->term_id, $r->taxonomy ) ) ) : '',
-		'%%term_description%%'          => !empty( $r->taxonomy ) ? trim( strip_tags( get_term_field( 'description', $r->term_id, $r->taxonomy ) ) ) : '',
-		'%%term_title%%'                => $r->name,
-		'%%focuskw%%'                   => wpseo_get_value( 'focuskw', $r->ID ),
-		'%%tag%%'                       => wpseo_get_terms( $r->ID, 'post_tag' ),
-		'%%modified%%'                  => mysql2date( get_option( 'date_format' ), $r->post_modified ),
-		'%%id%%'                        => $r->ID,
-		'%%name%%'                      => get_the_author_meta( 'display_name', !empty( $r->post_author ) ? $r->post_author : get_query_var( 'author' ) ),
-		'%%userid%%'                    => !empty( $r->post_author ) ? $r->post_author : get_query_var( 'author' ),
-		'%%searchphrase%%'              => esc_html( get_query_var( 's' ) ),
-		'%%page%%'                      => ( $max_num_pages > 1 && $pagenum > 1 ) ? sprintf( $sep . ' ' . __( 'Page %d of %d', 'wordpress-seo' ), $pagenum, $max_num_pages ) : '',
-		'%%pagetotal%%'                 => $max_num_pages,
-		'%%pagenumber%%'                => $pagenum,
-		'%%caption%%'                   => $r->post_excerpt,
+		'%%date%%'         => $date,
+		'%%searchphrase%%' => esc_html( get_query_var( 's' ) ),
+		'%%page%%'         => ( $max_num_pages > 1 && $pagenum > 1 ) ? sprintf( $sep . ' ' . __( 'Page %d of %d', 'wordpress-seo' ), $pagenum, $max_num_pages ) : '',
+		'%%pagetotal%%'    => $max_num_pages,
+		'%%pagenumber%%'   => $pagenum,
 	);
+
+	if ( isset( $r->ID ) ) {
+		$replacements = array_merge( $replacements, array(
+			'%%caption%%'      => $r->post_excerpt,
+			'%%category%%'     => wpseo_get_terms( $r->ID, 'category' ),
+			'%%excerpt%%' 	   => ( !empty( $r->post_excerpt ) ) ? strip_tags( $r->post_excerpt ) : ( ( extension_loaded( 'mbstring' ) === true ) ? mb_substr( strip_shortcodes( strip_tags( $r->post_content ) ), 0, 155, 'UTF-8' ) : substr( strip_shortcodes( strip_tags( utf8_decode( $r->post_content ) ) ), 0, 155 ) ),
+			'%%excerpt_only%%' => strip_tags( $r->post_excerpt ),
+			'%%focuskw%%'      => wpseo_get_value( 'focuskw', $r->ID ),
+			'%%id%%'           => $r->ID,
+			'%%modified%%'     => mysql2date( get_option( 'date_format' ), $r->post_modified ),
+			'%%name%%'         => get_the_author_meta( 'display_name', !empty( $r->post_author ) ? $r->post_author : get_query_var( 'author' ) ),
+			'%%tag%%'          => wpseo_get_terms( $r->ID, 'post_tag' ),
+			'%%title%%'        => stripslashes( $r->post_title ),
+			'%%userid%%'       => !empty( $r->post_author ) ? $r->post_author : get_query_var( 'author' ),
+		) );
+	}
+
+	if ( !empty( $r->taxonomy ) ) {
+		$replacements = array_merge( $replacements, array(
+			'%%category_description%%' => trim( strip_tags( get_term_field( 'description', $r->term_id, $r->taxonomy ) ) ),
+			'%%tag_description%%'      => trim( strip_tags( get_term_field( 'description', $r->term_id, $r->taxonomy ) ) ),
+			'%%term_description%%'     => trim( strip_tags( get_term_field( 'description', $r->term_id, $r->taxonomy ) ) ),
+			'%%term_title%%'           => $r->name,
+		) );
+	}
 
 	foreach ( $replacements as $var => $repl ) {
 		if ( !in_array( $var, $omit ) )
@@ -183,8 +200,8 @@ function wpseo_replace_vars( $string, $args, $omit = array() ) {
 		return trim( $string );
 	}
 
-	if ( isset( $wp_query->query_vars[ 'post_type' ] ) && preg_match_all( '/%%pt_([^%]+)%%/u', $string, $matches, PREG_SET_ORDER ) ) {
-		$pt        = get_post_type_object( $wp_query->query_vars[ 'post_type' ] );
+	if ( isset( $wp_query->query_vars['post_type'] ) && preg_match_all( '/%%pt_([^%]+)%%/u', $string, $matches, PREG_SET_ORDER ) ) {
+		$pt        = get_post_type_object( $wp_query->query_vars['post_type'] );
 		$pt_plural = $pt_singular = $pt->name;
 		if ( isset( $pt->labels->singular_name ) )
 			$pt_singular = $pt->labels->singular_name;
@@ -197,26 +214,26 @@ function wpseo_replace_vars( $string, $args, $omit = array() ) {
 	if ( preg_match_all( '/%%cf_([^%]+)%%/u', $string, $matches, PREG_SET_ORDER ) ) {
 		global $post;
 		foreach ( $matches as $match ) {
-			$string = str_replace( $match[ 0 ], get_post_meta( $post->ID, $match[ 1 ], true ), $string );
+			$string = str_replace( $match[0], get_post_meta( $post->ID, $match[1], true ), $string );
 		}
 	}
 
 	if ( preg_match_all( '/%%ct_desc_([^%]+)?%%/u', $string, $matches, PREG_SET_ORDER ) ) {
 		global $post;
 		foreach ( $matches as $match ) {
-			$terms  = get_the_terms( $post->ID, $match[ 1 ] );
-			$string = str_replace( $match[ 0 ], get_term_field( 'description', $terms[ 0 ]->term_id, $match[ 1 ] ), $string );
+			$terms  = get_the_terms( $post->ID, $match[1] );
+			$string = str_replace( $match[0], get_term_field( 'description', $terms[0]->term_id, $match[1] ), $string );
 		}
 	}
 
 	if ( preg_match_all( '/%%ct_([^%]+)%%(single%%)?/u', $string, $matches, PREG_SET_ORDER ) ) {
 		foreach ( $matches as $match ) {
 			$single = false;
-			if ( isset( $match[ 2 ] ) && $match[ 2 ] == 'single%%' )
+			if ( isset( $match[2] ) && $match[2] == 'single%%' )
 				$single = true;
-			$ct_terms = wpseo_get_terms( $r->ID, $match[ 1 ], $single );
+			$ct_terms = wpseo_get_terms( $r->ID, $match[1], $single );
 
-			$string = str_replace( $match[ 0 ], $ct_terms, $string );
+			$string = str_replace( $match[0], $ct_terms, $string );
 		}
 	}
 
@@ -261,7 +278,7 @@ function wpseo_get_terms( $id, $taxonomy, $return_single = false ) {
  *
  * @param string|object $term     term to get the meta value for
  * @param string        $taxonomy name of the taxonomy to which the term is attached
- * @param string    	$meta     meta value to get
+ * @param string        $meta     meta value to get
  * @return bool|mixed value when the meta exists, false when it does not
  */
 function wpseo_get_term_meta( $term, $taxonomy, $meta ) {
@@ -274,12 +291,12 @@ function wpseo_get_term_meta( $term, $taxonomy, $meta ) {
 		return false;
 
 	$tax_meta = get_option( 'wpseo_taxonomy_meta' );
-	if ( isset( $tax_meta[ $taxonomy ][ $term ] ) )
-		$tax_meta = $tax_meta[ $taxonomy ][ $term ];
+	if ( isset( $tax_meta[$taxonomy][$term] ) )
+		$tax_meta = $tax_meta[$taxonomy][$term];
 	else
 		return false;
 
-	return ( isset( $tax_meta[ 'wpseo_' . $meta ] ) ) ? $tax_meta[ 'wpseo_' . $meta ] : false;
+	return ( isset( $tax_meta['wpseo_' . $meta] ) ) ? $tax_meta['wpseo_' . $meta] : false;
 }
 
 
@@ -290,5 +307,21 @@ function wpseo_get_term_meta( $term, $taxonomy, $meta ) {
  * @return string $text string without shortcodes
  */
 function wpseo_strip_shortcode( $text ) {
-	return preg_replace( '|\[(.+?)\](.*)?(\[/\\1\])|s', '$2', $text );
+	return preg_replace( '|\[[^\]]+\]|s', '', $text );
 }
+
+/**
+ * Initialize sitemaps. Add sitemap rewrite rules and query var
+ */
+function xml_sitemaps_init() {
+	$options = get_option( 'wpseo_xml' );
+	if ( !isset( $options['enablexmlsitemap'] ) || !$options['enablexmlsitemap'] )
+		return;
+
+	$GLOBALS['wp']->add_query_var( 'sitemap' );
+	$GLOBALS['wp']->add_query_var( 'sitemap_n' );
+	add_rewrite_rule( 'sitemap_index\.xml$', 'index.php?sitemap=1', 'top' );
+	add_rewrite_rule( '([^/]+?)-sitemap([0-9]+)?\.xml$', 'index.php?sitemap=$matches[1]&sitemap_n=$matches[2]', 'top' );
+}
+
+add_action( 'init', 'xml_sitemaps_init', 1 );

@@ -3,6 +3,11 @@
  * @package Internals
  */
 
+if ( !defined('WPSEO_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
+
 /**
  * Flush the rewrite rules.
  */
@@ -69,6 +74,7 @@ function wpseo_defaults() {
 	if ( !is_array( get_option( 'wpseo_xml' ) ) ) {
 		$opt = array(
 			'enablexmlsitemap' => 'on',
+			'post_types-attachment-not_in_sitemap' => true
 		);
 		update_option( 'wpseo_xml', $opt );
 	}
@@ -211,9 +217,9 @@ function wpseo_admin_bar_menu() {
 
 	$focuskw = '';
 	$score   = '';
-	$seo_url = get_admin_url( 'admin.php?page=wpseo_dashboard' );
+	$seo_url = get_admin_url( null, 'admin.php?page=wpseo_dashboard' );
 
-	if ( is_singular() && isset( $post ) && is_object( $post ) ) {
+	if ( is_singular() && isset( $post ) && is_object( $post ) && apply_filters( 'wpseo_use_page_analysis', true ) === true ) {
 		$focuskw    = wpseo_get_value( 'focuskw', $post->ID );
 		$perc_score = wpseo_get_value( 'linkdex', $post->ID );
 		$txtscore   = wpseo_translate_score( round( $perc_score / 10 ) );

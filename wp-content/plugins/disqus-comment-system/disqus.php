@@ -4,7 +4,7 @@ Plugin Name: Disqus Comment System
 Plugin URI: http://disqus.com/
 Description: The Disqus comment system replaces your WordPress comment system with your comments hosted and powered by Disqus. Head over to the Comments admin page to set up your DISQUS Comment System.
 Author: Disqus <team@disqus.com>
-Version: 2.72
+Version: 2.74
 Author URI: http://disqus.com/
 */
 
@@ -31,7 +31,7 @@ define('DISQUS_CAN_EXPORT',         is_file(dirname(__FILE__) . '/export.php'));
 if (!defined('DISQUS_DEBUG')) {
     define('DISQUS_DEBUG',          false);
 }
-define('DISQUS_VERSION',            '2.72');
+define('DISQUS_VERSION',            '2.74');
 define('DISQUS_SYNC_TIMEOUT',       30);
 
 /**
@@ -44,14 +44,17 @@ function dsq_options() {
         '_disqus_sync_post_ids',
         # render disqus in the embed
         'disqus_active',
-        'disqus_public_key',
-        'disqus_secret_key',
         'disqus_forum_url',
         'disqus_api_key',
         'disqus_user_api_key',
-        'disqus_partner_key',
         'disqus_replace',
         'disqus_cc_fix',
+        # SSO features
+        'disqus_partner_key',
+        'disqus_public_key',
+        'disqus_secret_key',
+        'disqus_sso_button',
+        'disqus_sso_icon',
         # disables automatic sync via cron
         'disqus_manual_sync',
         # disables server side rendering
@@ -440,7 +443,7 @@ function dsq_request_handler() {
                     $eof = (int)($post_id == $max_post_id);
                     if ($eof) {
                         $status = 'complete';
-                        $msg = 'Your comments have been sent to Disqus and queued for import!<br/><a href="'.DISQUS_IMPORTER_URL.'" target="_blank">See the status of your import at Disqus</a>';
+                        $msg = dsq_i('Your comments have been sent to Disqus and queued for import!<br/><a href="'.DISQUS_IMPORTER_URL.'" target="_blank">See the status of your import at Disqus</a>');
                     }
                     else {
                         $status = 'partial';
@@ -513,6 +516,31 @@ function dsq_request_handler() {
 }
 
 add_action('init', 'dsq_request_handler');
+
+/**
+ * @param string $option_name
+ */
+function dsq_image_upload_handler($option_name) {
+    // If the upload field has a file in it
+    if(isset($_FILES[$option_name]) && ($_FILES[$option_name]['size'] > 0)) {
+        // Get the type of the uploaded file. This is returned as "type/extension"
+        $arr_file_type = wp_check_filetype(basename($_FILES[$option_name]['name']));
+        $uploaded_file_type = $arr_file_type['type'];
+        // Set an array containing a list of acceptable formats
+        $allowed_file_types = array('image/jpg','image/jpeg','image/gif','image/png','image/x-icon');
+        // If the uploaded file is the right format
+        if(in_array($uploaded_file_type, $allowed_file_types)) {
+            // Options array for the wp_handle_upload function. 'test_upload' => false
+            $upload_overrides = array( 'test_form' => false ); 
+            // Handle the upload using WP's wp_handle_upload function. Takes the posted file and an options array
+            $uploaded_file = wp_handle_upload($_FILES[$option_name], $upload_overrides);
+            // If the wp_handle_upload call returned a local path for the image
+            if(isset($uploaded_file['url'])) {
+                update_option($option_name, $uploaded_file['url']);
+            }
+        }
+    }
+}
 
 function dsq_add_pending_post_id($post_id) {
     update_post_meta($post_id, 'dsq_needs_sync', '1', $unique=true);
@@ -799,7 +827,6 @@ function dsq_comment( $comment, $args, $depth ) {
         <div id="dsq-comment-body-<?php echo comment_ID(); ?>" class="dsq-comment-body">
             <div id="dsq-comment-message-<?php echo comment_ID(); ?>" class="dsq-comment-message"><?php echo wp_filter_kses(comment_text()); ?></div>
         </div>
-    </li>
 
     <?php
             break;
@@ -843,7 +870,11 @@ function dsq_bloginfo_url($url) {
 function dsq_plugin_action_links($links, $file) {
     $plugin_file = basename(__FILE__);
     if (basename($file) == $plugin_file) {
-        $settings_link = '<a href="edit-comments.php?page=disqus#adv">'.dsq_i('Settings').'</a>';
+        if (!dsq_is_installed()) {
+            $settings_link = '<a href="edit-comments.php?page=disqus">'.dsq_i('Configure').'</a>';
+        } else {
+            $settings_link = '<a href="edit-comments.php?page=disqus#adv">'.dsq_i('Settings').'</a>';    
+        }
         array_unshift($links, $settings_link);
     }
     return $links;
@@ -882,6 +913,8 @@ jQuery(function($) {
     // fix menu
     var mc = $('#menu-comments');
     mc.find('a.wp-has-submenu').attr('href', 'edit-comments.php?page=disqus').end().find('.wp-submenu  li:has(a[href="edit-comments.php?page=disqus"])').prependTo(mc.find('.wp-submenu ul'));
+    // fix admin bar
+    $('#wp-admin-bar-comments').find('a.ab-item').attr('href', 'edit-comments.php?page=disqus');
 });
 </script>
 <?php
@@ -904,7 +937,7 @@ function dsq_dash_comment_counts() {
     $known_types = array_keys( $approved );
     foreach( (array) $count as $row_num => $row ) {
         $total += $row['num_comments'];
-        if ( in_array( $row['comment_approved'], $known_types ) )
+        if ( in_array( $row['comment_approved'], $known_types ) && array_key_exists($row['comment_approved'], $approved) )
             $stats[$approved[$row['comment_approved']]] = $row['num_comments'];
     }
 
@@ -915,15 +948,9 @@ function dsq_dash_comment_counts() {
     }
     $stats = (object) $stats;
 ?>
-<style type="text/css">
-#dashboard_right_now .inside,
-#dashboard_recent_comments div.trackback {
-    display: none;
-}
-</style>
 <script type="text/javascript">
 jQuery(function($) {
-    $('#dashboard_right_now').find('.b-comments a').html('<?php echo number_format($stats->total_comments); ?>').end().find('.b_approved a').html('<?php echo number_format($stats->approved); ?>').end().find('.b-waiting a').html('<?php echo number_format($stats->moderated); ?>').end().find('.b-spam a').html('<?php echo number_format($stats->spam); ?>').end().find('.inside').slideDown();
+    $('#dashboard_right_now').find('.b-comments a').html('<?php echo number_format($stats->total_comments); ?>').end().find('.b_approved a').html('<?php echo number_format($stats->approved); ?>').end().find('.b-waiting a').html('<?php echo number_format($stats->moderated); ?>').end().find('.b-spam a').html('<?php echo number_format($stats->spam); ?>');
     $('#dashboard_recent_comments div.trackback').remove();
     $('#dashboard_right_now .inside table td.last a, #dashboard_recent_comments .inside .textright a.button').attr('href', 'edit-comments.php?page=disqus');
 });
@@ -940,7 +967,7 @@ function dsq_manage() {
         dsq_install();
     }
 
-    if (dsq_does_need_update() && isset($_POST['uninstall'])) {
+    if (dsq_does_need_update() && isset($_POST['reset'])) {
         include_once(dirname(__FILE__) . '/upgrade.php');
     } else {
         include_once(dirname(__FILE__) . '/manage.php');
@@ -1079,17 +1106,6 @@ dsq_import_comments = function(wipe) {
 }
 add_action('admin_head', 'dsq_admin_head');
 
-function dsq_warning() {
-    $page = (isset($_GET['page']) ? $_GET['page'] : null);
-    if ( !get_option('disqus_forum_url') && !isset($_POST['forum_url']) && $page != 'disqus' ) {
-        dsq_manage_dialog('You must <a href="edit-comments.php?page=disqus">configure the plugin</a> to enable Disqus Comments.', true);
-    }
-
-    if ( !dsq_is_installed() && $page != 'disqus' && !empty($_GET['step']) && !isset($_POST['uninstall']) ) {
-        dsq_manage_dialog('Disqus Comments has not yet been configured. (<a href="edit-comments.php?page=disqus">Click here to configure</a>)');
-    }
-}
-
 /**
  * Wrapper for built-in __() which pulls all text from
  * the disqus domain and supports variable interpolation.
@@ -1177,14 +1193,7 @@ function dsq_output_loop_comment_js($post_ids = null) {
             }
             var s = document.createElement('script'); s.async = true;
             s.type = 'text/javascript';
-            <?php
-            if (is_ssl()) {
-                $connection_type = "https";
-            } else {
-                $connection_type = "http";
-            }
-            ?>
-            s.src = '<?php echo $connection_type; ?>' + '://' + '<?php echo DISQUS_DOMAIN; ?>/forums/' + disqus_shortname + '/count.js';
+            s.src = '//' + '<?php echo DISQUS_DOMAIN; ?>/forums/' + disqus_shortname + '/count.js';
             (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
         }());
     //]]>
@@ -1213,7 +1222,7 @@ function dsq_output_footer_comment_js() {
             }
             var s = document.createElement('script'); s.async = true;
             s.type = 'text/javascript';
-            s.src = 'http://<?php echo DISQUS_DOMAIN; ?>/forums/' + disqus_shortname + '/count.js';
+            s.src = '//' + '<?php echo DISQUS_DOMAIN; ?>/forums/' + disqus_shortname + '/count.js';
             (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
         }());
     //]]>
@@ -1245,8 +1254,6 @@ function dsq_check_permalink($post_id) {
     }
 }
 add_action('edit_post', 'dsq_check_permalink');
-
-add_action('admin_notices', 'dsq_warning');
 
 // Only replace comments if the disqus_forum_url option is set.
 add_filter('comments_template', 'dsq_comments_template');
@@ -1371,6 +1378,7 @@ function dsq_sso() {
             'id' => $current_user->ID,
             'avatar' => $avatar,
             'email' => $current_user->user_email,
+            'url' => $current_user->user_url,
         );
     }
     else {
@@ -1389,8 +1397,26 @@ function dsq_sso() {
     }
 }
 
+function dsq_sso_login() {
+    global $current_site;
+    $sitename = get_bloginfo('name');
+    $siteurl = site_url();
+    $button = get_option('disqus_sso_button');
+    $icon = get_option('disqus_sso_icon');
+    $sso_login_str = 'this.sso = {
+          name: "'.$sitename.'",
+          button: "'.$button.'",
+          icon: "'.$icon.'",
+          url: "'.$siteurl.'/wp-login.php",
+          logout: "'.$siteurl.'/wp-login.php?action=logout",
+          width: "800",
+          height: "700"
+    }';
+    return $sso_login_str;
+}
+
 // from: http://www.php.net/manual/en/function.sha1.php#39492
-//Calculate HMAC-SHA1 according to RFC2104
+// Calculate HMAC-SHA1 according to RFC2104
 // http://www.ietf.org/rfc/rfc2104.txt
 function dsq_hmacsha1($data, $key) {
     $blocksize=64;
@@ -1465,6 +1491,67 @@ function dsq_install($allow_database_install=true) {
 }
 
 /**
+ * Adds a simple WordPress pointer to Comments menu, to remind the user to configure the plugin
+ */
+function dsq_enqueue_pointer_script_style( $hook_suffix ) {
+    
+    // Assume pointer shouldn't be shown
+    $enqueue_pointer_script_style = false;
+
+    // Get array list of dismissed pointers for current user and convert it to array
+    $dismissed_pointers = explode( ',', get_user_meta( get_current_user_id(), 'dismissed_wp_pointers', true ) );
+
+    // Check if our pointer is not among dismissed ones
+    if( !in_array( 'disqus_settings_pointer', $dismissed_pointers ) ) {
+        $enqueue_pointer_script_style = true;
+        
+        // Add footer scripts using callback function
+        add_action( 'admin_print_footer_scripts', 'dsq_pointer_print_scripts' );
+    }
+
+    // Enqueue pointer CSS and JS files, if needed
+    if( $enqueue_pointer_script_style ) {
+        wp_enqueue_style( 'wp-pointer' );
+        wp_enqueue_script( 'wp-pointer' );
+    }
+    
+}
+if (!dsq_is_installed()) {
+    // Only show the pointer when Disqus isn't already configured
+    add_action( 'admin_enqueue_scripts', 'dsq_enqueue_pointer_script_style' );
+}
+
+function dsq_pointer_print_scripts() {
+
+    $pointer_content  = '<h3>DISQUS needs to be configured</h3>';
+    $pointer_content .= '<p>Configure DISQUS by clicking Comments to the left.</p>';
+?>
+    
+    <script type="text/javascript">
+    //<![CDATA[
+    jQuery(document).ready( function($) {
+        $('#menu-comments').pointer({
+            content:        '<?php echo $pointer_content; ?>',
+            position:       {
+                                edge:   'left', // arrow direction
+                                align:  'center' // vertical alignment
+                            },
+            pointerWidth:   350,
+            close:          function() {
+                                $.post( ajaxurl, {
+                                        pointer: 'disqus_settings_pointer', // pointer ID
+                                        action: 'dismiss-wp-pointer'
+                                });
+                            }
+        }).pointer('open');
+    });
+    //]]>
+    </script>
+
+<?php
+}
+
+/**
  * Initializes the database if it's not already present.
  */
 function dsq_install_database($version=0) {
@@ -1474,9 +1561,27 @@ function dsq_install_database($version=0) {
         $wpdb->query("CREATE INDEX disqus_dupecheck ON `".$wpdb->prefix."commentmeta` (meta_key, meta_value(11));");
     }
 }
-function dsq_uninstall_database($version=0) {
+function dsq_reset_database($version=0) {
+    global $wpdb;
+    
     if (version_compare($version, '2.49', '>=')) {
         $wpdb->query("DROP INDEX disqus_dupecheck ON `".$wpdb->prefix."commentmeta`;");
     }
 }
+
+/**
+* Disable internal Wordpress commenting if Disqus is enabled - this prevents spam bots from
+* commenting using POST requests to /wp-comments-post.php.
+*
+* @param int $comment_post_ID
+* @return int
+*/
+function dsq_pre_comment_on_post($comment_post_ID) {
+    if (dsq_can_replace()) {
+        wp_die( dsq_i('Sorry, the built-in commenting system is disabled because Disqus is active.') );
+    }
+    return $comment_post_ID;
+}
+add_action('pre_comment_on_post', 'dsq_pre_comment_on_post');
+
 ?>

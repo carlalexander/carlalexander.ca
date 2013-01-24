@@ -116,9 +116,9 @@ div.yoastbox .button:hover, div.yoastbox .button-primary:hover {
 	text-decoration: none;
 }
 
-.button, .button-primary {
-	margin-top: 10px;
-}
+/*.button, .button-primary {*/
+	/*margin-top: 10px;*/
+/*}*/
 
 table.yoast_help, table.yoast_help th, table.yoast_help td {
 	border: 1px solid #ddd;

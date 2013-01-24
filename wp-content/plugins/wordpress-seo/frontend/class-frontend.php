@@ -5,6 +5,11 @@
  * Main frontend code.
  */
 
+if ( !defined('WPSEO_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
+
 /**
  * Main frontend class for WordPress SEO, responsible for the SEO output as well as removing default WordPress output.
  *
@@ -24,8 +29,8 @@ class WPSEO_Frontend {
 		add_action( 'wp_head', array( $this, 'head' ), 1, 1 );
 		remove_action( 'wp_head', 'rel_canonical' );
 
-		add_filter( 'wp_title', array( $this, 'title' ), 10, 3 );
-		add_filter( 'thematic_doctitle', array( $this, 'title' ) );
+		add_filter( 'wp_title', array( $this, 'title' ), 15, 3 );
+		add_filter( 'thematic_doctitle', array( $this, 'title' ), 15 );
 
 		add_action( 'wp', array( $this, 'page_redirect' ), 99, 1 );
 
@@ -82,6 +87,9 @@ class WPSEO_Frontend {
 
 		if ( isset( $options['title_test'] ) && $options['title_test'] )
 			add_filter( 'wpseo_title', array( $this, 'title_test_helper' ) );
+
+		if ( isset( $_GET['replytocom'] ) )
+			remove_action( 'wp_head', 'wp_no_robots' );
 	}
 
 	/**
@@ -306,7 +314,7 @@ class WPSEO_Frontend {
 			$title = $this->get_title_from_options( 'title-search' );
 
 			if ( empty( $title ) )
-				$title_part = sprintf( __( 'Search for "%s"', 'wordpress-seo' ), get_search_query() );
+				$title_part = sprintf( __( 'Search for "%s"', 'wordpress-seo' ), esc_html( get_search_query() ) );
 		} else if ( is_category() || is_tag() || is_tax() ) {
 			$title = $this->get_taxonomy_title();
 
@@ -450,11 +458,15 @@ class WPSEO_Frontend {
 			}
 		}
 
+		unset( $options );
+
 		do_action( 'wpseo_head' );
 
 		echo "<!-- / Yoast WordPress SEO plugin. -->\n\n";
 
 		$GLOBALS['wp_query'] = $old_wp_query;
+		unset( $old_wp_query );
+		return;
 	}
 
 	/**
@@ -533,9 +545,10 @@ class WPSEO_Frontend {
 
 		$robotsstr = preg_replace( '/^index,follow,?/', '', $robotsstr );
 
-		if ( $robotsstr != '' ) {
-			echo '<meta name="robots" content="' . $robotsstr . '"/>' . "\n";
-		}
+		$robotsstr = apply_filters( 'wpseo_robots', $robotsstr );
+
+		if ( $robotsstr != '' )
+			echo '<meta name="robots" content="' . esc_attr( $robotsstr ) . '"/>' . "\n";
 	}
 
 	/**
@@ -558,14 +571,17 @@ class WPSEO_Frontend {
 			} else {
 				$obj       = get_queried_object();
 				$canonical = get_permalink( $obj->ID );
-				// Fix paginated pages
+
+				// Fix paginated pages canonical, but only if the page is truly paginated.
 				if ( get_query_var( 'page' ) > 1 ) {
 					global $wp_rewrite;
-					/** @noinspection PhpUndefinedMethodInspection */
-					if ( !$wp_rewrite->using_permalinks() ) {
-						$canonical = add_query_arg( 'page', get_query_var( 'page' ), $canonical );
-					} else {
-						$canonical = user_trailingslashit( trailingslashit( $canonical ) . get_query_var( 'page' ) );
+					$numpages = substr_count( $obj->post_content, '<!--nextpage-->' ) + 1;
+					if ( $numpages && get_query_var( 'page' ) < $numpages ) {
+						if ( !$wp_rewrite->using_permalinks() ) {
+							$canonical = add_query_arg( 'page', get_query_var( 'page' ), $canonical );
+						} else {
+							$canonical = user_trailingslashit( trailingslashit( $canonical ) . get_query_var( 'page' ) );
+						}
 					}
 				}
 			}
@@ -701,24 +717,32 @@ class WPSEO_Frontend {
 	}
 
 	/**
-	 * Outputs the rel=author element
+	 * Outputs the rel=author & rel=publisher element
 	 */
 	function author() {
-		$gplus = false;
+		$gplus   = false;
+		$options = get_wpseo_options();
 
 		if ( is_singular() ) {
 			global $post;
 			$gplus = get_the_author_meta( 'googleplus', $post->post_author );
 		} else if ( is_home() ) {
-			$options = get_wpseo_options();
 			if ( isset( $options['plus-author'] ) )
 				$gplus = get_the_author_meta( 'googleplus', $options['plus-author'] );
 		}
 
 		$gplus = apply_filters( 'wpseo_author_link', $gplus );
 
-		if ( $gplus )
+		if ( is_front_page() ) {
+			if ( isset( $options['plus-publisher'] ) && !empty( $options['plus-publisher'] ) ) {
+				echo '<link rel="publisher" href="' . esc_attr( $options['plus-publisher'] ) . '"/>' . "\n";
+			} else if ( $gplus ) {
+				echo '<link rel="author" href="' . $gplus . '"/>' . "\n";
+			}
+		} else if ( $gplus ) {
 			echo '<link rel="author" href="' . $gplus . '"/>' . "\n";
+		}
+
 	}
 
 	/**
@@ -821,7 +845,7 @@ class WPSEO_Frontend {
 			} else if ( function_exists( 'is_post_type_archive' ) && is_post_type_archive() ) {
 				$post_type = get_post_type();
 				if ( isset( $options['metadesc-ptarchive-' . $post_type] ) && '' != $options['metadesc-ptarchive-' . $post_type] ) {
-					$metadesc = $options['metadesc-ptarchive-' . $post_type];
+					$metadesc = wpseo_replace_vars( $options['metadesc-ptarchive-' . $post_type], (array) $wp_query->get_queried_object() );
 				}
 			}
 		}
@@ -861,7 +885,6 @@ class WPSEO_Frontend {
 	 * Outputs noindex values for the current page.
 	 */
 	function noindex_page() {
-		$this->debug_marker();
 		echo '<meta name="robots" content="noindex" />' . "\n";
 	}
 
@@ -896,7 +919,7 @@ class WPSEO_Frontend {
 			( isset( $options['disable-author'] ) && $options['disable-author'] && $wp_query->is_author ) ||
 			( isset( $options['disable-post_formats'] ) && $options['disable-post_formats'] && $wp_query->is_tax( 'post_format' ) )
 		) {
-			wp_redirect( get_bloginfo( 'url' ), 301 );
+			wp_safe_redirect( get_bloginfo( 'url' ), 301 );
 			exit;
 		}
 	}
@@ -909,7 +932,7 @@ class WPSEO_Frontend {
 	function attachment_redirect() {
 		global $post;
 		if ( is_attachment() && isset( $post->post_parent ) && is_numeric( $post->post_parent ) && $post->post_parent != 0 ) {
-			wp_redirect( get_permalink( $post->post_parent ), 301 );
+			wp_safe_redirect( get_permalink( $post->post_parent ), 301 );
 			exit;
 		}
 	}
@@ -924,7 +947,7 @@ class WPSEO_Frontend {
 	 * @return string
 	 */
 	function add_trailingslash( $url, $type ) {
-		if ( 'single' === $type ) {
+		if ( 'single' === $type || 'single_paged' === $type ) {
 			return $url;
 		} else {
 			return trailingslashit( $url );
@@ -1056,7 +1079,7 @@ class WPSEO_Frontend {
 		}
 
 		if ( !empty( $properurl ) && $cururl != $properurl ) {
-			wp_redirect( $properurl, 301 );
+			wp_safe_redirect( $properurl, 301 );
 			exit;
 		}
 	}
@@ -1177,12 +1200,22 @@ class WPSEO_Frontend {
 	 * @return string
 	 */
 	function title_test_helper( $title ) {
+		if ( !defined( 'DONOTCACHEPAGE' ) )
+			define( 'DONOTCACHEPAGE', true );
+
+		if ( !defined( 'DONOTCACHCEOBJECT' ) )
+			define( 'DONOTCACHCEOBJECT', true );
+
+		if ( !defined( 'DONOTMINIFY' ) )
+			define( 'DONOTMINIFY', true );
+
 		global $wp_version;
-		if ( $_SERVER['HTTP_USER_AGENT'] == "WordPress/${wp_version}; " . get_site_url() . " - Yoast" )
+		if ( $_SERVER['HTTP_USER_AGENT'] == "WordPress/${wp_version}; " . get_bloginfo( 'url' ) . " - Yoast" )
 			return 'This is a Yoast Test Title';
 		return $title;
 	}
 
 }
+
 global $wpseo_front;
 $wpseo_front = new WPSEO_Frontend;

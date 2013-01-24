@@ -5,20 +5,20 @@ License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Tags: seo, SEO, google, meta, meta description, search engine optimization, xml sitemap, xml sitemaps, google sitemap, sitemap, sitemaps, robots meta, rss, rss footer, yahoo, bing, news sitemaps, XML News Sitemaps, WordPress SEO, WordPress SEO by Yoast, yoast, multisite, canonical, nofollow, noindex, keywords, meta keywords, description, webmaster tools, google webmaster tools, seo pack
 Requires at least: 3.1
-Tested up to: 3.4
-Stable tag: 1.2.5
+Tested up to: 3.5
+Stable tag: 1.3.4.4
 
 Improve your WordPress SEO: Write better content and have a fully optimized WordPress site using the WordPress SEO plugin by Yoast.
 
 == Description ==
 
-WordPress out of the box is already technically quite a good platform for SEO, this was true when I wrote my original [WordPress SEO](http://yoast.com/articles/wordpress-seo/) article in 2008 and it's still true today, but that doesn't mean you can't improve it further! This plugin is written from the ground up by [WordPress SEO consultant](http://yoast.com/hire-me/wordpress-seo-consultant/) and [WordPress developer](http://yoast.com/hire-me/wordpress-developer/) Joost de Valk to improve your site's SEO on *all* needed aspects. While this [WordPress SEO plugin](http://yoast.com/wordpress/seo/) goes the extra mile to take care of all the technical optimization, more on that below, it first and foremost helps you write better content.  WordPress SEO forces you to choose a focus keyword when you're writing your articles, and then makes sure you use that focus keyword everywhere. 
+WordPress out of the box is already technically quite a good platform for SEO, this was true when I wrote my original [WordPress SEO](http://yoast.com/articles/wordpress-seo/) article in 2008 and it's still true today, but that doesn't mean you can't improve it further! This plugin is written from the ground up by [WordPress SEO consultant](http://yoast.com/hire-me/wordpress-seo-consultant/) and [WordPress developer](http://yoast.com/hire-me/wordpress-developer/) Joost de Valk to improve your site's SEO on *all* needed aspects. While this [WordPress SEO plugin](http://yoast.com/wordpress/seo/) goes the extra mile to take care of all the technical optimization, more on that below, it first and foremost helps you write better content.  WordPress SEO forces you to choose a focus keyword when you're writing your articles, and then makes sure you use that focus keyword everywhere.
 
 = Write better content with WordPress SEO =
 Using the snippet preview you can see a rendering of what your post or page will look like in the search results, whether your title is too long or too short and your meta description makes sense in the context of a search result. This way the plugin will help you not only increase rankings but also increase the click through for organic search results.
 
 = Page Analysis =
-The WordPress SEO plugins [Linkdex Page Analysis](http://yoast.com/content-seo-wordpress-linkdex/) functionality checks simple things you're bound to forget. It checks, for instance, if you have images in your post and whether they have an alt tag containing the focus keyword for that post. It also checks whether your posts are long enough, if you've written a meta description and if that meta description contains your focus keyword, if you've used any subheadings within your post, etc. etc. 
+The WordPress SEO plugins [Linkdex Page Analysis](http://yoast.com/content-seo-wordpress-linkdex/) functionality checks simple things you're bound to forget. It checks, for instance, if you have images in your post and whether they have an alt tag containing the focus keyword for that post. It also checks whether your posts are long enough, if you've written a meta description and if that meta description contains your focus keyword, if you've used any subheadings within your post, etc. etc.
 
 The plugin also allows you to write meta titles and descriptions for all your category, tag and custom taxonomy archives, giving you the option to further optimize those pages.
 
@@ -33,7 +33,7 @@ With the WordPress SEO plugin you can control which pages Google shows in its se
 WordPress itself only shows canonical link elements on single pages, WordPress SEO makes it output canonical link elements everywhere. Google has recently announced they would also use `rel="next"` and `rel="prev"` link elements in the `head` section of your paginated archives, this plugin adds those automatically, see [this post](http://yoast.com/rel-next-prev-paginated-archives/ title="rel=next & rel=prev for paginated archives") for more info.
 
 = XML Sitemaps =
-WordPress SEO has the most advanced XML Sitemaps functionality in any WordPress plugin. Once you check the box, it automatically creates XML sitemaps and notifies Google & Bing of the sitemaps existence. These XML sitemaps include the images in your posts & pages too, so that your images may be found better in the search engines too. 
+WordPress SEO has the most advanced XML Sitemaps functionality in any WordPress plugin. Once you check the box, it automatically creates XML sitemaps and notifies Google & Bing of the sitemaps existence. These XML sitemaps include the images in your posts & pages too, so that your images may be found better in the search engines too.
 
 These XML Sitemaps will even work on large sites, because of how they're created, using one index sitemap that links to sub-sitemaps for each 1,000 posts. They will also work with custom post types and custom taxonomies automatically, while giving you the option to remove those from the XML sitemap should you wish to.
 
@@ -91,7 +91,7 @@ For more info, check out the following articles:
 
 = The SEO title output for the plugin doesn't work as expected =
 
-You've set up a template for your titles, but things get added to it when they're output? You can do two things: either enable "Force rewrite titles" on the SEO -> Titles settings page, or go into your header.php and change the title element to just this: 
+You've set up a template for your titles, but things get added to it when they're output? You can do two things: either enable "Force rewrite titles" on the SEO -> Titles settings page, or go into your header.php and change the title element to just this:
 
 `<title><?php wp_title(''); ?></title>`
 
@@ -122,6 +122,13 @@ Once you'll start using this plugin, you won't ask that question anymore, you'll
 
 Also, other than All In One SEO Pack, this plugin has a completely working canonical implementation for all pages within your site, whereas the one in All In One SEO pack is broken, it was originally written by the author of this plugin, so he knows. It comes with XML Sitemaps, an XML News sitemap module, loads and loads of robots meta options and other options to improve your SEO.
 
+= I want to use your XML Sitemaps with NGINX, is that possible? =
+
+Yes, of course! Here are the rewrite rules you'll need:
+
+`rewrite ^/sitemap_index\.xml$ /index.php?sitemap=1 last;
+rewrite ^/([^/]+?)-sitemap([0-9]+)?\.xml$ /index.php?sitemap=$1&sitemap_n=$2 last;`
+
 == Screenshots ==
 
 1. The WordPress SEO plugin general meta box. You'll see this on edit post pages, for posts, pages and custom post types.
@@ -133,6 +140,173 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 7. The advanced section of the WordPress SEO meta box.
 
 == Changelog ==
+
+= 1.3.4.4 =
+
+* Bug with revisions in XML sitemap for some weird combinations.
+* Improved logic for rel=publisher on frontpage.
+* Allow variables in meta description for post type archive.
+* Improved counting of images for page analysis.
+* updated Turkish (tr_TR)
+* updated Russian (ru_RU)
+* updated Indonesian (id_ID)
+* updated French (fr_FR)
+* updated Czech (cs_CZ)
+* added Japanese (ja)
+
+= 1.3.4.3 =
+
+* Regex annoyances anyone? Sigh. Bug fixed.
+
+= 1.3.4.2 =
+
+* Added missing filter for meta box priority.
+* Fixed bug in JS encoding.
+
+= 1.3.4.1 =
+
+* Bug in page analysis regex.
+
+= 1.3.4 =
+
+* Fix bug in custom field value retrieval for new drafts.
+* Fix bug in meta box value for checkboxes (only used currently in News extension).
+* Remove redirect added in 1.3.3 as it seems to cause loops on some servers, will investigate later.
+* Add option to filter `wpseo_admin_pages` so more pages can use WP SEO admin stylesheets.
+* Prevent notice for images without alt tags.
+* Use mb_string when possible.
+
+= 1.3.3 =
+
+* Properly `$wpdb->prepare` all queries that need preparing.
+* Fix wrong escaping in admin pointers.
+* Make %%currentdate%% and %%currenttime%% variables respect WP date format settings.
+* Add %%currentday%% format.
+* Force remove Jetpack OpenGraph.
+* Fix the weird addition of `noindex, nofollow` on URLs with ?replytocom that was added in 3.5.
+* Force XML sitemap to be displayed on the proper domain URL, so XSLT works.
+
+= 1.3.2 =
+
+* Updated wordpress-seo.pot
+* Updated Turkish (tr_TR) filename.
+* Updated Spanish (es_ES) translation.
+* Fixed bug where non-admin users couldn't save their profile updates.
+* Fixed bug with the same OpenGraph image appearing multiple times.
+* Fixed bug that would prevent import and export of plugin settings.
+* Try to do a redirect back after saving settings.
+* Properly allow for attachment pages in XML sitemaps, default them to off.
+* Fixed annoying bug where checkboxes wouldn't display as "checked" even when the value was set to true.
+* Show post type name and taxonomy name (as opposed to label) next to labels in XML sitemap settings to more easily identify post types and taxonomies.
+* Switch tracking to a daily cronjob instead of an admin process to prevent tracking from slowing down admin interface.
+* Focus keyword detection now properly works for diacritical focus keywords as well.
+* Properly apply filters to meta desc and titles in admin grid.
+* Properly detect new versions of Facebook plugin too.
+* Allow changing of the number of posts per XML sitemap, to prevent memory issues on certain installs.
+
+= 1.3.1.1 =
+
+* Some of that escaping was too aggressive.
+
+= 1.3.1 =
+
+* Fix somewhat too aggressive escaping of content.
+* Added notice text for non-existing .htaccess file / robots.txt file.
+
+= 1.3 =
+
+* Long list of small fixes and improvements to code best practices after Sucuri review. Fixes 3 small security issues.
+* Updated .pot file
+* Updated Danish (da_DK), Indonesian (id_ID), Chinese (zh_CN), Russian (ru_RU), Norwegian (nb_NO), Turkish (tr_TK), Hebrew (he_IL) and Persian (fa_IR).
+* Added Arabic (ar), Catalan (ca) and Romanian (ro_RO).
+
+= 1.2.8.7 =
+
+* Fixed %%category%% and %%tag%% and some other variables that weren't working since 1.2.8.6.
+
+= 1.2.8.6 =
+
+* Revert gplus changes in 1.2.8.5 that were causing issues.
+* Fix a tracking timeout.
+* Fix a bunch of notices throughout variables functions.
+
+= 1.2.8.5 =
+
+* Fixed a bug for MultiSite due to a missing attribute in calling `get_admin_url`.
+* Updated Hebrew (he_IL), Dutch (nl_NL) French (fr_FR), Czech (cs_CZ), Italian (it_IT), Brazilian Portuguese (pt_BR).
+* Added Norwegian (nb_NO) and Portuguese (pt_PT).
+* Added a `wpseo_robots` filter for the robots meta tag.
+* Fixed integration with the [Facebook plugin](http://wordpress.org/extend/plugins/facebook).
+
+= 1.2.8.4 =
+
+* Fix for double title issues with themes that filter `wp_title`, by having WP SEO filter a bit later in the process
+  (but no too late because the genesis <title> wrap filter is on 30).
+* Improved Twitter Card functionality: twitter meta tags now appear above OpenGraph meta tags.
+* Updated a bunch of languages: da_DK, de_DE, es_ES, fa_IR, fr_FR, he_IL, hu, hu_HU, it_IT, nl_NL, pt_BR, ru_RU, tr_TK, zh_CN.
+* Added Czech (cs_CZ) and Spanish - Venezuela (es_VE).
+
+= 1.2.8.3 =
+
+* Updated all the languages in hopes to fix the empty text strings.
+* Added basic translations for Danish (da_DK) and Finnish (fi).
+
+= 1.2.8.2 =
+
+* "Fix" for tracking popup with empty buttons.
+
+* Updated languages
+	* French fr_FR
+	* Dutch nl_NL
+	* Turkish tr_TK
+
+= 1.2.8.1 =
+
+* Fixed one s, that caused a fatal error. Sigh.
+
+= 1.2.8 =
+
+* Bug fixes:
+    * Fix for images not showing up in XML sitemap.
+    * Fix to allow breadcrumb titles to once again be set for CPT archive pages.
+    * Prevent empty rel=publisher link from being put out.
+    * Several fixes to the strip category base settings.
+    * Several fixes to the hardcoded meta description recognition code.
+    * Prevent title testing from priming the cache.
+    * Prevent upgrading from a recent version to force a title test, no longer overrides manual force rewrite settings.
+    * Fix paginated singular post / page issue when single isn't paginated.
+* Enhancements:
+    * No longer show .htaccess editor when on NGINX.
+    * Move tracking to its own file, switching to my own tracking instead of PressTrends so more specific options can be tracked.
+    * Tracking can now be enabled and disabled from the SEO Dashboard screen.
+* Documentation:
+    * Added rewrite rules for NGINX to FAQ.
+    * Now showing rewrite rules for NGINX on XML sitemaps settings page.
+
+= 1.2.7 =
+
+* Fixed compatibility with 3.3 and lower.
+
+= 1.2.6 =
+
+* Enhancements:
+    * Added (optional) PressTrends tracking to get some more info on common configurations of WP to test for.
+    * Made config page loading even faster.
+    * Added a link to my [Amazon wishlist](http://amzn.com/w/CBV7CEOJJH98) to the plugin sidebar in the admin ;)
+    * Added a check to see whether your theme contains a hardcoded meta description, and options to remove it.
+    * Added a Google+ Publisher input option for the homepage.
+    * Added the option to allow showing the date in the snippet preview per post type.
+    * Removed aggressive cache deleting in the XML sitemaps. Could cause issues with some plugins but should increase speed.
+    * Force the XML Sitemap to return a 200 OK Header.
+* Deprecated functionality:
+    * The breadcrumbs functionality no longer automatically hooks as this was giving too many issues.
+* Bug fixes:
+    * Prevent adding trailing slash on paged posts when force trailing slash on categories and tags is on.
+    * Breadcrumbs now properly use `home_url` instead of `site_url`.
+    * Simplify shortcode stripping, to make it actually work.
+    * Prevent several notices in XML Sitemaps class.
+* Textual / documentation changes:
+    * Add a "without @" notice to the Twitter username input field.
 
 = 1.2.5 =
 
@@ -212,7 +386,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Title's should be (and now is) Titles.
 	* Fixes to Theme integrations for Woo, Genesis and Thematic.
 	* Enhancement to force rewrite title test.
-	
+
 = 1.2 =
 
 * Bugs fixed:
@@ -279,7 +453,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Fixed a couple of notices.
 	* Allow '+' in focus keyword.
 	* A *load* of i18n fixes (including a new POT file).
-	
+
 = 1.1.7 =
 
 * Bugs fixed / Changes:
@@ -305,7 +479,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 		* Force XML Sitemap descriptions for images to be clean to prevent XML parse errors.
 		* Tiny change in CSS for explanatory text in XSL.
 * New filters:
-	* Add filter `wpseo_locale` for the locale in the opengraph settings. 
+	* Add filter `wpseo_locale` for the locale in the opengraph settings.
 	* Add filter `wpseo_metabox_prio` to allow WP SEO metabox priority to be changed.
 * Documentation:
 	* Removed the "Other Notes" tab from the plugin page, enough tabs there already.
@@ -358,7 +532,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 
 = 1.1 =
 
-* Biggest change: entire plugin now supports localization, testing can be done by dropping your properly named .mo file (wordpress-seo-nl_NL.mo for instance) into the languages dir. 
+* Biggest change: entire plugin now supports localization, testing can be done by dropping your properly named .mo file (wordpress-seo-nl_NL.mo for instance) into the languages dir.
 * Added Dutch, German, French, Hebrew, Italian, Russian and Swedish translations.
 * Show proper post type names in admin menu for disabling editor box and hide non-public post types (props Nacin).
 * Disabling the Advanced Editor now only disables it for non admins.
@@ -492,7 +666,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Several performance optimizations to class includes.
 	* Some fixes in JavaScript keyword detection and keyword bolding in snippet when using colon and semicolons etc in title or meta description.
 	* Tiny CSS fixes so it all looks nice in WordPress 3.2.
-	
+
 
 * Also:
 	* XML Sitemaps now have their own settings page.
@@ -502,7 +676,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Added some filters:
 		* `wpseo_sitemap_urlimages` so you can add images to the sitemap, found in inc/class-sitemaps.php
 		* `wpseo_title` and `wpseo_metadesc` in frontend/class-frontend.php
-		
+
 
 = 0.3.5 =
 
@@ -519,7 +693,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 * Fixes:
 	* CSS issue caused by 0.3.3.
 	* Some security issues, thanks Jon Cave and Andrew Nacin for pointing them out and helping to fix!
-	
+
 = 0.3.3 =
 
 * Fixes:
@@ -538,7 +712,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 
 * Also:
 	* Notice now properly tells you to save as draft or update a post to see new Linkdex analysis. No, it's not going to be AJAX, ever, for performance reasons.
-	
+
 = 0.3.2 =
 
 * Fixes:
@@ -554,7 +728,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Removed 3 no longer needed JavaScript files.
 	* Added the new bug tracker to the plugins sidebar notice under support.
 	* Canonical now has a filter (`wpseo_canonical`) so you can remove it or change it.
-	
+
 = 0.3.1 =
 
 * Fixes:
@@ -568,7 +742,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 
 * Other new features:
 	* You can now noindex, follow all sub pages of archives, taxonomies and categories.
-	
+
 * Fixes / Updates:
 	* Snippet will now use ellipsis when post title or meta description is too long.
 	* Various JS optimizations in snippet preview generation.
@@ -625,10 +799,10 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Issue with removing tags when string was empty in JavaScript.
 	* Hiding the post_format taxonomy on the right places.
 	* Should now work better with crappy themes that do weird things in header.php.
-	
+
 * Design fixes:
 	* Updated tabs in meta boxes to reflect Core UI, for more info see [this post](http://developersmind.com/tabbed-meta-box-in-wordpress/) by Pete Mall.
-	
+
 * Enhancements:
 	* Now using plugin version number to enqueue files so browser cache isn't in the way when upgrading.
 	* Loading scripts in footer now when possible.
@@ -647,19 +821,19 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 
 * New features:
 	* Option to disable WordPress SEO meta data box on (custom) taxonomies.
-	
+
 = 0.2.5 =
 
 * Bugs fixed:
 	* Snippet preview quicker than ever and it no longer blows up some browsers: all AJAX calls have been removed and the entire process is done with JavaScript within the browser.
-	
+
 * Feature enhancements:
 	* The meta box on the edit posts page now features tabs, thanks to Pete Mall (even works nicely in the blue theme).
 	* Advanced features moved to their own tab instead of button.
 	* Focus keyword now shown straight below snippet preview.
-	
+
 * Other news: The Google News module almost ready for mass-deployment. Stay tuned.
-	
+
 = 0.2.3.4 =
 
 * Added WPML config file, so you can SEO in multiple languages.
@@ -670,17 +844,17 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Comma in priority in sitemap which should be dot. I hate European servers.
 	* Fixed a notice in generating a path to the wpseo directory in the uploads dir.
 	* Fixed a rather annoying XML Sitemap date issue, props to [Staze in wp.org forums](http://wordpress.org/support/topic/plugin-wordpress-seo-by-yoast-sitemapxml-wrong-date-for-blog?replies=8).
-	
+
 * Feature enhancement:
 	* Breadcrumbs now output links to post type archives too.
-	
+
 = 0.2.3.2 =
 
 * Bugs fixed:
 	* Fixed race condition where sitemap wouldn't load sometimes.
 	* ... in snippet preview are now bold as they should be.
 	* Desc and Title in snippet preview should now update less frequently to prevent crashing low mem browsers.
-	
+
 = 0.2.3.1 =
 
 * Bugs fixed:
@@ -689,14 +863,14 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Fix for an error that could occur when the post thumbnail functionality is not active.
 * Changes:
 	* Added page numbers to default titles for taxonomies and archives.
-	
+
 = 0.2.3 =
 
 * New features:
 	* First stab at (Facebook) OpenGraph implementation.
 	* Meta Description can now be returned, using `$wpseo_front->metadesc( false );` for use elsewhere.
 	* Plugins can now register their own variables to not be cleaned out when permalink redirect is enabled.
-	
+
 * Bugs fixed:
 	* Deleting the dashboard widget will now really delete it.
 	* Some fixes for notices.
@@ -707,11 +881,11 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Breadcrumb now actually returns when you ask it to.
 	* Fixed some errors in JavaScript of title generation within snippet preview.
 	* Removed SEO title from post edit overview as you couldn't edit it there anyway.
-	
+
 * Documentation fixes:
 	* Added an extra notice to clean permalink to let people know they're playing with fire.
 	* Small improvement to error handling for upload path.
-	
+
 = 0.2.2 =
 
 * Bugs fixed:
@@ -721,7 +895,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Several fixes in rewrites for MultiSite instances.
 	* Option to force http or https on canonical URLs.
 	* Several other bugfixes.
-	
+
 = 0.2.1 =
 
 * Bugs fixed:
@@ -741,11 +915,11 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 * Changes:
 	* Moved all rewrites to their own class, *inc/class-rewrite.php*.
 	* Further improved error handling when *uploads/wpseo* dir creation fails.
-	
+
 * New features:
 	* Remove category base, removes `/category/` from category URL's. Find it under Permalinks. Props to [WP No Category Base](http://wordpresssupplies.com/wordpress-plugins/no-category-base/) for having the cleanest code I could find in this area, which I reused and modified.
 	* Admin bar goodness: an SEO menu! Try it if you're on 3.1 already, it allows you to perform several SEO actions!
-	
+
 = 0.2 =
 
 * Bugs fixed:
@@ -763,7 +937,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* New general settings panel on WPSEO Dashboard which allows you to disable WordPress SEO box on certain post types.
 	* Option to use focus keyword in title, meta description and keyword templates.
 	* Changed the hook for the permalink cleaning from `get_header` to `template_redirect`, which means it redirects faster and is less error prone.
-	
+
 * New Features:
 	* Added option to export taxonomy metadata (PHP 5.2+ only for now).
 	* Meta keywords are now an option... I don't like them but there's sufficient demand apparently. Works for homepage, post types, author pages and taxonomies.
@@ -773,11 +947,11 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 		* The option to make WordPress SEO only accessible to Super admins instead of site admins.
 		* The option to set a "default" site, from which new sites will henceforth acquire their settings on creation.
 		* The option to revert a site to the "default" site's settings.
-	
+
 = 0.1.8 =
 
 * Notice: The functionality in the post / page editor has changed quite a bit. Meta descriptions are now generated using the meta descriptions template if no meta description is entered, so it will for instance use the post excerpt, the SEO title is no longer filled automatically BUT it is properly shown in the snippet preview based on your title template. It should work faster, more intuitive and just better in general, but I do need your feedback, let me know if it's an improvement.
-	
+
 * Bugs fixed:
 	* Fixed a notice for non existing metadesc.
 	* Fixed several notices in title generation.
@@ -785,7 +959,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Fixed bug where frontpage title wouldn't be generated properly.
 	* Made sure unzip of settings.zip (for settings import) works properly everywhere (by getting rid of `WP_Filesystem` and `unzip_file()`, as they do not work reliably).
 	* Made sure meta descriptions are not shown on paged archives or homepages.
-	
+
 * Changes:
 	* Admin:
 		* Moved image used in news widget into images directory instead of loading from CDN to prevent https issues.
@@ -809,7 +983,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 		* Fix in XSL path generation on HTTPS admin backends when frontend is normal HTTP.
 		* XML Sitemap update on post publish now actually works properly.
 		* No longer are XML Sitemaps enabled automatically when publishing a post (sorry about that).
-	
+
 = 0.1.7.1 =
 
 * Apparently `is_network_admin()` didn't exist before WP 3.1. D0h!!!
@@ -825,27 +999,27 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Properly fallback to `$wp_query->get_queried_object()` instead of `get_queried_object()` for < 3.1 installs.
 	* Fixed several bugs in title generation, making it more stable and faster in the process.
 	* Properly escape entities in page titles, both in front end and in posts overview.
-	
+
 * Changes:
 	* Latest news from Yoast now appears on Network Admin too, and you can disable it there and on normal admin pages individually. First step towards getting a Multi Site Network Admin SEO page.
 	* Added a "Re-test focus keyword" button for people using the Rich Text editor, which wasn't sending update events properly.
-	
+
 = 0.1.6 =
 
 * New features:
 	* Export & Import your WordPress Settings easily.
 	* You can now supply extra variables to prevent from being cleaned out when clean permalinks is on.
-	
+
 * Bugs fixed:
 	* No longer throw errors when wpseo dir cannot be created.
 	* Your blog is not public warning can now be properly dismissed.
 	* Fixed rewrite issues: apparently if you only load rewrite rules on the front-end, they don't get added when changing rewrites in the backend. D0h.
 	* Rewrite rule for sitemap is now forced even harder when regenerating sitemap by hand.
-	* Search permalinks now work properly, though in "old" ?s=query style, because of a bug in core. 
+	* Search permalinks now work properly, though in "old" ?s=query style, because of a bug in core.
 	* Breadcrumbs no longer errors when term that is supposed to show is empty.
 	* Enabling breadcrumbs without setting any of the text fields no longer gives notices but proper defaults.
 	* Proper fallback for get_term_title for pre WP 3.1 sites with custom taxonomies.
-	
+
 * Changes:
 	* You can now dismiss settings advice.
 	* You can now fix some of the settings advice just by clicking the button.
@@ -855,7 +1029,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Removing RSS feeds now actually works (props @rrolfe).
 	* Added breadcrumb for 404 pages (props @rrolfe).
 	* Drastically reduced memory usage during XML sitemap generation.
-	
+
 = 0.1.5 =
 
 * Bugs fixed:
@@ -865,7 +1039,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Made sure regenerating sitemap worked again on post publish.
 	* Force flush rewrite rules on activation / upgrade of plugin to make rewrite work.
 	* Fixed empty RSS content bug caused in 0.1.4.
-	
+
 * Changes:
 	* Removed part done quick edit functionality, will need to revisit once API improves.
 	* Implemented a hook that would make the title work with Thematic based themes properly.
@@ -874,11 +1048,11 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Added option to force rewrite titles for people that can't adapt their theme, it's ugly but not as ugly as how All In One SEO handles it.
 	* If title templates aren't set, the plugin now generates proper default titles.
 	* The News module has moved to a separate directory, where all other modules will reside too, so they can be updated individually later. Download link for the news module will appear on yoast.com shortly.
-	
+
 * Documentation:
 	* Added Admin Only notice in HTML code when no meta description could be generated.
 	* Added a donation box, I'll gladly take your money ;)
-	
+
 = 0.1.4 =
 
 * Bugs fixed:
@@ -914,7 +1088,7 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Advanced button now looks cooler (hey even little changes deserve a changelog line!).
 	* Now pinging Ask.com too for updated sitemaps, for those of you caring about SEO for Ask.
 	* Added plugin version number to "branding" comment to help in bug fixing.
-	
+
 = 0.1.2.1 =
 
 * Added a missing ) to prevent death on install / going into wp-admin.
@@ -936,11 +1110,11 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Fixed several notices for unset variables.
 	* Added get text calls in several places to allow localization.
 
-* (Inline) Documentation fixes:	
+* (Inline) Documentation fixes:
 	* Exclusion list in XML sitemap box for post types now shows proper label instead of internal name.
 	* Exclusion list in XML sitemap box for custom taxonomies now shows plural instead of singular form.
 	* Added explanation on how to add breadcrumbs to your theme, as well as link to more explanatory page.
-	
+
 * Changes:
 	* Links to Webmaster Tools etc. now open in new window.
 	* Heavily simplified the javascript used for snippet preview, removing HTML5 placeholder code and instead inserting the title into the input straight away. Lot faster this way.
@@ -959,15 +1133,15 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Made %%page%% also work on page 1 of a result set.
 	* Fixed design of broken feed error.
 	* Made sure %%tag%% works too in title templates.
-	
-* (Inline) Documentation fixes:	
+
+* (Inline) Documentation fixes:
 	* Added this readme.txt file describing all the SEO functionality, and why this is _the_ All in one SEO plugin.
 	* MS Webmaster Central renamed to Bing Webmaster Tools.
 	* Added links to Bing Webmaster Tools and Yahoo! Site explorer to meta values box, as well as an explanation that you do not need to use those values if your site is already verified.
 	* Changed wording on description of clean permalinks.
 	* Added line explaining that SEO title overwrites the SEO title template.
 	* Added line telling to save taxonomy and post_type excludes before rebuilding XML sitemap.
-	
+
 * Changes:
 	* Changed robots meta noindex and nofollow storage for pages to boolean on noindex and nofollow, please check when upgrading.
 	* Now purging W3TC Object Cache when saving taxonomy meta data to make sure new settings are immediately reflected in output.
@@ -976,17 +1150,17 @@ Also, other than All In One SEO Pack, this plugin has a completely working canon
 	* Huge code optimizations in breadcrumbs generation and permalink clean up.
 	* Permalink cleaning now works for taxonomies too.
 	* Faked All in One SEO class to make plugin work with themes that check for that.
-	
+
 * New features:
 	* Noindex and nofollow options for taxonomies (noindexing a term automatically removes it from XML sitemap too).
 	* Editable canonicals for taxonomies.
 	* Completed module functionality, using the XML News sitemap as first module.
 	* Added experimental "Find related keywords" feature that'll return keywords that are related to your focus keyword.
-	
+
 * Issues currently in progress:
 	* WPML compatibility for the multilingual SEO's.
 	* XML Sitemap errors in Bing Webmaster Tools (due to use of "caption" for images).
-	
+
 
 = 0.1 =
 

@@ -1,9 +1,9 @@
 === Disqus Comment System ===
-Contributors: disqus, alexkingorg, crowdfavorite
+Contributors: disqus, alexkingorg, crowdfavorite, zeeg, tail, thetylerhayes
 Tags: comments, threaded, email, notification, spam, avatars, community, profile, widget, disqus
 Requires at least: 2.8
-Tested up to: 3.3.1
-Stable tag: 2.72
+Tested up to: 3.5
+Stable tag: 2.74
 
 The Disqus comment system replaces your WordPress comment system with your comments hosted and powered by Disqus.
 
@@ -37,7 +37,7 @@ The Disqus for WordPress plugin seamlessly integrates using the Disqus API and b
 
 == Installation ==
 
-**NOTE: It is recommended that you backup your database before installing the plugin.**
+**NOTE: It is recommended that you [backup your database](http://codex.wordpress.org/Backing_Up_Your_Database) before installing the plugin.**
 
 1. Unpack archive to this archive to the 'wp-content/plugins/' directory inside
    of WordPress
@@ -52,7 +52,37 @@ The Disqus for WordPress plugin seamlessly integrates using the Disqus API and b
 
 Go to [http://disqus.com/help/wordpress](http://disqus.com/help/wordpress)
 
+== Screenshots ==
+
+1. Disqus Comments
+2. Discovery Box (part of Disqus Comments)
+3. Inline Moderation Interface
+
 == Changes ==
+
+2.74
+
+* Updated settings UI
+* Add filter hook for setting custom Disqus language
+* For WP >= 3.5, use new media uploader
+* Disable internal Wordpress commenting if Disqus is enabled (thanks Artem Russakovskii)
+* Cleaned up installation and configuration flow
+* Added link to WP backup guide in README
+* Fix admin bar comments link
+* Added a check to avoid a missing key notice when WP_DEBUG=TRUE (thanks Jason Lengstorf)
+* Prevent 404 errors for embed.js from being reported by Google Webmaster Tools (missed in 2.73 README)
+
+2.73
+
+* Apply CDATA patch from Wordpress 3.4 to dsq_export_wxr_cdata() (thanks Artem
+  Russakovskii for the patch).
+* Added Single Sign-On log-in button and icon to options (only for sites using SSO)
+* Output user website if set in SSO payload
+* Added plugin activation statuses to debug info
+* Bump supported WordPress version to 3.4.1
+* Fixed issue where disqus_dupecheck won't properly uninstall
+* Load second count.js (output-in-footer version) reference via SSL too
+* Added screenshots
 
 2.72
 

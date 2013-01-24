@@ -134,7 +134,7 @@ determineAspectRatio = (current_ar, size_info) ->
 	gc = gcd width, height
 	if crop? and crop > 0
 		tmp_ar = null
-		if (width? > 0 and height? > 0)
+		if (width? and width > 0 and height? and height > 0)
 			if gc?
 				tmp_ar = "#{ width / gc }:#{ height / gc }"
 			else
@@ -292,7 +292,8 @@ do (pte) ->
 				catch error
 					ar = null
 					if ar isnt ias_instance.getOptions().aspectRatio
-						alert error
+						log "Setting Aspect Ratio to null"
+						#alert error
 					return false
 				true
 			iasSetAR ar

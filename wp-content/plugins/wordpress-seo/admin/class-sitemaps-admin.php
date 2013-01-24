@@ -3,6 +3,11 @@
  * @package XML_Sitemaps
  */
 
+if ( !defined('WPSEO_VERSION') ) {
+	header('HTTP/1.0 403 Forbidden');
+	die;
+}
+
 /**
  * Class that handles the Admin side of XML sitemaps
  */
@@ -17,7 +22,6 @@ class WPSEO_Sitemaps_Admin {
 		if ( !isset( $options[ 'enablexmlsitemap' ] ) || !$options[ 'enablexmlsitemap' ] )
 			return;
 
-		add_action( 'init', array( $this, 'init' ), 1 );
 		add_action( 'transition_post_status', array( $this, 'status_transition' ), 10, 3 );
 		add_action( 'admin_init', array( $this, 'delete_sitemaps' ) );
 	}
@@ -41,16 +45,6 @@ class WPSEO_Sitemaps_Admin {
 	}
 
 	/**
-	 * Initialize sitemaps. Add sitemap rewrite rules and query var
-	 */
-	function init() {
-		$GLOBALS[ 'wp' ]->add_query_var( 'sitemap' );
-		$GLOBALS[ 'wp' ]->add_query_var( 'sitemap_n' );
-		add_rewrite_rule( 'sitemap_index\.xml$', 'index.php?sitemap=1', 'top' );
-		add_rewrite_rule( '([^/]+?)-sitemap([0-9]+)?\.xml$', 'index.php?sitemap=$matches[1]&sitemap_n=$matches[2]', 'top' );
-	}
-
-	/**
 	 * Hooked into transition_post_status. Will initiate search engine pings
 	 * if the post is being published, is a post type that a sitemap is built for
 	 * and is a post that is included in sitemaps.
@@ -66,11 +60,11 @@ class WPSEO_Sitemaps_Admin {
 			return;
 
 		if ( WP_CACHE )
-			wp_schedule_single_event( time(), 'wpseo_hit_sitemap_index' );
+			wp_schedule_single_event( time() + 300, 'wpseo_hit_sitemap_index' );
 
 		// Allow the pinging to happen slightly after the hit sitemap index so the sitemap is fully regenerated when the ping happens.
 		if ( wpseo_get_value( 'sitemap-include', $post->ID ) != 'never' )
-			wp_schedule_single_event( ( time() + 60 ), 'wpseo_ping_search_engines' );
+			wp_schedule_single_event( ( time() + 300 ), 'wpseo_ping_search_engines' );
 	}
 }
 
