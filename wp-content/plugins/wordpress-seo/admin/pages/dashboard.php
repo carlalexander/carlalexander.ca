@@ -118,7 +118,7 @@ if ( isset( $options['ignore_tour'] ) && $options['ignore_tour'] ) {
 	echo '<p class="desc label">' . __( 'Take this tour to quickly learn about the use of this plugin.', 'wordpress-seo' ) . '</p>';
 }
 
-echo '<label class="select">' . __( 'Default Settings:', 'wordpress-seo' ) . '</label><a class="button-secondary" href="' . admin_url( 'admin.php?page=wpseo_dashboard&wpseo_reset_defaults' ) . '">' . __( 'Reset Default Settings', 'wordpress-seo' ) . '</a>';
+echo '<label class="select">' . __( 'Default Settings:', 'wordpress-seo' ) . '</label><a class="button-secondary" href="' . admin_url( 'admin.php?page=wpseo_dashboard&wpseo_reset_defaults&nonce='. wp_create_nonce('wpseo_reset_defaults') ) . '">' . __( 'Reset Default Settings', 'wordpress-seo' ) . '</a>';
 echo '<p class="desc label">' . __( 'If you want to restore a site to the default WordPress SEO settings, press this button.', 'wordpress-seo' ) . '</p>';
 
 echo '<h2>' . __( 'Tracking', 'wordpress-seo' ) . '</h2>';

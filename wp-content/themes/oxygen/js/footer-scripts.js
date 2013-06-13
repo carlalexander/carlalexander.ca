@@ -8,7 +8,7 @@ jqu( function () {
 	jqu( 'body' ).removeClass( 'no-js' );
 	
 	/* Masonry */
-	var $container = jqu( '.hfeed-more');
+	var $container = jqu( '.hfeed-more' );
 	var width = $container.width();
 	$container.imagesLoaded( function() {
 		$container.masonry( {

@@ -11,13 +11,13 @@
 }
 .tiled-gallery .gallery-group {
 	float: left;
-	overflow-y: hidden;
 	position: relative;
 }
 .tiled-gallery .tiled-gallery-item {
 	float: left;
 	margin: 0;
 	position: relative;
+	width: inherit; /* prevents ie8 bug with inline width styles */
 }
 .tiled-gallery .gallery-row {
 	 overflow: hidden;
@@ -56,7 +56,7 @@
 	width: 100%;
 	white-space: nowrap;
 }
-.tiled-gallery .tiled-gallery-item.small .tiled-gallery-caption { /* Smaller captions */
+.tiled-gallery .tiled-gallery-item-small .tiled-gallery-caption { /* Smaller captions */
 	font-size: 11px;
 }
 

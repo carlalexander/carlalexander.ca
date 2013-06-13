@@ -52,7 +52,9 @@ class WPSEO_Pointers {
 	 * Shows a popup that asks for permission to allow tracking.
 	 */
 	function tracking_request() {
-		$id      = '#wpadminbar';
+		$id    = '#wpadminbar';
+		$nonce = wp_create_nonce( 'wpseo_activate_tracking' );
+
 		$content = '<h3>' . __( 'Help improve WordPress SEO', 'wordpress-seo' ) . '</h3>';
 		$content .= '<p>' . __( 'You\'ve just installed WordPress SEO by Yoast. Please helps us improve it by allowing us to gather anonymous usage stats so we know which configurations, plugins and themes to test with.', 'wordpress-seo' ) . '</p>';
 		$opt_arr   = array(
@@ -60,10 +62,9 @@ class WPSEO_Pointers {
 			'position' => array( 'edge' => 'top', 'align' => 'center' )
 		);
 		$button2   = __( 'Allow tracking', 'wordpress-seo' );
-		$nonce     = wp_create_nonce( 'wpseo_activate_tracking' );
 
-		$function2 = 'document.location="' . admin_url( 'admin.php?page=wpseo_dashboard&allow_tracking=yes&nonce='.$nonce ) . '";';
-		$function1 = 'document.location="' . admin_url( 'admin.php?page=wpseo_dashboard&allow_tracking=no&nonce='.$nonce ) . '";';
+		$function2 = 'wpseo_store_answer("yes","'.$nonce.'")';
+		$function1 = 'wpseo_store_answer("no","'.$nonce.'")';
 
 		$this->print_scripts( $id, $opt_arr, __( 'Do not allow tracking', 'wordpress-seo' ), $button2, $function2, $function1 );
 	}
@@ -95,11 +96,11 @@ class WPSEO_Pointers {
 			),
 			'wpseo_titles'         => array(
 				'content'  => "<h3>" . __( "Title &amp; Description settings", 'wordpress-seo' ) . "</h3>"
-					. "<p>" . __( "This is were you set the templates for your titles and descriptions of all the different types of pages on your blog, be it your homepage, posts & pages (under post types), category or tag archives (under taxonomy archives), or even custom post type archives and custom posts: all of that is done from here.", 'wordpress-seo' ) . "</p>"
+					. "<p>" . __( "This is where you set the templates for your titles and descriptions of all the different types of pages on your blog, be it your homepage, posts & pages (under post types), category or tag archives (under taxonomy archives), or even custom post type archives and custom posts: all of that is done from here.", 'wordpress-seo' ) . "</p>"
 					. "<p><strong>" . __( "Templates", 'wordpress-seo' ) . "</strong><br/>"
 					. __( "The templates are built using variables, the help tab for all the different variables available to you to use in these.", 'wordpress-seo' ) . "</p>"
 					. "<p><strong>" . __( "Sitewide settings", 'wordpress-seo' ) . "</strong><br/>"
-					. __( "You can also set some sidewide settings here to add specific meta tags or to remove some unneeded cruft.", 'wordpress-seo' ) . "</p>",
+					. __( "You can also set some settings for the entire site here to add specific meta tags or to remove some unneeded cruft.", 'wordpress-seo' ) . "</p>",
 				'button2'  => __( 'Next', 'wordpress-seo' ),
 				'function' => 'window.location="' . admin_url( 'admin.php?page=wpseo_social' ) . '";'
 			),
@@ -212,6 +213,17 @@ class WPSEO_Pointers {
 		//<![CDATA[
 		(function ($) {
 			var wpseo_pointer_options = <?php echo json_encode( $options ); ?>, setup;
+
+            function wpseo_store_answer( input, nonce ) {
+				var wpseo_tracking_data = {
+					action : 'wpseo_allow_tracking',
+					allow_tracking : input,
+					nonce: nonce
+				}
+				jQuery.post( ajaxurl, wpseo_tracking_data, function() {
+                    jQuery('#wp-pointer-0').remove();
+				} );
+			}
 
 			wpseo_pointer_options = $.extend(wpseo_pointer_options, {
 				buttons:function (event, t) {

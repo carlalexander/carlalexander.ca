@@ -1,0 +1,936 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: hybrid-core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-06-03 17:05+0200\n"
+"PO-Revision-Date: 2013-02-10 22:29-0300\n"
+"Last-Translator: Galin Simeonov <galin@alienwp.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;esc_attr__;esc_attr_e;"
+"esc_html__;esc_html_e;_n;_x\n"
+"X-Poedit-Basepath: .\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-SearchPath-0: c:\\wamp\\www\\cell\\wp-content\\themes\\ascetica"
+"\\library\n"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-seo.php:37
+msgid "SEO"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-seo.php:70
+msgid "Document Title:"
+msgstr "Titulo do documento:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-seo.php:76
+msgid "Meta Description:"
+msgstr "Descrição"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-seo.php:82
+msgid "Meta Keywords:"
+msgstr "Keywords"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-template.php:36
+msgid "Template"
+msgstr "Formato"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-post-template.php:87
+msgid "No templates exist for this post type."
+msgstr "Nenhum formato para esse tipo de post"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:31
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:36
+#, php-format
+msgid "About %1$s"
+msgstr "Sobre %1$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:61
+msgid "Theme:"
+msgstr "Tema:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:69
+msgid "Version:"
+msgstr "Versão"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:77
+msgid "Author:"
+msgstr "Autor:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-about.php:85
+msgid "Description:"
+msgstr "Descrição:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-footer.php:29
+msgid "Footer settings"
+msgstr "Configurações do rodapé"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/meta-box-theme-footer.php:52
+msgid ""
+"You can add custom <acronym title=\"Hypertext Markup Language\">HTML</"
+"acronym> and/or shortcodes, which will be automatically inserted into your "
+"theme."
+msgstr ""
+"Você pode adicionar <acronym title=\"Hypertext Markup Language\">HTML</"
+"acronym> e/ou shortcodes, que serão automaticamente inserido em seu site."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:47
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:168
+#, php-format
+msgid "%1$s Theme Settings"
+msgstr "%1$s Configurações do tema"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:48
+msgid "Theme Settings"
+msgstr "Configurações do tema"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:185
+msgid "Update Settings"
+msgstr "Atualizar configurações"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:236
+msgid "Documentation"
+msgstr "Documentação"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/admin/theme-settings.php:240
+msgid "Support"
+msgstr "Suporte"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:32
+msgid ""
+"An advanced widget that gives you total control over the output of your "
+"archives."
+msgstr "Um widget que te dá controle total sobre como exibir seus arquivos"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:141
+msgid "Archives"
+msgstr "Arquivos"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:79
+msgid "Select Year"
+msgstr "Selecione o ano"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:82
+msgid "Select Month"
+msgstr "Selecione o mês"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:85
+msgid "Select Week"
+msgstr "Selecione a semana"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:88
+msgid "Select Day"
+msgstr "Selecione o dia"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:91
+msgid "Select Post"
+msgstr "Selecione o post"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Alphabetical"
+msgstr "Alfabetico"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Daily"
+msgstr "Diário"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Monthly"
+msgstr "Mensal"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Post By Post"
+msgstr "Post por post"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Weekly"
+msgstr "Semanal"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:154
+msgid "Yearly"
+msgstr "Anual"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:157
+msgid "Custom"
+msgstr "Custom"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:157
+msgid "HTML"
+msgstr "HTML"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:157
+msgid "Option"
+msgstr "Opção"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:162
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:143
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:180
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-calendar.php:108
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:168
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-nav-menu.php:133
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:162
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:143
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:180
+msgid "Title:"
+msgstr "Título:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-archives.php:198
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:191
+msgid "Show post count?"
+msgstr "Mostrar contador de posts?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:32
+msgid ""
+"An advanced widget that gives you total control over the output of your "
+"author lists."
+msgstr ""
+"Um widget que te dá controle total sobre como exibir sua lista de autores"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:119
+msgid "Authors"
+msgstr "Autores"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:136
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:171
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:173
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:160
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:153
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:172
+msgid "Ascending"
+msgstr "Ascendente"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:136
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:171
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:173
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:160
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:153
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:172
+msgid "Descending"
+msgstr "Descendente"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Display Name"
+msgstr "Exibir nome"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Email"
+msgstr "email"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:172
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:161
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "ID"
+msgstr "ID"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Nice Name"
+msgstr "Nome fera"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Post Count"
+msgstr "COntador de posts"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Registered"
+msgstr "Registrado"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "URL"
+msgstr "URL"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:137
+msgid "Login"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:169
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:159
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:171
+msgid "List"
+msgstr "Lista"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:169
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:159
+msgid "None"
+msgstr "Nenhum"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:187
+msgid "<acronym title=\"Hypertext Markup Language\">HTML</acronym>?"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:195
+msgid "Exclude admin?"
+msgstr "Excluir admin?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:199
+msgid "Show full name?"
+msgstr "Exibir nome completo?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-authors.php:203
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:279
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:299
+msgid "Hide empty?"
+msgstr "Esconder vazios?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:32
+msgid ""
+"An advanced widget that gives you total control over the output of your "
+"bookmarks (links)."
+msgstr ""
+"Um widget que te dá controle total sobre como exibir seus links favoritos"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:78
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:141
+msgid "Bookmarks"
+msgstr "Links favoritos"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:172
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:161
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:173
+msgid "Count"
+msgstr "Contador"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:172
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:161
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:173
+msgid "Name"
+msgstr "Nome"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:172
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:161
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "Slug"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Description"
+msgstr "Descrição"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Length"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Notes"
+msgstr "Notas"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Owner"
+msgstr "Dono"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:172
+msgid "Random"
+msgstr "Randomico"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Rating"
+msgstr "Classificação"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Rel"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:162
+msgid "RSS"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Target"
+msgstr "Alvo"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:174
+msgid "Updated"
+msgstr "Atualizado"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:282
+msgid "Categorize?"
+msgstr "Categorizar?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:286
+msgid "Show description?"
+msgstr "Exibir descrição"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:290
+msgid "Hide invisible?"
+msgstr "Esconder invisiveis?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:294
+msgid "Show rating?"
+msgstr "Exibir classificação?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:298
+msgid "Show updated?"
+msgstr "Exibir atualizações"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:302
+msgid "Show images?"
+msgstr "Exibir imagens?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:306
+msgid "Show name?"
+msgstr "Exibir nome?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-bookmarks.php:310
+msgid "Show private?"
+msgstr "Exibir status privado?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-calendar.php:32
+msgid ""
+"An advanced widget that gives you total control over the output of your "
+"calendar."
+msgstr "Um widget que te dá controle total sobre como exibir o calendário"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-calendar.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-calendar.php:99
+msgid "Calendar"
+msgstr "Canlendário"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-calendar.php:113
+msgid "One-letter abbreviation?"
+msgstr "Abreviação paa uma carta?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:32
+msgid ""
+"An advanced widget that gives you total control over the output of your "
+"category links."
+msgstr ""
+"Um widget que te dá controle total sobre como exibir seus links de categoria"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:131
+msgid "Categories"
+msgstr "Categorias"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:161
+msgid "Term Group"
+msgstr "Termo do grupo"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:162
+msgid "Atom"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:162
+msgid "RDF"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:162
+msgid "RSS 2.0"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:267
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:265
+msgid "Hierarchical?"
+msgstr "Hierarquico?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:271
+msgid "Use description?"
+msgstr "Usar descrição?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-categories.php:275
+msgid "Show count?"
+msgstr "Mostrar contador?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-nav-menu.php:32
+msgid ""
+"An advanced widget that gives you total control over the output of your "
+"menus."
+msgstr "Um widget que te dá controle total sobre como exibir seus menus"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-nav-menu.php:44
+msgid "Navigation Menu"
+msgstr "Menu de navegação"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-nav-menu.php:109
+msgid "Navigation"
+msgstr "Navegação"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:32
+msgid ""
+"An advanced widget that gives you total control over the output of your page "
+"links."
+msgstr "Um widget que te dá controle total sobre como exibir suas páginas"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:125
+msgid "Pages"
+msgstr "Páginas"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "Author"
+msgstr "Autor"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "Date"
+msgstr "Data"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "Menu Order"
+msgstr "Ordem do menu"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:155
+msgid "Modified"
+msgstr "Modificado"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:154
+msgid "Title"
+msgstr "Título"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-pages.php:155
+msgid "Created"
+msgstr "Criado"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:33
+msgid ""
+"An advanced widget that gives you total control over the output of your "
+"search form."
+msgstr "Um widget que te dá controle total sobre como exibir a busca"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:45
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:131
+msgid "Search"
+msgstr "Busca"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:147
+msgid "Search Label:"
+msgstr "Rótulo da busca:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:151
+msgid "Search Text:"
+msgstr "Texto da busca:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:158
+msgid "Search Submit:"
+msgstr "Texto do botão de enviar:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-search.php:163
+msgid "Use theme's <code>searchform.php</code>?"
+msgstr "usar tema <code>searchform.php</code>?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:32
+msgid ""
+"An advanced widget that gives you total control over the output of your tags."
+msgstr "Um widget que te dá controle total sobre como exibir suas tags"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:44
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:141
+msgid "Tags"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:170
+msgid "View"
+msgstr "Ver"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:170
+msgid "Edit"
+msgstr "Editar"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:171
+msgid "Flat"
+msgstr "Plano"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/classes/widget-tags.php:295
+msgid "Pad counts?"
+msgstr "Contador de Pads?"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:42
+msgid "Browse:"
+msgstr "Pesquisar:"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:45
+msgid "Home"
+msgstr "Início"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:296
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:419
+msgid "g:i a"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:299
+#, php-format
+msgid "Minute %1$s"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:299
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:422
+msgid "i"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:302
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:425
+msgid "g a"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:313
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:319
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:324
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:329
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:516
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:431
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:437
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/core-seo.php:90
+msgid "Y"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:314
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:325
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:520
+msgid "F"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:315
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:524
+msgid "d"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:320
+#, php-format
+msgid "Week %1$s"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:320
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:431
+msgid "W"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:336
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:448
+#, php-format
+msgid "Search results for &quot;%1$s&quot;"
+msgstr "Buscar por &quot;%1$s&quot;"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:340
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:452
+msgid "404 Not Found"
+msgstr "404 - Não encontrado"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:409
+msgid "Split"
+msgstr "Separar"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:413
+msgid "Merge"
+msgstr "Mesclar"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:520
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/core-seo.php:86
+msgid "F Y"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/breadcrumb-trail.php:524
+msgid "F j, Y"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/custom-field-series.php:86
+msgid "Articles in this series"
+msgstr "Artigos nestas séries"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/custom-field-series.php:212
+msgid "Series"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/post-stylesheets.php:255
+msgid "Stylesheet"
+msgstr "Folha de estilos"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:295
+msgid "Default"
+msgstr "Padrão"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:296
+msgid "One Column"
+msgstr "Uma coluna"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:297
+msgid "Two Columns, Left"
+msgstr "Duas colunas, esquerda"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:298
+msgid "Two Columns, Right"
+msgstr "Duas colunas, direita"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:299
+msgid "Three Columns, Left"
+msgstr "Três colunas, esquerda"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:300
+msgid "Three Columns, Right"
+msgstr "Três colunas, direita"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:301
+msgid "Three Columns, Center"
+msgstr "Três colunas, centro"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:377
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:485
+msgid "Layout"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/extensions/theme-layouts.php:404
+msgid "Layout is a theme-specific structure for the single view of the post."
+msgstr "Layout é um tema único para a visualização do post"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:182
+msgid "*"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:189
+msgid "Website"
+msgstr "Site"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:195
+msgid "Comment"
+msgstr "Comentário"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:196
+#, php-format
+msgid ""
+"You must be <a href=\"%1$s\" title=\"Log in\">logged in</a> to post a "
+"comment."
+msgstr ""
+"Você deve estar <a href=\"%1$s\" title=\"Log in\">logado</a> para comentar"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:197
+#, php-format
+msgid "Logged in as <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
+msgstr "Logado como <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:197
+msgid "Log out of this account"
+msgstr "Sair dessa conta"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:197
+msgid "Log out &raquo;"
+msgstr "Sair &raquo;"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:202
+msgid "Leave a Reply"
+msgstr "Responder"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:203
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr "Responder %s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:204
+msgid "Click here to cancel reply."
+msgstr "Clique para cancelar a resposta."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/comments.php:205
+msgid "Post Comment"
+msgstr "Comentário do post"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:419
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:425
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:428
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:434
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:437
+#, php-format
+msgid "Archive for %1$s"
+msgstr "Arquivo para %1$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:422
+#, php-format
+msgid "Archive for minute %1$s"
+msgstr "Arquivo par ao minuto %1$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:428
+msgid "F jS, Y"
+msgstr "F jS, Y"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:431
+#, php-format
+msgid "Archive for week %1$s of %2$s"
+msgstr "Arquivo para a semana %1$s of %2$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/context.php:456
+#, php-format
+msgid "%1$s Page %2$s"
+msgstr "%1$s Página %2$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/core-seo.php:93
+#, php-format
+msgid "Copyright (c) %1$s"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/core-seo.php:112
+msgid "l, F jS, Y, g:i a"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/deprecated.php:572
+#, php-format
+msgid ""
+"<code>%1$s</code> &mdash; This function has been removed or replaced by "
+"another function."
+msgstr "<code>%1$s</code> &mdash; Essa função foi substituida"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/menus.php:38
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:81
+msgid "Primary"
+msgstr "Primário"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/menus.php:42
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:85
+msgid "Secondary"
+msgstr "Secundário"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/menus.php:46
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:89
+msgid "Subsidiary"
+msgstr "Subsidiário"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/settings.php:76
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/settings.php:80
+msgid "Copyright &#169; [the-year] [site-link]."
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/settings.php:76
+msgid "Powered by [wp-link], [theme-link], and [child-link]."
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/settings.php:80
+msgid "Powered by [wp-link] and [theme-link]."
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:93
+msgid "State-of-the-art semantic personal publishing platform"
+msgstr "Uma plataforma de publicação muito foda."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:93
+msgid "WordPress"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:106
+#, php-format
+msgid "%s WordPress Theme"
+msgstr "%s Tema WordPress"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:134
+msgid "Log out"
+msgstr "Sair"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:136
+msgid "Log in"
+msgstr "Login"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:151
+#, php-format
+msgid "This page loaded in %1$s seconds with %2$s database queries."
+msgstr "This page loaded in %1$s seconds with %2$s database queries."
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:204
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:443
+#, php-format
+msgid "Edit %1$s"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:234
+msgid "Leave a response"
+msgstr "Responder"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:234
+#, php-format
+msgid "%1$s Response"
+msgstr "%1$s Resposta"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:234
+#, php-format
+msgid "%1$s Responses"
+msgstr "%1$s Respostas"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:241
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:243
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:245
+#, php-format
+msgid "Comment on %1$s"
+msgstr "Comentar %1$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:305
+msgid "(Untitled)"
+msgstr "(Sem título)"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:321
+msgid "Shortlink"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:345
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:422
+msgid "Permalink"
+msgstr ""
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:373
+#, php-format
+msgid "%1$s at %2$s"
+msgstr "%1$s a %2$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:422
+#, php-format
+msgid "Permalink to comment %1$s"
+msgstr "Permalink para o comentário %1$s"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:462
+msgid "Reply"
+msgstr "Responder"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/shortcodes.php:463
+msgid "Log in to reply."
+msgstr "LOgar para responder"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:82
+msgid "The main (primary) widget area, most often used as a sidebar."
+msgstr "Sidebar principal"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:86
+msgid ""
+"The second most important widget area, most often used as a secondary "
+"sidebar."
+msgstr "Sidebar secundária"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:90
+msgid "A widget area loaded in the footer of the site."
+msgstr "Sidebar de rodapé"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:93
+msgid "Header"
+msgstr "Cabeçalho"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:94
+msgid "Displayed within the site's header area."
+msgstr "Exibido no cabeçalho do site"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:97
+msgid "Before Content"
+msgstr "Antes do conteúdo"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:98
+msgid "Loaded before the page's main content area."
+msgstr "Exibido antes do conteúdo principal do site"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:101
+msgid "After Content"
+msgstr "Depois do conteúdo"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:102
+msgid "Loaded after the page's main content area."
+msgstr "Exibido logo após o conteúdo principal do site"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:105
+msgid "After Singular"
+msgstr "Após Singular"
+
+#: c:\wamp\www\cell\wp-content\themes\ascetica\library/functions/sidebars.php:106
+msgid ""
+"Loaded on singular post (page, attachment, etc.) views before the comments "
+"area."
+msgstr ""
+"Carregar em singular post (página, anexos, etc...) visualizados antes dos "
+"comentários"

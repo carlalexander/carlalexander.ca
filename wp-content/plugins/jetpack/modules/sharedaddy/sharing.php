@@ -186,6 +186,10 @@ class Sharing_Admin {
 									?>
 	  						<?php endforeach; ?>
 		  				</ul>
+						<?php
+			  				if ( -1 == get_option( 'blog_public' ) )
+								echo '<p><strong>'.__( 'Please note that your services have been restricted because your site is private.', 'jetpack' ).'</strong></p>';
+		  				?>
 		  				<br class="clearing" />
 		  			</td>
 					</tr>
@@ -277,7 +281,6 @@ class Sharing_Admin {
 									endforeach; ?>
 									<li class="advanced"><a href="#" class="sharing-anchor sd-button share-more"><span><?php _e( 'More', 'jetpack' ); ?></span></a></li>
 								</ul>
-								<div class="sharing-clear"></div>
 							</div>
 						</div>
 						<br class="clearing" />

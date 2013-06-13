@@ -1,4 +1,4 @@
-/* This file was automatically generated on Oct 16 2012 08:47:28 */
+/* This file was automatically generated on Apr 04 2013 13:33:55 */
 
 /* =Tiled Gallery Default Styles
 -------------------------------------------------------------- */
@@ -13,13 +13,13 @@
 }
 .tiled-gallery .gallery-group {
 	float: right;
-	overflow-y: hidden;
 	position: relative;
 }
 .tiled-gallery .tiled-gallery-item {
 	float: right;
 	margin: 0;
 	position: relative;
+	width: inherit; /* prevents ie8 bug with inline width styles */
 }
 .tiled-gallery .gallery-row {
 	 overflow: hidden;
@@ -58,7 +58,7 @@
 	width: 100%;
 	white-space: nowrap;
 }
-.tiled-gallery .tiled-gallery-item.small .tiled-gallery-caption { /* Smaller captions */
+.tiled-gallery .tiled-gallery-item-small .tiled-gallery-caption { /* Smaller captions */
 	font-size: 11px;
 }
 

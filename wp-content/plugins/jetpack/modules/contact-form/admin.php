@@ -6,6 +6,10 @@ function menu_alter() {
 	#menu-posts-feedback .wp-menu-image img { display: none; }
 	#adminmenu .menu-icon-feedback:hover div.wp-menu-image, #adminmenu .menu-icon-feedback.wp-has-current-submenu div.wp-menu-image, #adminmenu .menu-icon-feedback.current div.wp-menu-image { background: url("' .GRUNION_PLUGIN_URL . 'images/grunion-menu-hover.png") no-repeat 7px 7px !important; }
 	#adminmenu .menu-icon-feedback div.wp-menu-image, #adminmenu .menu-icon-feedback div.wp-menu-image, #adminmenu .menu-icon-feedback div.wp-menu-image { background: url("' . GRUNION_PLUGIN_URL . 'images/grunion-menu.png") no-repeat 7px 7px !important; }
+	body.admin-color-mp6 #adminmenu .menu-icon-feedback div.wp-menu-image, body.admin-color-mp6 #adminmenu .menu-icon-feedback div.wp-menu-image, body.admin-color-mp6 #adminmenu .menu-icon-feedback div.wp-menu-image { background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSItNDc5LjUgMzAwLjUgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTQ3OS41IDMwMC41IDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48c3R5bGU+LnN0eWxlMHtmaWxsOgkjOTk5OTk5O308L3N0eWxlPjxwYXRoIGQ9Ik0tNDcxLjUgMzA3LjVoNnYzaC02VjMwNy41eiBNLTQ3MS41IDMxMS41aDZ2M2gtNlYzMTEuNXogTS00NzQuNSAzMDcuNWgydjFoLTJWMzA3LjV6IE0tNDc0LjUgMzExLjVoMnYxaC0yIFYzMTEuNXogTS00NjMuNSAzMDEuNWgtMTNjLTAuNDg5IDAtMSAwLjUxMi0xIDF2MTRjMCAwLjUgMC41IDEgMSAxaDEzYzAuNDg5IDAgMS0wLjUxMiAxLTF2LTE0IEMtNDYyLjUgMzAyLjAxMi00NjMuMDExIDMwMS41LTQ2My41IDMwMS41eiBNLTQ2NC41IDMxNS41aC0xMXYtOWgxMVYzMTUuNXoiIGNsYXNzPSJzdHlsZTAiLz48L3N2Zz4=) no-repeat 7px 7px !important; background-size: 20px 20px !important;}
+	body.admin-color-mp6 #adminmenu .menu-icon-feedback:hover div.wp-menu-image { background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSItNDc5LjUgMzAwLjUgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTQ3OS41IDMwMC41IDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48c3R5bGU+LnN0eWxlMHtmaWxsOgkjMkVBMkNDO308L3N0eWxlPjxwYXRoIGQ9Ik0tNDcxLjUgMzA3LjVoNnYzaC02VjMwNy41eiBNLTQ3MS41IDMxMS41aDZ2M2gtNlYzMTEuNXogTS00NzQuNSAzMDcuNWgydjFoLTJWMzA3LjV6IE0tNDc0LjUgMzExLjVoMnYxaC0yIFYzMTEuNXogTS00NjMuNSAzMDEuNWgtMTNjLTAuNDg5IDAtMSAwLjUxMi0xIDF2MTRjMCAwLjUgMC41IDEgMSAxaDEzYzAuNDg5IDAgMS0wLjUxMiAxLTF2LTE0IEMtNDYyLjUgMzAyLjAxMi00NjMuMDExIDMwMS41LTQ2My41IDMwMS41eiBNLTQ2NC41IDMxNS41aC0xMXYtOWgxMVYzMTUuNXoiIGNsYXNzPSJzdHlsZTAiLz48L3N2Zz4=) no-repeat 7px 7px !important; }
+	body.admin-color-mp6 #adminmenu .menu-icon-feedback.wp-has-current-submenu div.wp-menu-image, body.admin-color-mp6 #adminmenu .menu-icon-feedback.current div.wp-menu-image { background: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB2ZXJzaW9uPSIxLjEiIHg9IjBweCIgeT0iMHB4IiB3aWR0aD0iMjBweCIgaGVpZ2h0PSIyMHB4IiB2aWV3Qm94PSItNDc5LjUgMzAwLjUgMjAgMjAiIGVuYWJsZS1iYWNrZ3JvdW5kPSJuZXcgLTQ3OS41IDMwMC41IDIwIDIwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48c3R5bGU+LnN0eWxlMHtmaWxsOgkjRkZGRkZGO308L3N0eWxlPjxwYXRoIGQ9Ik0tNDcxLjUgMzA3LjVoNnYzaC02VjMwNy41eiBNLTQ3MS41IDMxMS41aDZ2M2gtNlYzMTEuNXogTS00NzQuNSAzMDcuNWgydjFoLTJWMzA3LjV6IE0tNDc0LjUgMzExLjVoMnYxaC0yIFYzMTEuNXogTS00NjMuNSAzMDEuNWgtMTNjLTAuNDg5IDAtMSAwLjUxMi0xIDF2MTRjMCAwLjUgMC41IDEgMSAxaDEzYzAuNDg5IDAgMS0wLjUxMiAxLTF2LTE0IEMtNDYyLjUgMzAyLjAxMi00NjMuMDExIDMwMS41LTQ2My41IDMwMS41eiBNLTQ2NC41IDMxNS41aC0xMXYtOWgxMVYzMTUuNXoiIGNsYXNzPSJzdHlsZTAiLz48L3N2Zz4=) no-repeat 7px 7px !important; }
+
 	.grunion-menu-button { background: url("' . GRUNION_PLUGIN_URL . 'images/grunion-form.png") no-repeat; width: 13px; height: 13px; display: inline-block; vertical-align: middle; ) }
 	@media only screen and (-moz-min-device-pixel-ratio: 1.5), only screen and (-o-min-device-pixel-ratio: 3/2), only screen and (-webkit-min-device-pixel-ratio: 1.5), only screen and (min-device-pixel-ratio: 1.5) {
 	    #adminmenu .menu-icon-feedback:hover div.wp-menu-image, #adminmenu .menu-icon-feedback.wp-has-current-submenu div.wp-menu-image, #adminmenu .menu-icon-feedback.current div.wp-menu-image { background: url("' .GRUNION_PLUGIN_URL . 'images/grunion-menu-hover-2x.png") no-repeat 7px 7px !important; background-size: 15px 16px !important; }
@@ -49,7 +53,7 @@ function grunion_admin_css() {
 ?>
 
 <style type='text/css'>
-.add-new-h2, .view-switch, body.no-js .tablenav select[name^=action], body.no-js #doaction, body.no-js #doaction2 { 
+.add-new-h2, .view-switch, body.no-js .tablenav select[name^=action], body.no-js #doaction, body.no-js #doaction2 {
 	display: none
 }
 
@@ -90,6 +94,79 @@ color: #D98500;
 <?php
 }
 
+/**
+ * Hack a 'Bulk Spam' option for bulk edit
+ * There isn't a better way to do this until
+ * http://core.trac.wordpress.org/changeset/17297 is resolved
+ */
+add_action( 'admin_head', 'grunion_add_bulk_edit_option' );
+function grunion_add_bulk_edit_option() {
+
+	$screen = get_current_screen();
+
+	if ( 'edit-feedback' != $screen->id
+	|| ( ! empty( $_GET['post_status'] ) && 'spam' == $_GET['post_status'] ) )
+		return;
+
+	$spam_text = __( 'Mark Spam', 'jetpack' );
+	?>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$('#posts-filter .actions select[name=action] option:first-child').after('<option value="spam"><?php echo esc_attr( $spam_text ); ?></option>' );
+			})
+		</script>
+	<?php
+}
+
+/**
+ * Handle a bulk spam report
+ */
+add_action( 'admin_init', 'grunion_handle_bulk_spam' );
+function grunion_handle_bulk_spam() {
+	global $pagenow;
+
+	if ( 'edit.php' != $pagenow
+	|| ( empty( $_REQUEST['post_type'] ) || 'feedback' != $_REQUEST['post_type'] ) )
+		return;
+
+	// Slip in a success message
+	if ( ! empty( $_REQUEST['message'] ) && 'marked-spam' == $_REQUEST['message'] )
+		add_action( 'admin_notices', 'grunion_message_bulk_spam' );
+
+	if ( empty( $_REQUEST['action'] ) || 'spam' != $_REQUEST['action'] )
+		return;
+
+	check_admin_referer('bulk-posts');
+
+	if ( empty( $_REQUEST['post'] ) ) {
+		wp_safe_redirect( wp_get_referer() );
+		exit;
+	}
+
+	$post_ids = array_map( 'intval', $_REQUEST['post'] );
+
+	foreach( $post_ids as $post_id ) {
+		if ( ! current_user_can( "edit_page", $post_id ) )
+			wp_die( __( 'You are not allowed to manage this item.', 'jetpack' ) );
+
+		$post = array(
+				'ID'           => $post_id,
+				'post_status'  => 'spam',
+			);
+		$akismet_values = get_post_meta( $post_id, '_feedback_akismet_values', true );
+		wp_update_post( $post );
+		do_action( 'contact_form_akismet', 'spam', $akismet_values );
+	}
+
+	$redirect_url = add_query_arg( 'message', 'marked-spam', wp_get_referer() );
+	wp_safe_redirect( $redirect_url );
+	exit;
+}
+
+function grunion_message_bulk_spam() {
+	echo '<div class="updated"><p>' . __( 'Feedback(s) marked as spam', 'jetpack' ) . '</p></div>';
+}
+
 // remove admin UI parts that we don't support in feedback management
 add_action( 'admin_menu', 'grunion_admin_menu' );
 function grunion_admin_menu() {
@@ -118,7 +195,7 @@ function grunion_admin_view_tabs( $views ) {
 	preg_match( '|post_type=feedback\'( class="current")?\>(.*)\<span class=|', $views['all'], $match );
 	if ( !empty( $match[2] ) )
 		$views['all'] = str_replace( $match[2], 'Messages ', $views['all'] );
-	
+
 	return $views;
 }
 
@@ -263,7 +340,7 @@ jQuery(document).ready( function($) {
 			function( r ) {
 				$('#post-<?php echo $post_id; ?>')
 					.css( {backgroundColor:'#FF7979'} )
-					.fadeOut(350, function() { 
+					.fadeOut(350, function() {
 						$(this).remove();
 						$('.subsubsub').html(r);
 				});
@@ -321,7 +398,7 @@ jQuery(document).ready( function($) {
 			function( r ) {
 				$('#post-<?php echo $post_id; ?>')
 					.css( {backgroundColor:'#59C859'} )
-					.fadeOut(350, function() { 
+					.fadeOut(350, function() {
 						$(this).remove();
 						$('.subsubsub').html(r);
 				});
@@ -400,7 +477,7 @@ function grunion_ajax_shortcode() {
 // and constructs a json object representing its contents and attributes
 function grunion_ajax_shortcode_to_json() {
 	global $post, $grunion_form;
-	
+
 	check_ajax_referer( 'grunion_shortcode_to_json' );
 
 	if ( !isset( $_POST['content'] ) || !is_numeric( $_POST['post_id'] ) ) {
@@ -510,7 +587,7 @@ function grunion_ajax_spam() {
 	$sql = "
 		SELECT post_status,
 			COUNT( * ) AS post_count
-		FROM `{$wpdb->posts}` 
+		FROM `{$wpdb->posts}`
 		WHERE post_type =  'feedback'
 		GROUP BY post_status
 	";

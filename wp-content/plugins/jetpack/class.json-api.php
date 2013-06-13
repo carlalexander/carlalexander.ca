@@ -22,6 +22,8 @@ class WPCOM_JSON_API {
 	var $exit = true;
 	var $public_api_scheme = 'https';
 
+	var $trapped_error = null;
+
 	static function init( $method = null, $url = null, $post_body = null ) {
 		if ( !self::$self ) {
 			$class = function_exists( 'get_called_class' ) ? get_called_class() : __CLASS__;
@@ -48,7 +50,12 @@ class WPCOM_JSON_API {
 		return false;
 	}
 
-	function __construct( $method = null, $url = null, $post_body = null ) {
+	function __construct() {
+		$args = func_get_args();
+		call_user_func_array( array( $this, 'setup_inputs' ), $args );
+	}
+
+	function setup_inputs( $method = null, $url = null, $post_body = null ) {
 		if ( is_null( $method ) ) {
 			$this->method = strtoupper( $_SERVER['REQUEST_METHOD'] );
 		} else {
@@ -71,7 +78,7 @@ class WPCOM_JSON_API {
 			$this->accept = $_SERVER['HTTP_ACCEPT'];
 		}
 
-		if ( 'POST' == $this->method ) {
+		if ( 'POST' === $this->method ) {
 			if ( is_null( $post_body ) ) {
 				$this->post_body = file_get_contents( 'php://input' );
 
@@ -149,7 +156,7 @@ class WPCOM_JSON_API {
 				$methods = $allowed_methods;
 				$find_all_matching_endpoints = true;
 				$four_oh_five = true;
-			} 
+			}
 		}
 
 		// Find which endpoint to serve
@@ -232,6 +239,10 @@ class WPCOM_JSON_API {
 			return $this->output( 500, '', 'text/plain' );
 		} elseif ( is_wp_error( $response ) ) {
 			$status_code = $response->get_error_data();
+
+			if ( is_array( $status_code ) )
+				$status_code = $status_code['status_code'];
+
 			if ( !$status_code ) {
 				$status_code = 400;
 			}
@@ -341,8 +352,20 @@ class WPCOM_JSON_API {
 		return $blog_id;
 	}
 
-	function post_like_count() {
+	function post_like_count( $blog_id, $post_id ) {
 		return 0;
+	}
+
+	function is_liked( $blog_id, $post_id ) {
+		return false;
+	}
+
+	function is_reblogged( $blog_id, $post_id ) {
+		return false;
+	}
+
+	function is_following( $blog_id ) {
+		return false;
 	}
 
 	function get_avatar_url( $email ) {
@@ -367,5 +390,70 @@ class WPCOM_JSON_API {
 		}
 
 		return $return;
+	}
+
+	/**
+	 * Traps `wp_die()` calls and outputs a JSON response instead.
+	 * The result is always output, never returned.
+	 *
+	 * @param string|null $error_code.  Call with string to start the trapping.  Call with null to stop.
+	 */
+	function trap_wp_die( $error_code = null ) {
+		// Stop trapping
+		if ( is_null( $error_code ) ) {
+			$this->trapped_error = null;
+			remove_filter( 'wp_die_handler', array( $this, 'wp_die_handler_callback' ) );
+			return;
+		}
+
+		// If API called via PHP, bail: don't do our custom wp_die().  Do the normal wp_die().
+		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+			if ( ! defined( 'REST_API_REQUEST' ) || ! REST_API_REQUEST ) {
+				return;
+			}
+		} else {
+			if ( ! defined( 'XMLRPC_REQUEST' ) || ! XMLRPC_REQUEST ) {
+				return;
+			}
+		}
+
+		// Start trapping
+		$this->trapped_error = array(
+			'status'  => 500,
+			'code'    => $error_code,
+			'message' => '',
+		);
+
+		add_filter( 'wp_die_handler', array( $this, 'wp_die_handler_callback' ) );
+	}
+
+	function wp_die_handler_callback() {
+		return array( $this, 'wp_die_handler' );
+	}
+
+	function wp_die_handler( $message, $title = '', $args = array() ) {
+		$args = wp_parse_args( $args, array(
+			'response' => 500,
+		) );
+
+		if ( $title ) {
+			$message = "$title: $message";
+		}
+
+		$this->trapped_error['status']  = $args['response'];
+		$this->trapped_error['message'] = wp_kses( $message, array() );
+
+		// We still want to exit so that code execution stops where it should.
+		// Attach the JSON output to WordPress' shutdown handler
+		add_action( 'shutdown', array( $this, 'output_trapped_error' ), 0 );
+		exit;
+	}
+
+	function output_trapped_error() {
+		$this->exit = false; // We're already exiting once.  Don't do it twice.
+		$this->output( $this->trapped_error['status'], (object) array(
+			'error'   => $this->trapped_error['code'],
+			'message' => $this->trapped_error['message'],
+		) );
 	}
 }

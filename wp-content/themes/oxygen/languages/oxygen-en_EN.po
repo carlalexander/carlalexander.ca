@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Oxygen\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-10 15:06+0200\n"
-"PO-Revision-Date: 2012-08-10 15:06+0200\n"
+"POT-Creation-Date: 2013-03-06 18:28+0200\n"
+"PO-Revision-Date: 2013-03-06 18:29+0200\n"
 "Last-Translator: Galin Simeonov <galin@alienwp.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -23,7 +23,7 @@ msgid "You tried going to %1$s, and it doesn't exist. All is not lost! You can s
 msgstr ""
 
 #: archive.php:51
-#: featured-content.php:26
+#: featured-content.php:28
 #: index.php:52
 msgid "[entry-published]"
 msgstr ""
@@ -94,104 +94,100 @@ msgstr ""
 msgid "Comments are closed."
 msgstr ""
 
-#: functions.php:189
+#: functions.php:198
 #: loop-nav.php:28
 msgid "&larr; Previous"
 msgstr ""
 
-#: functions.php:190
+#: functions.php:199
 #: loop-nav.php:28
 msgid "Next &rarr;"
 msgstr ""
 
-#: functions.php:216
-msgid "(Untitled)"
-msgstr ""
-
-#: functions.php:265
+#: functions.php:248
 msgid "*"
 msgstr ""
 
-#: functions.php:270
+#: functions.php:253
 msgid "Name"
 msgstr ""
 
-#: functions.php:271
+#: functions.php:254
 msgid "Email"
 msgstr ""
 
-#: functions.php:272
+#: functions.php:255
 msgid "Website"
 msgstr ""
 
-#: functions.php:277
+#: functions.php:260
 msgid "Comment"
 msgstr ""
 
-#: functions.php:278
+#: functions.php:261
 #, php-format
 msgid "You must be <a href=\"%1$s\" title=\"Log in\">logged in</a> to post a comment."
 msgstr ""
 
-#: functions.php:279
+#: functions.php:262
 #, php-format
 msgid "Logged in as <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
 msgstr ""
 
-#: functions.php:279
+#: functions.php:262
 msgid "Log out of this account"
 msgstr ""
 
-#: functions.php:279
+#: functions.php:262
 msgid "Log out &rarr;"
 msgstr ""
 
-#: functions.php:284
+#: functions.php:267
 msgid "Leave a Reply"
 msgstr ""
 
-#: functions.php:285
+#: functions.php:268
 #, php-format
 msgid "Leave a Reply to %s"
 msgstr ""
 
-#: functions.php:286
+#: functions.php:269
 msgid "Click here to cancel reply."
 msgstr ""
 
-#: functions.php:287
+#: functions.php:270
 msgid "Post Comment &rarr;"
 msgstr ""
 
-#: functions.php:312
+#: functions.php:295
 msgid "Copyright &#169; [the-year] [site-link]"
 msgstr ""
 
-#: functions.php:312
+#: functions.php:295
 msgid "Powered by [wp-link] and [theme-link]"
 msgstr ""
 
-#: functions.php:322
+#: functions.php:305
 msgid "Location"
 msgstr ""
 
-#: functions.php:332
+#: functions.php:315
 msgid "Featured"
 msgstr ""
 
-#: functions.php:333
+#: functions.php:316
 msgid "Primary"
 msgstr ""
 
-#: functions.php:334
+#: functions.php:317
 msgid "Secondary"
 msgstr ""
 
-#: functions.php:335
+#: functions.php:318
 msgid "Do not display"
 msgstr ""
 
-#: functions.php:337
+#: functions.php:320
 msgid "Post location on the home page"
 msgstr ""
 
@@ -206,6 +202,11 @@ msgstr ""
 #: loop-nav.php:22
 #: loop-nav.php:23
 msgid "%link"
+msgstr ""
+
+#: menu-primary.php:17
+#: menu-secondary.php:17
+msgid "Menu"
 msgstr ""
 
 #: page-template-archives.php:47
@@ -224,11 +225,11 @@ msgstr ""
 msgid "Recent Articles"
 msgstr ""
 
-#: page-template-front.php:93
+#: page-template-front.php:95
 msgid "More Articles"
 msgstr ""
 
-#: page-template-front.php:109
+#: page-template-front.php:113
 msgid "[entry-published] / by [entry-author] / in [entry-terms taxonomy=\"category\"] [entry-edit-link before=\" / \"]"
 msgstr ""
 
@@ -252,139 +253,35 @@ msgstr ""
 msgid "By [entry-author] on [entry-published] [entry-edit-link before=\" | \"]"
 msgstr ""
 
-#: admin/functions-admin.php:38
-msgid "General settings"
+#: admin/customize.php:33
+msgid "Typography"
 msgstr ""
 
-#: admin/functions-admin.php:56
-msgid "Favicon:"
+#: admin/customize.php:39
+msgid "Miscellaneous"
 msgstr ""
 
-#: admin/functions-admin.php:62
-msgid "Upload favicon image (recommended max size: 32x32)."
+#: admin/customize.php:93
+msgid "Font Family"
 msgstr ""
 
-#: admin/functions-admin.php:74
-msgid "Logo:"
+#: admin/customize.php:117
+msgid "Font Size"
 msgstr ""
 
-#: admin/functions-admin.php:80
-msgid "Upload logo image."
+#: admin/customize.php:135
+msgid "Link Color"
 msgstr ""
 
-#: admin/functions-admin.php:92
-msgid "Title font family:"
+#: admin/customize.php:143
+msgid "Slider Timeout"
 msgstr ""
 
-#: admin/functions-admin.php:96
-msgid "Abel"
+#: admin/customize.php:151
+msgid "Fancybox"
 msgstr ""
 
-#: admin/functions-admin.php:97
-msgid "Oswald"
-msgstr ""
-
-#: admin/functions-admin.php:98
-msgid "Terminal Dosis"
-msgstr ""
-
-#: admin/functions-admin.php:99
-msgid "Bitter"
-msgstr ""
-
-#: admin/functions-admin.php:100
-msgid "Georgia"
-msgstr ""
-
-#: admin/functions-admin.php:101
-msgid "Droid Serif"
-msgstr ""
-
-#: admin/functions-admin.php:102
-msgid "Helvetica"
-msgstr ""
-
-#: admin/functions-admin.php:103
-msgid "Arial"
-msgstr ""
-
-#: admin/functions-admin.php:104
-msgid "Droid Sans"
-msgstr ""
-
-#: admin/functions-admin.php:106
-msgid "Choose a font for the titles."
-msgstr ""
-
-#: admin/functions-admin.php:113
-msgid "Font size:"
-msgstr ""
-
-#: admin/functions-admin.php:117
-msgid "default"
-msgstr ""
-
-#: admin/functions-admin.php:118
-msgid "17"
-msgstr ""
-
-#: admin/functions-admin.php:119
-msgid "16"
-msgstr ""
-
-#: admin/functions-admin.php:120
-msgid "15"
-msgstr ""
-
-#: admin/functions-admin.php:121
-msgid "14"
-msgstr ""
-
-#: admin/functions-admin.php:122
-msgid "13"
-msgstr ""
-
-#: admin/functions-admin.php:123
-msgid "12"
-msgstr ""
-
-#: admin/functions-admin.php:125
-msgid "The base font size in pixels."
-msgstr ""
-
-#: admin/functions-admin.php:132
-msgid "Link color:"
-msgstr ""
-
-#: admin/functions-admin.php:137
-msgid "Set the theme link color."
-msgstr ""
-
-#: admin/functions-admin.php:144
-msgid "Slider Timeout:"
-msgstr ""
-
-#: admin/functions-admin.php:148
-msgid "The time interval between slides in milliseconds."
-msgstr ""
-
-#: admin/functions-admin.php:155
-msgid "Fancybox:"
-msgstr ""
-
-#: admin/functions-admin.php:159
-msgid "Check to enable the built-in <a href=\"http://fancybox.net/\" target=\"_blank\">Fancybox</a>."
-msgstr ""
-
-#: admin/functions-admin.php:166
-msgid "Custom CSS:"
-msgstr ""
-
-#: admin/functions-admin.php:170
-msgid "Add your custom CSS here. It would overwrite any default or custom theme settings."
-msgstr ""
-
-#: admin/functions-admin.php:206
-msgid "Use this Image"
+#: admin/customize.php:160
+msgid "Custom CSS"
 msgstr ""
 

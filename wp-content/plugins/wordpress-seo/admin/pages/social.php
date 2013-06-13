@@ -147,9 +147,13 @@ echo '<h4>' . __( 'Default settings', 'wordpress-seo' ) . '</h4>';
 echo $wpseo_admin_pages->textinput( 'og_default_image', __( 'Image URL', 'wordpress-seo' ) );
 echo '<p class="desc label">' . __( 'This image is used if the post/page being shared does not contain any images.', 'wordpress-seo' ) . '</p>';
 
+do_action('wpseo_admin_opengraph_section');
+
 echo '<h2>' . __( 'Twitter', 'wordpress-seo' ) . '</h2>';
 echo $wpseo_admin_pages->checkbox( 'twitter', '<label for="twitter">' . __( 'Add Twitter card meta data', 'wordpress-seo' ) . '</label>' );
 echo'<p class="desc">' . __( 'Add Twitter card meta data to your site\'s <code>&lt;head&gt;</code> section.', 'wordpress-seo' ) . '</p>';
 echo $wpseo_admin_pages->textinput( 'twitter_site', __( 'Site Twitter Username', 'wordpress-seo' ) );
+
+do_action('wpseo_admin_twitter_section');
 
 $wpseo_admin_pages->admin_footer();

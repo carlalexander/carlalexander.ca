@@ -27,9 +27,6 @@
 	<!-- Title -->
 	<title><?php hybrid_document_title(); ?></title>
 	
-	<!-- Stylesheet -->	
-	<link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>" type="text/css" />
-	
 	<link rel="profile" href="http://gmpg.org/xfn/11" />
 	<link rel="pingback" href="<?php bloginfo( 'pingback_url' ); ?>" />
 	

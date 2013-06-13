@@ -1,4 +1,5 @@
 <?php
+
 /*
 Plugin Name: The Neverending Home Page.
 Plugin URI: http://automattic.com/
@@ -19,7 +20,7 @@ class The_Neverending_Home_Page {
 	 *
 	 */
 	function __construct() {
-		add_filter( 'pre_get_posts',                  array( $this, 'posts_per_page_query' ) );
+		add_action( 'pre_get_posts',                  array( $this, 'posts_per_page_query' ) );
 
 		add_action( 'admin_init',                     array( $this, 'settings_api_init' ) );
 		add_action( 'template_redirect',              array( $this, 'action_template_redirect' ) );
@@ -92,8 +93,7 @@ class The_Neverending_Home_Page {
 							case 'wrapper' :
 								if ( 'wrapper' == $key && is_bool( $value ) ) {
 									$settings[ $key ] = $value;
-								}
-								else {
+								} else {
 									$value = preg_replace( $css_pattern, '', $value );
 
 									if ( ! empty( $value ) )
@@ -114,8 +114,7 @@ class The_Neverending_Home_Page {
 							case 'footer' :
 								if ( is_bool( $value ) ) {
 									$settings[ $key ] = $value;
-								}
-								elseif ( is_string( $value ) ) {
+								} elseif ( is_string( $value ) ) {
 									$value = preg_replace( $css_pattern, '', $value );
 
 									if ( ! empty( $value ) )
@@ -136,9 +135,9 @@ class The_Neverending_Home_Page {
 								break;
 						}
 					}
-				}
-				// Checks below are for backwards compatibility
-				elseif ( is_string( $_settings[0] ) ) {
+				} elseif ( is_string( $_settings[0] ) ) {
+					// Checks below are for backwards compatibility
+
 					// Container to append new posts to
 					$settings['container'] = preg_replace( $css_pattern, '', $_settings[0] );
 
@@ -156,8 +155,7 @@ class The_Neverending_Home_Page {
 			// It is safe to use `is_active_sidebar()` before the sidebar is registered as this function doesn't check for a sidebar's existence when determining if it contains any widgets.
 			if ( function_exists( 'infinite_scroll_has_footer_widgets' ) ) {
 				$settings['footer_widgets'] = (bool) infinite_scroll_has_footer_widgets();
-			}
-			elseif ( is_array( $settings['footer_widgets'] ) ) {
+			} elseif ( is_array( $settings['footer_widgets'] ) ) {
 				$sidebar_ids = $settings['footer_widgets'];
 				$settings['footer_widgets'] = false;
 
@@ -170,8 +168,7 @@ class The_Neverending_Home_Page {
 
 				unset( $sidebar_ids );
 				unset( $sidebar_id );
-			}
-			elseif ( is_string( $settings['footer_widgets'] ) ) {
+			} elseif ( is_string( $settings['footer_widgets'] ) ) {
 				$settings['footer_widgets'] = (bool) is_active_sidebar( $settings['footer_widgets'] );
 			}
 
@@ -201,6 +198,18 @@ class The_Neverending_Home_Page {
 		}
 
 		return (object) self::$settings;
+	}
+
+	/**
+	 * Retrieve the query used with Infinite Scroll
+	 *
+	 * @global $wp_the_query
+	 * @uses apply_filters
+	 * @return object
+	 */
+	static function wp_query() {
+		global $wp_the_query;
+		return apply_filters( 'infinite_scroll_query_object', $wp_the_query );
 	}
 
 	/**
@@ -294,7 +303,7 @@ class The_Neverending_Home_Page {
 
 		add_action( 'wp_footer', array( $this, 'action_wp_footer' ), 99999999 );
 
-		add_filter( 'infinite_scroll_results', array( $this, 'filter_infinite_scroll_results' ) );
+		add_filter( 'infinite_scroll_results', array( $this, 'filter_infinite_scroll_results' ), 10, 3 );
 	}
 
 	/**
@@ -321,7 +330,7 @@ class The_Neverending_Home_Page {
 	 * @return string 'Y-m-d H:i:s' or null
 	 */
 	function set_last_post_time( $date = false ) {
-		global $posts;
+		$posts = self::wp_query()->posts;
 		$count = count( $posts );
 
 		if ( ! empty( $date ) && preg_match( '|\d{4}\-\d{2}\-\d{2}|', $_GET['date'] ) ) {
@@ -338,8 +347,7 @@ class The_Neverending_Home_Page {
 		// If the function is called again but we already have a value, return it
 		if ( null != self::$the_time ) {
 			return self::$the_time;
-		}
-		else if ( isset( $last_post->post_date_gmt ) ) {
+		} elseif ( isset( $last_post->post_date_gmt ) ) {
 			// Grab the latest post time in Y-m-d H:i:s gmt format
 			self::$the_time = $last_post->post_date_gmt;
 		}
@@ -352,8 +360,11 @@ class The_Neverending_Home_Page {
 	 * will always return results prior to (descending sort)
 	 * or before (ascending sort) the last post date.
 	 *
+	 * @global $wpdb
 	 * @param string $where
 	 * @param object $query
+	 * @uses apply_filters
+	 * @uses self::set_last_post_time
 	 * @filter posts_where
 	 * @return string
 	 */
@@ -363,7 +374,9 @@ class The_Neverending_Home_Page {
 		$operator = 'ASC' == $query->get( 'order' ) ? '>' : '<';
 
 		// Construct the date query using our timestamp
-		$where .= $wpdb->prepare( " AND post_date_gmt {$operator} %s", self::set_last_post_time() );
+		$clause = $wpdb->prepare( " AND {$wpdb->posts}.post_date_gmt {$operator} %s", self::set_last_post_time() );
+
+		$where .= apply_filters( 'infinite_scroll_posts_where', $clause, $query, $operator, self::set_last_post_time() );
 
 		return $where;
 	}
@@ -371,15 +384,12 @@ class The_Neverending_Home_Page {
 	/**
 	 * Let's overwrite the default post_per_page setting to always display a fixed amount.
 	 *
-	 * @global $wp_the_query Used to provide compatibility back to WP 3.2
 	 * @param object $query
-	 * @uses self::archive_supports_infinity, self::get_settings
+	 * @uses is_admin, self::archive_supports_infinity, self::get_settings
 	 * @return null
 	 */
 	function posts_per_page_query( $query ) {
-		global $wp_the_query;
-
-		if ( self::archive_supports_infinity() && $query === $wp_the_query ) // After 3.3, this line would be: if ( self::archive_supports_infinity() && $query->is_main_query() )
+		if ( ! is_admin() && self::archive_supports_infinity() && $query->is_main_query() )
 			$query->set( 'posts_per_page', self::get_settings()->posts_per_page );
 	}
 
@@ -396,11 +406,21 @@ class The_Neverending_Home_Page {
 
 	/**
 	 * Returns the Ajax url
+	 *
+	 * @global $wp
+	 * @uses home_url, is_ssl, add_query_arg, trailingslashit, apply_filters
+	 * @return string
 	 */
 	function ajax_url() {
 		global $wp;
 
-		$base_url = home_url( trailingslashit( $wp->request ), is_ssl() ? 'https' : 'http' );
+		// When using default permalinks, $wp->request will be null, so we reconstruct the request from the query arguments WP parsed.
+		if ( is_null( $wp->request ) ) {
+			$base_url = home_url( '/', is_ssl() ? 'https' : 'http' );
+			$base_url = add_query_arg( $wp->query_vars, $base_url );
+		} else {
+			$base_url = home_url( trailingslashit( $wp->request ), is_ssl() ? 'https' : 'http' );
+		}
 
 		$ajaxurl = add_query_arg( array( 'infinity' => 'scrolling' ), $base_url );
 
@@ -427,28 +447,29 @@ class The_Neverending_Home_Page {
 	/**
 	 * Prints the relevant infinite scroll settings in JS.
 	 *
+	 * @global $wp_rewrite
 	 * @uses self::get_settings, esc_js, esc_url_raw, self::has_wrapper, __, apply_filters, do_action
 	 * @action wp_head
 	 * @return string
 	 */
 	function action_wp_head() {
-		global $wp_query, $wp_rewrite;
+		global $wp_rewrite;
 
 		// Base JS settings
 		$js_settings = array(
 			'id'               => self::get_settings()->container,
-			'ajaxurl'          => esc_js( esc_url_raw( self::ajax_url() ) ),
+			'ajaxurl'          => esc_url_raw( self::ajax_url() ),
 			'type'             => esc_js( self::get_settings()->type ),
 			'wrapper'          => self::has_wrapper(),
 			'wrapper_class'    => is_string( self::get_settings()->wrapper ) ? esc_js( self::get_settings()->wrapper ) : 'infinite-wrap',
 			'footer'           => is_string( self::get_settings()->footer ) ? esc_js( self::get_settings()->footer ) : self::get_settings()->footer,
-			'text'             => esc_js( __( 'Load more posts', 'jetpack' ) ),
+			'text'             => esc_js( __( 'Older posts', 'jetpack' ) ),
 			'totop'            => esc_js( __( 'Scroll back to top', 'jetpack' ) ),
 			'order'            => 'DESC',
 			'scripts'          => array(),
 			'styles'           => array(),
 			'google_analytics' => false,
-			'offset'           => $wp_query->get( 'paged' ),
+			'offset'           => self::wp_query()->get( 'paged' ),
 			'history'          => array(
 				'host'                 => preg_replace( '#^http(s)?://#i', '', untrailingslashit( get_option( 'home' ) ) ),
 				'path'                 => self::get_request_path(),
@@ -507,8 +528,7 @@ class The_Neverending_Home_Page {
 				$path = '/' . $path;
 
 			$path = user_trailingslashit( $path );
-		}
-		else {
+		} else {
 			// Clean up raw $_GET input
 			$path = array_map( 'sanitize_text_field', $_GET );
 			$path = array_filter( $path );
@@ -533,7 +553,10 @@ class The_Neverending_Home_Page {
 		global $wp_scripts, $wp_styles;
 
 		$scripts = is_a( $wp_scripts, 'WP_Scripts' ) ? $wp_scripts->done : array();
+		$scripts = apply_filters( 'infinite_scroll_existing_scripts', $scripts );
+
 		$styles = is_a( $wp_styles, 'WP_Styles' ) ? $wp_styles->done : array();
+		$styles = apply_filters( 'infinite_scroll_existing_stylesheets', $styles );
 
 		?><script type="text/javascript">
 			jQuery.extend( infiniteScroll.settings.scripts, <?php echo json_encode( $scripts ); ?> );
@@ -549,7 +572,7 @@ class The_Neverending_Home_Page {
 	 * @filter infinite_scroll_results
 	 * @return array
 	 */
-	function filter_infinite_scroll_results( $results ) {
+	function filter_infinite_scroll_results( $results, $query_args, $wp_query ) {
 		// Don't bother unless there are posts to display
 		if ( 'success' != $results['type'] )
 			return $results;
@@ -592,7 +615,7 @@ class The_Neverending_Home_Page {
 					else
 						$ver = $wp_scripts->registered[ $handle ]->ver ? $wp_scripts->registered[ $handle ]->ver : $wp_scripts->default_version;
 
-					if ( isset($wp_scripts->args[ $handle ] ) )
+					if ( isset( $wp_scripts->args[ $handle ] ) )
 						$ver = $ver ? $ver . '&amp;' . $wp_scripts->args[$handle] : $wp_scripts->args[$handle];
 
 					// Full script source with version info
@@ -603,6 +626,15 @@ class The_Neverending_Home_Page {
 				}
 			}
 		}
+
+		// Expose additional script data to filters, but only include in final `$results` array if needed.
+		if ( ! isset( $results['scripts'] ) )
+			$results['scripts'] = array();
+
+		$results['scripts'] = apply_filters( 'infinite_scroll_additional_scripts', $results['scripts'], $initial_scripts, $results, $query_args, $wp_query );
+
+		if ( empty( $results['scripts'] ) )
+			unset( $results['scripts' ] );
 
 		// Parse and sanitize the style handles already output
 		$initial_styles = isset( $_GET['styles'] ) && is_array( $_GET['styles'] ) ? array_map( 'sanitize_text_field', $_GET['styles'] ) : false;
@@ -679,6 +711,15 @@ class The_Neverending_Home_Page {
 			}
 		}
 
+		// Expose additional stylesheet data to filters, but only include in final `$results` array if needed.
+		if ( ! isset( $results['styles'] ) )
+			$results['styles'] = array();
+
+		$results['styles'] = apply_filters( 'infinite_scroll_additional_stylesheets', $results['styles'], $initial_styles, $results, $query_args, $wp_query );
+
+		if ( empty( $results['styles'] ) )
+			unset( $results['styles' ] );
+
 		// Lastly, return the IS results array
 		return $results;
 	}
@@ -689,17 +730,19 @@ class The_Neverending_Home_Page {
 	 *
 	 * @global $wp_query
 	 * @global $wp_the_query
-	 * @uses current_user_can, get_option, self::set_last_post_time, current_user_can, apply_filters, self::get_settings, add_filter, WP_Query, remove_filter, have_posts, wp_head, do_action, add_action, this::render, this::has_wrapper, esc_attr, wp_footer, sharing_register_post_for_share_counts, get_the_id
+	 * @uses current_theme_supports, get_option, self::wp_query, self::set_last_post_time, current_user_can, apply_filters, self::get_settings, add_filter, WP_Query, remove_filter, have_posts, wp_head, do_action, add_action, this::render, this::has_wrapper, esc_attr, wp_footer, sharing_register_post_for_share_counts, get_the_id
 	 * @return string or null
 	 */
 	function query() {
-		global $wp_query, $wp_the_query;
-
 		if ( ! isset( $_GET['page'] ) || ! current_theme_supports( 'infinite-scroll' ) )
 			die;
 
 		$page = (int) $_GET['page'];
+
 		$sticky = get_option( 'sticky_posts' );
+		$post__not_in = self::wp_query()->get( 'post__not_in' );
+		if ( ! empty( $post__not_in ) )
+			$sticky = array_unique( array_merge( $sticky, $post__not_in ) );
 
 		if ( ! empty( $_GET['date'] ) )
 			self::set_last_post_time( $_GET['date'] );
@@ -710,7 +753,7 @@ class The_Neverending_Home_Page {
 
 		$order = in_array( $_GET['order'], array( 'ASC', 'DESC' ) ) ? $_GET['order'] : 'DESC';
 
-		$query_args = array_merge( $wp_the_query->query_vars, array(
+		$query_args = array_merge( self::wp_query()->query_vars, array(
 			'paged'          => $page,
 			'post_status'    => $post_status,
 			'posts_per_page' => self::get_settings()->posts_per_page,
@@ -719,7 +762,7 @@ class The_Neverending_Home_Page {
 		) );
 
 		// By default, don't query for a specific page of a paged post object.
-		// This argument comes from merging $wp_the_query.
+		// This argument can come from merging self::wp_query() into $query_args above.
 		// Since IS is only used on archives, we should always display the first page of any paged content.
 		unset( $query_args['page'] );
 
@@ -728,7 +771,7 @@ class The_Neverending_Home_Page {
 		// Add query filter that checks for posts below the date
 		add_filter( 'posts_where', array( $this, 'query_time_filter' ), 10, 2 );
 
-		$wp_query = new WP_Query( $query_args );
+		$GLOBALS['wp_the_query'] = $GLOBALS['wp_query'] = new WP_Query( $query_args );
 
 		remove_filter( 'posts_where', array( $this, 'query_time_filter' ), 10, 2 );
 
@@ -762,8 +805,7 @@ class The_Neverending_Home_Page {
 				unset( $results['html'] );
 				do_action( 'infinite_scroll_empty' );
 				$results['type'] = 'empty';
-			}
-			elseif ( $this->has_wrapper() ) {
+			} elseif ( $this->has_wrapper() ) {
 				$wrapper_classes = is_string( self::get_settings()->wrapper ) ? self::get_settings()->wrapper : 'infinite-wrap';
 				$wrapper_classes .= ' infinite-view-' . $page;
 				$wrapper_classes = trim( $wrapper_classes );
@@ -793,7 +835,7 @@ class The_Neverending_Home_Page {
 			$results['type'] = 'empty';
 		}
 
-		echo json_encode( apply_filters( 'infinite_scroll_results', $results ) );
+		echo json_encode( apply_filters( 'infinite_scroll_results', $results, $query_args, self::wp_query() ) );
 		die;
 	}
 
@@ -815,11 +857,13 @@ class The_Neverending_Home_Page {
 	/**
 	 * Allow plugins to filter what archives Infinite Scroll supports
 	 *
-	 * @uses apply_filters, current_theme_supports, is_home, is_archive, self::get_settings
+	 * @uses current_theme_supports, is_home, is_archive, apply_filters, self::get_settings
 	 * @return bool
 	 */
-	public function archive_supports_infinity() {
-		return (bool) apply_filters( 'infinite_scroll_archive_supported', current_theme_supports( 'infinite-scroll' ) && ( is_home() || is_archive() ), self::get_settings() );
+	public static function archive_supports_infinity() {
+		$supported = current_theme_supports( 'infinite-scroll' ) && ( is_home() || is_archive() );
+
+		return (bool) apply_filters( 'infinite_scroll_archive_supported', $supported, self::get_settings() );
 	}
 
 	/**

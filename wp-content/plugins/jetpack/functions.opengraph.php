@@ -16,17 +16,20 @@ function jetpack_og_tags() {
 		return;
 	}
 
+	// Disable the widont filter on WP.com to avoid stray &nbsps
+	$disable_widont = remove_filter( 'the_title', 'widont' );
+
 	$og_output = "\n<!-- Jetpack Open Graph Tags -->\n";
 	$tags = array();
 
-	$image_width  = absint( apply_filters( 'jetpack_open_graph_image_width', 200 ) );
-	$image_height = absint( apply_filters( 'jetpack_open_graph_image_height', 200 ) );
+	$image_width        = absint( apply_filters( 'jetpack_open_graph_image_width', 200 ) );
+	$image_height       = absint( apply_filters( 'jetpack_open_graph_image_height', 200 ) );
 	$description_length = 197;
 
 	if ( is_home() || is_front_page() ) {
-		$site_type = get_option( 'open_graph_protocol_site_type' );
-		$tags['og:type'] = ! empty( $site_type ) ? $site_type : 'blog';
-		$tags['og:title'] = get_bloginfo( 'name' );
+		$site_type              = get_option( 'open_graph_protocol_site_type' );
+		$tags['og:type']        = ! empty( $site_type ) ? $site_type : 'blog';
+		$tags['og:title']       = get_bloginfo( 'name' );
 		$tags['og:description'] = get_bloginfo( 'description' );
 
 		$front_page_id = get_option( 'page_for_posts' );
@@ -41,34 +44,37 @@ function jetpack_og_tags() {
 			$tags['fb:admins'] = $facebook_admins;
 
 	} else if ( is_author() ) {
-		$tags['og:type'] = 'author';
+		$tags['og:type'] = 'profile';
 
 		$author = get_queried_object();
 
-		$tags['og:title'] = $author->display_name;
-		$tags['og:url'] = get_author_posts_url( $author->ID );
-		$tags['og:description'] = $author->description;
+		$tags['og:title']           = $author->display_name;
+		$tags['og:url']             = get_author_posts_url( $author->ID );
+		$tags['og:description']     = $author->description;
+		$tags['profile:first_name'] = get_the_author_meta( 'first_name', $author->ID );
+		$tags['profile:last_name']  = get_the_author_meta( 'last_name', $author->ID );
 
 	} else if ( is_singular() ) {
 		global $post;
-		setup_postdata( $post );
+		$data = $post; // so that we don't accidentally explode the global
 
-		$tags['og:type'] = 'article';
-		$tags['og:title'] = get_the_title();
-		$tags['og:url'] = get_permalink();
-		$tags['og:description'] = strip_tags( get_the_excerpt() );
-
-		// Force a description, to avoid FB getting its own
-		if ( empty( $tags['og:description'] ) )
-			$tags['og:description'] = ' ';
-
+		$tags['og:type']        = 'article';
+		$tags['og:title']       = empty( $data->post_title ) ? ' ' : wp_kses( $data->post_title, array() ) ;
+		$tags['og:url']         = get_permalink( $data->ID );
+		if ( !post_password_required() )
+			$tags['og:description'] = ! empty( $data->post_excerpt ) ? strip_shortcodes( wp_kses( $data->post_excerpt, array() ) ) : wp_trim_words( strip_shortcodes( wp_kses( $data->post_content, array() ) ) );
+		$tags['og:description'] = empty( $tags['og:description'] ) ? ' ' : $tags['og:description'];
 	}
+
+	// Re-enable widont if we had disabled it
+	if ( $disable_widont )
+		add_filter( 'the_title', 'widont' );
 
 	if ( empty( $tags ) )
 		return;
 
 	$tags['og:site_name'] = get_bloginfo( 'name' );
-	$tags['og:image'] = jetpack_og_get_image( $image_width, $image_height );
+	$tags['og:image']     = jetpack_og_get_image( $image_width, $image_height );
 
 	// Facebook whines if you give it an empty title
 	if ( empty( $tags['og:title'] ) )

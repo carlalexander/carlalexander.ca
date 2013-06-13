@@ -91,14 +91,14 @@ class Publicize_UI {
 	  			<?php esc_html_e( 'Connect your blog to popular social networking sites and automatically share new posts with your friends.', 'jetpack' ) ?>
 	  			<?php esc_html_e( 'You can make a connection for just yourself or for all users on your blog. Shared connections are marked with the (Shared) text.', 'jetpack' ); ?>
 	  		</p>
-	  		
+
   			<?php
   			if ( $this->in_jetpack )
   				$doc_link = "http://jetpack.me/support/publicize/";
   			else
   				$doc_link = "http://en.support.wordpress.com/publicize/";
   			?>
-	  		
+
 	  		<p>&rarr; <a href="<?php echo esc_url( $doc_link ); ?>"><?php esc_html_e( 'More information on using Publicize.', 'jetpack' ); ?></a></p>
 
 	  		<div id="publicize-services-block">
@@ -152,7 +152,7 @@ class Publicize_UI {
 											<?php if ( 0 == $cmeta['connection_data']['user_id'] ) : ?>
 												<small>(<?php esc_html_e( 'Shared', 'jetpack' ); ?>)</small>
 
-												<?php if ( current_user_can( Publicize::GLOBAL_CAP ) ) : ?>
+												<?php if ( current_user_can( $this->publicize->GLOBAL_CAP ) ) : ?>
 													<a class="pub-disconnect-button" title="<?php esc_html_e( 'Disconnect', 'jetpack' ); ?>" href="<?php echo esc_url( $disconnect_url ); ?>">×</a>
 												<?php endif; ?>
 
@@ -170,6 +170,18 @@ class Publicize_UI {
 			  			</div>
 			  		</div>
 				<?php endforeach; ?>
+				<script>
+  				(function($){
+  					$('.pub-disconnect-button').on('click', function(e){
+							if ( confirm( '<?php echo esc_js( __( 'Are you sure you want to stop Publicizing posts to this connection?', 'jetpack' ) ); ?>' ) ) {
+								return true;
+							} else {
+  							e.preventDefault();
+  							return false;
+  						}
+  					})
+  				})(jQuery);
+  				</script>
 	  		</div>
 
 			<?php wp_nonce_field( "wpas_posts_{$_blog_id}", "_wpas_posts_{$_blog_id}_nonce" ); ?>
@@ -179,7 +191,8 @@ class Publicize_UI {
 	}
 
 	function global_checkbox( $service_name, $id ) {
-		if ( current_user_can( Publicize::GLOBAL_CAP ) ) : ?>
+		global $publicize;
+		if ( current_user_can( $publicize->GLOBAL_CAP ) ) : ?>
 			<p>
 				<input id="globalize_<?php echo $service_name; ?>" type="checkbox" name="global" value="<?php echo wp_create_nonce( 'publicize-globalize-' . $id ) ?>" />
 				<label for="globalize_<?php echo $service_name; ?>"><?php _e( 'Make this connection available to all users of this blog?', 'jetpack' ); ?></label>
@@ -237,7 +250,7 @@ class Publicize_UI {
 <script type="text/javascript">
 jQuery( function($) {
 	var wpasTitleCounter    = $( '#wpas-title-counter' ),
-	    wpasTwitterCheckbox = $( '#wpas-submit-twitter' ).size(),
+	    wpasTwitterCheckbox = $( '.wpas-submit-twitter' ).size(),
 	    wpasTitle = $('#wpas-title').keyup( function() {
 		var length = wpasTitle.val().length;
 		wpasTitleCounter.text( length );
@@ -267,7 +280,7 @@ jQuery( function($) {
 
 				var defaultMessage = $.trim( '<?php printf( $default_prefix, 'url' ); printf( $default_message, '$("#title").val()', 'url' ); printf( $default_suffix, 'url' ); ?>' );
 
-				wpasTitle.append( defaultMessage );
+				wpasTitle.append( defaultMessage.replace( /<[^>]+>/g,'') );
 
 				var selBeg = defaultMessage.indexOf( $("#title").val() );
 				if ( selBeg < 0 ) {
@@ -400,7 +413,13 @@ jQuery( function($) {
 
 					foreach ( $services as $name => $connections ) {
 						foreach ( $connections as $connection ) {
-							if ( !$continue = apply_filters( 'wpas_submit_post?', true, $post->ID, $name ) )
+							$connection_data = '';
+							if ( method_exists( $connection, 'get_meta' ) )
+								$connection_data = $connection->get_meta( 'connection_data' );
+							elseif ( ! empty( $connection['connection_data'] ) )
+								$connection_data = $connection['connection_data'];
+							
+							if ( !$continue = apply_filters( 'wpas_submit_post?', true, $post->ID, $name, $connection_data ) )
 								continue;
 
 							if ( !empty( $connection->unique_id ) )
@@ -436,7 +455,7 @@ jQuery( function($) {
 							// those connections, don't let them change it
 							$cmeta = $this->publicize->get_connection_meta( $connection );
 							$hidden_checkbox = false;
-							if ( !$done && ( 0 == $cmeta['user_id'] && !current_user_can( Publicize::GLOBAL_CAP ) ) ) {
+							if ( !$done && ( 0 == $cmeta['connection_data']['user_id'] && !current_user_can( $this->publicize->GLOBAL_CAP ) ) ) {
 								$disabled = ' disabled="disabled"';
 								$hidden_checkbox = true;
 							}
@@ -460,7 +479,7 @@ jQuery( function($) {
 							?>
 							<li>
 								<label for="wpas-submit-<?php echo esc_attr( $unique_id ); ?>">
-									<input type="checkbox" name="wpas[submit][<?php echo $unique_id; ?>]" id="wpas-submit-<?php echo $unique_id; ?>" value="1" <?php
+									<input type="checkbox" name="wpas[submit][<?php echo $unique_id; ?>]" id="wpas-submit-<?php echo $unique_id; ?>" class="wpas-submit-<?php echo $name; ?>" value="1" <?php
 										checked( true, $checked );
 										echo $disabled;
 									?> />

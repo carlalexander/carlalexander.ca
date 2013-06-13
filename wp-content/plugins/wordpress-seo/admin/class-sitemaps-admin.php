@@ -63,8 +63,12 @@ class WPSEO_Sitemaps_Admin {
 			wp_schedule_single_event( time() + 300, 'wpseo_hit_sitemap_index' );
 
 		// Allow the pinging to happen slightly after the hit sitemap index so the sitemap is fully regenerated when the ping happens.
-		if ( wpseo_get_value( 'sitemap-include', $post->ID ) != 'never' )
-			wp_schedule_single_event( ( time() + 300 ), 'wpseo_ping_search_engines' );
+		if ( wpseo_get_value( 'sitemap-include', $post->ID ) != 'never' ) {
+			if ( defined( 'YOAST_SEO_PING_IMMEDIATELY' ) && YOAST_SEO_PING_IMMEDIATELY )
+				wpseo_ping_search_engines();
+			else
+				wp_schedule_single_event( ( time() + 300 ), 'wpseo_ping_search_engines' );
+		}
 	}
 }
 

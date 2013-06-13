@@ -9,21 +9,26 @@
  */
 
 /**
- * Sets the post excerpt length to 40 words.
- *
- * To override this length in a child theme, remove the filter and add your own
- * function tied to the excerpt_length filter hook.
- */
-function minileven_excerpt_length( $length ) {
-	return 40;
+* Sets the post excerpt length based on number of characters, without breaking words at the end
+*
+*/
+function minileven_excerpt( $count ) {
+	$permalink = get_permalink( $post->ID );
+	$excerpt = get_the_content();
+	$excerpt = strip_tags( $excerpt );
+	$excerpt = strip_shortcodes( $excerpt );
+	$excerpt = substr( $excerpt, 0, $count );
+	$excerpt = substr( $excerpt, 0, strripos( $excerpt, " " ) );
+	$excerpt = $excerpt . minileven_continue_reading_link();
+	return $excerpt;
 }
-add_filter( 'excerpt_length', 'minileven_excerpt_length' );
+/**
 
 /**
  * Returns a "Continue Reading" link for excerpts
  */
 function minileven_continue_reading_link() {
-	return ' <a href="'. esc_url( get_permalink() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'jetpack' ) . '</a>';
+	return ' &hellip; <a href="'. esc_url( get_permalink() ) . '">' . __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'jetpack' ) . '</a>';
 }
 
 /**
@@ -65,3 +70,30 @@ function minileven_body_classes( $classes ) {
 	return $classes;
 }
 add_filter( 'body_class', 'minileven_body_classes' );
+
+/**
+ * Filters wp_title to print a neat <title> tag based on what is being viewed.
+ *
+ * @since Minileven 2.0
+ */
+function minileven_wp_title( $title, $sep ) {
+	global $page, $paged;
+
+	if ( is_feed() )
+		return $title;
+
+	// Add the blog name
+	$title .= get_bloginfo( 'name' );
+
+	// Add the blog description for the home/front page.
+	$site_description = get_bloginfo( 'description', 'display' );
+	if ( $site_description && ( is_home() || is_front_page() ) )
+		$title .= " $sep $site_description";
+
+	// Add a page number if necessary:
+	if ( $paged >= 2 || $page >= 2 )
+		$title .= " $sep " . sprintf( __( 'Page %s', 'jetpack' ), max( $paged, $page ) );
+
+	return $title;
+}
+add_filter( 'wp_title', 'minileven_wp_title', 10, 2 );

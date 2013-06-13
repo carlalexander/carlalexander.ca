@@ -96,6 +96,8 @@ function testFocusKw() {
         html += 'Meta description: ' + ptest( jQuery('#yoast_wpseo_metadesc').val(), p );
         html += '</p>';
         jQuery('#focuskwresults').html(html);
+    } else {
+        jQuery('#focuskwresults').html('');
     }
 }
 
@@ -115,6 +117,8 @@ function updateTitle( force ) {
 
     if ( force )
         jQuery('#yoast_wpseo_title').val( title );
+    else
+        jQuery('#yoast_wpseo_title').attr( 'placeholder', title );
 
     title = yst_clean( title );
     title = jQuery.trim( title );
@@ -307,11 +311,6 @@ jQuery(document).ready(function(){
     jQuery('#yoast_wpseo_metadesc').live('change', function() {
         updateDesc();
     });
-    jQuery('#yoast_wpseo_focuskw').live('change', function() {
-        jQuery('#wpseo_relatedkeywords').show();
-        jQuery('#wpseo_tag_suggestions').hide();
-        jQuery('#related_keywords_heading').hide();
-    });
     jQuery('#excerpt').live('change', function() {
         updateDesc();
     });
@@ -329,48 +328,43 @@ jQuery(document).ready(function(){
         return false;
     });
 
-    jQuery('#wpseo_relatedkeywords').click(function() {
-        if (jQuery('#yoast_wpseo_focuskw').val() == '')
-            return false;
-        jQuery.getJSON("http://boss.yahooapis.com/ysearch/web/v1/"+jQuery('#yoast_wpseo_focuskw').val()+"?"
-            +"appid=NTPCcr7V34Gspq8myEAxcQZs2w.WLOE2a2z.p.1WjSc_u5XQn9xnf8n_N9oOCOs-"
-            +"&lang="+wpseo_lang
-            +"&format=json"
-            +"&count=50"
-            +"&view=keyterms"
-            +"&callback=?",
-            function (data) {
-                var keywords = new Array();
+    var focuskwhelptriggered = false;
+    jQuery('#yoast_wpseo_focuskw').live('change', function() {
+        if ( jQuery('#yoast_wpseo_focuskw').val().search(',') != -1 ) {
+            jQuery("#focuskwhelp").click();
+            focuskwhelptriggered = true;
+        } else if ( focuskwhelptriggered ) {
+            jQuery('#focuskwhelp').qtip("hide");
+            focuskwhelptriggered = false;
+        }
 
-                if ( data['ysearchresponse']['resultset_web'] != undefined ) {
-                    jQuery.each(data['ysearchresponse']['resultset_web'], function(i,item) {
-                        if ( item['keyterms']['terms'] != undefined ) {
-                            jQuery.each(item['keyterms']['terms'], function(i,kw) {
-                                key = kw.toLowerCase();
+        updateSnippet();
+    });
 
-                                if ( key != undefined ) {
-                                    if (keywords[key] == undefined)
-                                        keywords[key] = 1;
-                                    else
-                                        keywords[key]++;
-                                }
-                            });
-                        }
-                    });
 
-                    var result = '<p class="clear">';
-                    for (key in keywords) {
-                        if (keywords[key] > 5)
-                            result += '<span class="wpseo_yahoo_kw">' + key + '</span>';
-                    }
-                    result += '</p>';
-                    jQuery('#wpseo_tag_suggestions').html( result );
-                    jQuery('#related_keywords_heading').show();
-                }
-            });
-        jQuery(this).hide();
-        return false;
+    jQuery(".yoast_help").qtip({
+        position:{
+            corner:{
+                target:'topMiddle',
+                tooltip:'bottomLeft'
+            }
+        },
+        show:{
+            when:{
+                event:'click'
+            }
+        },
+        hide:{
+            when:{
+                event:'click'
+            }
+        },
+        style:{
+            tip:'bottomLeft',
+            name:'blue'
+        }
     });
 
     updateSnippet();
+
 });

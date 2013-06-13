@@ -36,33 +36,25 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 			add_filter( 'fb_meta_tags', array( $this, 'facebook_filter' ), 10, 1 );
 		} else {
 			add_filter( 'language_attributes', array( $this, 'add_opengraph_namespace' ) );
-			add_action( 'wpseo_head', array( $this, 'opengraph' ) );
+
+			add_action( 'wpseo_opengraph', array( $this, 'locale'), 1 );
+			add_action( 'wpseo_opengraph', array( $this, 'site_owner'), 20 );
+			add_action( 'wpseo_opengraph', array( $this, 'og_title'), 10 );
+			add_action( 'wpseo_opengraph', array( $this, 'description'), 11 );
+			add_action( 'wpseo_opengraph', array( $this, 'url'), 12 );
+			add_action( 'wpseo_opengraph', array( $this, 'site_name'), 13 );
+			add_action( 'wpseo_opengraph', array( $this, 'type'), 5 );
+			add_action( 'wpseo_opengraph', array( $this, 'image'), 30 );
 		}
 		remove_action( 'wp_head', 'jetpack_og_tags' );
-		add_action( 'wpseo_head', array( $this, 'wpseo_opengraph_action' ) );
-	}
-
-	/**
-	 * Do the opengraph action
-	 */
-	public function wpseo_opengraph_action() {
-		do_action( 'wpseo_opengraph' );
+		add_action( 'wpseo_head', array( $this, 'opengraph' ), 30 );
 	}
 
 	/**
 	 * Main OpenGraph output.
 	 */
 	public function opengraph() {
-		wp_reset_query();
-
-		$this->locale();
-		$this->site_owner();
-		$this->og_title();
-		$this->description();
-		$this->url();
-		$this->site_name();
-		$this->type();
-		$this->image();
+		do_action( 'wpseo_opengraph' );
 	}
 
 	/**
@@ -122,7 +114,7 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 	 */
 	public function og_title( $echo = true ) {
 		$title = $this->title( '' );
-		if ( $echo )
+		if ( $echo !== false )
 			echo "<meta property='og:title' content='" . esc_attr( $title ) . "'/>\n";
 		else
 			return $title;
@@ -181,7 +173,7 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 		if ( !in_array( $locale, $fb_valid_fb_locales ) )
 			$locale = 'en_US';
 
-		if ( $echo )
+		if ( $echo !== false )
 			echo "<meta property='og:locale' content='" . esc_attr( $locale ) . "'/>\n";
 		else
 			return $locale;
@@ -204,7 +196,7 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 		}
 		$type = apply_filters( 'wpseo_opengraph_type', $type );
 
-		if ( $echo )
+		if ( $echo !== false )
 			echo "<meta property='og:type' content='" . esc_attr( $type ) . "'/>\n";
 		else
 			return $type;
@@ -217,7 +209,7 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 	 *
 	 * @return bool
 	 */
-	private function image_output( $img ) {
+	function image_output( $img ) {
 		if ( empty( $img ) )
 			return false;
 
@@ -259,7 +251,7 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 			}
 
 			if ( function_exists( 'has_post_thumbnail' ) && has_post_thumbnail( $post->ID ) ) {
-				$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), apply_filters( 'wpseo_opengraph_image_size', 'medium' ) );
+				$thumb = wp_get_attachment_image_src( get_post_thumbnail_id( $post->ID ), apply_filters( 'wpseo_opengraph_image_size', 'large' ) );
 				$this->image_output( $thumb[0] );
 			}
 
@@ -289,8 +281,10 @@ class WPSEO_OpenGraph extends WPSEO_Frontend {
 		if ( !$ogdesc )
 			$ogdesc = $this->metadesc( false );
 
+		$ogdesc = apply_filters( 'wpseo_opengraph_desc', $ogdesc );
+
 		if ( $ogdesc && $ogdesc != '' ) {
-			if ( $echo )
+			if ( $echo !== false )
 				echo "<meta property='og:description' content='" . esc_attr( $ogdesc ) . "'/>\n";
 			else
 				return $ogdesc;

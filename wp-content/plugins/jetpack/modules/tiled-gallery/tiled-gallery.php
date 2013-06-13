@@ -9,6 +9,7 @@ class Jetpack_Tiled_Gallery {
 	public function __construct() {
 		add_action( 'admin_init', array( $this, 'settings_api_init' ) );
 		add_filter( 'jetpack_gallery_types', array( $this, 'jetpack_gallery_types' ), 9 );
+		add_filter( 'jetpack_default_gallery_type', array( $this, 'jetpack_default_gallery_type' ) );
 	}
 
 	public function tiles_enabled() {
@@ -135,7 +136,7 @@ class Jetpack_Tiled_Gallery {
 
 					$img_src = add_query_arg( array( 'w' => $image->width, 'h' => $image->height ), $orig_file );
 
-					$output .= '<div class="tiled-gallery-item ' . esc_attr( $size ) . '"><a href="' . esc_url( $link ) . '"><img ' . $this->generate_carousel_image_args( $image ) . ' src="' . esc_url( $img_src ) . '" width="' . esc_attr( $image->width ) . '" height="' . esc_attr( $image->height ) . '" align="left" title="' . esc_attr( $image_title ) . '" /></a>';
+					$output .= '<div class="tiled-gallery-item tiled-gallery-item-' . esc_attr( $size ) . '"><a href="' . esc_url( $link ) . '"><img ' . $this->generate_carousel_image_args( $image ) . ' src="' . esc_url( $img_src ) . '" width="' . esc_attr( $image->width ) . '" height="' . esc_attr( $image->height ) . '" align="left" title="' . esc_attr( $image_title ) . '" /></a>';
 
 					if ( $this->atts['grayscale'] == true ) {
 						$img_src_grayscale = jetpack_photon_url( $img_src, array( 'filter' => 'grayscale' ) );
@@ -213,7 +214,15 @@ class Jetpack_Tiled_Gallery {
 
 		$html = '<div '. $this->gallery_classes() . ' data-original-width="' . esc_attr( self::get_content_width() ) . '">';
 		$blog_id = (int) get_current_blog_id();
-		$extra_data = array( 'data-carousel-extra' => array( 'blog_id' => $blog_id, 'permalink' => get_permalink( $post->ID ) ) );
+
+		if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
+			$likes_blog_id = $blog_id;
+		} else {
+			$jetpack = Jetpack::init();
+			$likes_blog_id = $jetpack->get_option( 'id' );
+		}
+
+		$extra_data = array( 'data-carousel-extra' => array( 'blog_id' => $blog_id, 'permalink' => get_permalink( $post->ID ), 'likes_blog_id' => $likes_blog_id ) );
 
 		foreach ( (array) $extra_data as $data_key => $data_values ) {
 			$html = str_replace( '<div ', '<div ' . esc_attr( $data_key ) . "='" . json_encode( $data_values ) . "' ", $html );
@@ -283,9 +292,7 @@ class Jetpack_Tiled_Gallery {
 	}
 
 	public static function get_content_width() {
-		global $content_width;
-
-		$tiled_gallery_content_width = $content_width;
+		$tiled_gallery_content_width = Jetpack::get_content_width();
 
 		if ( ! $tiled_gallery_content_width )
 			$tiled_gallery_content_width = 500;
@@ -297,10 +304,22 @@ class Jetpack_Tiled_Gallery {
 	 * Media UI integration
 	 */
 	function jetpack_gallery_types( $types ) {
-		$types['rectangular'] = __( 'Tiles', 'jetpack' );
+		if ( get_option( 'tiled_galleries' ) && isset( $types['default'] ) ) {
+			// Tiled is set as the default, meaning that type='default'
+			// will still display the mosaic.
+			$types['thumbnails'] = $types['default'];
+			unset( $types['default'] );
+		}
+
+		$types['rectangular'] = __( 'Tiled Mosaic', 'jetpack' );
 		$types['square'] = __( 'Square Tiles', 'jetpack' );
 		$types['circle'] = __( 'Circles', 'jetpack' );
+
 		return $types;
+	}
+
+	function jetpack_default_gallery_type( $default ) {
+		return ( get_option( 'tiled_galleries' ) ? 'rectangular' : 'default' );
 	}
 
 	/**
@@ -348,8 +367,7 @@ class Jetpack_Tiled_Gallery_Shape {
 	}
 
 	public function is_wide_theme() {
-		global $content_width;
-		return $content_width > 1000;
+		return Jetpack::get_content_width() > 1000;
 	}
 
 	public static function set_last_shape( $last_shape ) {

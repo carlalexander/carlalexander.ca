@@ -1,0 +1,406 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Oxygen\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-08-10 15:06+0200\n"
+"PO-Revision-Date: 2013-02-10 22:42-0300\n"
+"Last-Translator: Galin Simeonov <galin@alienwp.com>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-KeywordsList: _;gettext;gettext_noop;__;_e;esc_attr__;esc_attr_e;"
+"esc_html__;esc_html_e;_n;_x;_x:1,2c\n"
+"X-Poedit-Basepath: ../\n"
+"X-Generator: Poedit 1.5.3\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: 404.php:37
+msgid "Not Found"
+msgstr "Não encontrado"
+
+#: 404.php:42
+#, php-format
+msgid ""
+"You tried going to %1$s, and it doesn't exist. All is not lost! You can "
+"search for what you're looking for."
+msgstr ""
+"Você tentou ir  %1$s, só que essa página não existe. Não se preocupe, nem "
+"tudo está perdido, use a busca ou volte para a página inicial."
+
+#: archive.php:51 featured-content.php:26 index.php:52
+msgid "[entry-published]"
+msgstr ""
+
+#: archive.php:53 index.php:54
+msgid "by [entry-author]"
+msgstr "por [entry-author]"
+
+#: archive.php:55 index.php:56
+msgid "[entry-edit-link]"
+msgstr ""
+
+#: archive.php:59 index.php:60
+msgid "[entry-terms taxonomy=\"category\" before=\"\"]"
+msgstr ""
+
+#: archive.php:65 attachment.php:60 index.php:66 page-template-archives.php:63
+msgid "Pages:"
+msgstr "Páginas"
+
+#: archive.php:69 index.php:70
+msgid "Read Article"
+msgstr "Ler post"
+
+#: attachment.php:54
+#, php-format
+msgid "Download &quot;%1$s&quot;"
+msgstr ""
+
+#: attachment.php:59 page-template-archives.php:45
+msgid "Continue reading <span class=\"meta-nav\">&rarr;</span>"
+msgstr "Continuar lendo <span class=\"meta-nav\">&rarr;</span>"
+
+#: comment.php:32
+msgid "Your comment is awaiting moderation."
+msgstr "Seu comentário aguarda moderação."
+
+#: comments.php:14
+msgid "Please do not load this page directly. Thanks!"
+msgstr "Por favor não carregue essa página diretamente. Obrigado!"
+
+#: comments.php:29
+msgid "No Responses"
+msgstr "Nenhuma resposta"
+
+#: comments.php:29
+msgid "One Response"
+msgstr "Uma resposta"
+
+#: comments.php:29
+msgid "% Responses"
+msgstr "% Respostas"
+
+#: comments.php:50
+#, php-format
+msgid ""
+"Comments are closed, but <a href=\"%1$s\" title=\"Trackback URL for this post"
+"\">trackbacks</a> and pingbacks are open."
+msgstr ""
+"Os comentários não estão ativos, mas <a href=\"%1$s\" title=\"Trackback URL "
+"for this post\">trackbacks</a> e pingbacks estão."
+
+#: comments.php:56
+msgid "Comments are closed."
+msgstr "Os comentários não estão ativos"
+
+#: functions.php:189 loop-nav.php:28
+msgid "&larr; Previous"
+msgstr "&larr; Anterior"
+
+#: functions.php:190 loop-nav.php:28
+msgid "Next &rarr;"
+msgstr "Próximo &rarr;"
+
+#: functions.php:216
+msgid "(Untitled)"
+msgstr "(sem título)"
+
+#: functions.php:265
+msgid "*"
+msgstr ""
+
+#: functions.php:270
+msgid "Name"
+msgstr "Nome"
+
+#: functions.php:271
+msgid "Email"
+msgstr ""
+
+#: functions.php:272
+msgid "Website"
+msgstr "Site"
+
+#: functions.php:277
+msgid "Comment"
+msgstr "Comentário"
+
+#: functions.php:278
+#, php-format
+msgid ""
+"You must be <a href=\"%1$s\" title=\"Log in\">logged in</a> to post a "
+"comment."
+msgstr ""
+"Você precisa estar <a href=\"%1$s\" title=\"Log in\">logado</a> para "
+"comentar."
+
+#: functions.php:279
+#, php-format
+msgid "Logged in as <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
+msgstr "Logado como <a href=\"%1$s\" title=\"%2$s\">%2$s</a>."
+
+#: functions.php:279
+msgid "Log out of this account"
+msgstr "Sair dessa conta"
+
+#: functions.php:279
+msgid "Log out &rarr;"
+msgstr "Sair &rarr;"
+
+#: functions.php:284
+msgid "Leave a Reply"
+msgstr "Responder"
+
+#: functions.php:285
+#, php-format
+msgid "Leave a Reply to %s"
+msgstr "Responder para %s"
+
+#: functions.php:286
+msgid "Click here to cancel reply."
+msgstr "Clique aqui para cancelar a resposta"
+
+#: functions.php:287
+msgid "Post Comment &rarr;"
+msgstr "postar comentário &rarr;"
+
+#: functions.php:312
+msgid "Copyright &#169; [the-year] [site-link]"
+msgstr ""
+
+#: functions.php:312
+msgid "Powered by [wp-link] and [theme-link]"
+msgstr ""
+
+#: functions.php:322
+msgid "Location"
+msgstr "Localização"
+
+#: functions.php:332
+msgid "Featured"
+msgstr "Destaque"
+
+#: functions.php:333
+msgid "Primary"
+msgstr "Primário"
+
+#: functions.php:334
+msgid "Secondary"
+msgstr "Secundário"
+
+#: functions.php:335
+msgid "Do not display"
+msgstr "Não exibir"
+
+#: functions.php:337
+msgid "Post location on the home page"
+msgstr "Postar na página inicial"
+
+#: loop-error.php:15
+msgid "Apologies, but no entries were found."
+msgstr "Perdão, mas nenhum post foi encontrado"
+
+#: loop-nav.php:16
+msgid "&larr; Return to entry"
+msgstr "&larr; Retornar para o conteúdo"
+
+#: loop-nav.php:22 loop-nav.php:23
+msgid "%link"
+msgstr ""
+
+#: page-template-archives.php:47
+msgid "Archives by category"
+msgstr "Arquivos por categoria"
+
+#: page-template-archives.php:51
+msgid "RSS"
+msgstr ""
+
+#: page-template-archives.php:55
+msgid "Archives by month"
+msgstr "Arquivos por mês"
+
+#: page-template-front.php:33
+msgid "Recent Articles"
+msgstr "Artigos recentes"
+
+#: page-template-front.php:93
+msgid "More Articles"
+msgstr "Mais artigos"
+
+#: page-template-front.php:109
+msgid ""
+"[entry-published] / by [entry-author] / in [entry-terms taxonomy=\"category"
+"\"] [entry-edit-link before=\" / \"]"
+msgstr ""
+"[entry-published] / por [entry-author] / em [entry-terms taxonomy=\"category"
+"\"] [entry-edit-link before=\" / \"]"
+
+#: post.php:48
+msgid ""
+"[entry-published] &middot; by [entry-author] &middot; in [entry-terms "
+"taxonomy=\"category\" before=\"\"] [entry-edit-link before=\" &middot; \"]"
+msgstr ""
+"[entry-published] &middot; por [entry-author] &middot; em [entry-terms "
+"taxonomy=\"category\" before=\"\"] [entry-edit-link before=\" &middot; \"]"
+
+#: post.php:58
+msgid "[entry-terms taxonomy=\"post_tag\" before=\"Tags: \"]"
+msgstr ""
+
+#: searchform.php:17
+msgid "Search this site..."
+msgstr "Buscar esse site..."
+
+#: searchform.php:19
+msgid "Search"
+msgstr "Buscar"
+
+#: singular.php:44
+msgid "By [entry-author] on [entry-published] [entry-edit-link before=\" | \"]"
+msgstr ""
+"Por [entry-author] em [entry-published] [entry-edit-link before=\" | \"]"
+
+#: admin/functions-admin.php:38
+msgid "General settings"
+msgstr "Configurações gerais"
+
+#: admin/functions-admin.php:56
+msgid "Favicon:"
+msgstr ""
+
+#: admin/functions-admin.php:62
+msgid "Upload favicon image (recommended max size: 32x32)."
+msgstr "Upload da imagem de Favicon (Tamanho máximo recomendado: 32x32)"
+
+#: admin/functions-admin.php:74
+msgid "Logo:"
+msgstr ""
+
+#: admin/functions-admin.php:80
+msgid "Upload logo image."
+msgstr "Upload do logo"
+
+#: admin/functions-admin.php:92
+msgid "Title font family:"
+msgstr "Título da fonte:"
+
+#: admin/functions-admin.php:96
+msgid "Abel"
+msgstr ""
+
+#: admin/functions-admin.php:97
+msgid "Oswald"
+msgstr ""
+
+#: admin/functions-admin.php:98
+msgid "Terminal Dosis"
+msgstr ""
+
+#: admin/functions-admin.php:99
+msgid "Bitter"
+msgstr ""
+
+#: admin/functions-admin.php:100
+msgid "Georgia"
+msgstr ""
+
+#: admin/functions-admin.php:101
+msgid "Droid Serif"
+msgstr ""
+
+#: admin/functions-admin.php:102
+msgid "Helvetica"
+msgstr ""
+
+#: admin/functions-admin.php:103
+msgid "Arial"
+msgstr ""
+
+#: admin/functions-admin.php:104
+msgid "Droid Sans"
+msgstr ""
+
+#: admin/functions-admin.php:106
+msgid "Choose a font for the titles."
+msgstr ""
+
+#: admin/functions-admin.php:113
+msgid "Font size:"
+msgstr "Tamanho da fonte:"
+
+#: admin/functions-admin.php:117
+msgid "default"
+msgstr "Padrão"
+
+#: admin/functions-admin.php:118
+msgid "17"
+msgstr ""
+
+#: admin/functions-admin.php:119
+msgid "16"
+msgstr ""
+
+#: admin/functions-admin.php:120
+msgid "15"
+msgstr ""
+
+#: admin/functions-admin.php:121
+msgid "14"
+msgstr ""
+
+#: admin/functions-admin.php:122
+msgid "13"
+msgstr ""
+
+#: admin/functions-admin.php:123
+msgid "12"
+msgstr ""
+
+#: admin/functions-admin.php:125
+msgid "The base font size in pixels."
+msgstr "O tamanho da fonte é medido em pixels."
+
+#: admin/functions-admin.php:132
+msgid "Link color:"
+msgstr "Cor do link:"
+
+#: admin/functions-admin.php:137
+msgid "Set the theme link color."
+msgstr "Escolher cor do link."
+
+#: admin/functions-admin.php:144
+msgid "Slider Timeout:"
+msgstr "Tempo de permanência do slide:"
+
+#: admin/functions-admin.php:148
+msgid "The time interval between slides in milliseconds."
+msgstr "Tempo de intervalo entre os slides:"
+
+#: admin/functions-admin.php:155
+msgid "Fancybox:"
+msgstr ""
+
+#: admin/functions-admin.php:159
+msgid ""
+"Check to enable the built-in <a href=\"http://fancybox.net/\" target=\"_blank"
+"\">Fancybox</a>."
+msgstr ""
+"Marque para ativar o efeito <a href=\"http://fancybox.net/\" target=\"_blank"
+"\">Fancybox</a>."
+
+#: admin/functions-admin.php:166
+msgid "Custom CSS:"
+msgstr "Customizar CSS:"
+
+#: admin/functions-admin.php:170
+msgid ""
+"Add your custom CSS here. It would overwrite any default or custom theme "
+"settings."
+msgstr ""
+"Adicione o seu CSS customizado aqui. Ele vai sobrescrever os estilos padrão."
+
+#: admin/functions-admin.php:206
+msgid "Use this Image"
+msgstr "Usar essa imagem"

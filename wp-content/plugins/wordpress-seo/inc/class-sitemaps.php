@@ -37,7 +37,6 @@ class WPSEO_Sitemaps {
 		add_action( 'template_redirect', array( $this, 'redirect' ) );
 		add_filter( 'redirect_canonical', array( $this, 'canonical' ) );
 		add_action( 'wpseo_hit_sitemap_index', array( $this, 'hit_sitemap_index' ) );
-		add_action( 'wpseo_ping_search_engines', array( $this, 'ping_search_engines' ) );
 
 		// default stylesheet
 		$this->stylesheet = '<?xml-stylesheet type="text/xsl" href="' . WPSEO_FRONT_URL . 'css/xml-sitemap-xsl.php"?>';
@@ -571,25 +570,6 @@ class WPSEO_Sitemaps {
 		}
 		$output .= "\t</url>\n";
 		return $output;
-	}
-
-	/**
-	 * Notify search engines of the updated sitemap.
-	 */
-	function ping_search_engines() {
-		$options    = get_option( 'wpseo_xml' );
-		$base       = $GLOBALS['wp_rewrite']->using_index_permalinks() ? 'index.php/' : '';
-		$sitemapurl = urlencode( home_url( $base . 'sitemap_index.xml' ) );
-
-		// Always ping Google and Bing, optionally ping Ask and Yahoo!
-		wp_remote_get( 'http://www.google.com/webmasters/tools/ping?sitemap=' . $sitemapurl );
-		wp_remote_get( 'http://www.bing.com/webmaster/ping.aspx?sitemap=' . $sitemapurl );
-
-		if ( isset( $options['xml_ping_yahoo'] ) && $options['xml_ping_yahoo'] )
-			wp_remote_get( 'http://search.yahooapis.com/SiteExplorerService/V1/updateNotification?appid=3usdTDLV34HbjQpIBuzMM1UkECFl5KDN7fogidABihmHBfqaebDuZk1vpLDR64I-&url=' . $sitemapurl );
-
-		if ( isset( $options['xml_ping_ask'] ) && $options['xml_ping_ask'] )
-			wp_remote_get( 'http://submissions.ask.com/ping?sitemap=' . $sitemapurl );
 	}
 
 	/**

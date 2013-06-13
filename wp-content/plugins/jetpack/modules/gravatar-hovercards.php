@@ -4,6 +4,7 @@
  * Module Description: Show a pop-up business card of your users' gravatar profiles in comments.
  * Sort Order: 8
  * First Introduced: 1.1
+ * Requires Connection: No
  */
 
 define( 'GROFILES__CACHE_BUSTER', gmdate( 'YM' ) . 'aa' ); // Break CDN cache, increment when gravatar.com/js/gprofiles.js changes
@@ -13,11 +14,11 @@ function grofiles_hovercards_init() {
 	add_action( 'wp_enqueue_scripts',  'grofiles_attach_cards' );
 	add_action( 'wp_footer',           'grofiles_extra_data' );
 	add_action( 'admin_init',          'grofiles_add_settings' );
-	
+
 	add_action( 'load-index.php',              'grofiles_admin_cards' );
 	add_action( 'load-users.php',              'grofiles_admin_cards' );
-	add_action( 'load-edit-comments.php',      'grofiles_admin_cards' );	
-	add_action( 'load-options-discussion.php', 'grofiles_admin_cards_forced' );	
+	add_action( 'load-edit-comments.php',      'grofiles_admin_cards' );
+	add_action( 'load-options-discussion.php', 'grofiles_admin_cards_forced' );
 
 	Jetpack::enable_module_configurable( __FILE__ );
 	Jetpack::module_configuration_load( __FILE__, 'gravatar_hovercards_configuration_load' );
@@ -52,7 +53,7 @@ function grofiles_setting_callback() {
 	global $current_user;
 
 	$checked = 'disabled' == get_option( 'gravatar_disable_hovercards' ) ? '' : 'checked="checked" ';
- 
+
  	echo "<label id='gravatar-hovercard-options'><input {$checked}name='gravatar_disable_hovercards' id='gravatar_disable_hovercards' type='checkbox' value='enabled' class='code' /> " . __( "View people's profiles when you mouse over their Gravatars", 'jetpack' ) . "</label>";
 ?>
 <style type="text/css">
@@ -141,7 +142,7 @@ function grofiles_get_avatar( $avatar, $author ) {
 		if ( false !== strpos( $author, '@' ) ) {
 			grofiles_gravatars_to_append( $author );
 		} else {
-			if ( $user = get_userdatabylogin( $author ) )
+			if ( $user = get_user_by( 'slug', $author ) )
 				grofiles_gravatars_to_append( $user->ID );
 		}
 	} else if ( isset( $author->comment_type ) ) {
@@ -167,7 +168,7 @@ function grofiles_get_avatar( $avatar, $author ) {
  */
 function grofiles_attach_cards() {
 	global $blog_id;
-	
+
 	if ( 'disabled' == get_option( 'gravatar_disable_hovercards' ) )
 		return;
 

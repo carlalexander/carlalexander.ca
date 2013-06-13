@@ -3,8 +3,8 @@
  * @package Internals
  */
 
-if ( !defined('WPSEO_VERSION') ) {
-	header('HTTP/1.0 403 Forbidden');
+if ( !defined( 'WPSEO_VERSION' ) ) {
+	header( 'HTTP/1.0 403 Forbidden' );
 	die;
 }
 
@@ -61,19 +61,19 @@ function wpseo_defaults() {
 			'noindex-post_format' => 'on',
 		);
 		foreach ( get_post_types( array( 'public' => true ), 'objects' ) as $pt ) {
-			$opt[ 'title-' . $pt->name ] = '%%title%% %%page%% %%sep%% %%sitename%%';
+			$opt['title-' . $pt->name] = '%%title%% %%page%% %%sep%% %%sitename%%';
 			if ( $pt->has_archive )
-				$opt[ 'title-ptarchive-' . $pt->name ] = sprintf( __( '%s Archive', 'wordpress-seo' ), '%%pt_plural%%' ) . ' %%page%% %%sep%% %%sitename%%';
+				$opt['title-ptarchive-' . $pt->name] = sprintf( __( '%s Archive', 'wordpress-seo' ), '%%pt_plural%%' ) . ' %%page%% %%sep%% %%sitename%%';
 		}
 		foreach ( get_taxonomies( array( 'public' => true ) ) as $tax ) {
-			$opt[ 'title-' . $tax ] = sprintf( __( '%s Archives', 'wordpress-seo' ), '%%term_title%%' ) . ' %%page%% %%sep%% %%sitename%%';
+			$opt['title-' . $tax] = sprintf( __( '%s Archives', 'wordpress-seo' ), '%%term_title%%' ) . ' %%page%% %%sep%% %%sitename%%';
 		}
 		update_option( 'wpseo_titles', $opt );
 	}
 
 	if ( !is_array( get_option( 'wpseo_xml' ) ) ) {
 		$opt = array(
-			'enablexmlsitemap' => 'on',
+			'enablexmlsitemap'                     => 'on',
 			'post_types-attachment-not_in_sitemap' => true
 		);
 		update_option( 'wpseo_xml', $opt );
@@ -107,10 +107,10 @@ function wpseo_defaults() {
 function wpseo_title_test() {
 	$options = get_option( 'wpseo_titles' );
 
-	if ( isset( $options[ 'forcerewritetitle' ] ) )
-		unset( $options[ 'forcerewritetitle' ] );
+	if ( isset( $options['forcerewritetitle'] ) )
+		unset( $options['forcerewritetitle'] );
 
-	$options[ 'title_test' ] = true;
+	$options['title_test'] = true;
 	update_option( 'wpseo_titles', $options );
 
 	// Setting title_test to true forces the plugin to output the title below through a filter in class-frontend.php
@@ -124,34 +124,35 @@ function wpseo_title_test() {
 
 	global $wp_version;
 	$args = array(
-	 	'user-agent' => "WordPress/${wp_version}; ".get_site_url()." - Yoast",
+		'user-agent' => "WordPress/${wp_version}; " . get_site_url() . " - Yoast",
 	);
 	$resp = wp_remote_get( get_bloginfo( 'url' ), $args );
 
 	// echo '<pre>'.$resp['body'].'</pre>';
 
-	if ( $resp && !is_wp_error( $resp ) && 200 == $resp[ 'response' ][ 'code' ] ) {
-		$res = preg_match( '/<title>([^<]+)<\/title>/im', $resp[ 'body' ], $matches );
+	if ( $resp && !is_wp_error( $resp ) && 200 == $resp['response']['code'] ) {
+		$res = preg_match( '/<title>([^<]+)<\/title>/im', $resp['body'], $matches );
 
-		if ( $res && strcmp( $matches[ 1 ], $expected_title ) !== 0 ) {
-			$options[ 'forcerewritetitle' ] = 'on';
+		if ( $res && strcmp( $matches[1], $expected_title ) !== 0 ) {
+			$options['forcerewritetitle'] = 'on';
 			update_option( 'wpseo_titles', $options );
 
 			$resp = wp_remote_get( get_bloginfo( 'url' ), $args );
 
-			$res = preg_match( '/<title>([^>]+)<\/title>/im', $resp[ 'body' ], $matches );
+			$res = preg_match( '/<title>([^>]+)<\/title>/im', $resp['body'], $matches );
 		}
 
-		if ( !$res || $matches[ 1 ] != $expected_title )
-			unset( $options[ 'forcerewritetitle' ] );
+		if ( !$res || $matches[1] != $expected_title )
+			unset( $options['forcerewritetitle'] );
 	} else {
 		// If that dies, let's make sure the titles are correct and force the output.
-		$options[ 'forcerewritetitle' ] = 'on';
+		$options['forcerewritetitle'] = 'on';
 	}
 
-	unset( $options[ 'title_test' ] );
+	unset( $options['title_test'] );
 	update_option( 'wpseo_titles', $options );
 }
+
 add_filter( 'switch_theme', 'wpseo_title_test', 0 );
 
 /**
@@ -223,7 +224,7 @@ function wpseo_admin_bar_menu() {
 		$focuskw    = wpseo_get_value( 'focuskw', $post->ID );
 		$perc_score = wpseo_get_value( 'linkdex', $post->ID );
 		$txtscore   = wpseo_translate_score( round( $perc_score / 10 ) );
-		$score      = '<div alt="' . ucfirst( $txtscore ) . '" title="' . ucfirst( $txtscore ) . '" class="wpseo_score_img ' . $txtscore . ' ' . $perc_score . '"></div>';
+		$score      = '<div title="' . ucfirst( $txtscore ) . '" class="wpseo_score_img ' . $txtscore . ' ' . $perc_score . '"></div>';
 		$seo_url    = get_edit_post_link( $post->ID );
 		if ( $txtscore != 'na' )
 			$seo_url .= '#wpseo_linkdex';
@@ -246,7 +247,7 @@ function wpseo_admin_bar_menu() {
 	$admin_menu = false;
 	if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 		$options = get_site_option( 'wpseo_ms' );
-		if ( is_array( $options ) && isset( $options[ 'access' ] ) && $options[ 'access' ] == 'superadmin' ) {
+		if ( is_array( $options ) && isset( $options['access'] ) && $options['access'] == 'superadmin' ) {
 			if ( is_super_admin() )
 				$admin_menu = true;
 			else
@@ -284,3 +285,30 @@ function wpseo_admin_bar_css() {
 }
 
 add_action( 'wp_enqueue_scripts', 'wpseo_admin_bar_css' );
+
+/**
+ * Allows editing of the meta fields through weblog editors like Marsedit.
+ *
+ * @param array $allcaps Capabilities that must all be true to allow action.
+ * @param array $cap     Array of capabilities to be checked, unused here.
+ * @param array $args    List of arguments for the specific cap to be checked.
+ *
+ * @return array $allcaps
+ */
+function allow_custom_field_edits( $allcaps, $cap, $args ) {
+	// $args[0] holds the capability
+	// $args[2] holds the post ID
+	// $args[3] holds the custom field
+
+	// Make sure the request is to edit or add a post meta (this is usually also the second value in $cap,
+	// but this is safer to check).
+	if ( in_array( $args[0], array( "edit_post_meta", "add_post_meta" ) ) ) {
+		// Only allow editing rights for users who have the rights to edit this post and make sure
+		// the meta value starts with _yoast_wpseo.
+		if ( current_user_can( 'edit_post', $args[2] ) && strpos( $args[3], "_yoast_wpseo_" ) === 0 )
+			$allcaps[$args[0]] = true;
+	}
+
+	return $allcaps;
+}
+add_filter( 'user_has_cap', 'allow_custom_field_edits', 0, 3 );

@@ -1,5 +1,17 @@
 == Changelog ==
 
+= 0.5 =
+* Migrated theme settings to the theme Customizer. The old settings entries will be used as a fallback, but please re-save all settings in the Customizer and/or Header as support for legacy settings will be dropped in the future.
+* Removed the favicon upload option. Simply place favicon.ico in the theme folder instead.
+* Added support for custom header to replace the old logo upload option.
+* Added responsive menu toggle.
+* Disqus plugin compatibility.
+* Added style.min.css - minified version of the theme stylesheet.
+* Updated the English .po/.mo files.
+* Updated Hybrid Core to 1.5.3.
+* Added Brazilian Portuguese translation files.
+* Minor CSS improvements.
+
 = 0.3.6 =
 * Added changelog.txt file.
 * Updated Hybrid Core to 1.4.3.

@@ -4,10 +4,10 @@ jQuery(document).ready(function($) {
 	// gallery faded layer and container elements
 	var overlay, comments, gallery, container, nextButton, previousButton, info, title,
 	caption, resizeTimeout, mouseTimeout, photo_info, close_hint, commentInterval, buttons,
-	screenPadding = 110, originalOverflow = $('body').css('overflow'), proportion = 85, isMobile;
-	
+	screenPadding = 110, originalOverflow = $('body').css('overflow'), originalHOverflow = $('html').css('overflow'), proportion = 85, isMobile;
+
 	isMobile = /Android|iPhone|iPod/i.test(navigator.userAgent);
-	
+
 	if (isMobile)
 		screenPadding = 0;
 
@@ -54,9 +54,69 @@ jQuery(document).ready(function($) {
 		}, 200);
 	};
 
-	var prepareGallery = function(){
-		if (!overlay) {
+	// For each image in the carousel, emit likes widget markup
+	var getCarouselLikeWidgets = function( dataCarouselExtra ) {
 
+		// Only do this if likes is enabled
+		if ( "undefined" === typeof jetpackLikesWidgetQueue )
+			return "";
+
+		var blogId = dataCarouselExtra.likes_blog_id;
+		var attachmentId = 0;
+		var protocol = 'http';
+		var originDomain = 'http://wordpress.com';
+
+		if ( dataCarouselExtra.permalink.length ) {
+			var parts = dataCarouselExtra.permalink.split( ':' );
+			var protocol = parts[0];
+			if ( ( protocol != 'http' ) && ( protocol != 'https' ) ) {
+				protocol = 'http';
+			}
+
+			parts = dataCarouselExtra.permalink.split( '/' );
+			if ( parts.length >= 2 ) {
+				originDomain = protocol + "://" + parts[2];
+			}
+		}
+
+		var likesWidgetContainer = $("<div class='likes-widget-container'></div>");
+
+		$( 'div.gallery, div.tiled-gallery' ).find( 'img' ).each( function() {
+
+			attachmentId = $( this ).attr( "data-attachment-id" );
+			var dataSource = protocol + "://widgets.wp.com/likes/#blog_id=" + blogId + "&amp;post_id=" + attachmentId + "&amp;slim=1&amp;origin=" + originDomain;
+
+			if ( 'en' !== jetpackCarouselStrings.lang ) {
+				dataSource += "&amp;lang=" + jetpackCarouselStrings.lang;
+			}
+
+			var likesWidgetWrapper = $( "<div></div>" );
+			likesWidgetWrapper.addClass( "jetpack-likes-widget-wrapper" )
+				.addClass( "jetpack-likes-widget-unloaded" )
+				.addClass( "slim-likes-widget" )
+				.attr( "id", "like-post-wrapper-" + blogId + "-" + attachmentId )
+				.attr( "data-src", dataSource )
+				.attr( "data-name", "like-post-frame-" + blogId + "-" + attachmentId )
+				.attr( "data-attachment-id", attachmentId )
+				.css( "display", "none" )
+				.css( "vertical-align", "middle" );
+
+			var likesWidget = $( "<iframe class='post-likes-widget jetpack-likes-widget jetpack-resizeable'></iframe>" );
+			likesWidget.attr( "name", "like-post-frame-" + blogId + "-" + attachmentId )
+				.attr( "src", dataSource );
+			likesWidget.css( "display", "inline-block" );
+			likesWidgetWrapper.append( likesWidget );
+
+			likesWidgetWrapper.append( "<div class='post-likes-widget-placeholder'></div>" );
+
+			likesWidgetContainer.append( likesWidgetWrapper );
+		});
+
+		return likesWidgetContainer.html();
+	};
+
+	var prepareGallery = function( dataCarouselExtra ){
+		if (!overlay) {
 			overlay = $('<div></div>')
 				.addClass('jp-carousel-overlay')
 				.css({
@@ -68,8 +128,11 @@ jQuery(document).ready(function($) {
 				});
 
 			buttons  = '<a class="jp-carousel-commentlink" href="#">' + jetpackCarouselStrings.comment + '</a>';
+			if ( 1 == jetpackCarouselStrings.is_logged_in ) {
+			}
+			buttons += getCarouselLikeWidgets( dataCarouselExtra );
 			buttons  = $('<div class="jp-carousel-buttons">' + buttons + '</div>');
-			
+
 			caption    = $('<h2></h2>');
 			photo_info = $('<div class="jp-carousel-photo-info"></div>').append(caption);
 
@@ -80,6 +143,11 @@ jQuery(document).ready(function($) {
 					'margin-top' : '20px',
 					'width'      :  '250px'
 				});
+
+			imageMeta.append( buttons );
+			imageMeta.append( "<ul class='jp-carousel-image-exif' style='display:none;'></ul>" );
+			imageMeta.append( "<a class='jp-carousel-image-download' style='display:none;'></a>" );
+			imageMeta.append( "<div class='jp-carousel-image-map' style='display:none;'></div>" );
 
 			titleAndDescription = $('<div></div>')
 				.addClass('jp-carousel-titleanddesc')
@@ -99,15 +167,20 @@ jQuery(document).ready(function($) {
 				commentFormMarkup += '<iframe src="'+iframeSrc+'" width="100%" height="'+iframeHeight+'" style="width:100%;height:'+iframeHeight+'px;" allowtransparency="true" frameBorder="0" scrolling="no" name="jp-carousel-comment-iframe" id="jp-carousel-comment-iframe"></iframe>';
 			} else if ( jetpackCarouselStrings.local_comments_commenting_as && jetpackCarouselStrings.local_comments_commenting_as.length ) {
 				// Jetpack comments not enabled, fallback to local comments
-				commentFormMarkup += '<form id="jp-carousel-comment-form">';
-				commentFormMarkup += '<textarea name="comment" class="jp-carousel-comment-form-field jp-carousel-comment-form-textarea" id="jp-carousel-comment-form-comment-field" placeholder="Write a comment&hellip;"></textarea>';
-				commentFormMarkup += '<div id="jp-carousel-comment-form-submit-and-info-wrapper">';
-				commentFormMarkup += '<div id="jp-carousel-comment-form-commenting-as">' + jetpackCarouselStrings.local_comments_commenting_as + '</div>';
-				commentFormMarkup += '<input type="submit" name="submit" class="jp-carousel-comment-form-button" id="jp-carousel-comment-form-button-submit" value="'+jetpackCarouselStrings.post_comment+'" />';
-				commentFormMarkup += '<span id="jp-carousel-comment-form-spinner">&nbsp;</span>';
-				commentFormMarkup += '<div id="jp-carousel-comment-post-results"></div>';
-				commentFormMarkup += '</div>';
-				commentFormMarkup += '</form>';
+
+				if ( 1 != jetpackCarouselStrings.is_logged_in && 1 == jetpackCarouselStrings.comment_registration ) {
+					commentFormMarkup += '<div id="jp-carousel-comment-form-commenting-as">' + jetpackCarouselStrings.local_comments_commenting_as + '</div>';
+				} else {
+					commentFormMarkup += '<form id="jp-carousel-comment-form">';
+					commentFormMarkup += '<textarea name="comment" class="jp-carousel-comment-form-field jp-carousel-comment-form-textarea" id="jp-carousel-comment-form-comment-field" placeholder="Write a comment&hellip;"></textarea>';
+					commentFormMarkup += '<div id="jp-carousel-comment-form-submit-and-info-wrapper">';
+					commentFormMarkup += '<div id="jp-carousel-comment-form-commenting-as">' + jetpackCarouselStrings.local_comments_commenting_as + '</div>';
+					commentFormMarkup += '<input type="submit" name="submit" class="jp-carousel-comment-form-button" id="jp-carousel-comment-form-button-submit" value="'+jetpackCarouselStrings.post_comment+'" />';
+					commentFormMarkup += '<span id="jp-carousel-comment-form-spinner">&nbsp;</span>';
+					commentFormMarkup += '<div id="jp-carousel-comment-post-results"></div>';
+					commentFormMarkup += '</div>';
+					commentFormMarkup += '</form>';
+				}
 			}
 			commentFormMarkup += '</div>';
 
@@ -132,14 +205,10 @@ jQuery(document).ready(function($) {
 					'bottom'     : '10px',
 					'margin-top' : '20px'
 				});
-			
+
 			leftWidth = ( $(window).width() - ( screenPadding * 2 ) ) - (imageMeta.width() + 40);
-			if ( $.browser.mozilla )
-				leftWidth -= 55;
-			else if ( $.browser.msie )
-				leftWidth -= 20;
 			leftWidth += 'px';
-			
+
 			if (isMobile)
 				leftWidth = '100%';
 
@@ -155,7 +224,7 @@ jQuery(document).ready(function($) {
 
 			fadeaway = $('<div></div>')
 				.addClass('jp-carousel-fadeaway');
-		 	
+
 			info = $('<div></div>')
 				.addClass('jp-carousel-info')
 				.css({
@@ -166,7 +235,7 @@ jQuery(document).ready(function($) {
 				.append(photo_info)
 				.append(imageMeta)
 				.append(leftColWrapper);
-				
+
 			if (isMobile)
 				info.prepend(leftColWrapper);
 			else
@@ -179,7 +248,7 @@ jQuery(document).ready(function($) {
 				.css({
 					'position' : 'fixed',
 					'top'      : 0,
-					'right'    : 0,
+					'right'    : '15px',
 					'bottom'   : 0,
 					'width'    : screenPadding
 				});
@@ -188,7 +257,7 @@ jQuery(document).ready(function($) {
 				'top'    : '40px',
 				'bottom' : targetBottomPos
 			});
-			
+
 			previousButton = $("<div><span></span></div>")
 				.addClass('jp-carousel-previous-button')
 				.css({
@@ -203,7 +272,7 @@ jQuery(document).ready(function($) {
 				'top'    : '40px',
 				'bottom' : targetBottomPos
 			});
-			
+
 			gallery = $('<div></div>')
 				.addClass('jp-carousel')
 				.css({
@@ -218,20 +287,20 @@ jQuery(document).ready(function($) {
 				.css({
 					position : 'fixed'
 				});
-			
+
 			container = $("<div></div>")
 				.addClass('jp-carousel-wrap');
-			
+
 			if ( 'white' == jetpackCarouselStrings.background_color )
 				 container.addClass('jp-carousel-light');
-			
+
 			container.css({
 					'position'   : 'fixed',
 					'top'        : 0,
 					'right'      : 0,
 					'bottom'     : 0,
 					'left'       : 0,
-					'z-index'    : 999999,
+					'z-index'    : 2147483647,
 					'overflow-x' : 'hidden',
 					'overflow-y' : 'auto',
 					'direction'  : 'ltr'
@@ -259,6 +328,10 @@ jQuery(document).ready(function($) {
 						container.animate({scrollTop: parseInt(info.position()['top'], 10)}, 'fast');
 						$('#jp-carousel-comment-form-submit-and-info-wrapper').slideDown('fast');
 						$('#jp-carousel-comment-form-comment-field').focus();
+					} else if ( target.hasClass('jp-carousel-comment-login') ) {
+						var url = jetpackCarouselStrings.login_url + '%23jp-carousel-' + attachment_id;
+
+						document.location.href = url;
 					} else if ( target.parents('#jp-carousel-comment-form-container').length ) {
 						var textarea = $('#jp-carousel-comment-form-comment-field')
 							.blur(function(){
@@ -320,15 +393,17 @@ jQuery(document).ready(function($) {
 								ajaxData['author'] = authorField.val();
 								ajaxData['url']    = urlField.val();
 
-								if ( ! ajaxData['email'].length || ! ajaxData['email'].match('@') ) {
-									gallery.jp_carousel('postCommentError', {'field': 'jp-carousel-comment-form-email-field', 'error': jetpackCarouselStrings.no_comment_email});
-									return;
-								} else if ( ! ajaxData['author'].length ) {
-									gallery.jp_carousel('postCommentError', {'field': 'jp-carousel-comment-form-author-field', 'error': jetpackCarouselStrings.no_comment_author});
-									return;
+								if ( 1 == jetpackCarouselStrings.require_name_email ) {
+									if ( ! ajaxData['email'].length || ! ajaxData['email'].match('@') ) {
+										gallery.jp_carousel('postCommentError', {'field': 'jp-carousel-comment-form-email-field', 'error': jetpackCarouselStrings.no_comment_email});
+										return;
+									} else if ( ! ajaxData['author'].length ) {
+										gallery.jp_carousel('postCommentError', {'field': 'jp-carousel-comment-form-author-field', 'error': jetpackCarouselStrings.no_comment_author});
+										return;
+									}
 								}
 							}
-							
+
 							$.ajax({
 								type:       'POST',
 								url:        jetpackCarouselStrings.ajaxurl,
@@ -362,22 +437,32 @@ jQuery(document).ready(function($) {
 				.bind('jp_carousel.afterOpen', function(){
 					$(window).bind('keydown', keyListener);
 					$(window).bind('resize', resizeListener);
+					gallery.opened = true;
 				})
 				.bind('jp_carousel.beforeClose', function(){
 					var scroll = $(window).scrollTop();
 
 					$(window).unbind('keydown', keyListener);
 					$(window).unbind('resize', resizeListener);
-					document.location.hash = '';
+					if ( history.pushState ) {
+						history.pushState("", document.title, window.location.pathname + window.location.search);
+					} else {
+						document.location.hash = '';
+					}
 					$(window).scrollTop(scroll);
+					gallery.opened = false;
 				});
-				
+
 				$('.jp-carousel').touchwipe({
 				     wipeLeft: function() { gallery.jp_carousel('next'); },
 				     wipeRight: function() { gallery.jp_carousel('previous'); },
 				     min_move_x: 20,
 				     min_move_y: 20,
 				     preventDefaultEvents: true
+				});
+
+			$( '.jetpack-likes-widget-unloaded' ).each( function() {
+				jetpackLikesWidgetQueue.push( this.id );
 				});
 
 			nextButton.add(previousButton).click(function(e){
@@ -395,9 +480,16 @@ jQuery(document).ready(function($) {
 	var methods = {
 		testForData: function(gallery) {
 			gallery = $( gallery ); // make sure we have it as a jQuery object.
-			if ( ! gallery.length || undefined == gallery.data( 'carousel-extra' ) )
+			if ( ! gallery.length || undefined == gallery.data( 'carousel-extra' ) ) {
 				return false;
+			}
 			return true;
+		},
+
+		testIfOpened: function() {
+			if ( 'undefined' != typeof(gallery) && 'undefined' != typeof(gallery.opened) && true == gallery.opened )
+				return true;
+			return false;
 		},
 
 		open: function(options) {
@@ -410,12 +502,24 @@ jQuery(document).ready(function($) {
 			if ( !data )
 				return; // don't run if the default gallery functions weren't used
 
+			prepareGallery( data );
+
+			if ( gallery.jp_carousel( 'testIfOpened' ) )
+				return; // don't open if already opened
+
 			// make sure to stop the page from scrolling behind the carousel overlay, so we don't trigger
 			// infiniscroll for it when enabled (Reader, theme infiniscroll, etc).
 			originalOverflow = $('body').css('overflow');
 			$('body').css('overflow', 'hidden');
+			// prevent html from overflowing on some of the new themes.
+			originalHOverflow = $('html').css('overflow');
+			$('html').css('overflow', 'hidden');
 
-			prepareGallery();
+			// Re-apply inline-block style here and give an initial value for the width
+			// This value will get replaced with a more appropriate value once the slide is loaded
+			// This avoids the likes widget appearing initially full width below the comment button and then shuffling up
+			jQuery( '.slim-likes-widget' ).find( 'iframe' ).css( 'display', 'inline-block' ).css( 'width', '60px' );
+
 			container.data('carousel-extra', data);
 
 			return this.each(function() {
@@ -443,7 +547,7 @@ jQuery(document).ready(function($) {
 
 			if ( 0 === selected.length )
 				selected = slides.eq(0);
-				
+
 			gallery.jp_carousel('selectSlide', selected, false);
 			return this;
 		},
@@ -451,6 +555,7 @@ jQuery(document).ready(function($) {
 		close : function(){
 			// make sure to let the page scroll again
 			$('body').css('overflow', originalOverflow);
+			$('html').css('overflow', originalHOverflow);
 			return container
 				.trigger('jp_carousel.beforeClose')
 				.fadeOut('fast', function(){
@@ -494,6 +599,10 @@ jQuery(document).ready(function($) {
 		},
 
 		resetButtons : function(current) {
+			if ( current.data('liked') )
+				$('.jp-carousel-buttons a.jp-carousel-like').addClass('liked').text(jetpackCarouselStrings.unlike);
+			else
+				$('.jp-carousel-buttons a.jp-carousel-like').removeClass('liked').text(jetpackCarouselStrings.like);
 		},
 
 		loopSlides : function(reverse){
@@ -526,7 +635,7 @@ jQuery(document).ready(function($) {
 		selectedSlide : function(){
 			return this.find('.selected');
 		},
-		
+
 		setSlidePosition : function(x) {
 			return this.css({
 					'-webkit-transform':'translate3d(' + x + 'px,0,0)',
@@ -551,7 +660,7 @@ jQuery(document).ready(function($) {
 				animated,
 				info_min;
 			// center the main image
-			
+
 			caption.hide();
 
 			method = 'css';
@@ -579,26 +688,25 @@ jQuery(document).ready(function($) {
 				previous.jp_carousel('setSlidePosition', -previous.width() - current.width()).show();
 				next_next.jp_carousel('setSlidePosition', gallery.width() + current.width()).show();
 			}
-			
+
 			// if advancing prepare the slide that will enter the screen
 			previous.jp_carousel('setSlidePosition', -previous.width() + (screenPadding * 0.75)).show();
 			next.jp_carousel('setSlidePosition', gallery.width() - (screenPadding * 0.75)).show();
-
+			next.css({'position': ''});
 			document.location.href = document.location.href.replace(/#.*/, '') + '#jp-carousel-' + current.data('attachment-id');
 			gallery.jp_carousel('resetButtons', current);
 			container.trigger('jp_carousel.selectSlide', [current]);
 
-			$( 'div.jp-carousel-image-meta', 'div.jp-carousel-wrap' ).html('');
-			
-			gallery.jp_carousel('getTitleDesc', { title: current.data('title'), desc: current.data('desc') } );
-			gallery.jp_carousel('getMeta', current.data('image-meta'));
-			gallery.jp_carousel('getFullSizeLink', current);
-			gallery.jp_carousel('getMap', current.data('image-meta'));
-			gallery.jp_carousel('testCommentsOpened', current.data('comments-opened'));
-			gallery.jp_carousel('getComments', {'attachment_id': current.data('attachment-id'), 'offset': 0, 'clear': true});
+			gallery.jp_carousel( 'getTitleDesc', { title: current.data( 'title' ), desc: current.data( 'desc' ) } );
+			gallery.jp_carousel( 'updateLikesWidgetVisibility', current.data( 'attachment-id' ) )
+			gallery.jp_carousel( 'updateExif', current.data( 'image-meta' ) );
+			gallery.jp_carousel( 'updateFullSizeLink', current );
+			gallery.jp_carousel( 'updateMap', current.data( 'image-meta' ) );
+			gallery.jp_carousel( 'testCommentsOpened', current.data( 'comments-opened' ) );
+			gallery.jp_carousel( 'getComments', { 'attachment_id': current.data( 'attachment-id' ), 'offset': 0, 'clear': true } );
 
 			$('#jp-carousel-comment-post-results').slideUp();
-			
+
 			// $('<div />').html(sometext).text() is a trick to go to HTML to plain text (including HTML emntities decode, etc)
 			if ( current.data('caption') ) {
 				if ( $('<div />').html(current.data('caption')).text() == $('<div />').html(current.data('title')).text() )
@@ -672,19 +780,19 @@ jQuery(document).ready(function($) {
 				'left'  : (info.width() - size.width) * 0.5,
 				'width' : size.width
 			});
-			
+
 			if (isMobile){
 				photo_info.css('left', '0px');
 				photo_info.css('top', '-20px');
 			}
-			
+
 			return this;
 		},
 
 		fitMeta : function(animated){
 			var newInfoTop   = { top: ( $(window).height() / 100 * proportion + 5 ) + 'px' };
 			var newLeftWidth = { width: ( info.width() - (imageMeta.width() + 80) ) + 'px' };
-			
+
 			if (animated) {
 				info.animate(newInfoTop);
 				leftColWrapper.animate(newLeftWidth);
@@ -731,7 +839,7 @@ jQuery(document).ready(function($) {
 					large_file      = src_item.data('large-file') || '';
 
 					src = src_item.data('orig-file');
-					
+
 					src = gallery.jp_carousel('selectBestImageSize', {
 						orig_file   : src,
 						orig_width  : orig_size.width,
@@ -741,7 +849,7 @@ jQuery(document).ready(function($) {
 						medium_file : medium_file,
 						large_file  : large_file
 					});
-				
+
 				// Set the final src
 				$(this).data( 'gallery-src', src );
 			});
@@ -773,11 +881,11 @@ jQuery(document).ready(function($) {
 					title       = gallery.jp_carousel('texturize', title);
 					description = gallery.jp_carousel('texturize', description);
 					caption     = gallery.jp_carousel('texturize', caption);
-					
+
 					var slide = $('<div class="jp-carousel-slide"></div>')
 							.hide()
 							.css({
-								'position' : 'fixed',
+								//'position' : 'fixed',
 								'left'     : i < start_index ? -1000 : gallery.width()
 							})
 							.append($('<img>'))
@@ -806,36 +914,36 @@ jQuery(document).ready(function($) {
 		selectBestImageSize: function(args) {
 			if ( 'object' != typeof args )
 				args = {};
-			
+
 			if ( 'undefined' == typeof args.orig_file )
 				return '';
-			
+
 			if ( 'undefined' == typeof args.orig_width || 'undefined' == typeof args.max_width )
 				return args.orig_file;
-			
+
 			if ( 'undefined' == typeof args.medium_file || 'undefined' == typeof args.large_file )
 				return args.orig_file;
 
-			var medium_size       = args.medium_file.replace(/^https?:\/\/.+-([\d]+x[\d]+)\..+$/, '$1'),
+			var medium_size       = args.medium_file.replace(/-([\d]+x[\d]+)\..+$/, '$1'),
 				medium_size_parts = (medium_size != args.medium_file) ? medium_size.split('x') : [args.orig_width, 0],
 				medium_width      = parseInt( medium_size_parts[0], 10 ),
 				medium_height     = parseInt( medium_size_parts[1], 10 ),
-				large_size        = args.large_file.replace(/^https?:\/\/.+-([\d]+x[\d]+)\..+$/, '$1'),
+				large_size        = args.large_file.replace(/-([\d]+x[\d]+)\..+$/, '$1'),
 				large_size_parts  = (large_size != args.large_file) ? large_size.split('x') : [args.orig_width, 0],
 				large_width       = parseInt( large_size_parts[0], 10 ),
 				large_height      = parseInt( large_size_parts[1], 10 );
-		
+
 			// Give devices with a higher devicePixelRatio higher-res images (Retina display = 2, Android phones = 1.5, etc)
 			if ('undefined' != typeof window.devicePixelRatio && window.devicePixelRatio > 1) {
 				args.max_width  = args.max_width * window.devicePixelRatio;
 				args.max_height = args.max_height * window.devicePixelRatio;
 			}
 
-			if ( medium_width >= args.max_width || medium_height >= args.max_height )
-				return args.medium_file;
-
 			if ( large_width >= args.max_width || large_height >= args.max_height )
 				return args.large_file;
+
+			if ( medium_width >= args.max_width || medium_height >= args.max_height )
+				return args.medium_file;
 
 			return args.orig_file;
 		},
@@ -853,7 +961,7 @@ jQuery(document).ready(function($) {
 				return;
 			if ( ! args.replacements || 'undefined' == typeof args.replacements )
 				return args.text;
-			return args.text.replace(/{(\d+)}/g, function(match, number) { 
+			return args.text.replace(/{(\d+)}/g, function(match, number) {
 				return typeof args.replacements[number] != 'undefined' ? args.replacements[number] : match;
 			});
 		},
@@ -914,16 +1022,16 @@ jQuery(document).ready(function($) {
 			});
 			return value;
 		},
-		
+
 		getTitleDesc: function( data ) {
 			var title ='', desc = '', markup = '', target, commentWrappere;
-			
+
 			target = $( 'div.jp-carousel-titleanddesc', 'div.jp-carousel-wrap' );
 			target.hide();
-			
+
 			title = gallery.jp_carousel('parseTitleDesc', data.title) || '';
 			desc  = gallery.jp_carousel('parseTitleDesc', data.desc)  || '';
-			
+
 			if ( title.length || desc.length ) {
 				// $('<div />').html(sometext).text() is a trick to go to HTML to plain text (including HTML emntities decode, etc)
 				if ( $('<div />').html(title).text() == $('<div />').html(desc).text() )
@@ -938,16 +1046,30 @@ jQuery(document).ready(function($) {
 			$( 'div#jp-carousel-comment-form-container' ).css('margin-top', '20px');
 			$( 'div#jp-carousel-comments-loading' ).css('margin-top', '20px');
 		},
-		
-		getMeta: function( meta ) {
+
+		updateLikesWidgetVisibility: function( attachmentId ) {
+			// Hide all likes widgets except for the one for the attachmentId passed in
+
+			$( '.jp-carousel-buttons' ).find( '.jetpack-likes-widget-wrapper' ).each( function() {
+				var widgetWrapper = $( this );
+				if ( widgetWrapper.attr('data-attachment-id') == attachmentId ) {
+					widgetWrapper.css( 'display', 'inline-block' );
+				} else {
+					widgetWrapper.css( 'display', 'none' );
+				}
+				});
+		},
+
+		// updateExif updates the contents of the exif UL (.jp-carousel-image-exif)
+		updateExif: function( meta ) {
 			if ( !meta || 1 != jetpackCarouselStrings.display_exif )
 				return false;
-			
-			var $ul = $( '<ul></ul>' );
+
+			var $ul = $( "<ul class='jp-carousel-image-exif'></ul>" );
 			$.each( meta, function( key, val ) {
 				if ( 0 === parseFloat(val) || !val.length || -1 === $.inArray( key, [ 'camera', 'aperture', 'shutter_speed', 'focal_length' ] ) )
 					return;
-				
+
 				switch( key ) {
 					case 'focal_length':
 						val = val + 'mm';
@@ -962,18 +1084,16 @@ jQuery(document).ready(function($) {
 						// making jslint happy
 						break;
 				}
-				
+
 				$ul.append( '<li><h5>' + jetpackCarouselStrings[key] + '</h5>' + val + '</li>' );
 			});
 
-			$( 'div.jp-carousel-image-meta', 'div.jp-carousel-wrap' )
-				.append( $( buttons ) );
-
-			$( 'div.jp-carousel-image-meta', 'div.jp-carousel-wrap' )
-				.append( $ul );
+			// Update (replace) the content of the ul
+			$( 'div.jp-carousel-image-meta ul.jp-carousel-image-exif' ).replaceWith( $ul );
 		},
 
-		getFullSizeLink: function(current) {
+		// updateFullSizeLink updates the contents of the jp-carousel-image-download link
+		updateFullSizeLink: function(current) {
 			if(!current || !current.data)
 				return false;
 			var original  = current.data('orig-file').replace(/\?.+$/, ''),
@@ -982,17 +1102,17 @@ jQuery(document).ready(function($) {
 					.addClass( 'jp-carousel-image-download' )
 					.attr( 'href', original )
 					.attr( 'target', '_blank' );
-				
-			$( 'div.jp-carousel-image-meta', 'div.jp-carousel-wrap' )
-				.append( permalink );
+
+			// Update (replace) the content of the anchor
+			$( 'div.jp-carousel-image-meta a.jp-carousel-image-download' ).replaceWith( permalink );
 		},
-		
-		getMap: function( meta ) {
+
+		updateMap: function( meta ) {
 			if ( !meta.latitude || !meta.longitude || 1 != jetpackCarouselStrings.display_geo )
 				return;
-				
-			var latitude  = meta.latitude, 
-				longitude = meta.longitude, 
+
+			var latitude  = meta.latitude,
+				longitude = meta.longitude,
 				$metabox  = $( 'div.jp-carousel-image-meta', 'div.jp-carousel-wrap' ),
 				$mapbox   = $( '<div></div>' ),
 				style     = '&scale=2&style=feature:all|element:all|invert_lightness:true|hue:0x0077FF|saturation:-50|lightness:-5|gamma:0.91';
@@ -1030,23 +1150,23 @@ jQuery(document).ready(function($) {
 		getComments: function( args ) {
 			if ( 'object' != typeof args )
 				args = {};
-			
+
 			if ( ! args.attachment_id || 'undefined' == typeof args.attachment_id )
 				return;
-			
+
 			if ( ! args.offset || 'undefined' == typeof args.offset || args.offset < 1 )
 				args.offset = 0;
-			
+
 			var comments        = $('.jp-carousel-comments'),
 				commentsLoading = $('#jp-carousel-comments-loading');
-			
+
 			commentsLoading.show();
-			
+
 			if ( args.clear ) {
 				comments.hide();
 				comments.empty();
 			}
-			
+
 			$.ajax({
 				type:       'GET',
 				url:        jetpackCarouselStrings.ajaxurl,
@@ -1083,7 +1203,7 @@ jQuery(document).ready(function($) {
 								+ '</div>'
 							);
 						comments.append(comment);
-						
+
 						// Set the interval to check for a new page of comments.
 						clearInterval( commentInterval );
 						commentInterval = setInterval( function() {
@@ -1093,7 +1213,7 @@ jQuery(document).ready(function($) {
 							}
 						}, 150 );
 					});
-					
+
 					// Verify (late) that the user didn't repeatldy click the arrows really fast, in which case the requested
 					// attachment id might no longer match the current attachment id by the time we get the data back or a now
 					// registered infiniscroll event kicks in, so we don't ever display comments for the wrong image by mistake.
@@ -1106,7 +1226,7 @@ jQuery(document).ready(function($) {
 
 					// Increase the height of the background, semi-transparent overlay to match the new length of the comments list.
 					$('.jp-carousel-overlay').height( $(window).height() + titleAndDescription.height() + commentForm.height() + ( (comments.height() > 0) ? comments.height() : imageMeta.height() ) + 200 );
-					
+
 					comments.show();
 					commentsLoading.hide();
 				},
@@ -1157,7 +1277,7 @@ jQuery(document).ready(function($) {
 
 	};
 
-	// register the event listener for staring the gallery
+	// register the event listener for starting the gallery
 	$( document.body ).on( 'click', 'div.gallery,div.tiled-gallery', function(e) {
 		if ( ! $(this).jp_carousel( 'testForData', e.currentTarget ) )
 			return;
@@ -1167,11 +1287,23 @@ jQuery(document).ready(function($) {
 		$(this).jp_carousel('open', {start_index: $(this).find('.gallery-item, .tiled-gallery-item').index($(e.target).parents('.gallery-item, .tiled-gallery-item'))});
 	});
 
-	// start on page load if hash exists
-	if ( document.location.hash && document.location.hash.match(/jp-carousel-(\d+)/) ) {
-		$(document).ready(function(){
+	// Set an interval on page load to load the carousel if hash exists and not already opened.
+	// Makes carousel work on page load and when back button leads to same URL with carousel hash (ie: no actual document.ready trigger)
+	$(document).ready(function(){
+		last_known_location_hash = '';
+
+		var jp_carousel_open_interval = window.setInterval(function(){
+			// We should have a URL hash by now.
+			if ( ! document.location.hash || ! document.location.hash.match(/jp-carousel-(\d+)/) )
+				return;
+
+			if ( document.location.hash == last_known_location_hash )
+				return;
+
+			last_known_location_hash = document.location.hash;
+
 			var gallery = $('div.gallery, div.tiled-gallery'), index = -1, n = document.location.hash.match(/jp-carousel-(\d+)/);
-			
+
 			if ( ! $(this).jp_carousel( 'testForData', gallery ) )
 				return;
 
@@ -1185,11 +1317,10 @@ jQuery(document).ready(function($) {
 			});
 
 			if ( index != -1 )
-				gallery.jp_carousel('open', {start_index: index});
-		});
-	}
+				gallery.jp_carousel('open', {start_index: index}); // open method checks if already opened
+		}, 1000);
+	});
 });
 
 // Swipe gesture detection
 (function($){$.fn.touchwipe=function(settings){var config={min_move_x:20,min_move_y:20,wipeLeft:function(){},wipeRight:function(){},wipeUp:function(){},wipeDown:function(){},preventDefaultEvents:true};if(settings)$.extend(config,settings);this.each(function(){var startX;var startY;var isMoving=false;function cancelTouch(){this.removeEventListener('touchmove',onTouchMove);startX=null;isMoving=false}function onTouchMove(e){if(config.preventDefaultEvents){e.preventDefault()}if(isMoving){var x=e.touches[0].pageX;var y=e.touches[0].pageY;var dx=startX-x;var dy=startY-y;if(Math.abs(dx)>=config.min_move_x){cancelTouch();if(dx>0){config.wipeLeft()}else{config.wipeRight()}}else if(Math.abs(dy)>=config.min_move_y){cancelTouch();if(dy>0){config.wipeDown()}else{config.wipeUp()}}}}function onTouchStart(e){if(e.touches.length==1){startX=e.touches[0].pageX;startY=e.touches[0].pageY;isMoving=true;this.addEventListener('touchmove',onTouchMove,false)}}if('ontouchstart'in document.documentElement){this.addEventListener('touchstart',onTouchStart,false)}});return this}})(jQuery);
-

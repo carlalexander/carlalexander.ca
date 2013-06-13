@@ -39,7 +39,7 @@ abstract class Publicize_Base {
 	 * All users with this cap can unglobalize all other global connections, and globalize any of their own
 	 * Globalized connections cannot be unselected by users without this capability when publishing
 	 */
-	const GLOBAL_CAP = 'edit_others_posts';
+	var $GLOBAL_CAP = 'edit_others_posts';
 
 	/**
 	* Sets up the basics of Publicize
@@ -61,6 +61,7 @@ abstract class Publicize_Base {
 			'url',
 		) );
 
+		$this->GLOBAL_CAP = apply_filters( 'jetpack_publicize_global_connections_cap', $this->GLOBAL_CAP );
 
 		// stage 1 and 2 of 3-stage Publicize. Flag for Publicize on creation, save meta,
 		// then check meta and publicze based on that. stage 3 implemented on wpcom
@@ -100,8 +101,6 @@ abstract class Publicize_Base {
 			 return 'http://' . $cmeta['connection_data']['meta']['tumblr_base_hostname'];
 		} elseif ( 'twitter' == $service_name ) {
 			return 'http://twitter.com/' . substr( $cmeta['external_display'], 1 ); // Has a leading '@'
-		} else if ( 'yahoo' == $service_name ) {
-			return 'http://profile.yahoo.com/' . $cmeta['external_id'];
 		} else if ( 'linkedin' == $service_name ) {
 			if ( !isset( $cmeta['connection_data']['meta']['profile_url'] ) ) {
 				return false;
@@ -141,9 +140,6 @@ abstract class Publicize_Base {
 
 	function get_service_label( $service_name ) {
 		switch ( $service_name ) {
-			case 'yahoo':
-				return 'Yahoo!';
-				break;
 			case 'linkedin':
 				return 'LinkedIn';
 				break;
@@ -285,7 +281,13 @@ abstract class Publicize_Base {
 		 */
 		foreach ( (array) $this->get_services( 'connected' ) as $service_name => $connections ) {
 			foreach ( $connections as $connection ) {
-				if ( false == apply_filters( 'wpas_submit_post?', $submit_post, $post_id, $service_name ) ) {
+				$connection_data = '';
+				if ( method_exists( $connection, 'get_meta' ) )
+					$connection_data = $connection->get_meta( 'connection_data' );
+				elseif ( ! empty( $connection['connection_data'] ) )
+					$connection_data = $connection['connection_data'];
+
+				if ( false == apply_filters( 'wpas_submit_post?', $submit_post, $post_id, $service_name, $connection_data ) ) {
 					delete_post_meta( $post_id, $this->PENDING );
 					continue;
 				}
@@ -312,6 +314,10 @@ abstract class Publicize_Base {
 						delete_post_meta( $post_id, $this->POST_SKIP . $unique_id );
 					}
 				}
+
+				// Users may hook in here and do anything else they need to after meta is written,
+				// and before the post is processed for Publicize.
+				do_action( 'publicize_save_meta', $submit_post, $post_id, $service_name, $connection );
 			}
 		}
 

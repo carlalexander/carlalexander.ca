@@ -56,10 +56,15 @@ function get_wpseo_options_arr() {
  * @return array of options
  */
 function get_wpseo_options() {
-	$options = array();
-	foreach ( get_wpseo_options_arr() as $opt ) {
-		$options = array_merge( $options, (array) get_option( $opt ) );
+	static $options;
+
+	if ( !isset( $options ) ) {
+		$options = array();
+		foreach ( get_wpseo_options_arr() as $opt ) {
+			$options = array_merge( $options, (array) get_option( $opt ) );
+		}
 	}
+
 	return $options;
 }
 
@@ -313,7 +318,7 @@ function wpseo_strip_shortcode( $text ) {
 /**
  * Initialize sitemaps. Add sitemap rewrite rules and query var
  */
-function xml_sitemaps_init() {
+function wpseo_xml_sitemaps_init() {
 	$options = get_option( 'wpseo_xml' );
 	if ( !isset( $options['enablexmlsitemap'] ) || !$options['enablexmlsitemap'] )
 		return;
@@ -324,4 +329,39 @@ function xml_sitemaps_init() {
 	add_rewrite_rule( '([^/]+?)-sitemap([0-9]+)?\.xml$', 'index.php?sitemap=$matches[1]&sitemap_n=$matches[2]', 'top' );
 }
 
-add_action( 'init', 'xml_sitemaps_init', 1 );
+add_action( 'init', 'wpseo_xml_sitemaps_init', 1 );
+
+/**
+ * Notify search engines of the updated sitemap.
+ */
+function wpseo_ping_search_engines( $sitemapurl = null ) {
+	$options    = get_option( 'wpseo_xml' );
+	$base       = $GLOBALS['wp_rewrite']->using_index_permalinks() ? 'index.php/' : '';
+	if ( $sitemapurl  == null )
+		$sitemapurl = urlencode( home_url( $base . 'sitemap_index.xml' ) );
+
+	// Always ping Google and Bing, optionally ping Ask and Yahoo!
+	wp_remote_get( 'http://www.google.com/webmasters/tools/ping?sitemap=' . $sitemapurl );
+	wp_remote_get( 'http://www.bing.com/webmaster/ping.aspx?sitemap=' . $sitemapurl );
+
+	if ( isset( $options['xml_ping_yahoo'] ) && $options['xml_ping_yahoo'] )
+		wp_remote_get( 'http://search.yahooapis.com/SiteExplorerService/V1/updateNotification?appid=3usdTDLV34HbjQpIBuzMM1UkECFl5KDN7fogidABihmHBfqaebDuZk1vpLDR64I-&url=' . $sitemapurl );
+
+	if ( isset( $options['xml_ping_ask'] ) && $options['xml_ping_ask'] )
+		wp_remote_get( 'http://submissions.ask.com/ping?sitemap=' . $sitemapurl );
+}
+add_action( 'wpseo_ping_search_engines', 'wpseo_ping_search_engines' );
+
+function wpseo_store_tracking_response() {
+	if ( ! wp_verify_nonce( $_POST['nonce'], 'wpseo_activate_tracking' ) )
+		die();
+
+	$options = get_option( 'wpseo' );
+	$options['tracking_popup'] = 'done';
+
+	if ( $_POST['allow_tracking'] == 'yes' )
+		$options['yoast_tracking'] = true;
+
+	update_option( 'wpseo', $options );
+}
+add_action('wp_ajax_wpseo_allow_tracking', 'wpseo_store_tracking_response');

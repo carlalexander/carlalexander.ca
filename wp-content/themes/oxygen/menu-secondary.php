@@ -12,13 +12,15 @@ if ( has_nav_menu( 'secondary' ) ) : ?>
 
 	<?php do_atomic( 'before_menu_secondary' ); // oxygen_before_menu_secondary ?>
 
-	<div id="menu-secondary" class="menu-container">
+	<div id="menu-secondary" class="site-navigation menu-container" role="navigation">
+
+		<span class="menu-toggle"><?php _e( 'Menu', 'oxygen' ); ?></span>
 
 		<div class="wrap">
 
 			<?php do_atomic( 'open_menu_secondary' ); // oxygen_open_menu_secondary ?>
 
-			<?php wp_nav_menu( array( 'theme_location' => 'secondary', 'container_class' => 'menu', 'menu_class' => '', 'menu_id' => 'menu-secondary-items', 'fallback_cb' => '' ) ); ?>
+			<?php wp_nav_menu( array( 'theme_location' => 'secondary', 'container_class' => 'menu', 'menu_class' => 'nav-menu', 'menu_id' => 'menu-secondary-items', 'fallback_cb' => '' ) ); ?>
 
 			<?php do_atomic( 'close_menu_secondary' ); // oxygen_close_menu_secondary ?>
 

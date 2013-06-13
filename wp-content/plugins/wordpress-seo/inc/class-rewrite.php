@@ -22,7 +22,6 @@ class WPSEO_Rewrite {
 		add_filter( 'request', array( $this, 'request' ) );
 		add_filter( 'category_rewrite_rules', array( $this, 'category_rewrite_rules' ) );
 
-
 		add_action( 'created_category', array( $this, 'schedule_flush' ) );
 		add_action( 'edited_category', array( $this, 'schedule_flush' ) );
 		add_action( 'delete_category', array( $this, 'schedule_flush' ) );

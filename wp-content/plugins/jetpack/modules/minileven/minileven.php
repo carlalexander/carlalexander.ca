@@ -232,9 +232,9 @@ function jetpack_mobile_app_promo()  {
 		if ( ! navigator.userAgent.match( /wp-(iphone|android|blackberry|nokia|windowsphone)/i ) ) {
 			if ( ( navigator.userAgent.match( /iphone/i ) ) || ( navigator.userAgent.match( /ipod/i ) ) )
 			   document.write( '<span id="wpcom-mobile-app-promo" style="margin-top: 10px; font-size: 13px;"><strong>Now Available!</strong> <a href="/index.php?app-download=ios">Download WordPress for iOS</a></span><br /><br />' );
-			else if ( ( navigator.userAgent.match( /android/i ) ) )
+			else if ( ( navigator.userAgent.match( /android/i ) ) && ( null == navigator.userAgent.match( /playbook/i ) && null == navigator.userAgent.match( /bb10/i ) ) )
 			   document.write( '<span id="wpcom-mobile-app-promo" style="margin-top: 10px; font-size: 13px;"><strong>Now Available!</strong> <a href="/index.php?app-download=android">Download WordPress for Android</a></span><br /><br />' );
-			else if ( ( navigator.userAgent.match( /blackberry/i ) ) )
+			else if ( ( navigator.userAgent.match( /blackberry/i ) ) || ( navigator.userAgent.match( /playbook/i ) ) || ( navigator.userAgent.match( /bb10/i ) ) )
 			   document.write( '<span id="wpcom-mobile-app-promo" style="margin-top: 10px; font-size: 13px;"><strong>Now Available!</strong> <a href="/index.php?app-download=blackberry">Download WordPress for BlackBerry</a></span><br /><br />' );
 			else if ( ( navigator.userAgent.match( /windows phone os/i ) ) )
 			   document.write( '<span id="wpcom-mobile-app-promo" style="margin-top: 10px; font-size: 13px; line-height: 13px;"><strong>Now Available!</strong> <a href="/index.php?app-download=windowsphone">Download WordPress for <br />Windows Phone</a></span><br /><br />' );
@@ -305,6 +305,23 @@ function jetpack_mobile_css_settings() {
 }
 
 add_action( 'custom_css_submitbox_misc_actions', 'jetpack_mobile_css_settings' );
+
+function jetpack_mobile_customizer_controls( $wp_customize ) {
+	$wp_customize->add_setting( 'wp_mobile_custom_css' , array(
+		'default' => true,
+		'transport' => 'postMessage',
+		'type' => 'option'
+	) );
+
+	$wp_customize->add_control( 'jetpack_mobile_css_control', array(
+		'type' => 'checkbox',
+		'label' => __( 'Include this CSS in the Mobile Theme', 'jetpack' ),
+		'section' => 'jetpack_custom_css',
+		'settings' => 'wp_mobile_custom_css',
+	) );
+}
+
+add_action( 'jetpack_custom_css_customizer_controls', 'jetpack_mobile_customizer_controls' );
 
 function jetpack_mobile_save_css_settings() {
 	update_option( 'wp_mobile_custom_css', isset( $_POST['mobile_css'] ) && ! empty( $_POST['mobile_css'] ) );

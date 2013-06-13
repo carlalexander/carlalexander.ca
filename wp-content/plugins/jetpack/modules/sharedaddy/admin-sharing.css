@@ -6,7 +6,7 @@
 	-webkit-border-radius: 6px;
 	margin-top:15px;
 	min-width: 700px;
-	width: 100%;	
+	width: 100%;
 	float: left;
 	margin-bottom: 25px;
 }
@@ -34,7 +34,7 @@
 }
 
 .description{
-	width: 180px;	
+	width: 180px;
 	vertical-align: top;
 }
 
@@ -90,7 +90,8 @@
 .services ul li#linkedin, #available-services .preview-linkedin div.option-smart-off{background: #FFF url(images/linkedin.png) no-repeat 4px 5px;}
 .services ul li#tumblr,#available-services .preview-tumblr{background: #FFF url(images/tumblr.png) no-repeat 4px 5px; padding-right: 10px;}
 .services ul li#google-plus-1,#available-services .preview-google-plus-1{background: #FFF url(images/googleplus1.png) no-repeat 4px 5px; padding-right: 10px;}
-.services ul li#pinterest,#available-services .preview-pinterest{background: #FFF url(images/pinterest.png) no-repeat 4px 5px; padding-right: 10px;}
+.services ul li#pinterest,#available-services .preview-pinterest{background: #FFF url(images/pinterest.png) no-repeat 5px 6px; padding-right: 10px;}
+.services ul li#pocket,#available-services .preview-pocket{background: #FFF url(images/pocket.png) no-repeat 4px 5px; padding-right: 10px;}
 .services ul li.share-custom, #available-services .preview-custom{background: #FFF url(images/custom.png) no-repeat 4px 5px; no-repeat 4px 5px; padding-right: 10px;}
 
 
@@ -181,6 +182,20 @@
 	height: 20px;
 }
 
+.preview-pinterest .option-smart-on {
+	background: #FFF url(images/smart-pinterest.png) no-repeat top left;
+	background-size: 58px 20px;
+	width: 58px;
+	height: 20px;
+}
+
+.preview-pocket .option-smart-on {
+	background: #FFF url(images/smart-pocket.png) no-repeat top left;
+	background-size: 60px 20px;
+	width: 60px;
+	height: 20px;
+}
+
 .services .preview li.share-custom {
 	border-radius: 6px;
 	-moz-border-radius: 6px;
@@ -222,7 +237,7 @@
 #live-preview h2{
 	font-size:20px;
 	font-weight: normal !important;
-	color: #e3e3e3;		
+	color: #e3e3e3;
 }
 
 #live-preview{
@@ -230,17 +245,17 @@
 	border-bottom-left-radius:6px 6px;
 	border-bottom-right-radius:6px 6px;
 	-moz-border-radius-bottomleft: 6px;
-	-moz-border-radius-bottomright: 6px;	
+	-moz-border-radius-bottomright: 6px;
 }
 
 .clearing{
 	clear: both;
 }
-	
+
 	.options .options-left{
 		float: left;
 	}
-	
+
 	.input label{
 		font-size: 11px;
 		line-height: 16px;
@@ -253,20 +268,20 @@
 		border-top: 1px #e3e3e3 solid;
 		margin-top:4px;
 	}
-	
+
 	.utility{
 		float: right;
 		padding-top:10px;
 		padding-right: 10px;
 		font-size: 10px;
 	}
-	
+
 	.advanced input[type=submit]{
 		float: left;
 		margin-top:10px;
 		margin-right: 10px;
 	}
-	
+
 .services li.dropzone {
 	border: 1px dashed #999;
 	background: #e3e3e3;
@@ -297,7 +312,7 @@
 #hidden-drop-target p {
 	font-size: 10px;
 	margin: 0 0 10px 0;
-	
+
 }
 
 .sharing-hidden .inner {
@@ -370,6 +385,7 @@
 	.services ul li#tumblr,#available-services .preview-tumblr{background: #FFF url(images/tumblr@2x.png) no-repeat 4px 5px; padding-right: 10px;}
 	.services ul li#google-plus-1,#available-services .preview-google-plus-1{background: #FFF url(images/googleplus1@2x.png) no-repeat 4px 5px; padding-right: 10px;}
 	.services ul li#pinterest,#available-services .preview-pinterest{background: #FFF url(images/pinterest@2x.png) no-repeat 4px 5px; padding-right: 10px;}
+	.services ul li#pocket,#available-services .preview-pocket{background: #FFF url(images/pocket@2x.png) no-repeat 4px 5px; padding-right: 10px;}
 	.services ul li.share-custom, #available-services .preview-custom{background: #FFF url(images/custom@2x.png) no-repeat 4px 5px; no-repeat 4px 5px; padding-right: 10px;}
 
 	.services ul li#facebook, #available-services .preview-facebook div.option-smart-off,
@@ -385,6 +401,7 @@
 	.services ul li#tumblr,#available-services .preview-tumblr,
 	.services ul li#google-plus-1,#available-services .preview-google-plus-1,
 	.services ul li#pinterest,#available-services .preview-pinterest,
+	.services ul li#pocket,#available-services .preview-pocket,
 	.services ul li.share-custom, #available-services .preview-custom{
 		background-size: 16px 16px;
 	}
@@ -423,6 +440,10 @@
 
 	.preview-pinterest .option-smart-on {
 		background-image: url(images/smart-pinterest@2x.png);
+	}
+
+	.preview-pocket .option-smart-on {
+		background-image: url(images/smart-pocket@2x.png);
 	}
 
 }

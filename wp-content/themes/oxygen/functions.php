@@ -2,14 +2,14 @@
 /**
  * @package Oxygen
  * @subpackage Functions
- * @version 0.3.6
- * @author Galin Simeonov
+ * @version 0.5
+ * @author AlienWP
  * @link http://alienwp.com
  * @license http://www.gnu.org/licenses/gpl-2.0.html
  */
 
 /* Load the core theme framework. */
-require_once( trailingslashit( TEMPLATEPATH ) . 'library/hybrid.php' );
+require_once( trailingslashit( get_template_directory() ) . 'library/hybrid.php' );
 $theme = new Hybrid();
 
 /* Do theme setup on the 'after_setup_theme' hook. */
@@ -26,13 +26,13 @@ function oxygen_theme_setup() {
 	$prefix = hybrid_get_prefix();
 
 	/* Add theme support for core framework features. */
+	add_theme_support( 'hybrid-core-styles', array( 'style' ) );
 	add_theme_support( 'hybrid-core-menus', array( 'primary', 'secondary', 'subsidiary' ) );
 	add_theme_support( 'hybrid-core-sidebars', array( 'primary', 'secondary', 'subsidiary', 'after-singular', 'header' ) );
 	add_theme_support( 'hybrid-core-widgets' );
-	add_theme_support( 'hybrid-core-theme-settings', array( 'about', 'footer' ) );
+	add_theme_support( 'hybrid-core-theme-settings', array( 'footer', 'about' ) );
 	add_theme_support( 'hybrid-core-meta-box-footer' );
 	add_theme_support( 'hybrid-core-shortcodes' );
-	add_theme_support( 'hybrid-core-drop-downs' );
 	add_theme_support( 'hybrid-core-template-hierarchy' );
 
 	/* Add theme support for framework extensions. */
@@ -40,6 +40,7 @@ function oxygen_theme_setup() {
 	add_theme_support( 'get-the-image' );
 	add_theme_support( 'cleaner-gallery' );
 	add_theme_support( 'breadcrumb-trail' );
+	add_theme_support( 'hybrid-core-scripts', array( 'comment-reply', 'drop-downs' ) );
 
 	/* Add theme support for WordPress features. */
 	add_theme_support( 'automatic-feed-links' );
@@ -71,24 +72,28 @@ function oxygen_theme_setup() {
 	/* Enqueue scripts (and related stylesheets) */
 	add_action( 'wp_enqueue_scripts', 'oxygen_scripts' );
 	
-	/* Enqueue Google fonts */
-	add_action( 'wp_enqueue_scripts', 'oxygen_google_fonts' );
-	
-	/* Style settings */
-	add_action( 'wp_head', 'oxygen_style_settings' );	
-	
 	/* Add the breadcrumb trail just after the container is open. */
 	add_action( "{$prefix}_open_content", 'breadcrumb_trail' );
 	
 	/* Breadcrumb trail arguments. */
 	add_filter( 'breadcrumb_trail_args', 'oxygen_breadcrumb_trail_args' );
+
+	/* Add support for custom headers. */
+	$args = array(
+		'width'         => 400,
+		'height'        => 100,
+		'flex-height'   => true,
+		'flex-width'    => true,		
+		'header-text'   => false,
+		'uploads'       => true,
+	);
+	add_theme_support( 'custom-header', $args );	
 	
 	/* Add support for custom backgrounds */
 	add_theme_support( 'custom-background' );
-	
-	/* Add theme settings */
-	if ( is_admin() )
-	    require_once( trailingslashit( TEMPLATEPATH ) . 'admin/functions-admin.php' );
+
+	/* Add theme settings to the customizer. */
+	require_once( trailingslashit( get_template_directory() ) . 'admin/customize.php' );	
 	    
 	/* Default footer settings */
 	add_filter( "{$prefix}_default_theme_settings", 'oxygen_default_footer_settings' );
@@ -96,9 +101,18 @@ function oxygen_theme_setup() {
 	/* Metaboxes */
 	add_action( 'add_meta_boxes', 'oxygen_create_metabox' );
 	add_action( 'save_post', 'oxygen_save_meta', 1, 2 );
-	
-	/* Slider settings */
-	add_action( 'wp_footer', 'oxygen_slider_settings' );
+
+	/** 
+	* Disqus plugin: use higher priority.
+	* URL: http://themehybrid.com/support/topic/weird-problem-wit-disqus-plugin 
+	*/
+	if( function_exists( 'dsq_comments_template' ) ) :
+		remove_filter( 'comments_template', 'dsq_comments_template' );
+		add_filter( 'comments_template', 'dsq_comments_template', 11 );
+	endif;
+
+	/* Remove the "Theme Settings" submenu. */
+	add_action( 'admin_menu', 'oxygen_remove_theme_settings_submenu', 11 );	
 	
 }
 
@@ -162,11 +176,12 @@ function oxygen_scripts() {
 		wp_enqueue_script( 'oxygen_imagesloaded', get_template_directory_uri() . '/js/jquery.imagesloaded.js', array( 'jquery' ), '1.0', true );	
 		wp_enqueue_script( 'oxygen_masonry', get_template_directory_uri() . '/js/jquery.masonry.min.js', array( 'jquery' ), '1.0', true );	
 		wp_enqueue_script( 'oxygen_cycle', get_template_directory_uri() . '/js/cycle/jquery.cycle.min.js', array( 'jquery' ), '1.0', true );		
-		wp_enqueue_script( 'oxygen_fitvids', get_template_directory_uri() . '/js/fitvids/jquery.fitvids.js', array( 'jquery' ), '1.0', true );	
+		wp_enqueue_script( 'oxygen_fitvids', get_template_directory_uri() . '/js/fitvids/jquery.fitvids.js', array( 'jquery' ), '1.0', true );
+		wp_enqueue_script( 'oxygen_navigation', get_template_directory_uri() . '/js/navigation.js', array( 'jquery' ), '20130301', true );		
 		wp_enqueue_script( 'oxygen_footer_scripts', get_template_directory_uri() . '/js/footer-scripts.js', array( 'jquery', 'oxygen_imagesloaded', 'oxygen_masonry', 'oxygen_cycle', 'oxygen_fancybox', 'oxygen_fitvids' ), '1.0', true );
 		
 		/* Enqueue Fancybox if enabled. */	
-		if ( hybrid_get_setting( 'oxygen_fancybox_enable' ) ) {
+		if ( get_theme_mod( 'oxygen_fancybox_enable' ) ) {
 			wp_enqueue_script( 'oxygen_fancybox', get_template_directory_uri() . '/js/fancybox/jquery.fancybox-1.3.4.pack.js', array( 'jquery' ), '1.0', true );
 			wp_enqueue_style( 'fancybox-stylesheet', get_template_directory_uri() . '/js/fancybox/jquery.fancybox-1.3.4.css', false, 1.0, 'screen' );
 			wp_enqueue_script( 'oxygen_footer_scripts', get_template_directory_uri() . '/js/footer-scripts.js', array( 'jquery', 'oxygen_imagesloaded', 'oxygen_masonry', 'oxygen_cycle', 'oxygen_fancybox', 'oxygen_fitvids' ), '1.0', true );
@@ -317,91 +332,22 @@ function oxygen_save_meta( $post_id, $post ) {
 }
 
 /**
- * Google fonts
- *
- */
-function oxygen_google_fonts() {
-	
-	if ( hybrid_get_setting( 'oxygen_font_family' ) ) {
-		
-		switch ( hybrid_get_setting( 'oxygen_font_family' ) ) {
-			case 'Abel':
-				wp_enqueue_style( 'font-abel', 'http://fonts.googleapis.com/css?family=Abel', false, 1.0, 'screen' );
-				break;
-			case 'Oswald':
-				wp_enqueue_style( 'font-oswald', 'http://fonts.googleapis.com/css?family=Oswald', false, 1.0, 'screen' );
-				break;
-			case 'Terminal Dosis':
-				wp_enqueue_style( 'font-terminal-dosis', 'http://fonts.googleapis.com/css?family=Terminal+Dosis', false, 1.0, 'screen' );
-				break;
-			case 'Droid Serif':
-				wp_enqueue_style( 'font-droid-serif', 'http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic', false, 1.0, 'screen' );
-				break;			
-			case 'Istok Web':
-				wp_enqueue_style( 'font-istok-web', 'http://fonts.googleapis.com/css?family=Istok+Web', false, 1.0, 'screen' );
-				break;
-			case 'Droid Sans':
-				wp_enqueue_style( 'font-droid-sans', 'http://fonts.googleapis.com/css?family=Droid+Sans', false, 1.0, 'screen' );
-				break;				
-			case 'Bitter':
-				wp_enqueue_style( 'font-bitter', 'http://fonts.googleapis.com/css?family=Bitter', false, 1.0, 'screen' );
-				break;
-		}
-	} else {
-		wp_enqueue_style( 'font-abel', 'http://fonts.googleapis.com/css?family=Abel', false, 1.0, 'screen' );
-	}	
-}
-
-/**
- * Style settings
- *
- */
-function oxygen_style_settings() {
-	
-	echo "\n<!-- Style settings -->\n";
-	echo "<style type=\"text/css\" media=\"all\">\n";
-	
-	if ( hybrid_get_setting( 'oxygen_font_size' ) )
-		echo 'html { font-size: ' . hybrid_get_setting( 'oxygen_font_size' ) . "px; }\n";
-	
-	if ( hybrid_get_setting( 'oxygen_font_family' ) )
-		echo 'h1, h2, h3, h4, h5, h6, dl dt, blockquote, blockquote blockquote blockquote, #site-title, #menu-primary li a { font-family: ' . hybrid_get_setting( 'oxygen_font_family' ) . ", sans-serif; }\n";
-	
-	if ( hybrid_get_setting( 'oxygen_link_color' ) ) {
-		echo 'a, a:visited, .page-template-front .hfeed-more .hentry .entry-title a:hover, .entry-title a, .entry-title a:visited { color: ' . hybrid_get_setting( 'oxygen_link_color' ) . "; }\n";
-		echo 'a:hover, .comment-meta a, .comment-meta a:visited, .page-template-front .hentry .entry-title a:hover, .archive .hentry .entry-title a:hover, .search .hentry .entry-title a:hover { border-color: ' . hybrid_get_setting( 'oxygen_link_color' ) . "; }\n";
-		echo '.read-more, .read-more:visited, .pagination a:hover, .comment-navigation a:hover, #respond #submit, .button, a.button, #subscribe #subbutton, .wpcf7-submit, #loginform .button-primary { background-color: ' . hybrid_get_setting( 'oxygen_link_color' ) . "; }\n";		
-		echo "a:hover, a:focus { color: #000; }\n";
-		echo ".read-more:hover, #respond #submit:hover, .button:hover, a.button:hover, #subscribe #subbutton:hover, .wpcf7-submit:hover, #loginform .button-primary:hover { background-color: #111; }\n";		
-	}	
-	if ( hybrid_get_setting( 'oxygen_custom_css' ) )
-		echo hybrid_get_setting( 'oxygen_custom_css' ) . "\n";
-	
-	echo "</style>\n";
-
-}
-
-/**
- * Slider settings
- *
- */
-function oxygen_slider_settings() {
-	
-	$timeout = hybrid_get_setting( 'oxygen_slider_timeout' ) ? hybrid_get_setting( 'oxygen_slider_timeout' ) : '6000';
-	$settings = array( 'timeout' => $timeout );
-	wp_localize_script( 'oxygen_footer_scripts', 'slider_settings', $settings );
-	wp_localize_script( 'oxygen_footer_scripts_light', 'slider_settings', $settings );
-}
-
-/**
  * Oxygen site title.
  * 
  */
 function oxygen_site_title() {
 	
-	if ( hybrid_get_setting( 'oxygen_logo_url' ) ) {	
+	$tag = ( is_front_page() ) ? 'h1' : 'div';
+
+	if ( get_header_image() ) {
+
+		echo '<' . $tag . ' id="site-title">' . "\n";
+			echo '<a href="' . get_home_url() . '" title="' . get_bloginfo( 'name' ) . '" rel="Home">' . "\n";
+				echo '<img class="logo" src="' . get_header_image() . '" alt="' . get_bloginfo( 'name' ) . '" />' . "\n";
+			echo '</a>' . "\n";
+		echo '</' . $tag . '>' . "\n";
 	
-		$tag = ( is_front_page() ) ? 'h1' : 'div';	
+	} elseif ( hybrid_get_setting( 'oxygen_logo_url' ) ) { // check for legacy setting
 			
 		echo '<' . $tag . ' id="site-title">' . "\n";
 			echo '<a href="' . get_home_url() . '" title="' . get_bloginfo( 'name' ) . '" rel="Home">' . "\n";
@@ -414,6 +360,16 @@ function oxygen_site_title() {
 		hybrid_site_title();
 	
 	}
+}
+
+/**
+ * Remove the "Theme Settings" submenu.
+ *
+ */
+function oxygen_remove_theme_settings_submenu() {
+
+	/* Remove the Theme Settings settings page. */
+	remove_submenu_page( 'themes.php', 'theme-settings' );
 }
 
 ?>

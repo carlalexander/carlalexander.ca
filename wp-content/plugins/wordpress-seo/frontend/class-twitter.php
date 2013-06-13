@@ -24,7 +24,7 @@ class WPSEO_Twitter extends WPSEO_Frontend {
 	public function __construct() {
 		$this->options = get_option( 'wpseo_social' );
 
-		add_action( 'wpseo_head', array( $this, 'twitter' ) );
+		add_action( 'wpseo_head', array( $this, 'twitter' ), 40 );
 	}
 
 	/**
@@ -62,7 +62,7 @@ class WPSEO_Twitter extends WPSEO_Frontend {
 	 * This defaults to summary but can be filtered using the <code>wpseo_twitter_card_type</code> filter.
 	 */
 	public function type() {
-		echo '<meta name="twitter:card" content="' . apply_filters( 'wpseo_twitter_card_type', 'summary' ) . '">' . "\n";
+		echo '<meta name="twitter:card" content="' . apply_filters( 'wpseo_twitter_card_type', 'summary' ) . '"/>' . "\n";
 	}
 
 	/**
@@ -70,7 +70,7 @@ class WPSEO_Twitter extends WPSEO_Frontend {
 	 */
 	public function site_twitter() {
 		if ( isset( $this->options['twitter_site'] ) )
-			echo '<meta name="twitter:site" content="@' . trim( $this->options['twitter_site'] ) . '">' . "\n";
+			echo '<meta name="twitter:site" content="@' . trim( $this->options['twitter_site'] ) . '"/>' . "\n";
 	}
 
 	/**
@@ -80,7 +80,7 @@ class WPSEO_Twitter extends WPSEO_Frontend {
 		$twitter = trim( get_the_author_meta( 'twitter' ) );
 
 		if ( $twitter && !empty( $twitter ) )
-			echo '<meta name="twitter:creator" content="@' . $twitter . '">' . "\n";
+			echo '<meta name="twitter:creator" content="@' . $twitter . '"/>' . "\n";
 	}
 
 	/**
@@ -89,7 +89,7 @@ class WPSEO_Twitter extends WPSEO_Frontend {
 	 * Only used when OpenGraph is inactive.
 	 */
 	public function twitter_title() {
-		echo '<meta name="twitter:title" content="' . $this->title( '' ) . '">' . "\n";
+		echo '<meta name="twitter:title" content="' . $this->title( '' ) . '"/>' . "\n";
 	}
 
 	/**
@@ -108,7 +108,7 @@ class WPSEO_Twitter extends WPSEO_Frontend {
 			$metadesc = strip_tags( get_the_excerpt() );
 		}
 
-		echo '<meta name="twitter:description" content="' . esc_attr( $metadesc ) . '">' . "\n";
+		echo '<meta name="twitter:description" content="' . esc_attr( $metadesc ) . '"/>' . "\n";
 	}
 
 	/**
@@ -117,7 +117,7 @@ class WPSEO_Twitter extends WPSEO_Frontend {
 	 * Only used when OpenGraph is inactive.
 	 */
 	public function twitter_url() {
-		echo '<meta name="twitter:url" content="' . $this->canonical( false ) . '">' . "\n";
+		echo '<meta name="twitter:url" content="' . $this->canonical( false ) . '"/>' . "\n";
 	}
 
 	/**
@@ -133,12 +133,12 @@ class WPSEO_Twitter extends WPSEO_Frontend {
 
 			if ( $featured_img ) {
 				$img = apply_filters( 'wpseo_opengraph_image', $featured_img[0] );
-				echo "<meta name='twitter:image' content='" . esc_attr( $img ) . "'>\n";
+				echo "<meta name='twitter:image' content='" . esc_attr( $img ) . "'/>\n";
 			}
 		} else {
 			$options = get_wpseo_options();
 			if ( isset( $options['og_frontpage_image'] ) && !empty( $options['og_frontpage_image'] ) )
-				echo "<meta name='twitter:image' content='" . esc_attr( $options['og_frontpage_image'] ) . "'>\n";
+				echo "<meta name='twitter:image' content='" . esc_attr( $options['og_frontpage_image'] ) . "'/>\n";
 		}
 
 	}

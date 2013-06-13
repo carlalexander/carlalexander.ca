@@ -30,7 +30,7 @@ if ( ( isset( $_GET[ 'updated' ] ) && $_GET[ 'updated' ] == 'true' ) || ( isset(
 
 <h2 id="wpseo-title"><?php _e( "Yoast WordPress SEO: Titles &amp; Metas", 'wordpress-seo' ); ?></h2>
 
-<div id="wpseo_content_top" class="postbox-container" style="width:75%;">
+<div id="wpseo_content_top" class="postbox-container">
 <div class="metabox-holder">
 <div class="meta-box-sortables">
 

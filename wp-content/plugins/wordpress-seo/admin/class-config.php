@@ -3,8 +3,8 @@
  * @package Admin
  */
 
-if ( !defined('WPSEO_VERSION') ) {
-	header('HTTP/1.0 403 Forbidden');
+if ( !defined( 'WPSEO_VERSION' ) ) {
+	header( 'HTTP/1.0 403 Forbidden' );
 	die;
 }
 
@@ -36,7 +36,7 @@ class WPSEO_Admin_Pages {
 	 * Make sure the needed scripts are loaded for admin pages
 	 */
 	function init() {
-		if ( isset( $_GET['wpseo_reset_defaults'] ) ) {
+		if ( isset( $_GET['wpseo_reset_defaults'] ) && wp_verify_nonce( $_GET['nonce'], 'wpseo_reset_defaults' ) && current_user_can( 'manage_options' ) ) {
 			$this->reset_defaults();
 			wp_redirect( admin_url( 'admin.php?page=wpseo_dashboard' ) );
 		}
@@ -67,28 +67,64 @@ class WPSEO_Admin_Pages {
 	 * Generates the sidebar for admin pages.
 	 */
 	function admin_sidebar() {
+		$banners = array(
+			array(
+				'url' => 'https://yoast.com/hire-us/website-review/#utm_source=wordpress-seo-config&utm_medium=banner&utm_campaign=website-review-banner',
+				'img' => 'banner-website-review.png',
+				'alt' => 'Website Review banner',
+			)
+		);
+		if ( 'nl_NL' == get_locale() ) {
+			$rand = rand( 1, 2 );
+			switch ( $rand ) {
+				case 1:
+					$banners[] = array(
+						'url' => 'http://yoast.nl/seo-trainingen/wordpress-seo-training//#utm_source=wordpress-seo-config&utm_medium=banner&utm_campaign=wpseo-training-banner&utm_content=prijs',
+						'img' => 'banner-wpseo-training.png',
+						'alt' => 'WordPress SEO Training banner',
+					);
+					break;
+				case 2:
+					$banners[] = array(
+						'url' => 'http://yoast.nl/seo-trainingen/wordpress-seo-training//#utm_source=wordpress-seo-config&utm_medium=banner&utm_campaign=wpseo-training-banner&utm_content=klik-hier',
+						'img' => 'banner-wpseo-training-2.png',
+						'alt' => 'WordPress SEO Training banner',
+					);
+					break;
+			}
+		}
+		if ( !class_exists( 'wpseo_Video_Sitemap' ) ) {
+			$banners[] = array(
+				'url' => 'http://yoast.com/wordpress/video-seo/#utm_source=wordpress-seo-config&utm_medium=banner&utm_campaign=video-seo-banner',
+				'img' => 'banner-video-seo.png',
+				'alt' => 'Banner WordPress SEO Video SEO extension',
+			);
+		}
+		if ( !class_exists( 'wpseo_Video_Manual' ) ) {
+			$banners[] = array(
+				'url' => 'http://yoast.com/wordpress/video-manual-wordpress-seo/#utm_source=wordpress-seo-config&utm_medium=banner&utm_campaign=video-manual-banner',
+				'img' => 'banner-video-seo-manual.png',
+				'alt' => 'Banner WordPress SEO Video manual',
+			);
+		}
+		shuffle( $banners );
 		?>
-	<div class="postbox-container" style="width:25%;min-width:200px;max-width:350px;">
-		<div id="sidebar">
-			<?php
-			$this->postbox( 'sitereview', '<span class="promo">' . __( 'Improve your Site!', 'wordpress-seo' ) . '</span>', '<p>' . sprintf( __( 'Don\'t know where to start? Order a %1$swebsite review%2$s from Yoast!', 'wordpress-seo' ), '<a href="http://yoast.com/hire-me/website-review/#utm_source=wpadmin&utm_medium=sidebanner&utm_term=link&utm_campaign=wpseoplugin">', '</a>' ) . '</p>' . '<p><a class="button-primary" href="http://yoast.com/hire-me/website-review/#utm_source=wpadmin&utm_medium=sidebanner&utm_term=button&utm_campaign=wpseoplugin">' . __( 'Read more &raquo;', 'wordpress-seo' ) . '</a></p>' );
-			$this->plugin_support();
-			$this->postbox( 'donate', '<span class="promo">' . __( 'Spread the Word!', 'wordpress-seo' ) . '</span>', '<p>' . __( 'Want to help make this plugin even better? All donations are used to improve this plugin, so donate $10, $20 or $50 now!', 'wordpress-seo' ) . '</p><form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-						<input type="hidden" name="cmd" value="_s-xclick">
-						<input type="hidden" name="hosted_button_id" value="83KQ269Q2SR82">
-						<input type="image" src="https://www.paypal.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit">
-						</form>'
-				. '<p>' . __( 'Or you could:', 'wordpress-seo' ) . '</p>'
-				. '<ul>'
-				. '<li><a href="http://wordpress.org/extend/plugins/wordpress-seo/">' . __( 'Rate the plugin 5★ on WordPress.org', 'wordpress-seo' ) . '</a></li>'
-				. '<li><a href="http://yoast.com/wordpress/seo/#utm_source=wpadmin&utm_medium=sidebanner&utm_term=link&utm_campaign=wpseoplugin">' . __( 'Blog about it & link to the plugin page', 'wordpress-seo' ) . '</a></li>'
-				. '<li><a href="http://amzn.com/w/CBV7CEOJJH98">' . __( 'Buy me something from my wishlist', 'wordpress-seo' ) . '</a></li>'
-			. '</ul>' );
-			$this->news();
-			?>
-			<br/><br/><br/>
+		<div class="postbox-container" style="width:261px;">
+			<div id="sidebar">
+				<?php
+				$i = 0;
+				foreach ( $banners as $banner ) {
+					if ( $i == 3 )
+						break;
+					if ( $i != 0 )
+						echo '<hr style="border:none;border-top:dotted 1px #f48500;margin: 30px 0;">';
+					echo '<a target="_blank" href="' . $banner['url'] . '"><img src="' . WPSEO_URL . '/images/' . $banner['img'] . '" alt="' . $banner['alt'] . '"/></a>';
+					$i++;
+				}
+				?>
+				<br/><br/><br/>
+			</div>
 		</div>
-	</div>
 	<?php
 	}
 
@@ -104,7 +140,7 @@ class WPSEO_Admin_Pages {
 	function admin_header( $title, $form = true, $option = 'yoast_wpseo_options', $optionshort = 'wpseo', $contains_files = false ) {
 		?>
 		<div class="wrap">
-			<?php
+		<?php
 		if ( ( isset( $_GET['updated'] ) && $_GET['updated'] == 'true' ) || ( isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] == 'true' ) ) {
 			$msg = __( 'Settings updated', 'wordpress-seo' );
 
@@ -119,9 +155,9 @@ class WPSEO_Admin_Pages {
 			</div>
 		</a>
 		<h2 id="wpseo-title"><?php _e( "Yoast WordPress SEO: ", 'wordpress-seo' ); echo $title; ?></h2>
-                                <div id="wpseo_content_top" class="postbox-container" style="min-width:400px; max-width:600px; padding: 0 20px 0 0;">
-				<div class="metabox-holder">	
-					<div class="meta-box-sortables">
+		<div id="wpseo_content_top" class="postbox-container" style="min-width:400px; max-width:600px; padding: 0 20px 0 0;">
+		<div class="metabox-holder">
+		<div class="meta-box-sortables">
 		<?php
 		if ( $form ) {
 			echo '<form action="' . admin_url( 'options.php' ) . '" method="post" id="wpseo-conf"' . ( $contains_files ? ' enctype="multipart/form-data"' : '' ) . '>';
@@ -141,14 +177,14 @@ class WPSEO_Admin_Pages {
 			?>
 			<div class="submit"><input type="submit" class="button-primary" name="submit"
 									   value="<?php _e( "Save Settings", 'wordpress-seo' ); ?>"/></div>
-			<?php } ?>
+		<?php } ?>
 		</form>
-					</div>
-				</div>
-			</div>
-			<?php $this->admin_sidebar(); ?>
-		</div>				
-		<?php
+		</div>
+		</div>
+		</div>
+		<?php $this->admin_sidebar(); ?>
+		</div>
+	<?php
 	}
 
 	/**
@@ -287,7 +323,7 @@ class WPSEO_Admin_Pages {
 			$class        = 'checkbox double';
 		}
 
-		$output_input = "<input class='$class' type='checkbox' id='".esc_attr( $var )."' name='" . esc_attr( $option ) . "[" . esc_attr( $var ) ."]' " . checked( $options[$var], 'on', false ) . '/>';
+		$output_input = "<input class='$class' type='checkbox' id='" . esc_attr( $var ) . "' name='" . esc_attr( $option ) . "[" . esc_attr( $var ) . "]' " . checked( $options[$var], 'on', false ) . '/>';
 
 		if ( $label_left !== false ) {
 			$output = $output_label . $output_input . '<label class="checkbox" for="' . esc_attr( $var ) . '">' . $label . '</label>';
@@ -377,7 +413,7 @@ class WPSEO_Admin_Pages {
 		$options = $this->get_option( $option );
 
 		$var_esc = esc_attr( $var );
-		$output = '<label class="select" for="' . $var_esc . '">' . $label . ':</label>';
+		$output  = '<label class="select" for="' . $var_esc . '">' . $label . ':</label>';
 		$output .= '<select class="select" name="' . $option . '[' . $var_esc . ']" id="' . $var_esc . '">';
 
 		foreach ( $values as $value => $label ) {
@@ -412,7 +448,7 @@ class WPSEO_Admin_Pages {
 		}
 
 		$var_esc = esc_attr( $var );
-		$output = '<label class="select" for="' . $var_esc . '">' . esc_html( $label ) . ':</label>';
+		$output  = '<label class="select" for="' . $var_esc . '">' . esc_html( $label ) . ':</label>';
 		$output .= '<input type="file" value="' . $val . '" class="textinput" name="' . esc_attr( $option ) . '[' . $var_esc . ']" id="' . $var_esc . '"/>';
 
 		// Need to save separate array items in hidden inputs, because empty file inputs type will be deleted by settings API.
@@ -465,10 +501,10 @@ class WPSEO_Admin_Pages {
 	 */
 	function postbox( $id, $title, $content ) {
 		?>
-	<div id="<?php echo esc_attr( $id ); ?>" class="yoastbox">
-		<h2><?php echo $title; ?></h2>
-		<?php echo $content; ?>
-	</div>
+		<div id="<?php echo esc_attr( $id ); ?>" class="yoastbox">
+			<h2><?php echo $title; ?></h2>
+			<?php echo $content; ?>
+		</div>
 	<?php
 	}
 
@@ -495,68 +531,6 @@ class WPSEO_Admin_Pages {
 		}
 		$content .= '</table>';
 		return $content;
-	}
-
-	/**
-	 * Info box with link to the support forums.
-	 */
-	function plugin_support() {
-		$content = '<p>' . __( 'If you are having problems with this plugin, please talk about them in the', 'wordpress-seo' ) . ' <a href="http://wordpress.org/support/plugin/wordpress-seo/">' . __( "Support forums", 'wordpress-seo' ) . '</a>.</p>';
-		$this->postbox( 'support', __( 'Need support?', 'wordpress-seo' ), $content );
-	}
-
-	/**
-	 * Fetch RSS items from the feed.
-	 *
-	 * @param int    $num  Number of items to fetch.
-	 * @param string $feed The feed to fetch.
-	 * @return array|bool False on error, array of RSS items on success.
-	 */
-	function fetch_rss_items( $num, $feed ) {
-		include_once( ABSPATH . WPINC . '/feed.php' );
-		$rss = fetch_feed( esc_url( $feed ) );
-
-		// Bail if feed doesn't work
-		if ( !$rss || is_wp_error( $rss ) )
-			return false;
-
-		$rss_items = $rss->get_items( 0, $rss->get_item_quantity( $num ) );
-
-		// If the feed was erroneous 
-		if ( !$rss_items ) {
-			$md5 = md5( $feed );
-			delete_transient( 'feed_' . $md5 );
-			delete_transient( 'feed_mod_' . $md5 );
-			$rss       = fetch_feed( esc_url( $feed ) );
-			$rss_items = $rss->get_items( 0, $rss->get_item_quantity( $num ) );
-		}
-
-		return $rss_items;
-	}
-
-	/**
-	 * Box with latest news from Yoast.com for sidebar
-	 */
-	function news() {
-		$rss_items = $this->fetch_rss_items( 3, 'http://yoast.com/feed/' );
-
-		$content = '<ul>';
-		if ( !$rss_items ) {
-			$content .= '<li class="yoast">' . __( 'No news items, feed might be broken...', 'wordpress-seo' ) . '</li>';
-		} else {
-			foreach ( $rss_items as $item ) {
-				$url = preg_replace( '/#.*/', '', esc_url( $item->get_permalink(), null, 'display' ) );
-				$content .= '<li class="yoast">';
-				$content .= '<a class="rsswidget" href="' . $url . '#utm_source=wpadmin&utm_medium=sidebarwidget&utm_term=newsitem&utm_campaign=wpseoplugin">' . esc_html( $item->get_title() ) . '</a> ';
-				$content .= '</li>';
-			}
-		}
-		$content .= '<li class="facebook"><a href="https://www.facebook.com/yoast">' . __( 'Like Yoast on Facebook', 'wordpress-seo' ) . '</a></li>';
-		$content .= '<li class="twitter"><a href="http://twitter.com/yoast">' . __( 'Follow Yoast on Twitter', 'wordpress-seo' ) . '</a></li>';
-		$content .= '<li class="googleplus"><a href="https://plus.google.com/115369062315673853712/posts">' . __( 'Circle Yoast on Google+', 'wordpress-seo' ) . '</a></li>';
-		$content .= '<li class="email"><a href="http://yoast.com/wordpress-newsletter/">' . __( 'Subscribe by email', 'wordpress-seo' ) . '</a></li>';
-		$content .= '</ul>';
-		$this->postbox( 'yoastlatest', __( 'Latest news from Yoast', 'wordpress-seo' ), $content );
 	}
 
 } // end class WPSEO_Admin
