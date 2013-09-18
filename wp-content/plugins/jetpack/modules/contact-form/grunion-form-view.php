@@ -72,8 +72,8 @@ wp_localize_script( 'grunion', 'GrunionFB_i18n', array(
 	#sidemenu a { text-decoration:none; border-top: 1px solid #FFF; display:block; float:left; line-height:28px; padding:0 13px; outline: none; }
 	#sidemenu a.current { background-color:#F9F9F9; border-color:#DFDFDF #DFDFDF #F9F9F9; color:#D54E21; -moz-border-radius:4px 4px 0 0; border-radius:4px 4px 0 0; -webkit-border-radius:4px 4px 0 0; border-style:solid; border-width:1px; font-weight:normal; }
 	#sidemenu li { display:inline; margin-bottom:6px; line-height:200%; list-style:none outside none; margin:0; padding:0; text-align:center; white-space:nowrap; }
-	.button { background-color:#FFFFFF; background:url("<?php echo get_bloginfo('url'); ?>/wp-admin/images/white-grad.png") repeat-x scroll left top #F2F2F2; border-color:#BBBBBB; min-width:80px; text-align:center; color:#464646; text-shadow:0 1px 0 #FFFFFF; border-style:solid; border-width:1px; cursor:pointer; width: auto; font-size:11px !important; line-height:13px; padding:3px 11px; margin-top: 12px; text-decoration:none; -moz-border-radius:11px; border-radius:11px; -webkit-border-radius:11px }
-	.button-primary { background-color:#FFFFFF; font-weight: bold; background: url('<?php echo get_bloginfo('url'); ?>/wp-admin/images/button-grad-active.png') repeat-x scroll left top #21759B; border-color:#298CBA; text-align:center; color:#EAF2FA; text-shadow:0 -1px 0 rgba(0, 0, 0, 0.3); border-style:solid; border-width:1px; cursor:pointer; width: auto; font-size:11px !important; line-height:13px; padding:3px 11px; margin-top: 21px; text-decoration:none; -moz-border-radius:11px; border-radius:11px; -webkit-border-radius:11px }
+	.button { background-color:#f2f2f2; border-color:#BBBBBB; min-width:80px; text-align:center; color:#464646; text-shadow:0 1px 0 #FFFFFF; border-style:solid; border-width:1px; cursor:pointer; width: auto; font-size:11px !important; line-height:13px; padding:3px 11px; margin-top: 12px; text-decoration:none; -moz-border-radius:11px; border-radius:11px; -webkit-border-radius:11px }
+	.button-primary { background-color:#21759B; font-weight: bold; border-color:#298CBA; text-align:center; color:#EAF2FA; text-shadow:0 -1px 0 rgba(0, 0, 0, 0.3); border-style:solid; border-width:1px; cursor:pointer; width: auto; font-size:11px !important; line-height:13px; padding:3px 11px; margin-top: 21px; text-decoration:none; -moz-border-radius:11px; border-radius:11px; -webkit-border-radius:11px }
 	.clear { clear: both; }
 	.fb-add-field { padding-left: 10px; }
 	.fb-add-option { margin: 0 0 14px 100px; }
@@ -132,8 +132,8 @@ wp_localize_script( 'grunion', 'GrunionFB_i18n', array(
 			); ?></p>
 			<h3 style="margin-top: 21px;"><?php esc_html_e( 'Can I view my feedback within WordPress?', 'jetpack' ); ?></h3>
 			<p><?php printf(
-				esc_html( _x( 'Yep, you can read your feedback at any time by clicking the "%1$s" link in the admin menu.', '%1$s = "Feedbacks" in an HTML link', 'jetpack' ) ),
-				'<a id="fb-feedback" href="' . admin_url( 'edit.php?post_type=feedback' ) . '">' . esc_html__( 'Feedbacks', 'jetpack' ) . '</a>'
+				esc_html( _x( 'Yep, you can read your feedback at any time by clicking the "%1$s" link in the admin menu.', '%1$s = "Feedback" in an HTML link', 'jetpack' ) ),
+				'<a id="fb-feedback" href="' . admin_url( 'edit.php?post_type=feedback' ) . '">' . esc_html__( 'Feedback', 'jetpack' ) . '</a>'
 			); ?></p>
 			<div class="clear"></div>
 		</div>

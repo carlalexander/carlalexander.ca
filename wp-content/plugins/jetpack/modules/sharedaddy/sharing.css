@@ -314,6 +314,10 @@ li.share-pocket a.sd-button > span {
 	background-image: url('images/pocket.png');
 }
 
+li.share-kindle a.sd-button > span {
+	background-image: url('images/kindle.png');
+}
+
 li.share-email a.sd-button > span {
 	background-image: url('images/email.png');
 }
@@ -380,6 +384,11 @@ a.sd-button.share-more span {
 
 	li.share-pocket a.sd-button > span {
 		background-image: url('images/pocket@2x.png');
+		background-size: 16px 16px;
+	}
+
+	li.share-kindle a.sd-button > span {
+		background-image: url('images/kindle@2x.png');
 		background-size: 16px 16px;
 	}
 

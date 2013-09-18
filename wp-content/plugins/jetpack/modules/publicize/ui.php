@@ -71,7 +71,7 @@ class Publicize_UI {
 		add_thickbox();
 	}
 
-	function connected_notice( $service_name ) { ?>
+	public static function connected_notice( $service_name ) { ?>
 		<div class='updated'>
 			<p><?php printf( __( 'You have successfully connected your blog with your %s account.', 'jetpack' ), Publicize::get_service_label( $service_name ) ); ?></p>
 		</div><?php
@@ -99,7 +99,7 @@ class Publicize_UI {
   				$doc_link = "http://en.support.wordpress.com/publicize/";
   			?>
 
-	  		<p>&rarr; <a href="<?php echo esc_url( $doc_link ); ?>"><?php esc_html_e( 'More information on using Publicize.', 'jetpack' ); ?></a></p>
+	  		<p>&rarr; <a href="<?php echo esc_url( $doc_link ); ?>" target="_blank"><?php esc_html_e( 'More information on using Publicize.', 'jetpack' ); ?></a></p>
 
 	  		<div id="publicize-services-block">
 		  		<?php
@@ -108,7 +108,7 @@ class Publicize_UI {
 		  			?>
 		  			<div class="publicize-service-entry">
 			  			<div id="<?php echo esc_attr( $name ); ?>" class="publicize-service-left">
-			  				<a href="<?php echo esc_url( $connect_url ); ?>"><span class="pub-logos" id="<?php echo esc_attr( $name ); ?>">&nbsp;</span></a>
+			  				<a href="<?php echo esc_url( $connect_url ); ?>" target="_top"><span class="pub-logos" id="<?php echo esc_attr( $name ); ?>">&nbsp;</span></a>
 			  			</div>
 
 			  			<div class="publicize-service-right">
@@ -141,7 +141,7 @@ class Publicize_UI {
 										<li>
 											<?php
 											if ( !empty( $profile_link ) ) : ?>
-												<a class="publicize-profile-link" href="<?php echo esc_url( $profile_link ); ?>">
+												<a class="publicize-profile-link" href="<?php echo esc_url( $profile_link ); ?>" target="_top">
 													<?php echo esc_html( $connection_display ); ?>
 												</a><?php
 											else :
@@ -153,11 +153,11 @@ class Publicize_UI {
 												<small>(<?php esc_html_e( 'Shared', 'jetpack' ); ?>)</small>
 
 												<?php if ( current_user_can( $this->publicize->GLOBAL_CAP ) ) : ?>
-													<a class="pub-disconnect-button" title="<?php esc_html_e( 'Disconnect', 'jetpack' ); ?>" href="<?php echo esc_url( $disconnect_url ); ?>">×</a>
+													<a class="pub-disconnect-button" title="<?php esc_html_e( 'Disconnect', 'jetpack' ); ?>" href="<?php echo esc_url( $disconnect_url ); ?>" target="_top">×</a>
 												<?php endif; ?>
 
 											<?php else : ?>
-												<a class="pub-disconnect-button" title="<?php esc_html_e( 'Disconnect', 'jetpack' ); ?>" href="<?php echo esc_url( $disconnect_url ); ?>">×</a>
+												<a class="pub-disconnect-button" title="<?php esc_html_e( 'Disconnect', 'jetpack' ); ?>" href="<?php echo esc_url( $disconnect_url ); ?>" target="_top">×</a>
 											<?php endif; ?>
 										</li>
 
@@ -166,7 +166,7 @@ class Publicize_UI {
 				  					?>
 				  				</ul>
 				  			<?php endif; ?>
-							<a id="<?php echo esc_attr( $name ); ?>" class="publicize-add-connection" href="<?php echo esc_url( $connect_url); ?>"><?php echo esc_html( sprintf( __( 'Add new %s connection.', 'jetpack' ), $this->publicize->get_service_label( $name ) ) ); ?></a>
+							<a id="<?php echo esc_attr( $name ); ?>" class="publicize-add-connection" href="<?php echo esc_url( $connect_url); ?>" target="_top"><?php echo esc_html( sprintf( __( 'Add new %s connection.', 'jetpack' ), $this->publicize->get_service_label( $name ) ) ); ?></a>
 			  			</div>
 			  		</div>
 				<?php endforeach; ?>
@@ -190,7 +190,7 @@ class Publicize_UI {
 
 	}
 
-	function global_checkbox( $service_name, $id ) {
+	public static function global_checkbox( $service_name, $id ) {
 		global $publicize;
 		if ( current_user_can( $publicize->GLOBAL_CAP ) ) : ?>
 			<p>
@@ -208,7 +208,7 @@ class Publicize_UI {
 		</div><?php
 	}
 
-	function options_page_other( $service_name ) {
+	public static function options_page_other( $service_name ) {
 		// Nonce check
 		check_admin_referer( "options_page_{$service_name}_" . $_REQUEST['connection'] );
 		?>
@@ -376,7 +376,7 @@ jQuery( function($) {
 	function post_page_metabox() {
 		global $post;
 
-		if ( 'post' != $post->post_type )
+		if ( ! $this->publicize->post_type_is_publicizeable( $post->post_type ) )
 			return;
 
 		$user_id = empty( $post->post_author ) ? $GLOBALS['user_ID'] : $post->post_author;
@@ -418,7 +418,7 @@ jQuery( function($) {
 								$connection_data = $connection->get_meta( 'connection_data' );
 							elseif ( ! empty( $connection['connection_data'] ) )
 								$connection_data = $connection['connection_data'];
-							
+
 							if ( !$continue = apply_filters( 'wpas_submit_post?', true, $post->ID, $name, $connection_data ) )
 								continue;
 
@@ -463,6 +463,10 @@ jQuery( function($) {
 							// Determine the state of the checkbox (on/off) and allow filtering
 							$checked = $skip != 1 || $done;
 							$checked = apply_filters( 'publicize_checkbox_default', $checked, $post->ID, $name, $connection );
+
+							// Force the checkbox to be checked if the post was DONE, regardless of what the filter does
+							if ( $done )
+								$checked = true;
 
 							// This post has been handled, so disable everything
 							if ( $all_done )

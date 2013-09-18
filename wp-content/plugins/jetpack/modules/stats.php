@@ -5,6 +5,7 @@
  * Sort Order: 1
  * First Introduced: 1.1
  * Requires Connection: Yes
+ * Auto Activate: Yes
  */
 
 if ( defined( 'STATS_VERSION' ) ) {
@@ -215,6 +216,8 @@ function stats_upgrade_options( $options ) {
 	);
 
 	if ( isset( $options['reg_users'] ) ) {
+		if ( ! function_exists( 'get_editable_roles' ) )
+			require_once( ABSPATH . 'wp-admin/includes/user.php' );
 		if ( $options['reg_users'] )
 			$options['count_roles'] = array_keys( get_editable_roles() );
 		unset( $options['reg_users'] );
@@ -918,15 +921,23 @@ function stats_dashboard_widget_content() {
 	/* translators: Stats dashboard widget postviews list: "$post_title $views Views" */
 	$printf = __( '%1$s %2$s Views' , 'jetpack' );
 
-	foreach ( $top_posts = stats_get_csv( 'postviews', "days=$options[top]$csv_args[top]" ) as $post )
+	foreach ( $top_posts = stats_get_csv( 'postviews', "days=$options[top]$csv_args[top]" ) as $i => $post ) {
+		if ( $post['post_id'] == 0 ) {
+			unset( $top_posts[$i] );
+			continue;
+		}
 		$post_ids[] = $post['post_id'];
+	}
 
 	// cache
 	get_posts( array( 'include' => join( ',', array_unique( $post_ids ) ) ) );
 
 	$searches = array();
-	foreach ( $search_terms = stats_get_csv( 'searchterms', "days=$options[search]$csv_args[search]" ) as $search_term )
+	foreach ( $search_terms = stats_get_csv( 'searchterms', "days=$options[search]$csv_args[search]" ) as $search_term ) {
+		if ( $search_term['searchterm'] == 'encrypted_search_terms' )
+			continue;
 		$searches[] = esc_html( $search_term['searchterm'] );
+	}
 
 ?>
 <a class="button" href="admin.php?page=stats"><?php _e( 'View All', 'jetpack' ); ?></a>

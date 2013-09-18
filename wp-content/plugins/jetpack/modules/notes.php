@@ -5,6 +5,7 @@
  * Sort Order: 1
  * First Introduced: 1.9
  * Requires Connection: Yes
+ * Auto Activate: Yes
  */
 
 if ( !defined( 'JETPACK_NOTES__CACHE_BUSTER' ) ) define( 'JETPACK_NOTES__CACHE_BUSTER', JETPACK__VERSION . '-' . gmdate( 'oW' ) );
@@ -29,7 +30,7 @@ class Jetpack_Notifications {
 	 * Singleton
 	 * @static
 	 */
-	function &init() {
+	public static function init() {
 		static $instance = array();
 
 		if ( !$instance ) {

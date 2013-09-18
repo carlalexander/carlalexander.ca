@@ -70,10 +70,16 @@ class Grunion_Contact_Form_Plugin {
 		add_action( 'wp_ajax_grunion-contact-form', array( $this, 'ajax_request' ) );
 		add_action( 'wp_ajax_nopriv_grunion-contact-form', array( $this, 'ajax_request' ) );
 
+		// Export to CSV feature
+		if ( is_admin() ) {
+			add_action( 'admin_init',            array( $this, 'download_feedback_as_csv' ) );
+			add_action( 'admin_footer-edit.php', array( $this, 'export_form' ) );
+		}
+
 		// custom post type we'll use to keep copies of the feedback items
 		register_post_type( 'feedback', array(
 			'labels'            => array(
-				'name'               => __( 'Feedbacks', 'jetpack' ),
+				'name'               => __( 'Feedback', 'jetpack' ),
 				'singular_name'      => __( 'Feedback', 'jetpack' ),
 				'search_items'       => __( 'Search Feedback', 'jetpack' ),
 				'not_found'          => __( 'No feedback found', 'jetpack' ),
@@ -181,7 +187,7 @@ class Grunion_Contact_Form_Plugin {
 		if ( ! $submission_result ) {
 			header( "HTTP/1.1 500 Server Error", 500, true );
 			echo '<div class="form-error"><ul class="form-errors"><li class="form-error-message">';
-			esc_html_e( 'An error occurred. Please try again later.' );
+			esc_html_e( 'An error occurred. Please try again later.', 'jetpack' );
 			echo '</li></ul></div>';
 		} elseif ( is_wp_error( $submission_result ) ) {
 			header( "HTTP/1.1 400 Bad Request", 403, true );
@@ -189,7 +195,7 @@ class Grunion_Contact_Form_Plugin {
 			echo esc_html( $submission_result->get_error_message() );
 			echo '</li></ul></div>';
 		} else {
-			echo '<h3>' . esc_html__( 'Message Sent' ) . '</h3>' . $submission_result;
+			echo '<h3>' . esc_html__( 'Message Sent', 'jetpack' ) . '</h3>' . $submission_result;
 		}
 
 		die;
@@ -332,6 +338,182 @@ class Grunion_Contact_Form_Plugin {
 
 		$response = akismet_http_post( $query_string, $akismet_api_host, "/1.1/submit-{$as}", $akismet_api_port );
 		return trim( $response[1] );
+	}
+
+	/**
+	 * Prints the menu
+	 */
+	function export_form() {
+		if ( get_current_screen()->id != 'edit-feedback' )
+			return;
+
+		// if there aren't any feedbacks, bail out
+		if ( ! (int) wp_count_posts( 'feedback' )->publish )
+			return;
+		?>
+
+		<div id="feedback-export" style="display:none">
+			<h2><?php _e( 'Export feedback as CSV', 'jetpack' ) ?></h2>
+			<div class="clear"></div>
+			<form action="<?php echo admin_url( 'admin-post.php' ); ?>" method="post" class="form">
+				<?php wp_nonce_field( 'feedback_export','feedback_export_nonce' ); ?>
+
+				<input name="action" value="feedback_export" type="hidden">
+				<label for="post"><?php _e( 'Select feedback to download', 'jetpack' ) ?></label>
+				<select name="post">
+					<option value="all"><?php esc_html_e( 'All posts', 'jetpack' ) ?></option>
+					<?php echo $this->get_feedbacks_as_options() ?>
+				</select>
+
+				<br><br>
+				<input type="submit" name="submit" id="submit" class="button button-primary" value="<?php esc_html_e( 'Download', 'jetpack' ); ?>">
+			</form>
+		</div>
+
+		<?php
+		// There aren't any usable actions in core to output the "export feedback" form in the correct place,
+		// so this inline JS moves it from the top of the page to the bottom.
+		?>
+		<script type='text/javascript'>
+		var menu = document.getElementById( 'feedback-export' ),
+		wrapper = document.getElementsByClassName( 'wrap' )[0];
+		wrapper.appendChild(menu);
+		menu.style.display = 'block';
+		</script>
+		<?php
+	}
+
+	/**
+	 * download as a csv a contact form or all of them in a csv file
+	 */
+	function download_feedback_as_csv() {
+		if ( empty( $_POST['feedback_export_nonce'] ) )
+			return;
+
+		check_admin_referer( 'feedback_export', 'feedback_export_nonce' );
+
+		$args = array(
+			'posts_per_page'   => -1,
+			'post_type'        => 'feedback',
+			'post_status'      => 'publish',
+			'meta_key'         => '_feedback_subject',
+			'orderby'          => 'meta_value',
+			'fields'           => 'ids',
+			'suppress_filters' => false,
+		);
+
+		$filename = date( "Y-m-d" ) . '-feedback-export.csv';
+
+		// Check if we want to download all the feedbacks or just a certain contact form
+		if ( ! empty( $_POST['post'] ) && $_POST['post'] !== 'all' ) {
+			$args['post_parent'] = (int) $_POST['post'];
+			$filename            = date( "Y-m-d" ) . '-' . str_replace( '&nbsp;', '-', get_the_title( (int) $_POST['post'] ) ) . '.csv';
+		}
+
+		$feedbacks = get_posts( $args );
+		$filename  = sanitize_file_name( $filename );
+		$fields    = $this->get_field_names( $feedbacks );
+		array_unshift( $fields, __( 'Contact Form', 'jetpack' ) );
+
+		if ( empty( $feedbacks ) )
+			return;
+
+		// Forces the download of the CSV instead of echoing
+		header( 'Content-Disposition: attachment; filename=' . $filename );
+		header( 'Pragma: no-cache' );
+		header( 'Expires: 0' );
+		header( 'Content-Type: text/csv; charset=utf-8' );
+
+		$output = fopen( 'php://output', 'w' );
+
+		// Prints the header
+		fputcsv( $output, $fields );
+
+		// Create the csv string from the array of post ids
+		foreach ( $feedbacks as $feedback ) {
+			fputcsv( $output, self::make_csv_row_from_feedback( $feedback, $fields ) );
+		}
+
+		fclose( $output );
+	}
+
+	/**
+	 * Returns a string of HTML <option> items from an array of posts
+	 *
+	 * @return string a string of HTML <option> items
+	 */
+	protected function get_feedbacks_as_options() {
+		$options = '';
+
+		// Get the feedbacks' parents' post IDs
+		$feedbacks = get_posts( array(
+			'fields'           => 'id=>parent',
+			'posts_per_page'   => -1,
+			'post_type'        => 'feedback',
+			'post_status'      => 'publish',
+			'suppress_filters' => false,
+		) );
+		$parents = array_unique( array_values( $feedbacks ) );
+
+		$posts = get_posts( array(
+			'orderby'          => 'ID',
+			'posts_per_page'   => -1,
+			'post_type'        => 'any',
+			'post__in'         => array_values( $parents ),
+			'suppress_filters' => false,
+		) );
+
+		// creates the string of <option> elements
+		foreach ( $posts as $post ) {
+			$options .= sprintf( '<option value="%s">%s</option>', esc_attr( $post->ID ), esc_html( $post->post_title ) );
+		}
+
+		return $options;
+	}
+
+	/**
+	 * Get the names of all the form's fields
+	 *
+	 * @param  array|int $posts the post we want the fields of
+	 * @return array     the array of fields
+	 */
+	protected function get_field_names( $posts ) {
+		$posts = (array) $posts;
+		$all_fields = array();
+
+		foreach ( $posts as $post ){
+			$extra_fields = array_keys( get_post_meta( $post, '_feedback_all_fields', true ) );
+			$all_fields = array_merge( $all_fields, $extra_fields );
+		}
+
+		$all_fields = array_unique( $all_fields );
+		return $all_fields;
+	}
+
+	/**
+	 * Creates a valid csv row from a post id
+	 *
+	 * @param  int    $post_id The id of the post
+	 * @param  array  $fields  An array containing the names of all the fields of the csv
+	 * @return String The csv row
+	 */
+	protected static function make_csv_row_from_feedback( $post_id, $fields ) {
+		$all_fields = get_post_meta( $post_id, '_feedback_all_fields', true );
+
+		// The first element in all of the exports will be the subject
+		$row_items[] = get_post_meta( $post_id, '_feedback_subject', true );
+
+		// Loop the fields array in order to fill the $row_items array correctly
+		foreach ( $fields as $field ) {
+			if ( $field === __( 'Contact Form', 'jetpack' ) ) // the first field will ever be the contact form, so we can continue
+				continue;
+			elseif ( array_key_exists( $field, $all_fields ) )
+				$row_items[] = $all_fields[$field];
+			else
+				$row_items[] = '';
+		}
+
+		return $row_items;
 	}
 }
 
@@ -546,11 +728,12 @@ class Grunion_Contact_Form extends Crunion_Contact_Form_Shortcode {
 		}
 
 		$this->defaults = array(
-			'to'           => $default_to,
-			'subject'      => $default_subject,
-			'show_subject' => 'no', // only used in back-compat mode
-			'widget'       => 0,    // Not exposed to the user. Works with Grunion_Contact_Form_Plugin::widget_atts()
-			'id'           => null, // Not exposed to the user. Set above.
+			'to'                 => $default_to,
+			'subject'            => $default_subject,
+			'show_subject'       => 'no', // only used in back-compat mode
+			'widget'             => 0,    // Not exposed to the user. Works with Grunion_Contact_Form_Plugin::widget_atts()
+			'id'                 => null, // Not exposed to the user. Set above.
+			'submit_button_text' => __( 'Submit &#187;', 'jetpack' ),
 		);
 
 		$attributes = shortcode_atts( $this->defaults, $attributes );
@@ -692,7 +875,7 @@ class Grunion_Contact_Form extends Crunion_Contact_Form_Shortcode {
 			$r .= "<form action='" . esc_url( $url ) . "' method='post' class='contact-form commentsblock'>\n";
 			$r .= $form->body;
 			$r .= "\t<p class='contact-submit'>\n";
-			$r .= "\t\t<input type='submit' value='" . esc_attr__( 'Submit &#187;', 'jetpack' ) . "' class='pushbutton-wide'/>\n";
+			$r .= "\t\t<input type='submit' value='" . esc_attr( $form->get_attribute( 'submit_button_text' ) ) . "' class='pushbutton-wide'/>\n";
 			$r .= "\t\t" . wp_nonce_field( 'contact-form_' . $id, '_wpnonce', true, false ) . "\n"; // nonce and referer
 			$r .= "\t\t<input type='hidden' name='contact-form-id' value='$id' />\n";
 			$r .= "\t\t<input type='hidden' name='action' value='grunion-contact-form' />\n";
@@ -997,7 +1180,9 @@ class Grunion_Contact_Form extends Crunion_Contact_Form_Shortcode {
 
 		$subject = apply_filters( 'contact_form_subject', $contact_form_subject );
 
-		$time = date_i18n( __( 'l F j, Y \a\t g:i a', 'jetpack' ), current_time( 'timestamp' ) );
+		$date_time_format = _x( '%1$s \a\t %2$s', '{$date_format} \a\t {$time_format}', 'jetpack' );
+		$date_time_format = sprintf( $date_time_format, get_option( 'date_format' ), get_option( 'time_format' ) );
+		$time = date_i18n( $date_time_format, current_time( 'timestamp' ) );
 
 		$extra_content = '';
 
@@ -1419,7 +1604,7 @@ function grunion_delete_old_spam() {
 	# nothing special about 5000 or 11
 	# just trying to periodically recover deleted rows
 	$random_num = mt_rand( 1, 5000 );
-	if ( apply_filters( 'grunion_optimize_table', ( $random_number == 11 ) ) ) {
+	if ( apply_filters( 'grunion_optimize_table', ( $random_num == 11 ) ) ) {
 		$wpdb->query( "OPTIMIZE TABLE $wpdb->posts" );
 	}
 

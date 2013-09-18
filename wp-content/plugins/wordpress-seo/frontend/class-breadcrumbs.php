@@ -97,9 +97,38 @@ class WPSEO_Breadcrumbs {
 							unset( $terms_by_id[$term->parent] );
 						}
 
-						// As we could still have two subcategories, from different parent categories, let's pick the first.
-						reset( $terms_by_id );
-						$deepest_term = current( $terms_by_id );
+						// As we could still have two subcategories, from different parent categories, let's pick the one with the lowest ordered ancestor.
+                        $parents_count = 0;
+                        $term_order = 9999; //because ASC
+                        reset( $terms_by_id );
+                        $deepest_term = current($terms_by_id);
+                        foreach ( $terms_by_id as $term ) {
+                            $parents = $this->get_term_parents( $term );
+
+                            if ( sizeof( $parents ) >= $parents_count ) {
+                                $parents_count = sizeof( $parents );
+
+                                //if higher count
+                                if ( sizeof( $parents ) > $parents_count ) {
+                                    //reset order
+                                    $term_order = 9999;
+                                }
+
+                                $parent_order = 9999; //set default order
+                                foreach ( $parents as $parent ) {
+                                    if ( $parent->parent == 0 && isset( $parent->term_order ) ) {
+                                        $parent_order = $parent->term_order;
+                                    }
+                                }
+
+                                //check if parent has lowest order
+                                if ( $parent_order < $term_order ) {
+                                    $term_order = $parent_order;
+
+                                    $deepest_term = $term;
+                                }
+                            }
+                        }
 
 						if ( is_taxonomy_hierarchical( $main_tax ) && $deepest_term->parent != 0 ) {
 							foreach ( $this->get_term_parents( $deepest_term ) as $parent_term ) {
@@ -182,11 +211,45 @@ class WPSEO_Breadcrumbs {
 					$bc = __( 'You searched for', 'wordpress-seo' );
 				$links[] = array( 'text' => $bc . ' "' . esc_html( get_search_query() ) . '"' );
 			} elseif ( is_404() ) {
-				if ( isset( $options['breadcrumbs-404crumb'] ) && $options['breadcrumbs-404crumb'] != '' )
-					$crumb404 = $options['breadcrumbs-404crumb'];
-				else
-					$crumb404 = __( 'Error 404: Page not found', 'wordpress-seo' );
-				$links[] = array( 'text' => $crumb404 );
+
+				if ( 0 !== get_query_var( 'year' ) || ( 0 !== get_query_var( 'monthnum' ) || 0 !== get_query_var( 'day' ) ) ) {
+					
+					if ( 'page' == $on_front && !is_home() ) {
+						if ( $blog_page && ( !isset( $options['breadcrumbs-blog-remove'] ) || !$options['breadcrumbs-blog-remove'] ) )
+							$links[] = array( 'id' => $blog_page );
+					}
+
+					if ( isset( $options['breadcrumbs-archiveprefix'] ) )
+						$bc = $options['breadcrumbs-archiveprefix'];
+					else
+						$bc = __( 'Archives for', 'wordpress-seo' );
+
+
+					if ( 0 !== get_query_var( 'day' ) ) {
+						$links[] = array(
+							'url'  => get_month_link( get_query_var( 'year' ), get_query_var( 'monthnum' ) ),
+							'text' => $GLOBALS['wp_locale']->get_month( get_query_var( 'monthnum' ) ) . ' ' . get_query_var( 'year' )
+						);
+						global $post;
+						$original_p = $post;
+						$post->post_date = sprintf("%04d-%02d-%02d 00:00:00", get_query_var( 'year' ), get_query_var( 'monthnum' ), get_query_var( 'day' ) );
+						$links[] = array( 'text' => $bc . ' ' . get_the_date() );
+						$post = $original_p;
+
+					} else if ( 0 !== get_query_var( 'monthnum' ) ) {
+						$links[] = array( 'text' => $bc . ' ' . single_month_title( ' ', false ) );
+					} else if ( 0 !== get_query_var( 'year' ) ) {
+						$links[] = array( 'text' => $bc . ' ' . get_query_var( 'year' ) );
+					}
+				}
+				else {
+					if ( isset( $options['breadcrumbs-404crumb'] ) && '' != $options['breadcrumbs-404crumb'] )
+						$crumb404 = $options['breadcrumbs-404crumb'];
+					else
+						$crumb404 = __( 'Error 404: Page not found', 'wordpress-seo' );
+							
+					$links[] = array( 'text' => $crumb404 );
+				}
 			}
 		}
 
@@ -229,8 +292,6 @@ class WPSEO_Breadcrumbs {
 		$output = '';
 
 		foreach ( $links as $i => $link ) {
-			if ( !empty( $output ) )
-				$output .= " $sep ";
 
 			if ( isset( $link['id'] ) ) {
 				$link['url']  = get_permalink( $link['id'] );
@@ -272,7 +333,9 @@ class WPSEO_Breadcrumbs {
 			}
 			$link_output .= '</' . $element . '>';
 
-			$output .= apply_filters( 'wpseo_breadcrumb_single_link', $link_output, $link );
+			$link_sep = ( !empty( $output ) ? " $sep " : '' );
+			$link_output = apply_filters( 'wpseo_breadcrumb_single_link', $link_output, $link );
+			$output .= apply_filters( 'wpseo_breadcrumb_single_link_with_sep', $link_sep . $link_output, $link );
 		}
 
 		$id = apply_filters( 'wpseo_breadcrumb_output_id', false );

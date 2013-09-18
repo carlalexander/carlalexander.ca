@@ -1,8 +1,8 @@
 /*
 Theme Name: Minileven
-Theme URI: http://automattic.com
+Theme URI: http://theme.wordpress.com
 Author: Automattic
-Author URI: http://automattic.com
+Author URI: http://theme.wordpress.com
 Description: The Minileven theme is a clean, lightweight mobile experience for your blog based on Twenty Eleven.
 Version: 2.0-wpcom
 License: GNU General Public License
@@ -68,7 +68,7 @@ a img {
 	border: 0;
 }
 article, aside, details, figcaption, figure,
-footer, header, hgroup, menu, nav, section {
+footer, header, menu, nav, section {
 	display: block;
 }
 
@@ -218,10 +218,19 @@ input#s {
 	border-radius: 2px;
 	height: 1.692em;
 	line-height: 1.2;
-	padding: 0.4em 0.6em;
+	padding: 0.4em 0.6em 0.29em;
+}
+input#s:focus {
+	padding-bottom: 0.3em;
 }
 input#searchsubmit {
 	display: none;
+}
+input#s:focus,
+input[type=text]:focus,
+input[type=email]:focus,
+textarea:focus {
+	font-size: 1.231em;
 }
 
 /* Links */
@@ -286,7 +295,7 @@ object {
 /* =Header
 ----------------------------------------------- */
 
-#branding hgroup {
+#branding .site-branding {
 	margin-bottom: 1.3em;
 }
 #site-title,
@@ -514,6 +523,10 @@ body.singular .hentry {
 .entry-meta .entry-gallery {
 	display: block;
 	float: left;
+}
+.entry-meta .author-link {
+	display: block;
+	margin-top: 0.7em;
 }
 .entry-meta .comments-link {
 	display: block;
@@ -751,8 +764,15 @@ and remove the padding rules below.
 	text-transform: uppercase;
 	top: -5px;
 }
-.entry-header hgroup .entry-title {
+.entry-header .entry-heading .entry-title {
 	padding-top: 0.8em;
+}
+.entry-header .entry-heading {
+	position: relative;
+}
+.entry-thumbnail {
+	margin-bottom: 0.7em;
+	text-align: center;
 }
 
 /* Singular content styles for Posts and Pages */
@@ -1463,8 +1483,11 @@ p.comment-form-comment {
 	display: block;
 }
 #wpl-mustlogin {
-width: 240px !important;
-margin-left: -60px !important;
+	width: 240px !important;
+	margin-left: -60px !important;
+}
+img.latex {
+	display: inline;
 }
 
 /* WP.com comment form */

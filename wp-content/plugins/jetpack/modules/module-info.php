@@ -613,7 +613,7 @@ function jetpack_mobile_push_notifications_more_info() { ?>
 
 	<h4><?php esc_html_e( 'Mobile Push Notifications' , 'jetpack' ); ?></h4>
 
-	<p><?php _e( 'If you have your blog added to the <a href="http://ios.wordpress.org/">WordPress for iOS app</a>, you’ll now be able to opt in to receive push notifications of new comments, which makes it easier than ever to keep up with your readers and moderate comments on the go.', 'jetpack' ); ?></p>
+	<p><?php echo sprintf( __( 'If you use <a href="%1$s">WordPress for iOS</a> or <a href="%2$s">WordPress for Android</a>, you’ll now be able to opt in to receive push notifications of new comments, which makes it easier than ever to keep up with your readers and moderate comments on the go.', 'jetpack' ), 'http://ios.wordpress.org/', 'http://android.wordpress.org/' ); ?></p>
 
 <?php
 }
@@ -776,3 +776,66 @@ function jetpack_likes_more_link() {
 }
 add_action( 'jetpack_learn_more_button_likes', 'jetpack_likes_more_link' );
 // Likes: STOP
+
+// Omnisearch: START
+function jetpack_omnisearch_more_info() {
+	?>
+
+	<h4><?php esc_html_e( 'Omnisearch' , 'jetpack' ); ?></h4>
+
+	<p><?php esc_html_e( 'Search once, get results from everything! Currently supports searching posts, pages, comments, and plugins.', 'jetpack' ); ?></p>
+
+	<p><?php esc_html_e( 'Omnisearch plays nice with other plugins by letting other providers offer results as well.', 'jetpack' ); ?></p>
+
+	<?php if( class_exists( 'Jetpack_Omnisearch' ) && current_user_can( 'edit_posts' ) ): ?>
+		<?php echo Jetpack_Omnisearch::get_omnisearch_form(); ?>
+	<?php endif; ?>
+
+	<?php
+}
+
+function jetpack_omnisearch_more_link() {
+	echo '<a class="button-secondary more-info-link" href="http://jetpack.me/support/omnisearch/">' . __( 'Learn More', 'jetpack' ) . '</a>';
+}
+
+add_action( 'jetpack_module_more_info_omnisearch',  'jetpack_omnisearch_more_info' );
+add_action( 'jetpack_learn_more_button_omnisearch', 'jetpack_omnisearch_more_link' );
+// Omnisearch: STOP
+
+// Widget Visibility: START
+function jetpack_widget_visibility_more_info() { ?>
+	<h4><?php esc_html_e( 'Widget Visibility', 'jetpack' ); ?></h4>
+
+	<p><?php esc_html_e( 'Control which pages your widgets appear on with Widget Visibility.', 'jetpack' ); ?></p>
+	<p><?php esc_html_e( 'To control visibility, expand the widget and click the Visibility button next to the Save button, and then, choose a set of visibility options.', 'jetpack' ); ?></p>
+	<p><?php esc_html_e( 'For example, if you wanted the Archives widget to only appear on category archives and error pages, choose "Show" from the first dropdown and then add two rules: "Page is 404 Error Page" and "Category is All Category Pages."', 'jetpack' ); ?></p>
+	<p><?php esc_html_e( 'You can also hide widgets based on the current page. For example, if you don\'t want the Archives widget to appear on search results pages, choose "Hide" and "Page is Search results."', 'jetpack' ); ?></p>
+<?php
+}
+
+function jetpack_widget_visibility_more_link() {
+	echo '<a class="button-secondary more-info-link" href="http://jetpack.me/support/widget-visibility/">' . __( 'Learn More', 'jetpack' ) . '</a>';
+}
+
+add_action( 'jetpack_module_more_info_widget-visibility',  'jetpack_widget_visibility_more_info' );
+add_action( 'jetpack_learn_more_button_widget-visibility', 'jetpack_widget_visibility_more_link' );
+// Widget Visibility: STOP
+
+
+// WordPress.com Connect: START
+function jetpack_wpcc_more_info() { ?>
+	<h4><?php esc_html_e( 'WordPress.com Connect' , 'jetpack' ); ?></h4>
+
+	<p><?php esc_html_e( 'With WordPress.com Connect, your users will be able to log into your WordPress admin with the same credentials they use to log into WordPress.com.  It\'s safe and secure.' , 'jetpack' ); ?></p>
+	<p><?php esc_html_e( 'Once enabled, a "Connect with WordPress.com" option will be added to your existing log-in form.' , 'jetpack' ); ?></p>
+
+<?php
+}
+
+function jetpack_wpcc_more_link() {
+	echo '<a class="button-secondary more-info-link" href="http://jetpack.me/support/wpcc/">' . __( 'Learn More', 'jetpack' ) . '</a>';
+}
+
+add_action( 'jetpack_module_more_info_wpcc',  'jetpack_wpcc_more_info' );
+add_action( 'jetpack_learn_more_button_wpcc', 'jetpack_wpcc_more_link' );
+// WordPress.com Connect: STOP

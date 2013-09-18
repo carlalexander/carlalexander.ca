@@ -58,6 +58,9 @@ class Jetpack_Custom_CSS {
 
 		add_action( 'wp_head', array( 'Jetpack_Custom_CSS', 'link_tag' ), 101 );
 
+		add_filter( 'jetpack_content_width', array( 'Jetpack_Custom_CSS', 'jetpack_content_width' ) );
+		add_filter( 'editor_max_image_size', array( 'Jetpack_Custom_CSS', 'editor_max_image_size' ), 10, 3 );
+
 		if ( !current_user_can( 'switch_themes' ) && !is_super_admin() )
 			return;
 
@@ -86,9 +89,6 @@ class Jetpack_Custom_CSS {
 		// Modify all internal links so that preview state persists
 		if ( Jetpack_Custom_CSS::is_preview() )
 			ob_start( array( 'Jetpack_Custom_CSS', 'buffer' ) );
-
-		add_filter( 'jetpack_content_width', array( 'Jetpack_Custom_CSS', 'jetpack_content_width' ) );
-		add_filter( 'editor_max_image_size', array( 'Jetpack_Custom_CSS', 'editor_max_image_size' ), 10, 3 );
 	}
 
 	/**
@@ -187,6 +187,9 @@ class Jetpack_Custom_CSS {
 			update_metadata( 'post', $safecss_revision_id, 'content_width', $args['content_width'] );
 			update_metadata( 'post', $safecss_revision_id, 'custom_css_preprocessor', $args['preprocessor'] );
 
+			delete_option( 'safecss_add' );
+			delete_option( 'safecss_content_width' );
+
 			if ( $args['is_preview'] ) {
 				return $safecss_revision_id;
 			}
@@ -205,9 +208,15 @@ class Jetpack_Custom_CSS {
 		update_post_meta( $safecss_post_id, 'custom_css_add', $add_to_existing );
 		update_post_meta( $safecss_post_id, 'content_width', $args['content_width'] );
 		update_post_meta( $safecss_post_id, 'custom_css_preprocessor', $args['preprocessor'] );
+
+		delete_option( 'safecss_add' );
+		delete_option( 'safecss_content_width' );
+
 		update_metadata( 'post', $safecss_post_revision['ID'], 'custom_css_add', $add_to_existing );
 		update_metadata( 'post', $safecss_post_revision['ID'], 'content_width', $args['content_width'] );
 		update_metadata( 'post', $safecss_post_revision['ID'], 'custom_css_preprocessor', $args['preprocessor'] );
+
+		delete_option( 'safecss_preview_add' );
 
 		return $safecss_post_id;
 	}
@@ -373,10 +382,17 @@ class Jetpack_Custom_CSS {
 			else {
 				$custom_css_post_id = Jetpack_Custom_CSS::post_id();
 
-				if ( $custom_css_post_id )
-					return (bool) ( get_post_meta( $custom_css_post_id, 'custom_css_add', true ) == 'no' );
-				else
-					return (bool) ( get_option( 'safecss_add' ) == 'no' );
+				if ( $custom_css_post_id ) {
+					$custom_css_add = get_post_meta( $custom_css_post_id, 'custom_css_add', true );
+
+					// It is possible for the CSS to be stored in a post but for the safecss_add option
+					// to have not been upgraded yet if the user hasn't opened their Custom CSS editor
+					// since October 2012.
+					if ( ! empty( $custom_css_add ) )
+						return (bool) ( $custom_css_add === 'no' );
+				}
+
+				return (bool) ( get_option( 'safecss_add' ) == 'no' );
 			}
 		}
 	}
@@ -508,7 +524,7 @@ class Jetpack_Custom_CSS {
 		if ( $css == '' )
 			return;
 
-		$href = trailingslashit( site_url() );
+		$href = home_url( '/' );
 		$href = add_query_arg( 'custom-css', 1, $href );
 		$href = add_query_arg( 'csblog', $blog_id, $href );
 		$href = add_query_arg( 'cscache', 6, $href );
@@ -885,14 +901,25 @@ class Jetpack_Custom_CSS {
 
 	/**
 	 * Render metabox listing CSS revisions and the themes that correspond to the revisions.
-	 * Called by afecss_admin	 *
-	 * @param array $safecss_post
+	 * Called by safecss_admin
+	 *
 	 * @global $post
-	 * @uses WP_Query, wp_post_revision_title, esc_html, add_query_arg, menu_page_url, wp_reset_query
+	 * @param array $safecss_post
+	 * @uses wp_revisions_to_keep
+	 * @uses WP_Query
+	 * @uses wp_post_revision_title
+	 * @uses esc_html
+	 * @uses add_query_arg
+	 * @uses menu_page_url
+	 * @uses wp_reset_query
 	 * @return string
 	 */
 	static function revisions_meta_box( $safecss_post ) {
-		$max_revisions = defined( 'WP_POST_REVISIONS' ) && is_numeric( WP_POST_REVISIONS ) ? (int) WP_POST_REVISIONS : 25;
+		if ( function_exists( 'wp_revisions_to_keep' ) )
+			$max_revisions = wp_revisions_to_keep( $safecss_post );
+		else
+			$max_revisions = defined( 'WP_POST_REVISIONS' ) && is_numeric( WP_POST_REVISIONS ) ? (int) WP_POST_REVISIONS : 25;
+
 		$posts_per_page = isset( $_GET['show_all_rev'] ) ? $max_revisions : 6;
 
 		$revisions = new WP_Query( array(
@@ -957,9 +984,15 @@ class Jetpack_Custom_CSS {
 		update_post_meta( $safecss_post_id, 'custom_css_add', 'yes' );
 		update_post_meta( $safecss_post_id, 'content_width', false );
 		update_post_meta( $safecss_post_id, 'custom_css_preprocessor', '' );
+
+		delete_option( 'safecss_add' );
+		delete_option( 'safecss_content_width' );
+
 		update_metadata( 'post', $safecss_revision['ID'], 'custom_css_add', 'yes' );
 		update_metadata( 'post', $safecss_revision['ID'], 'content_width', false );
 		update_metadata( 'post', $safecss_revision['ID'], 'custom_css_preprocessor', '' );
+
+		delete_option( 'safecss_preview_add' );
 	}
 
 	static function is_customizer_preview() {
@@ -1017,9 +1050,15 @@ class Jetpack_Custom_CSS {
 		update_metadata( 'post', $safecss_revision['ID'], 'content_width', $content_width );
 		update_metadata( 'post', $safecss_revision['ID'], 'custom_css_add', $custom_css_add );
 		update_metadata( 'post', $safecss_revision['ID'], 'custom_css_preprocessor', $preprocessor );
+
+		delete_option( 'safecss_add' );
+		delete_option( 'safecss_content_width' );
+
 		update_post_meta( $_post->ID, 'content_width', $content_width );
 		update_post_meta( $_post->ID, 'custom_css_add', $custom_css_add );
 		update_post_meta( $_post->ID, 'custom_css_preprocessor', $preprocessor );
+
+		delete_option( 'safecss_preview_add' );
 	}
 
 	/**

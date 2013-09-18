@@ -124,7 +124,7 @@ class WPSEO_Taxonomy {
 	function update_term( $term_id, $tt_id, $taxonomy ) {
 		$tax_meta = get_option( 'wpseo_taxonomy_meta' );
 
-		if ( !is_array( $tax_meta[$taxonomy][$term_id] ) )
+		if ( !isset($tax_meta[$taxonomy]) || !isset($tax_meta[$taxonomy][$term_id]) || !is_array( $tax_meta[$taxonomy][$term_id] ) )
 			$tax_meta[$taxonomy][$term_id] = array();
 
 		foreach ( array( 'title', 'desc', 'metakey', 'bctitle', 'canonical', 'noindex', 'sitemap_include' ) as $key ) {
@@ -177,7 +177,12 @@ class WPSEO_Taxonomy {
 	 * @return string
 	 */
 	function custom_category_descriptions_add_shortcode_support( $desc ) {
-		return do_shortcode( $desc );
+		// Wrap in output buffering to prevent shortcodes that echo stuff instead of return from breaking things.
+		ob_start();
+		$desc = do_shortcode( $desc );
+		ob_end_clean();
+
+		return $desc;
 	}
 
 }

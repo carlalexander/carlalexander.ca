@@ -49,7 +49,7 @@ class Jetpack_Twitter_Timeline_Widget extends WP_Widget {
 		if ( $instance['title'] )
 			echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ) . $args['after_title'];
 
-		$data_attribs = array( 'widget-id', 'theme', 'link-color', 'border-color', 'chrome' );
+		$data_attribs = array( 'widget-id', 'theme', 'link-color', 'border-color', 'chrome', 'tweet-limit' );
 		$attribs      = array( 'width', 'height', 'lang' );
 
 		// Start tag output
@@ -57,6 +57,9 @@ class Jetpack_Twitter_Timeline_Widget extends WP_Widget {
 
 		foreach ( $data_attribs as $att ) {
 			if ( !empty( $instance[$att] ) ) {
+				if ( 'tweet-limit' == $att && 0 === $instance[$att] )
+					continue;
+
 				if ( is_array( $instance[$att] ) )
 					echo ' data-' . esc_attr( $att ) . '="' . esc_attr( join( ' ', $instance['chrome'] ) ) . '"';
 				else
@@ -89,11 +92,14 @@ class Jetpack_Twitter_Timeline_Widget extends WP_Widget {
 	 * @return array Updated safe values to be saved.
 	 */
 	public function update( $new_instance, $old_instance ) {
-		$non_hex_regex      = '/[^a-f0-9]/';
-		$instance           = array();
-		$instance['title']  = wp_kses( $new_instance['title'],        array() );
-		$instance['width']  = (int) wp_kses( $new_instance['width'],  array() );
-		$instance['height'] = (int) wp_kses( $new_instance['height'], array() );
+		$non_hex_regex       = '/[^a-f0-9]/';
+		$instance            = array();
+		$instance['title']   = sanitize_text_field( $new_instance['title'] );
+		$instance['width']   = (int) $new_instance['width'];
+		$instance['height']  = (int) $new_instance['height'];
+		$instance['width']   = ( 0 !== (int) $new_instance['width'] )  ? (int) $new_instance['width']  : 225;
+		$instance['height']  = ( 0 !== (int) $new_instance['height'] ) ? (int) $new_instance['height'] : 400;
+		$instance['tweet-limit']   = (int) $new_instance['tweet-limit']; 
 
 		// If they entered something that might be a full URL, try to parse it out
 		if ( is_string( $new_instance['widget-id'] ) ) {
@@ -101,11 +107,12 @@ class Jetpack_Twitter_Timeline_Widget extends WP_Widget {
 				$new_instance['widget-id'] = $matches[1];
 			}
 		}
-		$instance['widget-id'] = wp_kses( $new_instance['widget-id'], array() );
+
+		$instance['widget-id'] = sanitize_text_field( $new_instance['widget-id'] );
 		$instance['widget-id'] = is_numeric( $instance['widget-id'] ) ? $instance['widget-id'] : '';
-		
+
 		foreach ( array( 'link-color', 'border-color' ) as $color ) {
-			$clean = preg_replace( $non_hex_regex, '', wp_kses( $new_instance[$color], array() ) );
+			$clean = preg_replace( $non_hex_regex, '', sanitize_text_field( $new_instance[$color] ) );
 			if ( $clean )
 				$instance[$color] = '#' . $clean;
 		}
@@ -117,7 +124,7 @@ class Jetpack_Twitter_Timeline_Widget extends WP_Widget {
 		$instance['chrome'] = array();
 		if ( isset( $new_instance['chrome'] ) ) {
 			foreach ( $new_instance['chrome'] as $chrome ) {
-				if ( in_array( $chrome, array( 'noheader', 'nofooter', 'noborders', 'transparent' ) ) ) {
+				if ( in_array( $chrome, array( 'noheader', 'nofooter', 'noborders', 'noscrollbar', 'transparent' ) ) ) {
 					$instance['chrome'][] = $chrome;
 				}
 			}
@@ -145,7 +152,7 @@ class Jetpack_Twitter_Timeline_Widget extends WP_Widget {
 			'theme'        => 'light',
 			'chrome'       => array(),
 		);
-		
+
 		$instance = wp_parse_args( (array) $instance, $defaults );
 		?>
 
@@ -164,12 +171,19 @@ class Jetpack_Twitter_Timeline_Widget extends WP_Widget {
 			<input class="widefat" id="<?php echo $this->get_field_id( 'height' ); ?>" name="<?php echo $this->get_field_name( 'height' ); ?>" type="text" value="<?php echo esc_attr( $instance['height'] ); ?>" />
 		</p>
 
+                <p>
+                        <label for="<?php echo $this->get_field_id( 'tweet-limit' ); ?>"><?php esc_html_e( '# of Tweets Shown:', 'jetpack' ); ?></label>
+                        <input class="widefat" id="<?php echo $this->get_field_id( 'tweet-limit' ); ?>" name="<?php echo $this->get_field_name( 'tweet-limit' ); ?>" type="text" value="<?php echo esc_attr( $instance['tweet-limit'] ); ?>" />
+                </p>
+
 		<p><small>
 			<?php
-			printf(
-				esc_html__( 'You need to <a href="%1$s" target="_blank">create a widget at Twitter.com</a>, and then enter your widget id (the long number found in the URL of your widget\'s config page) in the field below. <a href="%2$s" target="_blank">Read more</a>.' ),
-				'https://twitter.com/settings/widgets/new/user',
-				'http://support.wordpress.com/widgets/twitter-timeline-widget/'
+			echo wp_kses_post(
+				sprintf(
+					__( 'You need to <a href="%1$s" target="_blank">create a widget at Twitter.com</a>, and then enter your widget id (the long number found in the URL of your widget\'s config page) in the field below. <a href="%2$s" target="_blank">Read more</a>.', 'jetpack' ),
+					'https://twitter.com/settings/widgets/new/user',
+					'http://support.wordpress.com/widgets/twitter-timeline-widget/'
+				)
 			);
 			?>
 		</small></p>
@@ -183,6 +197,7 @@ class Jetpack_Twitter_Timeline_Widget extends WP_Widget {
 			<input type="checkbox"<?php checked( in_array( 'noheader', $instance['chrome'] ) ); ?> id="<?php echo $this->get_field_id( 'chrome-noheader' ); ?>" name="<?php echo $this->get_field_name( 'chrome' ); ?>[]" value="noheader" /> <label for="<?php echo $this->get_field_id( 'chrome-noheader' ); ?>"><?php esc_html_e( 'No Header', 'jetpack' ); ?></label><br />
 			<input type="checkbox"<?php checked( in_array( 'nofooter', $instance['chrome'] ) ); ?> id="<?php echo $this->get_field_id( 'chrome-nofooter' ); ?>" name="<?php echo $this->get_field_name( 'chrome' ); ?>[]" value="nofooter" /> <label for="<?php echo $this->get_field_id( 'chrome-nofooter' ); ?>"><?php esc_html_e( 'No Footer', 'jetpack' ); ?></label><br />
 			<input type="checkbox"<?php checked( in_array( 'noborders', $instance['chrome'] ) ); ?> id="<?php echo $this->get_field_id( 'chrome-noborders' ); ?>" name="<?php echo $this->get_field_name( 'chrome' ); ?>[]" value="noborders" /> <label for="<?php echo $this->get_field_id( 'chrome-noborders' ); ?>"><?php esc_html_e( 'No Borders', 'jetpack' ); ?></label><br />
+            <input type="checkbox"<?php checked( in_array( 'noscrollbar', $instance['chrome'] ) ); ?> id="<?php echo $this->get_field_id( 'chrome-noscrollbar' ); ?>" name="<?php echo $this->get_field_name( 'chrome' ); ?>[]" value="noscrollbar" /> <label for="<?php echo $this->get_field_id( 'chrome-noscrollbar' ); ?>"><?php esc_html_e( 'No Scrollbar', 'jetpack' ); ?></label><br />
 			<input type="checkbox"<?php checked( in_array( 'transparent', $instance['chrome'] ) ); ?> id="<?php echo $this->get_field_id( 'chrome-transparent' ); ?>" name="<?php echo $this->get_field_name( 'chrome' ); ?>[]" value="transparent" /> <label for="<?php echo $this->get_field_id( 'chrome-transparent' ); ?>"><?php esc_html_e( 'Transparent Background', 'jetpack' ); ?></label>
 		</p>
 

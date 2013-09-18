@@ -60,7 +60,8 @@ class WPSEO_Admin_Pages {
 		}
 		wpseo_defaults();
 
-		wpseo_title_test();
+		//wpseo_title_test(); // is already run in wpseo_defaults
+		//wpseo_description_test(); // is already run in wpseo_defaults
 	}
 
 	/**
@@ -107,6 +108,13 @@ class WPSEO_Admin_Pages {
 				'alt' => 'Banner WordPress SEO Video manual',
 			);
 		}
+		if ( !defined( 'WPSEO_LOCAL_VERSION' ) ) {
+			$banners[] = array(
+				'url' => 'http://yoast.com/wordpress/local-seo/#utm_source=wordpress-seo-config&utm_medium=banner&utm_campaign=local-seo-banner',
+				'img' => 'banner-local-seo.png',
+				'alt' => 'Banner Local SEO plugin',
+			);
+		}
 		shuffle( $banners );
 		?>
 		<div class="postbox-container" style="width:261px;">
@@ -118,7 +126,7 @@ class WPSEO_Admin_Pages {
 						break;
 					if ( $i != 0 )
 						echo '<hr style="border:none;border-top:dotted 1px #f48500;margin: 30px 0;">';
-					echo '<a target="_blank" href="' . $banner['url'] . '"><img src="' . WPSEO_URL . '/images/' . $banner['img'] . '" alt="' . $banner['alt'] . '"/></a>';
+					echo '<a target="_blank" href="' . $banner['url'] . '"><img src="' . WPSEO_URL . 'images/' . $banner['img'] . '" alt="' . $banner['alt'] . '"/></a>';
 					$i++;
 				}
 				?>
@@ -260,7 +268,10 @@ class WPSEO_Admin_Pages {
 			wp_enqueue_style( 'thickbox' );
 			wp_enqueue_style( 'global' );
 			wp_enqueue_style( 'wp-admin' );
-			wp_enqueue_style( 'yoast-admin-css', WPSEO_URL . 'css/yst_plugin_tools.css', WPSEO_VERSION );
+			wp_enqueue_style( 'yoast-admin-css', WPSEO_URL . 'css/yst_plugin_tools.css', array(), WPSEO_VERSION );
+
+			if ( is_rtl() )
+				wp_enqueue_style( 'wpseo-rtl', WPSEO_URL . 'css/wpseo-rtl.css', array(), WPSEO_VERSION );
 		}
 	}
 
@@ -269,6 +280,7 @@ class WPSEO_Admin_Pages {
 	 */
 	function config_page_scripts() {
 		global $pagenow;
+		
 		if ( $pagenow == 'admin.php' && isset( $_GET['page'] ) && in_array( $_GET['page'], $this->adminpages ) ) {
 			wp_enqueue_script( 'wpseo-admin-script', WPSEO_URL . 'js/wp-seo-admin.js', array( 'jquery' ), WPSEO_VERSION, true );
 			wp_enqueue_script( 'postbox' );

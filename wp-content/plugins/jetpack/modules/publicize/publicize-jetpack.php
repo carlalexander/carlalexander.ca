@@ -11,13 +11,17 @@ class Publicize extends Publicize_Base {
 		add_action( 'wp_ajax_publicize_facebook_options_page', array( $this, 'options_page_facebook' ) );
 		add_action( 'wp_ajax_publicize_twitter_options_page', array( $this, 'options_page_twitter' ) );
 		add_action( 'wp_ajax_publicize_linkedin_options_page', array( $this, 'options_page_linkedin' ) );
+		add_action( 'wp_ajax_publicize_path_options_page', array( $this, 'options_page_path' ) );
 
 		add_action( 'wp_ajax_publicize_tumblr_options_save', array( $this, 'options_save_tumblr' ) );
 		add_action( 'wp_ajax_publicize_facebook_options_save', array( $this, 'options_save_facebook' ) );
 		add_action( 'wp_ajax_publicize_twitter_options_save', array( $this, 'options_save_twitter' ) );
 		add_action( 'wp_ajax_publicize_linkedin_options_save', array( $this, 'options_save_linkedin' ) );
+		add_action( 'wp_ajax_publicize_path_options_save', array( $this, 'options_save_path' ) );
 
 		add_action( 'load-settings_page_sharing', array( $this, 'force_user_connection' ) );
+		
+		add_filter( 'publicize_checkbox_default', array( $this, 'publicize_checkbox_default' ), 10, 4 );
 
 		add_action( 'transition_post_status', array( $this, 'save_publicized' ), 10, 3 );
 	}
@@ -259,6 +263,17 @@ class Publicize extends Publicize_Base {
 		), menu_page_url( 'sharing', false ) );
 	}
 
+	function refresh_url( $service_name ) {
+		return add_query_arg( array(
+			'action'   => 'request',
+			'service'  =>  $service_name,
+			'kr_nonce' => wp_create_nonce( 'keyring-request' ),
+			'refresh'  => 1,
+			'for'      => 'publicize',
+			'nonce'    => wp_create_nonce( "keyring-request-$service_name" ),
+		), menu_page_url( 'sharing', false ) );
+	}
+
 	function disconnect_url( $service_name, $id ) {
 		return add_query_arg( array (
 			'action'   => 'delete',
@@ -278,6 +293,7 @@ class Publicize extends Publicize_Base {
 				'twitter'  => array(),
 				'linkedin' => array(),
 				'tumblr'   => array(),
+				'path'     => array(),
 		);
 
 		if ( 'all' == $filter ) {
@@ -324,8 +340,8 @@ class Publicize extends Publicize_Base {
 		// Nonce check
 		check_admin_referer( 'options_page_facebook_' . $_REQUEST['connection'] );
 
-		$me = $options_to_show[0];
-		$pages = $options_to_show[1]['data'];
+		$me    = ( ! empty( $options_to_show[0] )         ? $options_to_show[0]         : false );
+		$pages = ( ! empty( $options_to_show[1]['data'] ) ? $options_to_show[1]['data'] : false );
 
 		$profile_checked = true;
 		$page_selected = false;
@@ -386,7 +402,6 @@ class Publicize extends Publicize_Base {
 					<tbody>
 
 						<?php foreach ( $pages as $i => $page ) : ?>
-							<?php if ( ! isset( $page['perms'] ) ) { continue; } ?>
 							<?php if ( ! ( $i % 2 ) ) : ?>
 								<tr>
 							<?php endif; ?>
@@ -556,9 +571,11 @@ class Publicize extends Publicize_Base {
 
 	function options_page_twitter() { Publicize_UI::options_page_other( 'twitter' ); }
 	function options_page_linkedin() { Publicize_UI::options_page_other( 'linkedin' ); }
+	function options_page_path() { Publicize_UI::options_page_other( 'path' ); }
 
 	function options_save_twitter() { $this->options_save_other( 'twitter' ); }
 	function options_save_linkedin() { $this->options_save_other( 'linkedin' ); }
+	function options_save_path() { $this->options_save_other( 'path' ); }
 
 	function options_save_other( $service_name ) {
 		// Nonce check
@@ -566,8 +583,74 @@ class Publicize extends Publicize_Base {
 		$this->globalization();
 	}
 
-	// stub
-	function refresh_tokens_message() {
+	function is_expired( $expires  = false ) {
+		$hour_in_seconds = 3600;
+		if ( !$expires )
+			return false; // No expires value, assume it's a permanent token
+		if ( '0000-00-00 00:00:00' == $expires )
+			return false; // Doesn't expire
+		if ( ( time() + $hour_in_seconds ) > strtotime( $expires ) )
+			return true; // Token's expiry time has passed, or will pass before $window
+		return false;
+	}
 
+	function refresh_tokens_message() {
+		global $post;
+		$post_id = $post ? $post->ID : 0;
+
+		$services = $this->get_services( 'all' );
+
+		// Same core nonce works for all services
+		$keyring_nonce = wp_create_nonce( 'keyring-request' );
+		$expired_tokens = false;
+
+		if ( is_array( $services ) && count( $services ) ) {
+			foreach ( $services as $name => $service ) {
+				if ( $connections = $this->get_connections( $name ) ) {
+			
+					foreach ( $connections as $connection ) {
+
+						$cmeta = $this->get_connection_meta( $connection );
+
+						// If the token for this connection is expired, or expires soon, then warn
+						if ( !$this->is_expired( $cmeta['expires'] ) ) {
+							continue;
+						}
+
+						if ( !$expired_tokens ) {
+							?>
+							<div class="error below-h2 publicize-token-refresh-message">
+							<p><?php echo esc_html( __( 'Before you hit Publish, please refresh your connection to make sure we can Publicize your post:' , 'jetpack') ); ?></p>
+							<?php
+							$expired_tokens = true;
+						}
+						// No need to request for a specific token id, since the token store detects duplication and updates a single token per service
+						$nonce = wp_create_nonce( "keyring-request-" . $name );
+						$url = $this->refresh_url( $name );
+						?>
+						<p style="text-align: center;" id="publicize-token-refresh-<?php echo esc_attr( $name ); ?>" class="publicize-token-refresh-button">
+							<a href="<?php echo esc_url( $url ); ?>" class="button" target="_refresh_<?php echo esc_attr( $name ); ?>">
+								<?php printf( __( 'Refresh connection with %s' , 'jetpack'), Publicize::get_service_label( $name ) ); ?>
+							</a>
+						</p><?php
+					}
+				}
+			}
+		}
+
+		if ( $expired_tokens ) {
+			echo '</div>';
+		}
+	}
+	
+	/** 
+	* Already-published posts should not be Publicized by default. This filter sets checked to 
+	* false if a post has already been published. 
+	*/ 
+	function publicize_checkbox_default( $checked, $post_id, $name, $connection ) { 
+		if ( 'publish' == get_post_status( $post_id ) ) 
+			return false; 
+
+		return $checked; 
 	}
 }

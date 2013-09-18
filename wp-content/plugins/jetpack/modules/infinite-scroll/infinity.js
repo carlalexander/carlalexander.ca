@@ -79,13 +79,12 @@ Scroller = function( settings ) {
 
 /**
  * Check whether we should fetch any additional posts.
- *
- * By default, checks whether the bottom of the viewport is within one
- * viewport-height of the bottom of the content.
  */
 Scroller.prototype.check = function() {
 	var bottom = this.window.scrollTop() + this.window.height(),
 		threshold = this.element.offset().top + this.element.outerHeight(false) - this.window.height();
+
+	threshold = Math.round( threshold * 0.75 );
 
 	return bottom > threshold;
 };
@@ -457,7 +456,7 @@ Scroller.prototype.updateURL = function( page ) {
  */
 $( document ).ready( function() {
 	// Check for our variables
-	if ( ! infiniteScroll )
+	if ( 'object' != typeof infiniteScroll ) 
 		return;
 
 	// Set ajaxurl (for brevity)
