@@ -41,7 +41,7 @@ class Helthe_ErrorHandler
             xdebug_disable();
         }
 
-        set_error_handler(array($handler, 'handleError'));
+        set_error_handler(array($handler, 'handleError'), $level);
         set_exception_handler(array($handler, 'handleException'));
         register_shutdown_function(array($handler, 'handleFatal'));
         $handler->reservedMemory = str_repeat('x', 10240);

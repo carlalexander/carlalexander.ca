@@ -6,6 +6,7 @@
  * First Introduced: 2.0
  * Requires Connection: No
  * Auto Activate: No
+ * Module Tags: Appearance
  */
 
 /**
@@ -138,7 +139,7 @@ class Jetpack_Infinite_Scroll_Extras {
 	/**
 	 * Modify Infinite Scroll configuration information
 	 *
-	 * @uses Jetpack::get_active_modules, is_user_logged_in, stats_get_options, Jetpack::get_option, get_option, JETPACK__API_VERSION, JETPACK__VERSION
+	 * @uses Jetpack::get_active_modules, is_user_logged_in, stats_get_options, Jetpack_Options::get_option, get_option, JETPACK__API_VERSION, JETPACK__VERSION
 	 * @filter infinite_scroll_js_settings
 	 * @return array
 	 */
@@ -156,7 +157,7 @@ class Jetpack_Infinite_Scroll_Extras {
 			}
 
 			// We made it this far, so gather the data needed to track IS views
-			$settings['stats'] = 'blog=' . Jetpack::get_option( 'id' ) . '&host=' . parse_url( get_option( 'home' ), PHP_URL_HOST ) . '&v=ext&j=' . JETPACK__API_VERSION . ':' . JETPACK__VERSION;
+			$settings['stats'] = 'blog=' . Jetpack_Options::get_option( 'id' ) . '&host=' . parse_url( get_option( 'home' ), PHP_URL_HOST ) . '&v=ext&j=' . JETPACK__API_VERSION . ':' . JETPACK__VERSION;
 
 			// Pagetype parameter
 			$settings['stats'] .= '&x_pagetype=infinite';
@@ -173,16 +174,48 @@ class Jetpack_Infinite_Scroll_Extras {
 	}
 
 	/**
-	 * Load VideoPress scripts if plugin is active.
+	 * Always load certain scripts when IS is enabled, as they can't be loaded after `document.ready` fires, meaning they can't leverage IS's script loader.
 	 *
 	 * @global $videopress
+	 * @uses do_action()
+	 * @uses apply_filters()
+	 * @uses wp_enqueue_style()
+	 * @uses wp_enqueue_script()
 	 * @action wp_enqueue_scripts
 	 * @return null
 	 */
 	public function action_wp_enqueue_scripts() {
+		// VideoPress stand-alone plugin
 		global $videopress;
-		if ( ! empty( $videopress ) && The_Neverending_Home_Page::archive_supports_infinity() && is_a( $videopress, 'VideoPress' ) && method_exists( $videopress, 'enqueue_scripts' ) )
+		if ( ! empty( $videopress ) && The_Neverending_Home_Page::archive_supports_infinity() && is_a( $videopress, 'VideoPress' ) && method_exists( $videopress, 'enqueue_scripts' ) ) {
 			$videopress->enqueue_scripts();
+		}
+
+		// VideoPress Jetpack module
+		if ( Jetpack::is_module_active( 'videopress' ) ) {
+			Jetpack_VideoPress_Shortcode::enqueue_scripts();
+		}
+
+		// Fire the post_gallery action early so Carousel scripts are present.
+		if ( Jetpack::is_module_active( 'carousel' ) ) {
+			do_action( 'post_gallery', '', '' );
+		}
+
+		// Always enqueue Tiled Gallery scripts when both IS and Tiled Galleries are enabled
+		if ( Jetpack::is_module_active( 'tiled-gallery' ) ) {
+			Jetpack_Tiled_Gallery::default_scripts_and_styles();
+		}
+
+		// Core's Audio and Video Shortcodes
+		if ( 'mediaelement' === apply_filters( 'wp_audio_shortcode_library', 'mediaelement' ) ) {
+			wp_enqueue_style( 'wp-mediaelement' );
+			wp_enqueue_script( 'wp-mediaelement' );
+		}
+
+		if ( 'mediaelement' === apply_filters( 'wp_video_shortcode_library', 'mediaelement' ) ) {
+			wp_enqueue_style( 'wp-mediaelement' );
+			wp_enqueue_script( 'wp-mediaelement' );
+		}
 	}
 }
 Jetpack_Infinite_Scroll_Extras::instance();

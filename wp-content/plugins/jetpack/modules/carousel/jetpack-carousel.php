@@ -105,6 +105,7 @@ class Jetpack_Carousel {
 				'background_color'     => $this->carousel_background_color_sanitize( get_option( 'carousel_background_color' ) ),
 				'comment'              => __( 'Comment', 'jetpack' ),
 				'post_comment'         => __( 'Post Comment', 'jetpack' ),
+				'write_comment'        => __( 'Write a Comment...', 'jetpack' ),
 				'loading_comments'     => __( 'Loading Comments...', 'jetpack' ),
 				'download_original'    => sprintf( __( 'View full size <span class="photo-size">%1$s<span class="photo-size-times">&times;</span>%2$s</span>', 'jetpack' ), '{0}', '{1}' ),
 				'no_comment_text'      => __( 'Please be sure to submit some text with your comment.', 'jetpack' ),
@@ -240,8 +241,7 @@ class Jetpack_Carousel {
 			if ( defined( 'IS_WPCOM' ) && IS_WPCOM ) {
 				$likes_blog_id = $blog_id;
 			} else {
-				$jetpack = Jetpack::init();
-				$likes_blog_id = $jetpack->get_option( 'id' );
+				$likes_blog_id = Jetpack_Options::get_option( 'id' );
 			}
 
 			$extra_data = array(

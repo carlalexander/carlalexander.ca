@@ -1,9 +1,9 @@
 === MailChimp List Subscribe Form ===
-Contributors: mc_jesse, crowdfavorite
+Contributors: crowdfavorite
 Tags: mailchimp, email, newsletter, signup, marketing, plugin, widget
 Requires at least: 2.8
-Tested up to: 3.5.1
-Stable tag: 1.2.14
+Tested up to: 3.7.1
+Stable tag: 1.4.1
 
 == Description ==
 
@@ -42,11 +42,25 @@ Or, if you are dropping it in between a bunch of HTML, use this:
 
 `<?php mailchimpSF_signup_form(); ?>`
 
-Where ever you want it to show up. 
+Where ever you want it to show up.
 
 Note: in some environments you will need to install the Exec_PHP plugin to use that method of display. It can be found here:
 http://wordpress.org/extend/plugins/exec-php/
 
+== Developer Mode ==
+
+You can enable "Devleoper Mode" by adding the following line to your `wp-config.php` file just above the "That's all, stope editing!" line.
+
+    define('MAILCHIMP_DEV_MODE', true);
+
+This will enable the MailChimp List Subscribe plugin to operate without the need to connect an external MailChimp Account, and will provide a
+subscription form widget that will not actually submit anywhere.
+
+This will allow you to style and configure the widget in non-production environments that are not publicly accessible.
+
+For more Developer Mode customization options see the following article:
+
+http://connect.mailchimp.com/how-to/how-to-article-configuring-developer-mode-for-the-list-subscribe-wordpress-plugin
 
 == Upgrading ==
 
@@ -124,6 +138,16 @@ Maybe! Look in the /po/ directory in our plugin package and see if your language
 
 == Upgrade Notice ==
 
+
+
+= 1.4 =
+Added Developer Mode "Kitchen Sink" to aid in styling without having to authenticate a MailChimp account.
+
+= 1.3 =
+Now using OAuth flow within plugin for user authentication
+
+Admin UI refresh
+
 = 1.2.11 =
 Merged pull request from https://github.com/headshift/wp-mailchimp adding additional translation strings.
 
@@ -133,13 +157,25 @@ Fixed submission error when apostrophes are present
 = 1.2.8=
 Fixes bug where entire phone numbers were only being deposited in the area code portion
 
-= 1.2.6 = 
+= 1.2.6 =
 Fixes major bug with "Settings" link on Plugins screen.
 
 = 1.2.5 =
 Added support for multiple interest groups, field formatting based on type and date picker.
 
 == Changelog ==
+
+= 1.4.1 =
+* Update styles to be compatible with upcoming 3.8 wp-admin changes
+
+= 1.4 =
+* Developer Mode "Kitchen Sink" takes over plugin for local development
+* Developer Mode has filters of changable content
+* Fix bug related to required US phone validation
+
+= 1.3 =
+* Now using OAuth flow for user authentication
+* Admin UI refresh
 
 = 1.2.14 =
 * Add link to edit profile within error when duplicate signup occurs
@@ -154,7 +190,7 @@ Added support for multiple interest groups, field formatting based on type and d
 * Fixed bug where multiple checkbox type interest groups were returning an invalid error
 * Fixed bug where assets were not enqueueing properly if the plugin directory was not set to 'mailchimp'. Now supports any directory name.
 
-= 1.2.8 = 
+= 1.2.8 =
 * Fixed bug where entire phone numbers were only being deposited in the area code portion
 
 = 1.2.7 =
@@ -182,10 +218,10 @@ Added support for multiple interest groups, field formatting based on type and d
 * Change mailchimpSF_where_am_i() to use plugins_url() in place of WP_PLUGIN_URL to take SSL into account when delivering assets (props John LeBlanc)
 * Update MCAPI wrapper to bring back PHP4 support (note: PHP 5.2 to be required starting with WordPress 3.2)
 
-= 1.2.2 = 
+= 1.2.2 =
 * Change MCAPI wrapper to use a more unique class name, v1.3 of the API, and a much lighter client library
 
-= 1.2.1 = 
+= 1.2.1 =
 * Fixed internationalization path bug.
 * Fixed instances where i18n functions weren't necessary in admin.
 * Added more strings to be translated.

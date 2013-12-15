@@ -12,18 +12,22 @@ class Publicize extends Publicize_Base {
 		add_action( 'wp_ajax_publicize_twitter_options_page', array( $this, 'options_page_twitter' ) );
 		add_action( 'wp_ajax_publicize_linkedin_options_page', array( $this, 'options_page_linkedin' ) );
 		add_action( 'wp_ajax_publicize_path_options_page', array( $this, 'options_page_path' ) );
+		add_action( 'wp_ajax_publicize_google_plus_options_page', array( $this, 'options_page_google_plus' ) );
 
 		add_action( 'wp_ajax_publicize_tumblr_options_save', array( $this, 'options_save_tumblr' ) );
 		add_action( 'wp_ajax_publicize_facebook_options_save', array( $this, 'options_save_facebook' ) );
 		add_action( 'wp_ajax_publicize_twitter_options_save', array( $this, 'options_save_twitter' ) );
 		add_action( 'wp_ajax_publicize_linkedin_options_save', array( $this, 'options_save_linkedin' ) );
 		add_action( 'wp_ajax_publicize_path_options_save', array( $this, 'options_save_path' ) );
+		add_action( 'wp_ajax_publicize_google_plus_options_save', array( $this, 'options_save_google_plus' ) ); 
 
 		add_action( 'load-settings_page_sharing', array( $this, 'force_user_connection' ) );
 		
 		add_filter( 'publicize_checkbox_default', array( $this, 'publicize_checkbox_default' ), 10, 4 );
 
 		add_action( 'transition_post_status', array( $this, 'save_publicized' ), 10, 3 );
+
+		include_once ( JETPACK__PLUGIN_DIR . 'modules/publicize/enhanced-open-graph.php' );
 	}
 
 	function force_user_connection() {
@@ -71,7 +75,7 @@ class Publicize extends Publicize_Base {
 	}
 
 	function get_connections( $service_name, $_blog_id = false, $_user_id = false ) {
-		$connections = Jetpack::get_option( 'publicize_connections' );
+		$connections = Jetpack_Options::get_option( 'publicize_connections' );
 		$connections_to_return = array();
 		if ( !empty( $connections ) && is_array( $connections ) ) {
 			if ( !empty( $connections[$service_name] ) ) {
@@ -112,7 +116,7 @@ class Publicize extends Publicize_Base {
 				$verification = Jetpack::create_nonce( 'publicize' );
 
 				$stats_options = get_option( 'stats_options' );
-				$wpcom_blog_id = Jetpack::get_option('id');
+				$wpcom_blog_id = Jetpack_Options::get_option('id');
 				$wpcom_blog_id = !empty( $wpcom_blog_id ) ? $wpcom_blog_id : $stats_options['blog_id'];
 
 				$user = wp_get_current_user();
@@ -139,7 +143,7 @@ class Publicize extends Publicize_Base {
 
 				if ( !$xml->isError() ) {
 					$response = $xml->getResponse();
-					Jetpack::update_option( 'publicize_connections', $response );
+					Jetpack_Options::update_option( 'publicize_connections', $response );
 				}
 				break;
 
@@ -155,7 +159,7 @@ class Publicize extends Publicize_Base {
 
 				if ( !$xml->isError() ) {
 					$response = $xml->getResponse();
-					Jetpack::update_option( 'publicize_connections', $response );
+					Jetpack_Options::update_option( 'publicize_connections', $response );
 				}
 				add_action( 'admin_notices', array( $this, 'display_disconnected' ) );
 				break;
@@ -230,7 +234,7 @@ class Publicize extends Publicize_Base {
 
 			if ( !$xml->isError() ) {
 				$response = $xml->getResponse();
-				Jetpack::update_option( 'publicize_connections', $response );
+				Jetpack_Options::update_option( 'publicize_connections', $response );
 			}
 		}
 	}
@@ -266,12 +270,12 @@ class Publicize extends Publicize_Base {
 	function refresh_url( $service_name ) {
 		return add_query_arg( array(
 			'action'   => 'request',
-			'service'  =>  $service_name,
+			'service'  => $service_name,
 			'kr_nonce' => wp_create_nonce( 'keyring-request' ),
 			'refresh'  => 1,
 			'for'      => 'publicize',
 			'nonce'    => wp_create_nonce( "keyring-request-$service_name" ),
-		), menu_page_url( 'sharing', false ) );
+		), admin_url( 'options-general.php?page=sharing' ) );
 	}
 
 	function disconnect_url( $service_name, $id ) {
@@ -289,11 +293,12 @@ class Publicize extends Publicize_Base {
 			$filter = 'all';
 
 		$services = array(
-				'facebook' => array(),
-				'twitter'  => array(),
-				'linkedin' => array(),
-				'tumblr'   => array(),
-				'path'     => array(),
+				'facebook'        => array(),
+				'twitter'         => array(),
+				'linkedin'        => array(),
+				'tumblr'          => array(),
+				'path'            => array(),
+				'google_plus'     => array(),
 		);
 
 		if ( 'all' == $filter ) {
@@ -317,6 +322,45 @@ class Publicize extends Publicize_Base {
 		// Stub only. Doesn't need to do anything on Jetpack Client
 	}
 
+	function test_connection( $service_name, $connection ) {
+		$connection_test_passed = true;
+		$connection_test_message = '';
+		$user_can_refresh = false;
+
+		$id = $this->get_connection_id( $connection );
+
+		Jetpack::load_xml_rpc_client();
+		$xml = new Jetpack_IXR_Client();
+		$xml->query( 'jetpack.testPublicizeConnection', $id );
+
+		if ( $xml->isError() ) {
+			$xml_response = $xml->getResponse();
+			$connection_test_message = $xml_response['faultString'];
+			$connection_test_passed = false;
+		}
+
+		// Bail if all is well
+		if ( $connection_test_passed ) {
+			return true;
+		} 
+
+		// Set up refresh if the user can
+		$user_can_refresh = current_user_can( $this->GLOBAL_CAP );
+		if ( $user_can_refresh ) {
+			$nonce = wp_create_nonce( "keyring-request-" . $service_name );
+			$refresh_text = sprintf( _x( 'Refresh connection with %s', 'Refresh connection with {social media service}', 'jetpack' ), $this->get_service_label( $service_name ) );
+			$refresh_url = $this->refresh_url( $service_name );
+		}
+
+		$error_data = array(
+			'user_can_refresh' => $user_can_refresh,
+			'refresh_text' => $refresh_text,
+			'refresh_url' => $refresh_url
+		);
+
+		return new WP_Error( 'pub_conn_test_failed', $connection_test_message, $error_data );
+	}
+
 	/**
 	 * Save a flag locally to indicate that this post has already been Publicized via the selected
 	 * connections.
@@ -333,9 +377,9 @@ class Publicize extends Publicize_Base {
 	*/
 
 	function options_page_facebook() {
-		$connected_services = Jetpack::get_option( 'publicize_connections' );
+		$connected_services = Jetpack_Options::get_option( 'publicize_connections' );
 		$connection = $connected_services['facebook'][$_REQUEST['connection']];
-		$options_to_show = $connection['connection_data']['meta']['options_responses'];
+		$options_to_show = ( ! empty( $connection['connection_data']['meta']['options_responses'] ) ? $connection['connection_data']['meta']['options_responses'] : false );
 
 		// Nonce check
 		check_admin_referer( 'options_page_facebook_' . $_REQUEST['connection'] );
@@ -469,7 +513,7 @@ class Publicize extends Publicize_Base {
 
 		if ( !$xml->isError() ) {
 			$response = $xml->getResponse();
-			Jetpack::update_option( 'publicize_connections', $response );
+			Jetpack_Options::update_option( 'publicize_connections', $response );
 		}
 
 		$this->globalization();
@@ -479,7 +523,7 @@ class Publicize extends Publicize_Base {
 		// Nonce check
 		check_admin_referer( 'options_page_tumblr_' . $_REQUEST['connection'] );
 
-		$connected_services = Jetpack::get_option( 'publicize_connections' );
+		$connected_services = Jetpack_Options::get_option( 'publicize_connections' );
 		$connection = $connected_services['tumblr'][$_POST['connection']];
 		$options_to_show = $connection['connection_data']['meta']['options_responses'];
 		$request = $options_to_show[0];
@@ -563,7 +607,7 @@ class Publicize extends Publicize_Base {
 
 		if ( !$xml->isError() ) {
 			$response = $xml->getResponse();
-			Jetpack::update_option( 'publicize_connections', $response );
+			Jetpack_Options::update_option( 'publicize_connections', $response );
 		}
 
 		$this->globalization();
@@ -572,10 +616,12 @@ class Publicize extends Publicize_Base {
 	function options_page_twitter() { Publicize_UI::options_page_other( 'twitter' ); }
 	function options_page_linkedin() { Publicize_UI::options_page_other( 'linkedin' ); }
 	function options_page_path() { Publicize_UI::options_page_other( 'path' ); }
+	function options_page_google_plus() { Publicize_UI::options_page_other( 'google_plus' ); }
 
 	function options_save_twitter() { $this->options_save_other( 'twitter' ); }
 	function options_save_linkedin() { $this->options_save_other( 'linkedin' ); }
 	function options_save_path() { $this->options_save_other( 'path' ); }
+	function options_save_google_plus() { $this->options_save_other( 'google_plus' ); }
 
 	function options_save_other( $service_name ) {
 		// Nonce check
@@ -583,66 +629,6 @@ class Publicize extends Publicize_Base {
 		$this->globalization();
 	}
 
-	function is_expired( $expires  = false ) {
-		$hour_in_seconds = 3600;
-		if ( !$expires )
-			return false; // No expires value, assume it's a permanent token
-		if ( '0000-00-00 00:00:00' == $expires )
-			return false; // Doesn't expire
-		if ( ( time() + $hour_in_seconds ) > strtotime( $expires ) )
-			return true; // Token's expiry time has passed, or will pass before $window
-		return false;
-	}
-
-	function refresh_tokens_message() {
-		global $post;
-		$post_id = $post ? $post->ID : 0;
-
-		$services = $this->get_services( 'all' );
-
-		// Same core nonce works for all services
-		$keyring_nonce = wp_create_nonce( 'keyring-request' );
-		$expired_tokens = false;
-
-		if ( is_array( $services ) && count( $services ) ) {
-			foreach ( $services as $name => $service ) {
-				if ( $connections = $this->get_connections( $name ) ) {
-			
-					foreach ( $connections as $connection ) {
-
-						$cmeta = $this->get_connection_meta( $connection );
-
-						// If the token for this connection is expired, or expires soon, then warn
-						if ( !$this->is_expired( $cmeta['expires'] ) ) {
-							continue;
-						}
-
-						if ( !$expired_tokens ) {
-							?>
-							<div class="error below-h2 publicize-token-refresh-message">
-							<p><?php echo esc_html( __( 'Before you hit Publish, please refresh your connection to make sure we can Publicize your post:' , 'jetpack') ); ?></p>
-							<?php
-							$expired_tokens = true;
-						}
-						// No need to request for a specific token id, since the token store detects duplication and updates a single token per service
-						$nonce = wp_create_nonce( "keyring-request-" . $name );
-						$url = $this->refresh_url( $name );
-						?>
-						<p style="text-align: center;" id="publicize-token-refresh-<?php echo esc_attr( $name ); ?>" class="publicize-token-refresh-button">
-							<a href="<?php echo esc_url( $url ); ?>" class="button" target="_refresh_<?php echo esc_attr( $name ); ?>">
-								<?php printf( __( 'Refresh connection with %s' , 'jetpack'), Publicize::get_service_label( $name ) ); ?>
-							</a>
-						</p><?php
-					}
-				}
-			}
-		}
-
-		if ( $expired_tokens ) {
-			echo '</div>';
-		}
-	}
-	
 	/** 
 	* Already-published posts should not be Publicized by default. This filter sets checked to 
 	* false if a post has already been published. 

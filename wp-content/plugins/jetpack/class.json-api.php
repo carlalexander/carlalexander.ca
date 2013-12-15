@@ -112,7 +112,7 @@ class WPCOM_JSON_API {
 	}
 
 	function initialize() {
-		$this->token_details['blog_id'] = Jetpack::get_option( 'id' );
+		$this->token_details['blog_id'] = Jetpack_Options::get_option( 'id' );
 	}
 
 	function serve( $exit = true ) {
@@ -398,6 +398,10 @@ class WPCOM_JSON_API {
 
 	function is_following( $blog_id ) {
 		return false;
+	}
+
+	function add_global_ID( $blog_id, $post_id ) {
+		return '';
 	}
 
 	function get_avatar_url( $email ) {

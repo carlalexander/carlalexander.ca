@@ -184,7 +184,7 @@ function grunion_admin_view_tabs( $views ) {
 
 	preg_match( '|post_type=feedback\'( class="current")?\>(.*)\<span class=|', $views['all'], $match );
 	if ( !empty( $match[2] ) )
-		$views['all'] = str_replace( $match[2], 'Messages ', $views['all'] );
+		$views['all'] = str_replace( $match[2], __( 'Messages', 'jetpack' ) . ' ', $views['all'] );
 
 	return $views;
 }
@@ -402,11 +402,11 @@ jQuery(document).ready( function($) {
 			break;
 
 		case 'feedback_date':
-			
+
 			$date_time_format = _x( '%1$s \a\t %2$s', '{$date_format} \a\t {$time_format}', 'jetpack' );
 			$date_time_format = sprintf( $date_time_format, get_option( 'date_format' ), get_option( 'time_format' ) );
 			$time = date_i18n( $date_time_format, get_the_time( 'U' ) );
-		
+
 			echo $time;
 			break;
 	}

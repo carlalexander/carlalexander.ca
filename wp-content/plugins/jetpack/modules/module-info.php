@@ -777,13 +777,39 @@ function jetpack_likes_more_link() {
 add_action( 'jetpack_learn_more_button_likes', 'jetpack_likes_more_link' );
 // Likes: STOP
 
+// Google+ Profile: START
+function jetpack_gplus_authorship_more_info() { ?>
+
+	<div class="jp-info-img">
+		<a href="http://jetpack.me/support/google-plus/">
+			<img class="jp-info-img" src="<?php echo plugins_url( basename( dirname( dirname( __FILE__ ) ) ) . '/_inc/images/screenshots/google-plus.png' ) ?>" alt="<?php esc_attr_e( 'Google+ Profile', 'jetpack' ) ?>" width="350" height="33" />
+		</a>
+	</div>
+
+	<h4><?php esc_html_e( 'Google+ Profile' , 'jetpack' ); ?></h4>
+
+	<p><?php esc_html_e( 'The Google+ profile module allows you to connect your blog and Google+ accounts.', 'jetpack' ) ?></p>
+	<p><?php esc_html_e( 'Displayed below your posts will be a link back to your Google+ profile and a Google+ follow button. A link will also be added to your Google+ profile.', 'jetpack' ); ?></p>
+
+	<p>&rarr; <a href="http://jetpack.me/support/google-plus/"><?php esc_html_e( 'More information on using Google+ Profile.', 'jetpack' ); ?></a></p>
+
+<?php
+}
+add_action( 'jetpack_module_more_info_gplus-authorship', 'jetpack_gplus_authorship_more_info' );
+
+function jetpack_gplus_authorship_more_link() {
+	echo '<a class="button-secondary more-info-link" href="#">' . __( 'Learn More', 'jetpack' ) . '</a>';
+}
+add_action( 'jetpack_learn_more_button_gplus-authorship', 'jetpack_gplus_authorship_more_link' );
+// Google+ Profile: STOP
+
 // Omnisearch: START
 function jetpack_omnisearch_more_info() {
 	?>
 
 	<h4><?php esc_html_e( 'Omnisearch' , 'jetpack' ); ?></h4>
 
-	<p><?php esc_html_e( 'Search once, get results from everything! Currently supports searching posts, pages, comments, and plugins.', 'jetpack' ); ?></p>
+	<p><?php esc_html_e( 'Search once, get results from everything! Currently supports searching posts, pages, comments, media, and plugins.', 'jetpack' ); ?></p>
 
 	<p><?php esc_html_e( 'Omnisearch plays nice with other plugins by letting other providers offer results as well.', 'jetpack' ); ?></p>
 
@@ -821,21 +847,54 @@ add_action( 'jetpack_module_more_info_widget-visibility',  'jetpack_widget_visib
 add_action( 'jetpack_learn_more_button_widget-visibility', 'jetpack_widget_visibility_more_link' );
 // Widget Visibility: STOP
 
+// VideoPress: START
+function jetpack_videopress_more_info() {
+	?>
+	<h4><?php esc_html_e( 'VideoPress', 'jetpack' ); ?></h4>
+	<p><?php _e( 'With the VideoPress module you can easily upload videos to your WordPress site and embed them in your posts and pages. This module requires a WordPress.com account with an active <a href="http://store.wordpress.com/premium-upgrades/videopress/" target="_blank">VideoPress subscription</a>.', 'jetpack' ); ?></p>
+	<?php
+}
+add_action( 'jetpack_module_more_info_videopress', 'jetpack_videopress_more_info' );
 
-// WordPress.com Connect: START
-function jetpack_wpcc_more_info() { ?>
-	<h4><?php esc_html_e( 'WordPress.com Connect' , 'jetpack' ); ?></h4>
+function jetpack_videopress_more_link() {
+	echo '<a class="button-secondary more-info-link" href="#">' . __( 'Learn More', 'jetpack' ) . '</a>';
+}
+add_action( 'jetpack_learn_more_button_videopress', 'jetpack_videopress_more_link' );
+// VideoPress: STOP
 
-	<p><?php esc_html_e( 'With WordPress.com Connect, your users will be able to log into your WordPress admin with the same credentials they use to log into WordPress.com.  It\'s safe and secure.' , 'jetpack' ); ?></p>
-	<p><?php esc_html_e( 'Once enabled, a "Connect with WordPress.com" option will be added to your existing log-in form.' , 'jetpack' ); ?></p>
+// SSO: START
+function jetpack_sso_more_info() { ?>
+	<h4><?php esc_html_e( 'Single Sign On' , 'jetpack' ); ?></h4>
+
+	<p><?php esc_html_e( 'With WordPress.com Single Sign On, your users will be able to log in to or register for your WordPress site with the same credentials they use on WordPress.com.  It\'s safe and secure.' , 'jetpack' ); ?></p>
+	<p><?php esc_html_e( 'Once enabled, a "Log in with WordPress.com" option will be added to your existing log in form.' , 'jetpack' ); ?></p>
 
 <?php
 }
 
-function jetpack_wpcc_more_link() {
-	echo '<a class="button-secondary more-info-link" href="http://jetpack.me/support/wpcc/">' . __( 'Learn More', 'jetpack' ) . '</a>';
+function jetpack_sso_more_link() {
+	echo '<a class="button-secondary more-info-link" href="http://jetpack.me/support/sso/">' . __( 'Learn More', 'jetpack' ) . '</a>';
 }
 
-add_action( 'jetpack_module_more_info_wpcc',  'jetpack_wpcc_more_info' );
-add_action( 'jetpack_learn_more_button_wpcc', 'jetpack_wpcc_more_link' );
-// WordPress.com Connect: STOP
+add_action( 'jetpack_module_more_info_sso',  'jetpack_sso_more_info' );
+add_action( 'jetpack_learn_more_button_sso', 'jetpack_sso_more_link' );
+// SSO: STOP
+
+// Monitor: START
+function jetpack_monitor_more_info() { ?>
+	<h4><?php esc_html_e( 'Monitor' , 'jetpack' ); ?></h4>
+
+	<p><?php esc_html_e( 'Nobody likes downtime, and that\'s why Jetpack Monitor is on the job, keeping tabs on your site. As soon as any downtime is detected, you will receive an email notification alerting you to the issue. That way you can act quickly, to get your site back online again!', 'jetpack' ); ?>
+
+	<p><?php esc_html_e( 'We’ll also let you know as soon as your site is up and running, so you can keep an eye on total downtime.', 'jetpack'); ?></p>
+
+<?php
+}
+add_action( 'jetpack_module_more_info_monitor', 'jetpack_monitor_more_info' );
+
+function jetpack_monitor_more_link() {
+	echo '<a class="button-secondary more-info-link" href="http://jetpack.me/support/monitor/">' . esc_html__( 'Learn More', 'jetpack' ) . '</a>';
+}
+add_action( 'jetpack_learn_more_button_monitor', 'jetpack_monitor_more_link' );
+// Monitor: STOP
+

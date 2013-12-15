@@ -17,12 +17,12 @@
 	</header><!-- .entry-header -->
 
 	<div class="entry-content">
-		<?php if ( is_single() ) : ?>
+		<?php if ( is_single() || post_password_required() ) : ?>
 			<?php the_content( __( 'Continue reading <span class="meta-nav">&rarr;</span>', 'jetpack' ) ); ?>
 
 		<?php else : ?>
 			<?php
-					$images = get_children( array( 'post_parent' => $post->ID, 'post_type' => 'attachment', 'post_mime_type' => 'image', 'orderby' => 'rand', 'order' => 'ASC', 'numberposts' => 999 ) );
+					$images = minileven_get_gallery_images();
 					if ( $images ) :
 						$total_images = count( $images );
 						$large_image = array_shift( $images );

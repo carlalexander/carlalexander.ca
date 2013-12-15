@@ -22,9 +22,9 @@ class WPSEO_Admin {
 		$options = get_wpseo_options();
 
 		if ( isset( $options['stripcategorybase'] ) && $options['stripcategorybase'] ) {
-			add_action( 'created_category', 'flush_rewrite_rules' );
-			add_action( 'edited_category', 'flush_rewrite_rules' );
-			add_action( 'delete_category', 'flush_rewrite_rules' );
+			add_action( 'created_category', array( $this, 'schedule_rewrite_flush' ) );
+			add_action( 'edited_category', array( $this, 'schedule_rewrite_flush' ) );
+			add_action( 'delete_category', array( $this, 'schedule_rewrite_flush' ) );
 		}
 
 		if ( $this->grant_access() ) {
@@ -46,7 +46,8 @@ class WPSEO_Admin {
 
 		add_action( 'admin_init', array( $this, 'maybe_upgrade' ) );
 
-		add_filter( 'name_save_pre', array( $this, 'remove_stopwords_from_slug' ), 0 );
+		if ( isset( $options['cleanslugs'] ) && $options['cleanslugs'] )
+			add_filter( 'name_save_pre', array( $this, 'remove_stopwords_from_slug' ), 0 );
 
 		add_action( 'show_user_profile', array( $this, 'user_profile' ) );
 		add_action( 'edit_user_profile', array( $this, 'user_profile' ) );
@@ -65,6 +66,13 @@ class WPSEO_Admin {
 
 		add_action( 'after_switch_theme', array( $this, 'switch_theme' ) );
 		add_action( 'switch_theme', array( $this, 'switch_theme' ) );
+	}
+
+	/**
+	 * Schedules a rewrite flush to happen at shutdown
+	 */
+	function schedule_rewrite_flush() {
+		add_action( 'shutdown', 'flush_rewrite_rules' );
 	}
 
 	/**
@@ -101,7 +109,7 @@ class WPSEO_Admin {
 		if ( function_exists( 'is_multisite' ) && is_multisite() ) {
 			if ( get_option( 'wpseo' ) == '1pseo_social' )
 				delete_option( 'wpseo' );
-			register_setting( 'yoast_wpseo_multisite_options', 'wpseo_multisite' );
+			register_setting( 'yoast_wpseo_multisite_options', 'wpseo_ms' );
 		}
 	}
 
@@ -144,21 +152,24 @@ class WPSEO_Admin {
 	 * @global array $submenu used to change the label on the first item.
 	 */
 	function register_settings_page() {
-		add_menu_page( __( 'WordPress SEO Configuration', 'wordpress-seo' ), __( 'SEO', 'wordpress-seo' ), 'manage_options', 'wpseo_dashboard', array( $this, 'config_page' ), WPSEO_URL . 'images/yoast-icon.png', '99.31337' );
-		add_submenu_page( 'wpseo_dashboard', __( 'Titles &amp; Metas', 'wordpress-seo' ), __( 'Titles &amp; Metas', 'wordpress-seo' ), 'manage_options', 'wpseo_titles', array( $this, 'titles_page' ) );
-		add_submenu_page( 'wpseo_dashboard', __( 'Social', 'wordpress-seo' ), __( 'Social', 'wordpress-seo' ), 'manage_options', 'wpseo_social', array( $this, 'social_page' ) );
-		add_submenu_page( 'wpseo_dashboard', __( 'XML Sitemaps', 'wordpress-seo' ), __( 'XML Sitemaps', 'wordpress-seo' ), 'manage_options', 'wpseo_xml', array( $this, 'xml_sitemaps_page' ) );
-		add_submenu_page( 'wpseo_dashboard', __( 'Permalinks', 'wordpress-seo' ), __( 'Permalinks', 'wordpress-seo' ), 'manage_options', 'wpseo_permalinks', array( $this, 'permalinks_page' ) );
-		add_submenu_page( 'wpseo_dashboard', __( 'Internal Links', 'wordpress-seo' ), __( 'Internal Links', 'wordpress-seo' ), 'manage_options', 'wpseo_internal-links', array( $this, 'internallinks_page' ) );
-		add_submenu_page( 'wpseo_dashboard', __( 'RSS', 'wordpress-seo' ), __( 'RSS', 'wordpress-seo' ), 'manage_options', 'wpseo_rss', array( $this, 'rss_page' ) );
-		add_submenu_page( 'wpseo_dashboard', __( 'Import & Export', 'wordpress-seo' ), __( 'Import & Export', 'wordpress-seo' ), 'manage_options', 'wpseo_import', array( $this, 'import_page' ) );
+		add_menu_page( __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'General Settings', 'wordpress-seo' ), __( 'SEO', 'wordpress-seo' ), 'manage_options', 'wpseo_dashboard', array( $this, 'config_page' ), plugins_url( 'images/yoast-icon.png', dirname( __FILE__ ) ), '99.31337' );
+
+		$admin_page = add_submenu_page( 'wpseo_dashboard', __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'Titles &amp; Metas', 'wordpress-seo' ), __( 'Titles &amp; Metas', 'wordpress-seo' ), 'manage_options', 'wpseo_titles', array( $this, 'titles_page' ) );
+		add_action( 'load-' . $admin_page, array( $this, 'title_metas_help_tab' ) );
+
+		add_submenu_page( 'wpseo_dashboard', __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'Social', 'wordpress-seo' ), __( 'Social', 'wordpress-seo' ), 'manage_options', 'wpseo_social', array( $this, 'social_page' ) );
+		add_submenu_page( 'wpseo_dashboard', __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'XML Sitemaps', 'wordpress-seo' ), __( 'XML Sitemaps', 'wordpress-seo' ), 'manage_options', 'wpseo_xml', array( $this, 'xml_sitemaps_page' ) );
+		add_submenu_page( 'wpseo_dashboard', __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'Permalinks', 'wordpress-seo' ), __( 'Permalinks', 'wordpress-seo' ), 'manage_options', 'wpseo_permalinks', array( $this, 'permalinks_page' ) );
+		add_submenu_page( 'wpseo_dashboard', __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'Internal Links', 'wordpress-seo' ), __( 'Internal Links', 'wordpress-seo' ), 'manage_options', 'wpseo_internal-links', array( $this, 'internallinks_page' ) );
+		add_submenu_page( 'wpseo_dashboard', __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'RSS', 'wordpress-seo' ), __( 'RSS', 'wordpress-seo' ), 'manage_options', 'wpseo_rss', array( $this, 'rss_page' ) );
+		add_submenu_page( 'wpseo_dashboard', __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'Import & Export', 'wordpress-seo' ), __( 'Import & Export', 'wordpress-seo' ), 'manage_options', 'wpseo_import', array( $this, 'import_page' ) );
 
 		if ( ! ( defined( 'DISALLOW_FILE_EDIT' ) && DISALLOW_FILE_EDIT ) && ! ( defined( 'DISALLOW_FILE_MODS' ) && DISALLOW_FILE_MODS ) ) {
 			// Make sure on a multi site install only super admins can edit .htaccess and robots.txt
 			if ( ! function_exists( 'is_multisite' ) || ! is_multisite() )
-				add_submenu_page( 'wpseo_dashboard', __( 'Edit files', 'wordpress-seo' ), __( 'Edit files', 'wordpress-seo' ), 'manage_options', 'wpseo_files', array( $this, 'files_page' ) );
+				add_submenu_page( 'wpseo_dashboard', __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'Edit Files', 'wordpress-seo' ), __( 'Edit Files', 'wordpress-seo' ), 'manage_options', 'wpseo_files', array( $this, 'files_page' ) );
 			else
-				add_submenu_page( 'wpseo_dashboard', __( 'Edit files', 'wordpress-seo' ), __( 'Edit files', 'wordpress-seo' ), 'delete_users', 'wpseo_files', array( $this, 'files_page' ) );
+				add_submenu_page( 'wpseo_dashboard', __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'Edit Files', 'wordpress-seo' ), __( 'Edit Files', 'wordpress-seo' ), 'delete_users', 'wpseo_files', array( $this, 'files_page' ) );
 		}
 
 		global $submenu;
@@ -167,17 +178,188 @@ class WPSEO_Admin {
 	}
 
 	/**
+	 * Adds contextual help to the titles & metas page.
+	 */
+	function title_metas_help_tab() {
+		$screen = get_current_screen();
+
+		$screen->set_help_sidebar(
+			'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
+			'<p><a target="_blank" href="http://yoast.com/articles/wordpress-seo/#titles">' . __( 'Title optimization', 'wordpress-seo' ) . '</a></p>' .
+			'<p><a target="_blank" href="http://yoast.com/google-page-title/">' . __( 'Why Google won\'t display the right page title', 'wordpress-seo' ) . '</a></p>'
+		);
+
+		$screen->add_help_tab( array(
+			'id'      => 'basic-help',
+			'title'   => __( 'Template explanation', 'wordpress-seo' ),
+			'content' => '<p>' . __( 'The title & metas settings for WordPress SEO are made up of variables that are replaced by specific values from the page when the page is displayed. The tabs on the left explain the available variables.', 'wordpress-seo' ) . '</p>'
+		) );
+
+		$screen->add_help_tab( array(
+			'id'      => 'title-vars',
+			'title'   => __( 'Basic Variables', 'wordpress-seo' ),
+			'content' => '
+	<h2>' . __( 'Basic Variables.', 'wordpress-seo' ) . '</h2>
+		<table class="yoast_help">
+			<tr>
+				<th>%%date%%</th>
+				<td>' . __( 'Replaced with the date of the post/page', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%title%%</th>
+				<td>' . __( 'Replaced with the title of the post/page', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%sitename%%</th>
+				<td>' . __( 'The site\'s name', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%sitedesc%%</th>
+				<td>' . __( 'The site\'s tagline / description', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%excerpt%%</th>
+				<td>' . __( 'Replaced with the post/page excerpt (or auto-generated if it does not exist)', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%excerpt_only%%</th>
+				<td>' . __( 'Replaced with the post/page excerpt (without auto-generation)', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%tag%%</th>
+				<td>' . __( 'Replaced with the current tag/tags', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%category%%</th>
+				<td>' . __( 'Replaced with the post categories (comma separated)', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%category_description%%</th>
+				<td>' . __( 'Replaced with the category description', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%tag_description%%</th>
+				<td>' . __( 'Replaced with the tag description', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%term_description%%</th>
+				<td>' . __( 'Replaced with the term description', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%term_title%%</th>
+				<td>' . __( 'Replaced with the term name', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%searchphrase%%</th>
+				<td>' . __( 'Replaced with the current search phrase', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%sep%%</th>
+				<td>' . __( 'The separator defined in your theme\'s <code>wp_title()</code> tag.', 'wordpress-seo' ) . '</td>
+			</tr>
+			</table>' ) );
+		$screen->add_help_tab( array(
+			'id'      => 'title-vars-advanced',
+			'title'   => __( 'Advanced Variables.', 'wordpress-seo' ),
+			'content' => '
+			<h2>' . __( 'Advanced Variables.', 'wordpress-seo' ) . '</h2>
+			<table class="yoast_help">
+			<tr>
+				<th>%%pt_single%%</th>
+				<td>' . __( 'Replaced with the post type single label', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%pt_plural%%</th>
+				<td>' . __( 'Replaced with the post type plural label', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%modified%%</th>
+				<td>' . __( 'Replaced with the post/page modified time', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%id%%</th>
+				<td>' . __( 'Replaced with the post/page ID', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%name%%</th>
+				<td>' . __( 'Replaced with the post/page author\'s \'nicename\'', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%userid%%</th>
+				<td>' . __( 'Replaced with the post/page author\'s userid', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr class="alt">
+				<th>%%currenttime%%</th>
+				<td>' . __( 'Replaced with the current time', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%currentdate%%</th>
+				<td>' . __( 'Replaced with the current date', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr class="alt">
+				<th>%%currentday%%</th>
+				<td>' . __( 'Replaced with the current day', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%currentmonth%%</th>
+				<td>' . __( 'Replaced with the current month', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr class="alt">
+				<th>%%currentyear%%</th>
+				<td>' . __( 'Replaced with the current year', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%page%%</th>
+				<td>' . __( 'Replaced with the current page number (i.e. page 2 of 4)', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr class="alt">
+				<th>%%pagetotal%%</th>
+				<td>' . __( 'Replaced with the current page total', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%pagenumber%%</th>
+				<td>' . __( 'Replaced with the current page number', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr class="alt">
+				<th>%%caption%%</th>
+				<td>' . __( 'Attachment caption', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%focuskw%%</th>
+				<td>' . __( 'Replaced with the posts focus keyword', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%term404%%</th>
+				<td>' . __( 'Replaced with the slug which caused the 404', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%cf_&lt;custom-field-name&gt;%%</th>
+				<td>' . __( 'Replaced with a posts custom field value', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%ct_&lt;custom-tax-name&gt;%%</th>
+				<td>' . __( 'Replaced with a posts custom taxonomies, comma separated.', 'wordpress-seo' ) . '</td>
+			</tr>
+			<tr>
+				<th>%%ct_desc_&lt;custom-tax-name&gt;%%</th>
+				<td>' . __( 'Replaced with a custom taxonomies description', 'wordpress-seo' ) . '</td>
+			</tr>
+		</table>', //actual help text
+		) );
+	}
+
+	/**
 	 * Register the settings page for the Network settings.
 	 */
 	function register_network_settings_page() {
-		add_menu_page( __( 'WordPress SEO Configuration', 'wordpress-seo' ), __( 'SEO', 'wordpress-seo' ), 'delete_users', 'wpseo_dashboard', array( $this, 'network_config_page' ), WPSEO_URL . 'images/yoast-icon.png' );
+		add_menu_page( __( 'Yoast WordPress SEO:', 'wordpress-seo' ) . ' ' . __( 'MultiSite Settings', 'wordpress-seo' ), __( 'SEO', 'wordpress-seo' ), 'delete_users', 'wpseo_dashboard', array( $this, 'network_config_page' ), plugins_url( 'images/yoast-icon.png', dirname( __FILE__ ) ) );
 	}
 
 	/**
 	 * Loads the form for the network configuration page.
 	 */
 	function network_config_page() {
-		require( WPSEO_PATH . '/admin/pages/network.php' );
+		require_once( WPSEO_PATH . 'admin/pages/network.php' );
 	}
 
 	/**
@@ -185,7 +367,7 @@ class WPSEO_Admin {
 	 */
 	function import_page() {
 		if ( isset( $_GET['page'] ) && 'wpseo_import' == $_GET['page'] )
-			include( WPSEO_PATH . '/admin/pages/import.php' );
+			require_once( WPSEO_PATH . 'admin/pages/import.php' );
 	}
 
 	/**
@@ -193,7 +375,7 @@ class WPSEO_Admin {
 	 */
 	function titles_page() {
 		if ( isset( $_GET['page'] ) && 'wpseo_titles' == $_GET['page'] )
-			include( WPSEO_PATH . '/admin/pages/metas.php' );
+			require_once( WPSEO_PATH . 'admin/pages/metas.php' );
 	}
 
 	/**
@@ -201,7 +383,7 @@ class WPSEO_Admin {
 	 */
 	function permalinks_page() {
 		if ( isset( $_GET['page'] ) && 'wpseo_permalinks' == $_GET['page'] )
-			include( WPSEO_PATH . '/admin/pages/permalinks.php' );
+			require_once( WPSEO_PATH . 'admin/pages/permalinks.php' );
 	}
 
 	/**
@@ -209,7 +391,7 @@ class WPSEO_Admin {
 	 */
 	function internallinks_page() {
 		if ( isset( $_GET['page'] ) && 'wpseo_internal-links' == $_GET['page'] )
-			include( WPSEO_PATH . '/admin/pages/internal-links.php' );
+			require_once( WPSEO_PATH . 'admin/pages/internal-links.php' );
 	}
 
 	/**
@@ -217,7 +399,7 @@ class WPSEO_Admin {
 	 */
 	function files_page() {
 		if ( isset( $_GET['page'] ) && 'wpseo_files' == $_GET['page'] )
-			include( WPSEO_PATH . '/admin/pages/files.php' );
+			require_once( WPSEO_PATH . 'admin/pages/files.php' );
 	}
 
 	/**
@@ -225,7 +407,7 @@ class WPSEO_Admin {
 	 */
 	function rss_page() {
 		if ( isset( $_GET['page'] ) && 'wpseo_rss' == $_GET['page'] )
-			include( WPSEO_PATH . '/admin/pages/rss.php' );
+			require_once( WPSEO_PATH . 'admin/pages/rss.php' );
 	}
 
 	/**
@@ -233,7 +415,7 @@ class WPSEO_Admin {
 	 */
 	function xml_sitemaps_page() {
 		if ( isset( $_GET['page'] ) && 'wpseo_xml' == $_GET['page'] )
-			include( WPSEO_PATH . '/admin/pages/xml-sitemaps.php' );
+			require_once( WPSEO_PATH . 'admin/pages/xml-sitemaps.php' );
 	}
 
 	/**
@@ -241,7 +423,7 @@ class WPSEO_Admin {
 	 */
 	function config_page() {
 		if ( isset( $_GET['page'] ) && 'wpseo_dashboard' == $_GET['page'] )
-			include( WPSEO_PATH . '/admin/pages/dashboard.php' );
+			require_once( WPSEO_PATH . 'admin/pages/dashboard.php' );
 	}
 
 	/**
@@ -249,7 +431,7 @@ class WPSEO_Admin {
 	 */
 	function social_page() {
 		if ( isset( $_GET['page'] ) && 'wpseo_social' == $_GET['page'] )
-			require( WPSEO_PATH . '/admin/pages/social.php' );
+			require_once( WPSEO_PATH . 'admin/pages/social.php' );
 	}
 
 	/**
@@ -311,7 +493,7 @@ class WPSEO_Admin {
 	 * Enqueues the (tiny) global JS needed for the plugin.
 	 */
 	function config_page_scripts() {
-		wp_enqueue_script( 'wpseo-admin-global-script', WPSEO_URL . 'js/wp-seo-admin-global.js', array( 'jquery' ), WPSEO_VERSION, true );
+		wp_enqueue_script( 'wpseo-admin-global-script', plugins_url( 'js/wp-seo-admin-global.js', dirname( __FILE__ ) ), array( 'jquery' ), WPSEO_VERSION, true );
 	}
 
 	/**
@@ -398,11 +580,9 @@ class WPSEO_Admin {
 		if ( version_compare( $current_version, WPSEO_VERSION, '==' ) )
 			return;
 
-		delete_option( 'rewrite_rules' );
-
 		// <= 0.3.5: flush rewrite rules for new XML sitemaps
 		if ( $current_version == 0 ) {
-			flush_rewrite_rules();
+			$this->schedule_rewrite_flush();
 		}
 
 		if ( version_compare( $current_version, '0.4.2', '<' ) ) {
@@ -542,7 +722,17 @@ class WPSEO_Admin {
 		}
 
 		if ( version_compare( $current_version, '1.4.15', '<' ) ) {
-			flush_rewrite_rules();
+			$this->schedule_rewrite_flush();
+		}
+
+		if ( version_compare( $current_version, '1.4.16', '<' ) ) {
+			$options = get_option( 'wpseo_permalinks' );
+
+			if ( ! is_array( $options ) )
+				$options = array();
+
+			$options['cleanslugs'] = 'on';
+			update_option( 'wpseo_permalinks', $options );
 		}
 
 		$options            = get_option( 'wpseo' );
@@ -588,7 +778,7 @@ class WPSEO_Admin {
 	 */
 	function stopwords() {
 		/* translators: this should be an array of stopwords for your language, separated by comma's. */
-		$stopwords = explode( ',', __( "a,about,above,after,again,against,all,am,an,and,any,are,aren't,as,at,be,because,been,before,being,below,between,both,but,by,can't,cannot,could,couldn't,did,didn't,do,does,doesn't,doing,don't,down,during,each,few,for,from,further,had,hadn't,has,hasn't,have,haven't,having,he,he'd,he'll,he's,her,here,here's,hers,herself,him,himself,his,how,how's,i,i'd,i'll,i'm,i've,if,in,into,is,isn't,it,it's,its,itself,let's,me,more,most,mustn't,my,myself,no,nor,not,of,off,on,once,only,or,other,ought,our,ours , ourselves,out,over,own,same,shan't,she,she'd,she'll,she's,should,shouldn't,so,some,such,than,that,that's,the,their,theirs,them,themselves,then,there,there's,these,they,they'd,they'll,they're,they've,this,those,through,to,too,under,until,up,very,was,wasn't,we,we'd,we'll,we're,we've,were,weren't,what,what's,when,when's,where,where's,which,while,who,who's,whom,why,why's,with,won't,would,wouldn't,you,you'd,you'll,you're,you've,your,yours,yourself,yourselves", "wordpress-seo" ) );
+		$stopwords = explode( ',', __( "a,about,above,after,again,against,all,am,an,and,any,are,aren't,as,at,be,because,been,before,being,below,between,both,but,by,can't,cannot,could,couldn't,did,didn't,do,does,doesn't,doing,don't,down,during,each,few,for,from,further,had,hadn't,has,hasn't,have,haven't,having,he,he'd,he'll,he's,her,here,here's,hers,herself,him,himself,his,how,how's,i,i'd,i'll,i'm,i've,if,in,into,is,isn't,it,it's,its,itself,let's,me,more,most,mustn't,my,myself,no,nor,not,of,off,on,once,only,or,other,ought,our,ours,ourselves,out,over,own,same,shan't,she,she'd,she'll,she's,should,shouldn't,so,some,such,than,that,that's,the,their,theirs,them,themselves,then,there,there's,these,they,they'd,they'll,they're,they've,this,those,through,to,too,under,until,up,very,was,wasn't,we,we'd,we'll,we're,we've,were,weren't,what,what's,when,when's,where,where's,which,while,who,who's,whom,why,why's,with,won't,would,wouldn't,you,you'd,you'll,you're,you've,your,yours,yourself,yourselves", "wordpress-seo" ) );
 
 		/**
 		 * Allows filtering of the stop words list

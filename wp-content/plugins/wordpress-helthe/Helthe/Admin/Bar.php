@@ -41,7 +41,7 @@ class Helthe_Admin_Bar
      */
     public function generate(WP_Admin_Bar $bar)
     {
-        if (!is_super_admin() || !is_admin_bar_showing()) {
+        if (!is_super_admin() || is_admin() || !is_admin_bar_showing()) {
             return;
         }
 
