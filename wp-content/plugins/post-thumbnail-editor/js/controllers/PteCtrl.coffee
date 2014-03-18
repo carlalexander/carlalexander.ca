@@ -11,7 +11,8 @@ define [
       # Switch the enabled page to change the view
       ###
       $scope.page =
-         crop: on
+         loading: on
+         crop: off
          view: off
       $scope.changePage = (page) ->
          $scope.viewFilterValue = off
@@ -147,7 +148,7 @@ define [
                $scope.trash thumbnail
          if confirm_results.immediate
             # Change to the view
-            $scope.view viewFilter
+            #$scope.view viewFilter
          else
             checkFilter()
 
@@ -169,6 +170,7 @@ define [
          # if there aren't any other proposed, set the viewFilter to false
          checkFilter()
 
+	  # if there aren't any other proposed, set the viewFilter to false
       checkFilter = ->
          for thumbnail in $scope.thumbnails
             if thumbnail.proposed
@@ -179,6 +181,8 @@ define [
          deleteTemp()
          angular.forEach $scope.thumbnails, (thumb) ->
             $scope.trash thumb
+         $filter('randomizeUrl') {reset: true}
+         return
 
       deleteTemp = ->
          if not nonces?['pte-delete-nonce']?
@@ -242,15 +246,21 @@ define [
       $scope.setNonces = (nonceObj) ->
          nonces = nonceObj
 
+      ## LOAD THE THUMBNAIL INFORMATION ##
       $scope.thumbnails = []
       $scope.thumbnailObject = $scope.thumbnailResource.get {id: id}, ->
          angular.forEach $scope.thumbnailObject, (thumb, name) ->
-            thumb.name = name
-            @thumbnails.push thumb
-            addToAspectRatios thumb
-            return
+            if name not in ["$promise", "$resolved"]
+               thumb.name = name
+               @thumbnails.push thumb
+               addToAspectRatios thumb
+               return
          , $scope
          $scope.updateSelected()
+
+         # Turn off loading page
+         $log.info "Disabling loading screen"
+         $scope.changePage('crop')
          return
 
       $scope.anyProposed = ->

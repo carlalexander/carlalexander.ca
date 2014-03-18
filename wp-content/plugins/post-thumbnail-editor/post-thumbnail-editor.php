@@ -4,7 +4,7 @@ Plugin name: Post Thumbnail Editor
 Plugin URI: http://sewpafly.github.io/post-thumbnail-editor/
 Author: sewpafly
 Author URI: http://sewpafly.github.io/post-thumbnail-editor/
-Version: 2.2.1
+Version: 2.3.0
 Description: Individually manage your post thumbnails
 
 LICENSE
@@ -34,7 +34,15 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 define( 'PTE_PLUGINURL', plugins_url(basename( dirname(__FILE__))) . "/");
 define( 'PTE_PLUGINPATH', dirname(__FILE__) . "/");
 define( 'PTE_DOMAIN', "post-thumbnail-editor");
-define( 'PTE_VERSION', "2.2.1");
+define( 'PTE_VERSION', "2.3.0");
+
+// TODO:
+// * Find the best place for the require log (only when it's really needed, create an init function?)
+// * Change all the log calls?
+// * Rip out everything that's not a CONSTANT or a hook in here
+// * Make this an object
+// * Add a tour for new users
+require_once( PTE_PLUGINPATH . 'php/log.php' );
 
 /*
  * Option Functionality
@@ -54,7 +62,7 @@ function pte_get_user_options(){
 	}
 	$defaults = array( 'pte_debug' => false
 		, 'pte_crop_save' => false
-		, 'pte_thumbnail_bar' => 'vertical'
+		, 'pte_thumbnail_bar' => 'horizontal'
 		, 'pte_imgedit_max_size' => 600
 	);
 
@@ -119,13 +127,20 @@ function pte_update_user_options(){
  *
  * @param $id the post id of the attachment to modify
  */
-function pte_url( $id ){
-	$pte_url = admin_url('upload.php') 
-		. "?page=pte-edit&pte-id=" 
-		. $id;
+function pte_url( $id, $iframe=false ){
+	if ($iframe) {
+		$pte_url = admin_url( 'admin-ajax.php' )
+			. "?action=pte_ajax&pte-action=iframe&pte-id=${id}"
+			. "&TB_iframe=true";
+	}
+	else {
+		$pte_url = admin_url('upload.php') 
+			. "?page=pte-edit&pte-id=${id}";
+	}
 
 	return $pte_url;
 }
+
 
 
 
@@ -150,23 +165,35 @@ function pte_admin_media_scripts_editor(){
 
 function pte_admin_media_scripts($post_type){
 	$options = pte_get_options();
-	wp_enqueue_script( 'pte'
-		, PTE_PLUGINURL . 'apps/coffee-script.js'
-		, array('underscore')
-		, PTE_VERSION
-	);
-	wp_localize_script('pte'
-		, 'pteL10n'
-		, array('PTE' => __('Post Thumbnail Editor', PTE_DOMAIN)
-			, 'url' => pte_url( "<%= id %>" )
-		)
-	);
+	pte_add_thickbox();
 	if ($post_type == "attachment") {
+		wp_enqueue_script( 'pte'
+			, PTE_PLUGINURL . 'apps/coffee-script.js'
+			, array('underscore')
+			, PTE_VERSION
+		);
 		add_action( 'admin_print_footer_scripts', 'pte_enable_editor_js', 100);
 	}
 	else {
-		add_action( 'admin_print_footer_scripts', 'pte_enable_media_js', 100);
+		//add_action( 'admin_print_footer_scripts', 'pte_enable_media_js', 100);
+		wp_enqueue_script( 'pte'
+			, PTE_PLUGINURL . 'js/snippets/pte_enable_media.js'
+			, array('media-views')
+			, PTE_VERSION
+			, true
+		);
+		wp_enqueue_style( 'pte'
+			, PTE_PLUGINURL . 'css/pte-media.css'
+			, NULL
+			, PTE_VERSION
+		);
 	}
+	wp_localize_script('pte'
+		, 'pteL10n'
+		, array('PTE' => __('Post Thumbnail Editor', PTE_DOMAIN)
+			, 'url' => pte_url( "<%= id %>", true )
+		)
+	);
 }
 
 function pte_enable_editor_js(){
@@ -194,15 +221,26 @@ EOT;
 add_filter( 'admin_post_thumbnail_html', 'pte_admin_post_thumbnail_html', 10, 2 );
 
 function pte_admin_post_thumbnail_html( $content, $post_id ){
+	pte_add_thickbox();
 	$thumbnail_id = get_post_thumbnail_id( $post_id );
 	if ( $thumbnail_id == null )
 		return $content;
 
-	return $content .= '<p id="pte-link" class="hide-if-no-js"><a target="_blank" href="' 
-		. pte_url( $thumbnail_id )
+	return $content .= '<p id="pte-link" class="hide-if-no-js"><a class="thickbox" href="' 
+		. pte_url( $thumbnail_id, true )
 		. '">' 
 		. esc_html__( 'Post Thumbnail Editor', PTE_DOMAIN ) 
 		. '</a></p>';
+}
+
+/* Fix wordpress ridiculousness about making a thickbox max width=720 */
+function pte_add_thickbox() {
+	add_thickbox();
+	wp_enqueue_script('pte-fix-thickbox',
+		PTE_PLUGINURL . "js/snippets/pte-fix-thickbox.js",
+		array( 'media-upload' ),
+		PTE_VERSION
+	);
 }
 
 
@@ -211,11 +249,13 @@ add_action('wp_ajax_pte_ajax', 'pte_ajax');
 function pte_ajax(){
 	// Move all adjuntant functions to a separate file and include that here
 	require_once(PTE_PLUGINPATH . 'php/functions.php');
-	$logger = PteLogger::singleton();
-	$logger->debug( "PARAMETERS: " . print_r( $_REQUEST, true ) );
+	PteLogger::debug( "PARAMETERS: " . print_r( $_REQUEST, true ) );
 
 	switch ($_GET['pte-action'])
 	{
+	case "iframe":
+		pte_init_iframe();
+		break;
 	case "resize-images":
 		pte_resize_images();
 		break;
@@ -244,7 +284,7 @@ function pte_ajax(){
  * @returns boolean true if the current user has permission else false
  */
 function pte_check_id( $id ) {
-	if ( !$post =& get_post( $id ) ) {
+	if ( !$post = get_post( $id ) ) {
 		return false;
 	}
 	if ( current_user_can( 'edit_post', $id )
@@ -321,11 +361,14 @@ function pte_launch_options_page(){
 	pte_options_page();
 }
 
+/**
+ * This runs after headers have been sent, see the pte_edit_setup for the
+ * function that runs before anything is sent to the browser
+ */
 function pte_edit_page(){
 	// This is set via the pte_edit_setup function
-	global $post;
-	include_once( PTE_PLUGINPATH . "php/functions.php" );
-	pte_launch( PTE_PLUGINPATH . "html/pte.php", $post->ID );
+	global $pte_body;
+	echo( $pte_body );
 }
 
 /* Admin Edit Page: setup*/
@@ -338,7 +381,7 @@ function pte_edit_page(){
  */
 add_action( 'load-media_page_pte-edit', 'pte_edit_setup' );
 function pte_edit_setup() {
-	global $post, $title;
+	global $post, $title, $pte_body;
 	$post_id = (int) $_GET['pte-id'];
 	if ( !isset( $post_id ) 
 			|| !is_int( $post_id )
@@ -350,6 +393,16 @@ function pte_edit_setup() {
 	}
 	$post = get_post( $post_id );
 	$title = __( "Post Thumbnail Editor", PTE_DOMAIN );
+
+	include_once( PTE_PLUGINPATH . "php/functions.php" );
+	$pte_body = pte_body( $post->ID );
+
+	// Add the scripts and styles
+	wp_enqueue_script( 'jquery' );
+	wp_enqueue_script( 'jquery-ui-dialog' );
+	wp_enqueue_script( 'iris' );
+	wp_enqueue_style( 'colors' );
+	wp_enqueue_style( 'wp-jquery-ui-dialog' );
 }
 
 /**

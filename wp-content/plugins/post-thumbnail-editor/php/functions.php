@@ -205,13 +205,15 @@ function pte_get_all_alternate_size_information( $id ){
 }
 
 /*
- * pte_launch
+ * pte_body
  *
- * Outputs the base HTML needed to display and transform the inages
+ * Returns the base HTML needed to display and transform the inages
  *
  * Requires post id as $_GET['id']
  */
-function pte_launch( $page, $id ){
+function pte_body( $id ){
+	ob_start();
+
 	$logger = PteLogger::singleton();
 	$options = pte_get_options();
 
@@ -235,9 +237,9 @@ function pte_launch( $page, $id ){
 
 	$sizer = $big > 400 ? 400 / $big : 1;
 	$sizer = sprintf( "%.8F", $sizer );
-	$logger->debug( "PTE-VERSION: " . PTE_VERSION );
-	$logger->debug( "USER-AGENT: " . $_SERVER['HTTP_USER_AGENT'] );
-	$logger->debug( "WORDPRESS: " . $GLOBALS['wp_version'] );
+	PteLogger::debug( "PTE-VERSION: " . PTE_VERSION .
+		"\nUSER-AGENT:  " . $_SERVER['HTTP_USER_AGENT'] .
+		"\nWORDPRESS:   " . $GLOBALS['wp_version'] );
 
 	$script_url = PTE_PLUGINURL . 'php/load-scripts.php?load=jquery,imgareaselect,jquery-json,pte';
 	$style_url = PTE_PLUGINURL . 'php/load-styles.php?load=imgareaselect,pte';
@@ -246,7 +248,8 @@ function pte_launch( $page, $id ){
 		$script_url .= "&d=1";
 	}
 
-	require( $page );
+	require( PTE_PLUGINPATH . "html/pte.php" );
+	return ob_get_clean();
 }
 
 function pte_check_int( $int ){
@@ -374,8 +377,6 @@ function pte_resize_images(){
 
 	// The following information is common to all sizes
 	// *** common-info
-	$dst_x          = 0;
-	$dst_y          = 0;
 	$original_file  = _load_image_to_edit_path( $id );
 	$original_size  = @getimagesize( $original_file );
 	$uploads 	    = wp_upload_dir();
@@ -409,6 +410,8 @@ function pte_resize_images(){
 
 		// === CREATE IMAGE ===================
 		// This function is in wp-includes/media.php
+		// We've added a filter to return our own editor which extends the wordpress one.
+		add_filter( 'wp_image_editors', 'pte_image_editors' );
 		$editor = wp_get_image_editor( $original_file );
 		if ( is_a( $editor, "WP_Image_Editor_Imagick" ) ) $logger->debug( "EDITOR: ImageMagick" );
 		if ( is_a( $editor, "WP_Image_Editor_GD" ) ) $logger->debug( "EDITOR: GD" );
@@ -462,6 +465,13 @@ function pte_resize_images(){
 		'pte-nonce'         => $ptenonce,
 		'pte-delete-nonce'  => wp_create_nonce( "pte-delete-{$id}" )
 	) );
+}
+
+function pte_image_editors( $editor_array ){
+	require_once( PTE_PLUGINPATH . 'php/class-pte-image-editor-gd.php' );
+	require_once( PTE_PLUGINPATH . 'php/class-pte-image-editor-imagick.php' );
+	array_unshift( $editor_array, 'PTE_Image_Editor_Imagick', 'PTE_Image_Editor_GD' );
+	return $editor_array;
 }
 
 /*
@@ -600,6 +610,37 @@ function pte_delete_images()
 function pte_get_jpeg_quality($quality){
 	$logger = PteLogger::singleton();
 	$options = pte_get_options();
-	$logger->debug( "COMPRESSION: " . $options['pte_jpeg_compression'] );
-	return $options['pte_jpeg_compression'];
+	$jpeg_compression = $options['pte_jpeg_compression'];
+	if ( isset( $_GET['pte-jpeg-compression'] ) ) {
+		$tmp_jpeg = intval( $_GET['pte-jpeg-compression'] );
+		if ( 0 <= $tmp_jpeg && $tmp_jpeg <= 100 ){
+			$jpeg_compression = $tmp_jpeg;
+		}
+	}
+	$logger->debug( "COMPRESSION: " . $jpeg_compression );
+	return $jpeg_compression;
+}
+
+/**
+ * Sending output to an iframe
+ */
+function pte_init_iframe() {
+	global $title, $pte_iframe;
+	$pte_iframe = true;
+
+	// Provide the base framework/HTML for the editor.
+	require_once( ABSPATH . WPINC . '/script-loader.php' );
+	// Check the input parameters and create the HTML
+	pte_edit_setup();
+
+	print( "<!DOCTYPE html>\n<html><head><title>${title}</title>\n" );
+
+	print_head_scripts();
+	print_admin_styles();
+
+	print( '</head><body class="wp-core-ui pte-iframe">' );
+	// Simply echo the created HTML
+	pte_edit_page();
+	print_footer_scripts();
+	print( '</body></html>' );
 }

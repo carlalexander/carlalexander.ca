@@ -1,10 +1,11 @@
 <?php
-global $post;
+global $post, $pte_iframe;
 function ep(){
    echo PTE_PLUGINURL;
 }
 
 $options = pte_get_options();
+
 ?>
 
 <!--
@@ -21,194 +22,28 @@ $options = pte_get_options();
 			  , 'save_crop_problem' => __( 'There was a problem saving the crop...', PTE_DOMAIN )
 			  , 'cropSave' => __( 'Crop and Save', PTE_DOMAIN )
 			  , 'crop' => __( 'Crop', PTE_DOMAIN )
+			  , 'fitCrop_save' => __( 'Save', PTE_DOMAIN )
+			  , 'fitCrop_transparent' => __( 'Set transparent', PTE_DOMAIN )
+			  , 'transparent' => __( 'transparent/white', PTE_DOMAIN )
 		  ));
 ?>;
-
+<?php if ( $pte_iframe ) {
+	echo 'var ajaxurl = "' . admin_url( 'admin-ajax.php' ) . '";';
+}?>
 </script>
  
-<link rel="stylesheet" href="<?php ep() ?>apps/font-awesome/css/font-awesome.css"/>
+<link rel="stylesheet" href="<?php ep() ?>apps/font-awesome/css/font-awesome.min.css"/>
 <link rel="stylesheet" href="<?php ep() ?>apps/jcrop/css/jquery.Jcrop.css"/>
-<style type="text/css" media="all">
-   #pte-subtitle {
-      font-size: .7em;
-      color: #444444;
-   }
-   #aspect-ratio-selector a,
-   .nav-tab-wrapper a {
-      cursor: pointer;
-   }
-   #pte-image { float: left; margin-right: 10px;}
-   #pte-thumbnail-column {
-      float: left;
-      position: relative;
-      width: 400px;
-   }
-   #pte-thumbnail-column button {
-      float: right;
-      margin: 5px;
-   }
-   /**.pte-thumbnails-menu { display: none; }**/
-   .pte-thumbnail-menu {
-      font-size: 1.2em;
-      line-height: 1.3em;
-   }
-   td.pte-thumbnail-options {
-      width: 50px;
-   }
-   .pte-thumbnail-menu .icon-save { color: green; }
-   .pte-thumbnail-menu .icon-trash { color: red; }
-   .pte-thumbnail-menu i:hover,
-   .pte-thumbnails-menu i:hover {
-      font-size: 1.2em;
-   }
+<link rel="stylesheet" href="<?php ep() ?>css/pte.css"/>
 
-   i.disabled {
-      color: #aaaaaa;
-   }
-   tr.selected-true           { background-color: #e0ffe0; }
-   tr.selected-true.alternate { background-color: #eaffea; }
-   th.center,
-   td.center {
-      text-align: center;
-   }
-
-   #pte-thumbnail-table td {
-      line-height: 1.8em;
-   }
-   #pte-thumbnail-table th {
-      line-height: 1.5em;
-   }
-
-   #pte-thumbnail-table th input,
-   #pte-thumbnail-table td input {
-      margin: 1px 0 0;
-   }
-   .align-right {
-      text-align: right !important;
-   }
-
-   #aspect-ratio-selector {
-      margin-top: 20px;
-      font-size: 1.3em;
-   }
-
-   .info-message {
-      background-color: #ddddff;
-      border: 1px solid blue;
-      color: blue;
-      font-size: 1.5em;
-      margin-bottom: 10px;
-      padding: 10px;
-      position:relative;
-   }
-   .info-message .icon-remove {
-      font-size: 1.1em;
-      position: absolute;
-      top: 9px;
-      right: 10px;
-   }
-
-   .error-message {
-      font-size: 1.5em;
-      padding: 10px;
-      margin-bottom: 10px;
-      position:relative;
-      border: 1px solid red;
-      background-color: #ffdddd;
-   }
-   .error-message .icon-remove {
-      font-size: 1.1em;
-      position: absolute;
-      top: 9px;
-      right: 10px;
-   }
-
-   #pte-crop-settings {
-      background-color: #f9f9f9;
-      border: 1px solid #888888;
-      padding: 7px 10px;
-   }
-
-   #pte-crop-settings .icon-remove {
-      position: absolute;
-      top: 12px;
-      right: 10px;
-      font-size: 12pt;
-   }
-   #pte-crop-controls {
-      text-align: center;
-      margin: 10px 0;
-   }
-   .pte-display-thumbnail-image {
-      margin-bottom: 10px;
-      position: relative;
-   }
-
-   .pte-display-thumbnail-menu {
-      font-size: 1.2em;
-      float:left;
-      margin-right: 3px;
-      padding: 2px;
-   }
-
-   .no-current-image {
-      font-size: 3em;
-   }
-
-   .pte-display-thumbnail-image.selected {
-      border-width: 5px !important;
-      border-style: solid;
-      border-color: #cccccc;
-   }
-
-   .pte-display-thumbnail-image.modified {
-      border: 1px solid green;
-      background-color: #ddffdd;
-      padding: 10px 5px;
-   }
-   .pte-display-thumbnail-image.original {
-      transition: background 1.5s ease-in-out, padding 1.5s ease-in-out;
-      -webkit-transition: background 1.5s ease-in-out, padding 1.5s ease-in-out;
-      -moz-transition: background 1.5s ease-in-out, padding 1.5s ease-in-out;
-   }
-
-   /*** Angular cloak ***/
-   [ng\:cloak], [ng-cloak], .ng-cloak {
-      display: none;
-   }
-
-   /** For thumbnail review **/
-   #pte-remember, #pte-remember-list {
-       margin: 0;
-       padding: 0;
-       z-index: 1000;
-   }
-   #pte-remember.horizontal {
-       width: 100%;
-   }
-   #pte-remember.vertical {
-       position: absolute;
-       top: -15px;
-       right: -130px;
-       /*top: -0px;*/
-   }
-   #pte-remember.horizontal #pte-remember-list {
-       overflow-x: auto;
-       width: 100%;
-       white-space: nowrap;
-       margin-right: -10px;
-   }
-   #pte-remember.horizontal li { display: inline-block; margin-left: 10px; }
-   #pte-remember.horizontal #pte-remember-list li:first-child { margin-left: 0; }
-   #pte-remember.horizontal li img { height: 100px; }
-   #pte-remember.vertical li img { width: 100px; }
-</style>
 <div class="wrap ng-cloak" ng-init="currentThumbnailBarPosition='<?php echo $options['pte_thumbnail_bar'];?>'" ng-controller="PteCtrl">
-   <?php screen_icon(); ?>
+   <?php if ( !isset( $_GET['title'] ) || $_GET['title'] != 'false' ) : ?>
+   <?php screen_icon('upload'); ?>
    <h2><?php _e("Post Thumbnail Editor", PTE_DOMAIN);?> &ndash; 
       <span id="pte-subtitle"><?php _e("crop and resize", PTE_DOMAIN); ?></span>
    </h2>
    <div class="subtitle"><?php echo $post->post_title; ?></div>
+   <?php endif; ?>
    <h3 class="nav-tab-wrapper">
       <a ng-href="" ng-class="pageClass('crop')" ng-click="changePage('crop')" class="nav-tab"><?php _e("Crop", PTE_DOMAIN); ?></a>
       <a ng-href="" ng-class="pageClass('view')" ng-click="changePage('view')" class="nav-tab"><?php _e("View", PTE_DOMAIN); ?></a>
@@ -217,15 +52,24 @@ $options = pte_get_options();
       <div id="post-body" class="metabox-holder columns-1">
          <div id="post-body-content">
             <div class="error-message" ng-show="errorMessage">
-               <i class="icon-remove" ng-click="errorMessage = null"></i>
-               <i class="icon-warning-sign"></i>
+               <i class="fa-times" ng-click="errorMessage = null"></i>
+               <i class="fa-warning"></i>
                {{ errorMessage }}
             </div>
             <div class="info-message" ng-show="infoMessage">
-               <i class="icon-remove" ng-click="infoMessage = null"></i>
-               <i class="icon-info-sign"></i>
+               <i class="fa-times" ng-click="infoMessage = null"></i>
+               <i class="fa-info-circle"></i>
                {{ infoMessage }}
             </div>
+
+			<!-- LOADING SPINNER -->
+			<div class="pte-page-switcher" ng-show="page.loading">
+				<div class="pte-loading">
+					<img src="<?php echo( site_url( "wp-includes/images/wpspin-2x.gif" ) ); ?>"/>
+				</div>
+			</div>
+			<!-- END LOADING -->
+
             <div class="pte-page-switcher" ng-show="page.crop">
             <div id="pte-image" ng-controller="CropCtrl">
                <img id="pte-preview" src="<?php 
@@ -241,17 +85,18 @@ $options = pte_get_options();
                <div id="pte-crop-controls">
 						<a ng-click="toggleOptions()" class="button button-secondary" ng-href=""><?php
 							_e( "Options", PTE_DOMAIN ); ?>
-							<i class="icon-caret-down" ng-hide="cropOptions"></i>
-							<i class="icon-caret-up" ng-show="cropOptions"></i>
+							<i class="fa-caret-down" ng-hide="cropOptions"></i>
+							<i class="fa-caret-up" ng-show="cropOptions"></i>
 						</a>
 						<a ng-disabled="cropInProgress" class="button button-primary" ng-href="" ng-click="submitCrop()">
 							<span ng-hide="cropInProgress">{{ cropText() }}</span>
-							<i ng-show="cropInProgress" class="icon-spin icon-spinner"></i>
+							<i ng-show="cropInProgress" class="fa-spin fa-spinner"></i>
 						</a>
                </div>
 					<div style="position: relative">
 						<div id="pte-crop-settings" ng-show="cropOptions">
-							<i class="icon-remove" ng-click="toggleOptions()"></i>
+							<i class="fa-times" ng-click="toggleOptions()"></i>
+							<form name="test">
 							<ul>
 								<li>
 									<!--ui-event="{blur : 'aspectRatioBlur()'}"-->
@@ -259,9 +104,9 @@ $options = pte_get_options();
 									<input id="pte-aspect-ratio" 
 											type="number"
 											placeholder="<?php _e( "width/height", PTE_DOMAIN ); ?>"
-											ng-model="aspectRatio" ng-change="changeAR()"/>
+											ng-model="aspectRatio" ng-change="changeAR()" name="pte-aspect-ratio"/>
 									<!--ng-pattern="aspectRatioPattern"/>-->
-									<i class="icon-undo" ng-click="aspectRatio = null"></i>
+									<i class="fa-undo" ng-click="aspectRatio = null"></i>
 								</li>
 								<li>
 									<label for="pte-crop-and-save"><?php _e("Crop and save", PTE_DOMAIN); ?></label>
@@ -275,7 +120,32 @@ $options = pte_get_options();
 								<li>
                                     <?php _e( "Change the current thumbnails position:" ); ?>&nbsp;<button ng-click="toggleCurrentThumbnailBarPosition()">{{ currentThumbnailBarPosition }}</button>
 								</li>
+								<?php if ( $post->post_mime_type == "image/jpeg" ): # is JPEG file ?>
+								<li><label for="pte-jpg-compression"><?php _e( "JPEG Compression" ); ?></label>&nbsp;
+									<input id="pte-jpg-compression"
+										type="number"
+										ng-model="pteJpgCompression"
+										placeholder="<?php printf( __( "0 to 100 (Default: %d)" ), $options['pte_jpeg_compression'] ); ?>"
+										min="0"
+										max="100"
+										name="pte-jpg-compression"/>
+								</li>
+								<?php endif; ?>
+								<li>
+								<span ng-hide="aspectRatio">
+									<label for="pteFitCrop">
+										<?php _e( "Fit crop to thumbnail by adding border" ); ?>
+									</label>
+									<input id="pteFitCrop" 
+												name="pte-fit-crop" 
+												type="checkbox" 
+												ng-model="pteFitCrop"
+												ng-click="fitToCrop()"/>
+									<span ng-click="fitToCrop()">{{ pteFitCropColor }}</span>
+								</span>
+								</li>
 							</ul>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -287,25 +157,25 @@ $options = pte_get_options();
                            <input type="checkbox" ng-model="tableSelector" ng-change="toggleAll()"/>
                         </th>
                         <th><?php _e( "Thumbnails" ); ?></th>
-                        <th class="align-right"><?php _e( "W" ); ?></th>
-                        <th class="align-right"><?php _e( "H" ); ?></th>
-                        <th><?php _e( "C" ); ?></th>
+						<th class="align-right" title="<?php _e("width"); ?>"><?php _e( "W" ); ?></th>
+						<th class="align-right" title="<?php _e("height"); ?>"><?php _e( "H" ); ?></th>
+						<th title="<?php _e("crop"); ?>"><?php _e( "C" ); ?></th>
                         <th class="center">
                            <span class="pte-thumbnails-menu">
                               <i ng-show="anyProposed()" 
                                  ng-click="save()"
                                  id="pte-save-all"
                                  title="<?php _e( "Save all", PTE_DOMAIN ); ?>"
-                                 class="icon-save"></i>
+                                 class="fa-save"></i>
                               <i ng-show="anyProposed()" 
                                  ng-click="trashAll(); $event.stopPropagation()"
                                  id="pte-reset-all"
                                  title="<?php _e( "Reset all", PTE_DOMAIN ); ?>"
-                                 class="icon-trash"></i>
+                                 class="fa-trash-o"></i>
                               <i ng-click="view(anyProposed());"
                                  id="pte-view-modified" 
                                  title="<?php _e( 'View all/modified', PTE_DOMAIN ); ?>" 
-                                 class="icon-search"></i>
+                                 class="fa-search"></i>
                            </span>
                         </th>
                      </tr>
@@ -330,13 +200,13 @@ $options = pte_get_options();
                            <span class="pte-thumbnail-menu">
                               <i ng-show="thumbnail.proposed" 
                                  ng-click="save(thumbnail)"
-                                 title="<?php _e( "Save", PTE_DOMAIN ); ?>" class="icon-save"></i>
+                                 title="<?php _e( "Save", PTE_DOMAIN ); ?>" class="fa-save"></i>
                               <i ng-show="thumbnail.proposed" 
                                  ng-click="trash(thumbnail); $event.stopPropagation()"
-                                 title="<?php _e( "Reset", PTE_DOMAIN ); ?>" class="icon-trash"></i>
+                                 title="<?php _e( "Reset", PTE_DOMAIN ); ?>" class="fa-trash-o"></i>
                               <i ng-show="thumbnail.proposed" 
                                  ng-click="changePage('view'); view(thumbnail.name); $event.stopPropagation();" 
-                                 title="<?php _e( "Compare/View", PTE_DOMAIN ); ?>" class="icon-search"></i>
+                                 title="<?php _e( "Compare/View", PTE_DOMAIN ); ?>" class="fa-search"></i>
                            </span>
                         </td>
                      </tr>
@@ -347,7 +217,7 @@ $options = pte_get_options();
                   <ul>
                      <li ng-repeat="aspectRatio in aspectRatios | orderBy:size">
                         <a ng-click="selectAspectRatio(aspectRatio)" ng-href="">
-                           <i class="icon-chevron-right"></i>
+                           <i class="fa-chevron-right"></i>
                            {{ aspectRatio.thumbnails.toString().replace(",",", ") }}</a></li>
                   </ul>
                </div>
@@ -360,7 +230,7 @@ $options = pte_get_options();
                                    alt="{{ thumbnail.name }}" 
                                    title="{{ thumbnail.name }}"/>
                            <span title="{{ thumbnail.name }}" class="no-current-image" ng-hide="thumbnail.current">
-                               <i class="icon-exclamation-sign"></i>
+                               <i class="fa-exclamation-circle"></i>
                            </span>
                        </li>
                    </ul>
@@ -372,11 +242,11 @@ $options = pte_get_options();
                      ng-repeat="thumbnail in thumbnails | filter:viewFilterFunc | orderBy:orderBy">
                   <div class="pte-display-thumbnail-image" ng-class="thumbnailClass(thumbnail)">
                      <div class="pte-display-thumbnail-menu" ng-show="thumbnail.proposed">
-                        <button ng-click="thumbnail.showProposed = !thumbnail.showProposed"><i class="icon-refresh"></i></button>
+                        <button ng-click="thumbnail.showProposed = !thumbnail.showProposed"><i class="fa-refresh"></i></button>
                         <br/>
-                        <button ng-click="save(thumbnail)" ng-show="thumbnail.showProposed"><i class="icon-save"></i></button>
+                        <button ng-click="save(thumbnail)" ng-show="thumbnail.showProposed"><i class="fa-save"></i></button>
                         <br/>
-                        <button ng-click="trash(thumbnail); $event.stopPropagation()" ng-show="thumbnail.showProposed"><i class="icon-trash"></i></button>
+                        <button ng-click="trash(thumbnail); $event.stopPropagation()" ng-show="thumbnail.showProposed"><i class="fa-trash-o"></i></button>
                      </div>
                      <div 
                         ng-dblclick="changePage('crop');$event.stopPropagation();"
@@ -388,7 +258,7 @@ $options = pte_get_options();
                               alt="{{ thumbnail.name }}" 
                               title="{{ thumbnail.name }}"/>
                         <span class="no-current-image" ng-hide="thumbnail.current">
-                           <i class="icon-exclamation-sign"></i>
+                           <i class="fa-exclamation-circle"></i>
                            <?php _e( "No image has been generated yet for image: ", PTE_DOMAIN ) ?> '{{ thumbnail.name }}'
                         </span>
                      </div>
@@ -409,6 +279,9 @@ $options = pte_get_options();
          </div>
       </div>
    </div>
+</div>
+<div id="pte-iris-dialog">
+	<input type="text" name="pteIris" id="pteIris" value="" />
 </div>
 <?php
 

@@ -14,8 +14,16 @@ define [
 
          return
 
+      $scope.userDisabledFitCrop = false
       $scope.$watch 'aspectRatio', ->
          ar = $scope.aspectRatio || null
+         if ar is null
+            if $scope.userDisabledFitCrop
+               $scope.setInfoMessage $scope.i18n.crop_problems
+            # Set the fit to crop automatically
+            else
+               $scope.pteFitCrop = true
+               $scope.pteFitCropColor = settings.i18n.transparent
          jcrop.setOptions
             aspectRatio: ar
          return
@@ -35,7 +43,32 @@ define [
          if !$scope.cropOptions
             $scope.aspectRatio = null
             $scope.userChanged = false
+            $scope.pteJpgCompression = null
             $scope.updateSelected()
+         return
+
+      $scope.fitToCrop = (e) ->
+         if !$( "#pteFitCrop" ).prop('checked')
+            $scope.userDisabledFitCrop = true
+            $scope.setInfoMessage $scope.i18n.crop_problems
+            return
+
+         color = $scope.pteFitCropColor || ""
+         $("#pte-iris-dialog").find("input").val(color).iris
+            hide: false
+         .end().dialog
+            dialogClass: "wp-dialog"
+            buttons: [
+               text: settings.i18n.fitCrop_transparent
+               click: ->
+                  $scope.$apply "pteFitCropColor = '"+ settings.i18n.transparent + "'"
+                  $( this ).dialog( 'close' )
+            ,
+               text: settings.i18n.fitCrop_save
+               click: ->
+                  $scope.$apply "pteFitCropColor = '" + $( "input", this ).val() + "'"
+                  $( this ).dialog( 'close' )
+            ]
          return
 
       ###
@@ -97,7 +130,6 @@ define [
             if ar is null and selected is false
                ar = settings.width/settings.height
          catch error
-            $scope.setInfoMessage $scope.i18n.crop_problems
             ar = null
 
          $scope.aspectRatio = ar
@@ -138,7 +170,7 @@ define [
          crop_options =
             'pte-action': 'resize-images'
             'id': settings.id
-            'pte-sizes': selected_thumbs
+            'pte-sizes[]': selected_thumbs
             'w':w
             'h':h
             'x':x
@@ -146,6 +178,15 @@ define [
 
          if $scope.pteCropSave
             crop_options['save'] = 'true'
+
+         if 0 <= +$scope.pteJpgCompression <= 100
+            crop_options['pte-jpeg-compression'] = $scope.pteJpgCompression
+
+         # If the user wants to fit the crop to the thumbnail size, set the background color here
+         if $scope.pteFitCrop
+            color = $scope.pteFitCropColor || ""
+            color = "" if color is settings.i18n.transparent
+            crop_options[ 'pte-fit-crop-color' ] = color
 
          crop_results = $scope.thumbnailResource.get crop_options, ->
             $scope.cropInProgress = false
