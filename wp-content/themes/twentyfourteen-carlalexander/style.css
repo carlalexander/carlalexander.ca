@@ -1,0 +1,26 @@
+/*
+ Theme Name:   Twenty Fourteen (carlalexander.ca)
+ Description:  Twenty Fourteen for carlalexander.ca
+ Author:       Carl Alexander
+ Author URI:   http://carlalexander.ca
+ Template:     twentyfourteen
+*/
+
+@import url("../twentyfourteen/style.css");
+
+.site-content .entry-header,
+.site-content .entry-content,
+.site-content .entry-summary,
+.site-content .entry-meta,
+.page-content,
+#disqus_thread {
+  max-width: 574px;
+}
+
+.post-navigation, .image-navigation {
+  max-width: 574px;
+}
+
+.comments-area {
+  max-width: 574px;
+}
