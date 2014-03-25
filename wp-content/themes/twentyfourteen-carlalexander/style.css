@@ -29,3 +29,7 @@
   max-width: 574px;
   padding: 0 10px;
 }
+
+.site-info .license {
+  float: right;
+}
