@@ -8,6 +8,15 @@
 
 @import url("../twentyfourteen/style.css");
 
+
+/**
+ * Homepage
+ */
+.home .content-area,
+.home .content-sidebar {
+  padding-top: 0;
+}
+
 /**
  * Content width
  */
