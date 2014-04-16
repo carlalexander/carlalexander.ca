@@ -1,59 +1,58 @@
 jQuery( function ( $ ) {
-	$( '.switch-have-key' ).click( function() {
-		var no_key = $( this ).parents().find('div.no-key');		
-		var have_key = $( this ).parents().find('div.have-key');
-		
-		no_key.addClass( 'hidden' );
-		have_key.removeClass( 'hidden' );		
-		
+	$( 'a.activate-option' ).click( function(){
+		var link = $( this );
+		if ( link.hasClass( 'clicked' ) ) {
+			link.removeClass( 'clicked' );
+		}
+		else {
+			link.addClass( 'clicked' );
+		}
+		$( '.toggle-have-key' ).slideToggle( 'slow', function() {});
 		return false;
-	});
-	$( 'p.need-key a' ).click( function(){
-		document.akismet_activate.submit();
 	});
 	$('.akismet-status').each(function () {
 		var thisId = $(this).attr('commentid');
-		$(this).prependTo('#comment-' + thisId + ' .column-comment div:first-child');
+		$(this).prependTo('#comment-' + thisId + ' .column-comment');
 	});
 	$('.akismet-user-comment-count').each(function () {
 		var thisId = $(this).attr('commentid');
 		$(this).insertAfter('#comment-' + thisId + ' .author strong:first').show();
 	});
 	$('#the-comment-list').find('tr.comment, tr[id ^= "comment-"]').find('.column-author a[title ^= "http://"]').each(function () {
- 		var thisTitle = $(this).attr('title');
- 		    thisCommentId = $(this).parents('tr:first').attr('id').split("-");
- 		
- 		$(this).attr("id", "author_comment_url_"+ thisCommentId[1]);
- 		
- 		if (thisTitle) {
- 			$(this).after(
+		var thisTitle = $(this).attr('title');
+			thisCommentId = $(this).parents('tr:first').attr('id').split("-");
+
+		$(this).attr("id", "author_comment_url_"+ thisCommentId[1]);
+
+		if (thisTitle) {
+			$(this).after(
 				$( '<a href="#" class="remove_url">x</a>' )
 					.attr( 'commentid', thisCommentId[1] )
 					.attr( 'title', WPAkismet.strings['Remove this URL'] )
 			);
- 		}
- 	});
- 	$('.remove_url').live('click', function () {
- 		var thisId = $(this).attr('commentid');
- 		var data = {
- 			action: 'comment_author_deurl',
+		}
+	});
+	$('.remove_url').live('click', function () {
+		var thisId = $(this).attr('commentid');
+		var data = {
+			action: 'comment_author_deurl',
 			_wpnonce: WPAkismet.comment_author_url_nonce,
- 			id: thisId
- 		};
- 		$.ajax({
-		    url: ajaxurl,
-		    type: 'POST',
-		    data: data,
-		    beforeSend: function () {
-		        // Removes "x" link
-	 			$("a[commentid='"+ thisId +"']").hide();
-	 			// Show temp status
-		        $("#author_comment_url_"+ thisId).html( $( '<span/>' ).text( WPAkismet.strings['Removing...'] ) );
-		    },
-		    success: function (response) {
-		        if (response) {
-	 				// Show status/undo link
-	 				$("#author_comment_url_"+ thisId)
+			id: thisId
+		};
+		$.ajax({
+			url: ajaxurl,
+			type: 'POST',
+			data: data,
+			beforeSend: function () {
+				// Removes "x" link
+				$("a[commentid='"+ thisId +"']").hide();
+				// Show temp status
+				$("#author_comment_url_"+ thisId).html( $( '<span/>' ).text( WPAkismet.strings['Removing...'] ) );
+			},
+			success: function (response) {
+				if (response) {
+					// Show status/undo link
+					$("#author_comment_url_"+ thisId)
 						.attr('cid', thisId)
 						.addClass('akismet_undo_link_removal')
 						.html(
@@ -66,40 +65,40 @@ jQuery( function ( $ ) {
 								.addClass( 'akismet-span-link' )
 						);
 				}
-		    }
+			}
 		});
 
- 		return false;
- 	});
- 	$('.akismet_undo_link_removal').live('click', function () {
- 		var thisId = $(this).attr('cid');
+		return false;
+	});
+	$('.akismet_undo_link_removal').live('click', function () {
+		var thisId = $(this).attr('cid');
 		var thisUrl = $(this).attr('href').replace("http://www.", "").replace("http://", "");
- 		var data = {
- 			action: 'comment_author_reurl',
+		var data = {
+			action: 'comment_author_reurl',
 			_wpnonce: WPAkismet.comment_author_url_nonce,
- 			id: thisId,
- 			url: thisUrl
- 		};
+			id: thisId,
+			url: thisUrl
+		};
 		$.ajax({
-		    url: ajaxurl,
-		    type: 'POST',
-		    data: data,
-		    beforeSend: function () {
-	 			// Show temp status
-		        $("#author_comment_url_"+ thisId).html( $( '<span/>' ).text( WPAkismet.strings['Re-adding...'] ) );
-		    },
-		    success: function (response) {
-		        if (response) {
-	 				// Add "x" link
+			url: ajaxurl,
+			type: 'POST',
+			data: data,
+			beforeSend: function () {
+				// Show temp status
+				$("#author_comment_url_"+ thisId).html( $( '<span/>' ).text( WPAkismet.strings['Re-adding...'] ) );
+			},
+			success: function (response) {
+				if (response) {
+					// Add "x" link
 					$("a[commentid='"+ thisId +"']").show();
 					// Show link
 					$("#author_comment_url_"+ thisId).removeClass('akismet_undo_link_removal').html(thisUrl);
-	 			}
-		    }
+				}
+			}
 		});
- 		
- 		return false;
- 	});
+
+		return false;
+	});
 	$('a[id^="author_comment_url"], tr.pingback td.column-author a:first-of-type').mouseover(function () {
 		var wpcomProtocol = ( 'https:' === location.protocol ) ? 'https://' : 'http://';
 		// Need to determine size of author column
@@ -124,30 +123,30 @@ jQuery( function ( $ ) {
 	}).mouseout(function () {
 		$(this).find('.mShot').hide();
 	});
-	$('.checkforspam:not(.button-disabled)').click( function(e) { 
- 	    $('.checkforspam:not(.button-disabled)').addClass('button-disabled'); 
- 		$('.checkforspam-spinner').show(); 
- 		akismet_check_for_spam(0, 100); 
- 		e.preventDefault(); 
- 	});
-	
-	function akismet_check_for_spam(offset, limit) { 
-		$.post( 
-			ajaxurl, 
-			{ 
-				'action': 'akismet_recheck_queue', 
-				'offset': offset, 
-				'limit': limit 
-			}, 
-			function(result) { 
-				if (result.processed < limit) { 
-					window.location.reload(); 
-				} 
-				else { 
-					akismet_check_for_spam(offset + limit, limit); 
-				} 
-			} 
-		); 
+	$('.checkforspam:not(.button-disabled)').click( function(e) {
+		$('.checkforspam:not(.button-disabled)').addClass('button-disabled');
+		$('.checkforspam-spinner').show();
+		akismet_check_for_spam(0, 100);
+		e.preventDefault();
+	});
+
+	function akismet_check_for_spam(offset, limit) {
+		$.post(
+			ajaxurl,
+			{
+				'action': 'akismet_recheck_queue',
+				'offset': offset,
+				'limit': limit
+			},
+			function(result) {
+				if (result.processed < limit) {
+					window.location.reload();
+				}
+				else {
+					akismet_check_for_spam(offset + limit, limit);
+				}
+			}
+		);
 	}
 });
 // URL encode plugin
