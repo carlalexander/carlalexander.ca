@@ -1,10 +1,12 @@
 <?php
 global $post, $pte_iframe;
-function ep(){
-   echo PTE_PLUGINURL;
+function u( $path ){
+   printf( "%s%s?%s",
+	   PTE_PLUGINURL,
+	   $path,
+	   PTE_VERSION
+   );
 }
-
-$options = pte_get_options();
 
 ?>
 
@@ -32,9 +34,9 @@ $options = pte_get_options();
 }?>
 </script>
  
-<link rel="stylesheet" href="<?php ep() ?>apps/font-awesome/css/font-awesome.min.css"/>
-<link rel="stylesheet" href="<?php ep() ?>apps/jcrop/css/jquery.Jcrop.css"/>
-<link rel="stylesheet" href="<?php ep() ?>css/pte.css"/>
+<link rel="stylesheet" href="<?php u( 'apps/font-awesome/css/font-awesome.min.css' ) ?>"/>
+<link rel="stylesheet" href="<?php u( 'apps/jcrop/css/jquery.Jcrop.css' ) ?>"/>
+<link rel="stylesheet" href="<?php u( 'css/pte.css' ) ?>"/>
 
 <div class="wrap ng-cloak" ng-init="currentThumbnailBarPosition='<?php echo $options['pte_thumbnail_bar'];?>'" ng-controller="PteCtrl">
    <?php if ( !isset( $_GET['title'] ) || $_GET['title'] != 'false' ) : ?>
@@ -73,13 +75,7 @@ $options = pte_get_options();
             <div class="pte-page-switcher" ng-show="page.crop">
             <div id="pte-image" ng-controller="CropCtrl">
                <img id="pte-preview" src="<?php 
-               echo admin_url('admin-ajax.php'); 
-               ?>?action=pte_imgedit_preview&amp;_ajax_nonce=<?php
-               echo $nonce; 
-               ?>&amp;postid=<?php
-               echo $post->ID;
-               ?>&amp;rand=<?php
-               echo rand(1, 99999); // Verify that the image is up to date
+					echo $editor_image;
                ?>"/>
       
                <div id="pte-crop-controls">
@@ -118,10 +114,10 @@ $options = pte_get_options();
 											id="pte-crop-and-save"/>
 								</li>
 								<li>
-                                    <?php _e( "Change the current thumbnails position:" ); ?>&nbsp;<button ng-click="toggleCurrentThumbnailBarPosition()">{{ currentThumbnailBarPosition }}</button>
+                                    <?php _e( "Change the current thumbnails position:", PTE_DOMAIN ); ?>&nbsp;<button ng-click="toggleCurrentThumbnailBarPosition()">{{ currentThumbnailBarPosition }}</button>
 								</li>
 								<?php if ( $post->post_mime_type == "image/jpeg" ): # is JPEG file ?>
-								<li><label for="pte-jpg-compression"><?php _e( "JPEG Compression" ); ?></label>&nbsp;
+								<li><label for="pte-jpg-compression"><?php _e( "JPEG Compression", PTE_DOMAIN ); ?></label>&nbsp;
 									<input id="pte-jpg-compression"
 										type="number"
 										ng-model="pteJpgCompression"

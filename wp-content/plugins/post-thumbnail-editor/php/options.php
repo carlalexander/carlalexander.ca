@@ -68,6 +68,13 @@ function pte_options_init(){
 function pte_options_page(){
 	/*<code><pre><?php print_r( pte_get_options() ); ?></pre></code>*/
 ?>
+	<style type="text/css" media="screen">
+	.sub-option {
+		margin-left: 30px;
+		margin-top: 10px;
+		font-size: smaller;
+	}
+	</style>
 	<div class="wrap">
 		<h2><?php _e('Post Thumbnail Editor', PTE_DOMAIN); ?></h2>
 		<form action="options.php" method="post">
@@ -135,7 +142,11 @@ function pte_options_validate( $input ){
 		return array();
 	}
 	$options['pte_debug'] = isset( $input['pte_debug'] );
+	$options['pte_debug_out_chrome'] = isset( $input['pte_debug_out_chrome'] );
+	$options['pte_debug_out_file'] = isset( $input['pte_debug_out_file'] );
 	$options['pte_crop_save'] = isset( $input['pte_crop_save'] );
+	$options['pte_imgedit_disk'] = isset( $input['pte_imgedit_disk'] );
+
 	// Check the imgedit_max_size value
 	if ( $input['pte_imgedit_max_size'] != "" ){
 		$tmp_size = (int) preg_replace( "/[\D]/", "", $input['pte_imgedit_max_size'] );
@@ -163,10 +174,25 @@ function pte_debug_display(){
 	?> id="pte_debug"/>&nbsp;<label for="pte_debug"><?php _e( 'Enable debugging', PTE_DOMAIN ); ?></label>
 <?php if ( WP_DEBUG ) {
 	print( "<br/><em>" );
-	_e( "WP_DEBUG is currently set to true and will override this setting." ); 
+	_e( "WP_DEBUG is currently set to true and will override this setting. (debug is enabled)" ); 
 	print( "</em>" );
 }?>
 	</span>
+	<div class="sub-option"><input type="checkbox" name="<?php echo $option_label; ?>[pte_debug_out_chrome]" <?php
+		if ( $options['pte_debug_out_chrome'] ): print "checked"; endif; ?> id="pte_debug_out_chrome"/>
+		&nbsp;
+		<label for="pte_debug_out_chrome"><?php printf( __('Use <a href="%s">ChromePhp</a> for log output'),
+			'https://github.com/ccampbell/chromephp'
+		); ?></label>
+	</div>
+	<div class="sub-option"><input type="checkbox" name="<?php echo $option_label; ?>[pte_debug_out_file]" <?php
+		if ( $options['pte_debug_out_file'] ): print "checked"; endif; ?> id="pte_debug_out_file"/>
+		&nbsp;
+		<label for="pte_debug_out_file"><?php printf(
+			__('Write log output to a <a href="%s">file</a>'),
+			PteLogFileHandler::getLogFileUrl()
+		); ?></label>
+	</div>
 <?php
 }
 
@@ -194,6 +220,15 @@ function pte_imgedit_size_display(){
 	<?php _e("Set the max size for the crop image.", PTE_DOMAIN); ?>
 	<br/><em><?php _e("No entry defaults to 600", PTE_DOMAIN); ?></em>
 	</span>
+	<div class="sub-option">
+	<span><input type="checkbox" 
+			name="<?php print $option_label; ?>[pte_imgedit_disk]" 
+			<?php if ($options['pte_imgedit_disk'] ): print "checked"; endif; ?>
+			id="pte_imgedit_disk">&nbsp;<label for="pte_imgedit_disk"> 
+		<?php _e("Check this to save the generated working image to disk instead of creating on the fly (experimental)", PTE_DOMAIN); ?>
+	</label>
+	</span>
+	</div>
 <?php
 }
 

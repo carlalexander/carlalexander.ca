@@ -4,7 +4,7 @@ Plugin name: Post Thumbnail Editor
 Plugin URI: http://sewpafly.github.io/post-thumbnail-editor/
 Author: sewpafly
 Author URI: http://sewpafly.github.io/post-thumbnail-editor/
-Version: 2.3.0
+Version: 2.4.0
 Description: Individually manage your post thumbnails
 
 LICENSE
@@ -34,7 +34,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 define( 'PTE_PLUGINURL', plugins_url(basename( dirname(__FILE__))) . "/");
 define( 'PTE_PLUGINPATH', dirname(__FILE__) . "/");
 define( 'PTE_DOMAIN', "post-thumbnail-editor");
-define( 'PTE_VERSION', "2.3.0");
+define( 'PTE_VERSION', "2.4.0");
 
 // TODO:
 // * Find the best place for the require log (only when it's really needed, create an init function?)
@@ -63,7 +63,10 @@ function pte_get_user_options(){
 	$defaults = array( 'pte_debug' => false
 		, 'pte_crop_save' => false
 		, 'pte_thumbnail_bar' => 'horizontal'
+		, 'pte_imgedit_disk' => false
 		, 'pte_imgedit_max_size' => 600
+		, 'pte_debug_out_chrome' => false
+		, 'pte_debug_out_file' => false
 	);
 
 	// WORDPRESS DEBUG overrides user setting...
@@ -130,18 +133,28 @@ function pte_update_user_options(){
 function pte_url( $id, $iframe=false ){
 	if ($iframe) {
 		$pte_url = admin_url( 'admin-ajax.php' )
-			. "?action=pte_ajax&pte-action=iframe&pte-id=${id}"
+			. "?action=pte_ajax&pte-action=iframe&pte-id={$id}"
 			. "&TB_iframe=true";
 	}
 	else {
 		$pte_url = admin_url('upload.php') 
-			. "?page=pte-edit&pte-id=${id}";
+			. "?page=pte-edit&pte-id={$id}";
 	}
 
 	return $pte_url;
 }
 
 
+/**
+ * Used in functions.php, log.php & options.php to get pseudo-TMP file paths
+ */
+function pte_tmp_dir()
+{
+	$uploads 	    = wp_upload_dir();
+	$PTE_TMP_DIR    = $uploads['basedir'] . DIRECTORY_SEPARATOR . "ptetmp" . DIRECTORY_SEPARATOR;
+	$PTE_TMP_URL    = $uploads['baseurl'] . "/ptetmp/";
+	return compact( 'PTE_TMP_DIR', 'PTE_TMP_URL' );
+}
 
 
 /*
