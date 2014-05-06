@@ -96,7 +96,7 @@ class CrayonSettingsWP {
         self::init_js_settings();
 
         if (is_admin()) {
-            wp_enqueue_script('crayon_admin_js', plugins_url(CRAYON_JS_ADMIN, __FILE__), array('jquery', 'crayon_js_min', 'wpdialogs', 'wpdialogs-popup'), $CRAYON_VERSION);
+            wp_enqueue_script('crayon_admin_js', plugins_url(CRAYON_JS_ADMIN, __FILE__), array('jquery', 'crayon_js_min', 'wpdialogs'), $CRAYON_VERSION);
             self::init_admin_js_settings();
         }
     }
@@ -843,6 +843,7 @@ class CrayonSettingsWP {
     }
 
     public static function show_langs() {
+        CrayonSettingsWP::load_settings();
         require_once (CRAYON_PARSER_PHP);
         if (($langs = CrayonParser::parse_all()) != FALSE) {
             $langs = CrayonLangs::sort_by_name($langs);
@@ -888,6 +889,7 @@ class CrayonSettingsWP {
     }
 
     public static function show_posts() {
+        CrayonSettingsWP::load_settings();
         $postIDs = self::load_posts();
         $legacy_posts = self::load_legacy_posts();
         // Avoids O(n^2) by using a hash map, tradeoff in using strval
@@ -1209,11 +1211,12 @@ class Human {
                 '
                 Arabic (<a href="http://djennadhamza.eb2a.com/" target="_blank">Djennad Hamza</a>),
                 Chinese (<a href="http://smerpup.com/" target="_blank">Dezhi Liu</a>, <a href="http://neverno.me/" target="_blank">Jash Yin</a>),
-				Dutch (<a href="https://twitter.com/#!/chilionsnoek" target="_blank">Chilion Snoek</a>),
+				Dutch (<a href="http://www.dreamdesignsolutions.nl/" target="_blank">Robin Roelofsen</a>, <a href="https://twitter.com/#!/chilionsnoek" target="_blank">Chilion Snoek</a>),
 				French (<a href="http://tech.dupeu.pl" target="_blank">Victor Felder</a>),
 				German (<a href="http://www.technologyblog.de/" target="_blank">Stephan Knau&#223;</a>),
 				Italian (<a href="http://www.federicobellucci.net/" target="_blank">Federico Bellucci</a>),
 				Japanese (<a href="https://twitter.com/#!/west_323" target="_blank">@west_323</a>),
+				Korean (<a href="https://github.com/dokenzy" target="_blank">dokenzy</a>),
 				Lithuanian (<a href="http://www.host1free.com" target="_blank">Vincent G</a>),
 				Polish (<a href="https://github.com/toszcze" target="_blank">Bartosz Romanowski</a>),
 				Portuguese (<a href="http://www.adonai.eti.br" target="_blank">Adonai S. Canez</a>),

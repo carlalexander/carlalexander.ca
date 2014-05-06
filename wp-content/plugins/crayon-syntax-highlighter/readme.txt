@@ -128,11 +128,12 @@ See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specifica
 
 * Arabic (thanks to <a href="http://djennadhamza.eb2a.com/" target="_blank">Djennad Hamza</a>)
 * Chinese (Simplified, thanks to <a href="http://smerpup.com/" target="_blank">Dezhi Liu</a> & <a href="http://neverno.me/" target="_blank">Jash Yin</a>)
-* Dutch (thanks to <a href="https://twitter.com/#!/chilionsnoek" target="_blank">Chilion Snoek</a>)
+* Dutch (thanks to <a href="http://www.dreamdesignsolutions.nl/" target="_blank">Robin Roelofsen</a> & <a href="https://twitter.com/#!/chilionsnoek" target="_blank">Chilion Snoek</a>)
 * French (thanks to <a href="http://tech.dupeu.pl" target="_blank">Victor Felder</a>)
 * German (thanks to <a href="http://www.technologyblog.de/" target="_blank">Stephan Knau&szlig;</a>)
 * Italian (thanks to <a href="http://www.federicobellucci.net/" target="_blank">Federico Bellucci</a>)
 * Japanese (thanks to <a href="https://twitter.com/#!/west_323" target="_blank">@west_323</a>)
+* Korean (thanks to <a href="https://github.com/dokenzy" target="_blank">dokenzy</a>)
 * Lithuanian (thanks to <a href="http://www.host1free.com" target="_blank">Vincent G</a>)
 * Polish (thanks to <a href="https://github.com/toszcze" target="_blank">Bartosz Romanowski</a>)
 * Portuguese (thanks to <a href="http://www.adonai.eti.br" target="_blank">Adonai S. Canez</a>)
@@ -195,9 +196,12 @@ A handful of articles from others written about Crayon, thanks guys!
 
 Thanks to all those who donate to the project:
 
-
+* Alicia Ramirez, (http://aliciaramirez.com/), Canada
+* William Eisert, USA
+* Inappix Development, (http://www.inappix.com/), Switzerland
 * Stephen Sant, (http://thesantfamily.net/), UK
 * David Rodriguez, (http://davidarodriguez.com/), USA
+* Chris Moore, (http://moorecreativeideas.com/), USA
 * Sohail Ahmed, (http://sohail.io.com/), USA
 * Vanessa Garcia Espin, Spain
 * Samad Malik, (http://samadmalik.com/), USA
@@ -266,6 +270,19 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 5. Theme Editor.
 
 == Changelog ==
+
+= 2.6.0 =
+* ADDED:
+    * Delphi Web Script language (thanks to <a href="http://www.smartmobilestudio.com" target="_blank">smartmobilestudio</a>).
+    * Added Pspad theme.
+    * Dark terminal theme (thanks to <a href="http://blog.naydenov.net/" target="_blank">http://blog.naydenov.net/</a>)
+    * Support for user-defined languages in the wp-content/uploads/crayon-syntax-highlighter/langs folder which will remain after upgrades.
+    * Korean translation.
+* FIXED:
+    * Dutch translation.
+    * Compatibility with Wordpress 3.9:
+    * Tag editor updated to comply with TinyMCE version 4.
+    * Admin script failed to load since "wpdialgs-popup" script is no longer available.
 
 = 2.5.0 =
 * ADDED:
