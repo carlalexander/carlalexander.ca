@@ -16,6 +16,9 @@
 .home .content-sidebar {
   padding-top: 0;
 }
+.full-width.home .site-content .hentry.has-post-thumbnail {
+  margin: 0 0 48px;
+}
 
 /**
  * Content width
@@ -39,28 +42,6 @@
   border-left: 40px solid #000;
   padding-left: 15px;
   text-transform: uppercase;
-}
-
-.site-content .button {
-  background-color: #24890d;
-  border: 0;
-  border-radius: 2px;
-  color: #fff;
-  font-size: 12px;
-  font-weight: 700;
-  padding: 10px 30px 11px;
-  text-transform: uppercase;
-  vertical-align: bottom;
-  text-decoration: none;
-}
-
-.site-content .button:hover {
-  background-color: #41a62a;
-  color: #fff;
-}
-
-.site-content .button:active {
-  background-color: #55d737;
 }
 
 .post-navigation, .image-navigation {
