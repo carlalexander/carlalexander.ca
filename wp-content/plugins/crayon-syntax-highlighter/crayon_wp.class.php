@@ -3,7 +3,7 @@
 Plugin Name: Crayon Syntax Highlighter
 Plugin URI: https://github.com/aramkocharyan/crayon-syntax-highlighter
 Description: Supports multiple languages, themes, highlighting from a URL, local file or post text.
-Version: 2.6.0
+Version: 2.6.1
 Author: Aram Kocharyan
 Author URI: http://aramk.com/
 Text Domain: crayon-syntax-highlighter
@@ -534,7 +534,7 @@ class CrayonWP {
             global $CRAYON_VERSION;
             if (CRAYON_MINIFY) {
                 wp_enqueue_style('crayon', plugins_url(CRAYON_STYLE_MIN, __FILE__), array(), $CRAYON_VERSION);
-                wp_enqueue_script('crayon_js_min', plugins_url(CRAYON_JS_MIN, __FILE__), array('jquery'), $CRAYON_VERSION);
+                wp_enqueue_script('crayon_js', plugins_url(CRAYON_JS_MIN, __FILE__), array('jquery'), $CRAYON_VERSION);
             } else {
                 wp_enqueue_style('crayon_style', plugins_url(CRAYON_STYLE, __FILE__), array(), $CRAYON_VERSION);
                 wp_enqueue_style('crayon_global_style', plugins_url(CRAYON_STYLE_GLOBAL, __FILE__), array(), $CRAYON_VERSION);
@@ -546,11 +546,8 @@ class CrayonWP {
         }
     }
 
-//    public static function prevent_resources() {
-//        self::$enqueued = TRUE;
-//    }
-
     private static function init_tags_regex($force = FALSE, $flags = NULL, &$tags_regex = NULL) {
+        CrayonSettingsWP::load_settings();
         self::init_tag_bits();
 
         // Default output
