@@ -33,6 +33,18 @@
   max-width: 574px;
 }
 
+.post-navigation, .image-navigation {
+  margin: 24px auto 48px;
+  max-width: 574px;
+  padding: 0 10px;
+}
+
+.comments-area {
+  margin: 48px auto;
+  max-width: 574px;
+  padding: 0 10px;
+}
+
 /**
  * Seperator
  */
@@ -48,18 +60,6 @@
   border-left: 40px solid #000;
   padding-left: 15px;
   text-transform: uppercase;
-}
-
-.post-navigation, .image-navigation {
-  margin: 24px auto 48px;
-  max-width: 574px;
-  padding: 0 10px;
-}
-
-.comments-area {
-  margin: 48px auto;
-  max-width: 574px;
-  padding: 0 10px;
 }
 
 /**
