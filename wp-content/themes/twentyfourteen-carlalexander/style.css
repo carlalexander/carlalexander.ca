@@ -33,6 +33,12 @@
   max-width: 574px;
 }
 
+/**
+ * Seperator
+ */
+.home span + .comments-link:before {
+  content: "";
+}
 
 /**
  * Call to action
