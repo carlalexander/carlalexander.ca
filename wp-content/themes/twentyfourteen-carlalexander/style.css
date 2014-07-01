@@ -53,6 +53,17 @@
 }
 
 /**
+ * Secondary navigation
+ */
+.secondary-navigation {
+  display: none;
+}
+
+.secondary-navigation + .primary-sidebar {
+  padding-top: 48px;
+}
+
+/**
  * Call to action
  */
 .site-content .call-action {
@@ -93,5 +104,13 @@
     left: 0;
     top: 48px;
     margin: 0;
+  }
+
+  .secondary-navigation {
+    display: block;
+  }
+
+  .secondary-navigation + .primary-sidebar {
+    padding-top: 0;
   }
 }
