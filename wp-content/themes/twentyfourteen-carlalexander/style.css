@@ -82,3 +82,12 @@
     content: "\f304";
   }
 }
+
+@media screen and (min-width: 1008px) {
+  #secondary {
+    position: fixed;
+    left: 0;
+    top: 48px;
+    margin: 0;
+  }
+}
