@@ -68,3 +68,17 @@
 .site-info .license {
   float: right;
 }
+
+/**
+ * Media Queries
+ */
+@media screen and (min-width: 401px) {
+  .site-content .byline span:before {
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font: normal 16px/1 Genericons;
+    text-decoration: inherit;
+    vertical-align: text-bottom;
+    content: "\f304";
+  }
+}

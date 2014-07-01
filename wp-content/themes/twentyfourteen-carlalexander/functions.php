@@ -13,8 +13,7 @@ function twentyfourteen_posted_on() {
 	}
 
 	// Set up and print post meta information.
-	printf( '<span class="byline"><span class="author vcard"><a class="url fn n" href="%1$s" rel="author">%2$s</a></span></span>',
-		esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
+	printf( '<span class="byline"><span class="author vcard">%1$s</span></span>',
 		get_the_author()
 	);
 }
