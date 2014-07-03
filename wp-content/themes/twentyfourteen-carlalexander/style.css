@@ -46,6 +46,15 @@
 }
 
 /**
+ * Blockquotes
+ */
+.full-width .site-content blockquote.alignleft,
+.full-width .site-content blockquote.alignright {
+  width: -webkit-calc(50%);
+  width: calc(50%);
+}
+
+/**
  * Seperator
  */
 .home span + .comments-link:before {
