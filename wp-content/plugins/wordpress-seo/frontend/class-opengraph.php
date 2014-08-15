@@ -57,7 +57,7 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 
 				add_action( 'wpseo_opengraph', array( $this, 'image' ), 30 );
 			}
-			remove_action( 'wp_head', 'jetpack_og_tags' );
+			add_filter( 'jetpack_enable_open_graph', '__return_false' );
 			add_action( 'wpseo_head', array( $this, 'opengraph' ), 30 );
 		}
 
@@ -80,12 +80,13 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 		 * @return boolean
 		 */
 		public function og_tag( $property, $content ) {
+			$og_property = str_replace( ':', '_', $property );
 			/**
-			 * Filter: 'wpseo_og_' . $property - Allow developers to change the content of specific OG meta tags.
+			 * Filter: 'wpseo_og_' . $og_property - Allow developers to change the content of specific OG meta tags.
 			 *
 			 * @api string $content The content of the property
 			 */
-			$content = apply_filters( 'wpseo_og_' . str_replace( ':', '_', $property ), $content );
+			$content = apply_filters( 'wpseo_og_' . $og_property, $content );
 			if ( empty( $content ) ) {
 				return false;
 			}
@@ -213,12 +214,26 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 		 * @return boolean
 		 */
 		public function og_title( $echo = true ) {
+			if ( is_singular() ) {
+				$title = WPSEO_Meta::get_value( 'opengraph-title' );
+				if ( $title === '' ) {
+					$title = $this->title( '' );
+				} else {
+					// Replace WP SEO Variables
+					$title = wpseo_replace_vars( $title, get_post() );
+				}
+			} else if ( is_front_page() ) {
+				$title = ( $this->options['og_frontpage_title'] !== '' ) ? $this->options['og_frontpage_title'] : $this->title( '' );
+			} else {
+				$title = $this->title( '' );
+			}
+
 			/**
 			 * Filter: 'wpseo_opengraph_title' - Allow changing the title specifically for OpenGraph
 			 *
 			 * @api string $unsigned The title string
 			 */
-			$title = apply_filters( 'wpseo_opengraph_title', $this->title( '' ) );
+			$title = trim( apply_filters( 'wpseo_opengraph_title', $title ) );
 
 			if ( is_string( $title ) && $title !== '' ) {
 				if ( $echo !== false ) {
@@ -228,8 +243,8 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 			}
 
 			if ( $echo === false ) {
-				return $title; 
-			} 
+				return $title;
+			}
 
 			return false;
 		}
@@ -290,8 +305,8 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 					'zh' => 'zh_CN',
 			);
 
-			if ( isset( $fix_locales[$locale] ) ) {
-				$locale = $fix_locales[$locale];
+			if ( isset( $fix_locales[ $locale ] ) ) {
+				$locale = $fix_locales[ $locale ];
 			}
 
 			// convert locales like "es" to "es_ES", in case that works for the given locale (sometimes it does)
@@ -314,7 +329,7 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 			// check to see if the locale is a valid FB one, if not, use en_US as a fallback
 			// check to see if the locale is a valid FB one, if not, use en_US as a fallback
 			if ( ! in_array( $locale, $fb_valid_fb_locales ) ) {
-				$locale = strtolower( substr($locale, 0, 2) ) . '_' . strtoupper( substr($locale, 0, 2) );
+				$locale = strtolower( substr( $locale, 0, 2 ) ) . '_' . strtoupper( substr( $locale, 0, 2 ) );
 				if ( ! in_array( $locale, $fb_valid_fb_locales ) ) {
 					$locale = 'en_US';
 				}
@@ -348,12 +363,11 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 				if ( $type === '' ) {
 					$type = 'article';
 				}
-
 			}  else {
 				// We use "object" for archives etc. as article doesn't apply there
 				$type = 'object';
 			}
-			
+
 			/**
 			 * Filter: 'wpseo_opengraph_type' - Allow changing the OpenGraph type of the page
 			 *
@@ -380,7 +394,7 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 		 * @return bool
 		 */
 		function image_output( $img ) {
-			 /**
+			/**
 			 * Filter: 'wpseo_opengraph_image' - Allow changing the OpenGraph image
 			 *
 			 * @api string $img Image URL string
@@ -391,7 +405,7 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 				return false;
 			}
 
-			if ( strpos( $img, 'http' ) !== 0 ) {
+			if ( wpseo_is_url_relative( $img ) === true ) {
 				if ( $img[0] != '/' ) {
 					return false;
 				}
@@ -409,7 +423,6 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 			array_push( $this->shown_images, $img );
 
 			$this->og_tag( 'og:image', esc_url( $img ) );
-		
 
 			return true;
 		}
@@ -505,6 +518,11 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 
 			if ( is_category() || is_tag() || is_tax() ) {
 				$ogdesc = trim( strip_tags( term_description() ) );
+				if ( '' == $ogdesc ) {
+					global $wp_query;
+					$term   = $wp_query->get_queried_object();
+					$ogdesc = WPSEO_Taxonomy_Meta::get_term_meta( $term, $term->taxonomy, 'desc' );
+				}
 			}
 
 			// Strip shortcodes if any
@@ -515,7 +533,7 @@ if ( ! class_exists( 'WPSEO_OpenGraph' ) ) {
 			 *
 			 * @api string $ogdesc The description string.
 			 */
-			$ogdesc = apply_filters( 'wpseo_opengraph_desc', $ogdesc );
+			$ogdesc = trim( apply_filters( 'wpseo_opengraph_desc', $ogdesc ) );
 
 			if ( is_string( $ogdesc ) && $ogdesc !== '' ) {
 				if ( $echo !== false ) {

@@ -8,6 +8,8 @@ jQuery(document).ready( function() {
 	var new_metadesc_id 	 = "#wpseo-new-metadesc-";
 	var new_metadesc_class	 = ".wpseo-new-metadesc";
 
+	var current_element      = null;
+
 	var handle_response = function( response, status ) {
 		if (status != "success") { return; }
 
@@ -24,11 +26,11 @@ jQuery(document).ready( function() {
 		}
 		else {
 			if ( resp.status == 'success' ) {
-				if ( jQuery( '.wpseo_bulk_titles' ).length ) {
+				if ( jQuery(current_element).closest( '.wpseo_bulk_titles' ).length ) {
 					jQuery( existing_title_id + resp.post_id ).html( resp.new_title.replace(/\\(?!\\)/g, '') );
 					jQuery( new_title_id + resp.post_id ).val( '' ).focus();
 				}
-				else if ( jQuery( '.wpseo_bulk_descriptions').length ) {
+				else if ( jQuery(current_element).closest( '.wpseo_bulk_descriptions').length ) {
 					jQuery( existing_metadesc_id + resp.post_id ).html( resp.new_metadesc.replace(/\\(?!\\)/g, '') );
 					jQuery( new_metadesc_id + resp.post_id ).val( '' ).focus();
 				}
@@ -46,11 +48,14 @@ jQuery(document).ready( function() {
 		});
 	};
 
-	var submit_new = function( id ) {
-		if ( jQuery( '.wpseo_bulk_titles' ).length == 1 ) {
+	var submit_new = function( id , element) {
+
+		current_element = element;
+
+		if ( jQuery(current_element).closest( '.wpseo_bulk_titles' ).length == 1 ) {
 			submit_new_title( id );
 		}
-		else if ( jQuery( '.wpseo_bulk_descriptions').length == 1 ) {
+		else if ( jQuery(current_element).closest( '.wpseo_bulk_descriptions').length == 1 ) {
 			submit_new_metadesc( id );
 		}
 	};
@@ -58,6 +63,7 @@ jQuery(document).ready( function() {
 	var submit_new_title = function( id ) {
 		var data = {
 			'action': 'wpseo_save_title',
+			'_ajax_nonce' : wpseo_bulk_editor_nonce,
 			'wpseo_post_id': id,
 			'new_title' : jQuery( new_title_id + id ).val(),
 			'existing_title' : jQuery( existing_title_id + id ).html()
@@ -78,6 +84,7 @@ jQuery(document).ready( function() {
 	var submit_new_metadesc = function( id ) {
 		var data = {
 			'action': 'wpseo_save_desc',
+			'_ajax_nonce' : wpseo_bulk_editor_nonce,
 			'wpseo_post_id': id,
 			'new_metadesc' : jQuery( new_metadesc_id + id ).val(),
 			'existing_metadesc' : jQuery( existing_metadesc_id + id ).html()
@@ -108,7 +115,7 @@ jQuery(document).ready( function() {
 	jQuery.each( jQuery('.wpseo-save'), function() {
 		jQuery(this).click( function() {
 			var id = jQuery(this).data('id');
-			submit_new( id );
+			submit_new( id, this );
 		});
 	});
 
@@ -116,7 +123,8 @@ jQuery(document).ready( function() {
 		var save_all_titles = function() {
 
 			var data = {
-				'action': 'wpseo_save_all_titles'
+				'action': 'wpseo_save_all_titles',
+				'_ajax_nonce' : wpseo_bulk_editor_nonce
 			};
 
 			data.send = false;
@@ -148,7 +156,8 @@ jQuery(document).ready( function() {
 		var save_all_metadescs = function() {
 
 			var data = {
-				'action': 'wpseo_save_all_descs'
+				'action': 'wpseo_save_all_descs',
+				'_ajax_nonce' : wpseo_bulk_editor_nonce
 			};
 
 			data.send = false;

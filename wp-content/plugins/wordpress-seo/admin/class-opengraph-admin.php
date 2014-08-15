@@ -32,14 +32,23 @@ if ( ! class_exists( 'WPSEO_Social_Admin' ) ) {
 		 * the main meta box definition array in the class WPSEO_Meta() as well!!!!
 		 */
 		public static function translate_meta_boxes() {
+			self::$meta_fields['social']['opengraph-title']['title']       = __( 'Facebook Title', 'wordpress-seo' );
+			self::$meta_fields['social']['opengraph-title']['description'] = __( 'If you don\'t want to use the post title for sharing the post on Facebook but instead want another title there, write it here.', 'wordpress-seo' );
+
 			self::$meta_fields['social']['opengraph-description']['title']       = __( 'Facebook Description', 'wordpress-seo' );
 			self::$meta_fields['social']['opengraph-description']['description'] = __( 'If you don\'t want to use the meta description for sharing the post on Facebook but want another description there, write it here.', 'wordpress-seo' );
 
 			self::$meta_fields['social']['opengraph-image']['title'] 	   = __( 'Facebook Image', 'wordpress-seo' );
 			self::$meta_fields['social']['opengraph-image']['description'] = __( 'If you want to override the Facebook image for this post, upload / choose an image or add the URL here.', 'wordpress-seo' );
 
+			self::$meta_fields['social']['google-plus-title']['title'] 	   = __( 'Google+ Title', 'wordpress-seo' );
+			self::$meta_fields['social']['google-plus-title']['description'] = __( 'If you don\'t want to use the post title for sharing the post on Google+ but instead want another title there, write it here.', 'wordpress-seo' );
+
 			self::$meta_fields['social']['google-plus-description']['title'] 	   = __( 'Google+ Description', 'wordpress-seo' );
 			self::$meta_fields['social']['google-plus-description']['description'] = __( 'If you don\'t want to use the meta description for sharing the post on Google+ but want another description there, write it here.', 'wordpress-seo' );
+
+			self::$meta_fields['social']['google-plus-image']['title'] 	   = __( 'Google+ Image', 'wordpress-seo' );
+			self::$meta_fields['social']['google-plus-image']['description'] = __( 'If you want to override the image for this post that Google+ will use, upload / choose an image or add the URL here. Note that it will otherwise default to the Facebook one above.', 'wordpress-seo' );
 		}
 
 		/**
@@ -85,7 +94,7 @@ if ( ! class_exists( 'WPSEO_Social_Admin' ) ) {
 		 * @return	array	Array containing the meta boxes
 		 */
 		public function get_meta_boxes( $post_type = 'post' ) {
-			_deprecated_function( __CLASS__ . '::' . __METHOD__, 'WPSEO 1.5.0', 'WPSEO_Meta::get_meta_field_defs()' );
+			_deprecated_function( __METHOD__, 'WPSEO 1.5.0', 'WPSEO_Meta::get_meta_field_defs()' );
 			return $this->get_meta_field_defs( 'social' );
 		}
 
