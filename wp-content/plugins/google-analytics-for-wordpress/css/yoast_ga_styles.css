@@ -1,0 +1,161 @@
+h2#yoast_ga_title {
+	font-size: 23px;
+	font-weight: 400;
+	padding: 9px 15px 4px 0;
+	line-height: 29px;
+}
+
+.nav-tab-wrapper {
+	margin-bottom: 0px;
+}
+
+.gatab {
+	display: none;
+}
+
+.gatab.active {
+	display: block;
+	padding: 0.5em 0.9em;
+	border: 1px solid #ddd;
+	background-color: #fff;
+	border-radius: 0 3px 3px 3px;
+}
+
+.tabwrapper .gatab {
+	background: none;
+	border: none;
+	padding: 0px;
+}
+
+.tabwrapper .gatab h2 {
+	font-size: 23px;
+	font-weight: 400;
+	padding: 9px 15px 4px 0;
+}
+
+.ga-form-submit {
+	margin-top: 20px;
+}
+
+.ga-form-label-left {
+	width: 250px;
+	float: left;
+	margin: 0 0 0 5px;
+	font-weight: bold;
+	cursor: default;
+	font-size: 14px;
+}
+
+.ga-form-input {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+#yoast-ga-wrapper {
+	display: table;
+	width: auto;
+	max-width: 1150px;
+}
+
+.yoast-ga-content {
+	display: table-cell;
+	min-width: 850px;
+	height: 500px;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+}
+
+.yoast-ga-banners {
+	display: table-cell;
+	width: 261px;
+	height: 500px;
+	padding: 0;
+	margin: 0;
+	vertical-align: top;
+	padding: 20px;
+}
+
+.ga-form-input {
+	display: table;
+	margin-bottom: 20px;
+}
+
+.ga-form-table {
+	display: table-cell;
+}
+
+.ga-form-description {
+	color: #999999;
+	max-width: 325px;
+	display: block;
+	float: right;
+}
+
+p.ga-topdescription {
+	max-width: 600px;
+}
+
+#ga-promote {
+	border: 1px solid #ccc;
+	background-color: #fff;
+	max-width: 600px;
+	padding-left: 10px;
+}
+
+#yoast-ga-form-settings input[type="text"] {
+	width: 325px;
+}
+
+#enter_ua {
+	margin-top: 10px;
+	padding-top: 10px;
+	display: none;
+}
+
+#yoast-ga-form-text-settings-ga_general-manual_ua_code_field {
+	margin-top: -30px;
+}
+
+select.ga-multiple {
+	width: 300px;
+	height: 150px !important;
+}
+.wpseotab .extension {
+	box-sizing: border-box;
+	width: 350px;
+	height: 230px;
+	margin: 10px 20px 10px 0;
+	float: left;
+	border: 1px solid #ccc;
+}
+
+.wpseotab .extension p {
+	margin: 0;
+	padding: 10px;
+}
+
+.wpseotab .extension h3 {
+	box-sizing: border-box;
+	height: 110px;
+	margin: 0;
+	padding: 20px 10px 0 120px;
+	border-bottom: 1px solid #ccc;
+	background: #fff no-repeat left 10px;
+	background-size: 130px 100px;
+}
+
+.extension a {
+	text-decoration: none;
+}
+
+.ecommerce h3 {
+	background-image: url(../img/eComm_130x100.png) !important;
+}
+
+#ga-debug-info h3 {
+	font-size: 14px;
+	padding-left: 16px;
+	height: 30px;
+	margin-top: 10px;
+}
