@@ -141,11 +141,20 @@ function pte_options_validate( $input ){
 	if ( isset( $input['reset'] ) ){
 		return array();
 	}
-	$options['pte_debug'] = isset( $input['pte_debug'] );
-	$options['pte_debug_out_chrome'] = isset( $input['pte_debug_out_chrome'] );
-	$options['pte_debug_out_file'] = isset( $input['pte_debug_out_file'] );
-	$options['pte_crop_save'] = isset( $input['pte_crop_save'] );
-	$options['pte_imgedit_disk'] = isset( $input['pte_imgedit_disk'] );
+	$checkboxes = array(
+		'pte_debug',
+		'pte_debug_out_chrome',
+		'pte_debug_out_file',
+		'pte_crop_save',
+		'pte_imgedit_disk',
+	);
+
+	foreach ($checkboxes as $opt) {
+		if (isset( $input[$opt] ) )
+			$options[$opt] = true;
+		else if (isset($options[$opt]))
+			unset($options[$opt]);
+	}
 
 	// Check the imgedit_max_size value
 	if ( $input['pte_imgedit_max_size'] != "" ){
@@ -160,6 +169,7 @@ function pte_options_validate( $input ){
 	else{
 		unset( $options['pte_imgedit_max_size'] );
 	}
+
 	return $options;
 }
 
@@ -274,7 +284,9 @@ function pte_sizes_display(){
 		$hidden = ( in_array( $size, $options['pte_hidden_sizes'] ) ) ?
 			"checked":"";
 
-		print( "<tr><td><label for='{$size}'>{$size}</label></td>"
+		$name = isset( $size_data['display_name'] )? $size_data['display_name'] : $size;
+
+		print( "<tr><td><label for='{$size}'>{$name}</label></td>"
 			. "<td><input type='checkbox' id='{$size}' name='pte-site-options[pte_hidden_sizes][]'"
 			. " value='{$size}' {$hidden}></td>"
 			. "</tr>"

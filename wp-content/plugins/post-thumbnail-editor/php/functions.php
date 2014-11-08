@@ -98,12 +98,21 @@ function pte_filter_sizes( $element ){
  *   * height
  *   * width
  *   * crop boolean
+ *   * display name
  *
  * Thanks to the ajax_thumbnail_rebuild plugin
  */
 function pte_get_alternate_sizes($filter=true){
 	//Put in some code to check if it's already been called...
 	global $_wp_additional_image_sizes, $pte_gas;
+
+	$size_names = apply_filters( 'image_size_names_choose', array(
+		'thumbnail' => __( 'Thumbnail' ),
+		'medium'    => __( 'Medium' ),
+		'large'     => __( 'Large' ),
+		'full'      => __( 'Full Size' )
+	) );
+
 	if ( !isset($pte_gas) ){
 		$pte_gas = array();
 		$sizes = array();
@@ -137,6 +146,11 @@ function pte_get_alternate_sizes($filter=true){
 				'height' => $height,
 				'crop'   => $crop
 			);
+
+			// If the display name is set for this size, add this information
+			if (isset($size_names[$s])) {
+				$pte_gas[$s]['display_name'] = $size_names[$s];
+			}
 		}
 	}
 	return $pte_gas;
@@ -222,10 +236,7 @@ function pte_body( $id ){
 	$nonce = wp_create_nonce("image_editor-$id");
 	$meta = wp_get_attachment_metadata($id, true);
 
-	if ( is_array($meta) && isset( $meta['width'] ) ){
-		$big = max( $meta['width'], $meta['height'] );
-	}
-	else {
+	if ( !is_array($meta) || empty( $meta['width'] ) || empty( $meta['height'] ) ){
 		$logger->error( 
 			sprintf( __( "Invalid meta data for POST #%d: %s" )
 				, $id
@@ -361,11 +372,16 @@ function pte_get_width_height( $size_information, $w, $h ){
  *  * we shouldn't overwrite old images that have been placed into posts
  *  * keeps problems from occuring when I try to debug and people think picture
  *    didn't save, when it's just a caching issue
+ *
+ * @param $file the original file
+ * @param $w width of cropped image
+ * @param $h height of the cropped image
+ * @param $transparent if the cropped image is transparent
  */
-function pte_generate_filename( $file, $w, $h ){
+function pte_generate_filename( $file, $w, $h, $transparent=false){
 	$options      = pte_get_options();
 	$info         = pathinfo( $file );
-	$ext          = $info['extension'];
+	$ext          = (false !== $transparent) ? 'png' : $info['extension'];
 	$name         = wp_basename( $file, ".$ext" );
 	$suffix       = "{$w}x{$h}";
 
@@ -413,6 +429,11 @@ function pte_resize_images(){
 		return pte_json_error( "ResizeImages initialization failed: '{$id}-{$w}-{$h}-{$x}-{$y}'" );
 	}
 
+	// Check nonce
+	if ( !check_ajax_referer( "pte-resize-{$id}", 'pte-nonce', false ) ){
+		return pte_json_error( "CSRF Check failed" );
+	}
+
 	// Get the sizes to process
 	$pte_sizes      = $_GET['pte-sizes'];
 	if ( !is_array( $pte_sizes ) ){
@@ -426,7 +447,7 @@ function pte_resize_images(){
 	$original_file  = _load_image_to_edit_path( $id );
 	$original_size  = @getimagesize( $original_file );
 
-	// SETS PTE_TMP_DIR and PTE_TMP_URL
+	// SETS $PTE_TMP_DIR and $PTE_TMP_URL
 	extract( pte_tmp_dir() );
 	$thumbnails     = array();
 
@@ -449,9 +470,10 @@ function pte_resize_images(){
 		extract( pte_get_width_height( $data, $w, $h ) );
 		$logger->debug( "WIDTHxHEIGHT: $dst_w x $dst_h" );
 
-		// Set the directory
-		$basename = pte_generate_filename( $original_file, $dst_w, $dst_h );
-		// Set the file and URL's - defines set in pte_ajax
+		// Set the cropped filename
+		$transparent = pte_is_crop_border_enabled($w, $h, $dst_w, $dst_h)
+			&& !pte_is_crop_border_opaque();
+		$basename = pte_generate_filename( $original_file, $dst_w, $dst_h, $transparent );
 		$tmpfile  = "{$PTE_TMP_DIR}{$id}" . DIRECTORY_SEPARATOR . "{$basename}";
 
 		// === CREATE IMAGE ===================
@@ -694,4 +716,25 @@ function pte_init_iframe() {
 	pte_edit_page();
 	print_footer_scripts();
 	print( '</body></html>' );
+}
+
+/**
+ * Are we adding borders
+ *
+ * @param $src_w The width of the src image
+ * @param $src_h The height of the src image
+ * @param $dst_w The width of the dst image
+ * @param $dst_h The height of the dst image
+ */
+function pte_is_crop_border_enabled( $src_w, $src_h, $dst_w, $dst_h ) {
+	$src_ar = $src_w / $src_h;
+	$dst_ar = $dst_w / $dst_h;
+	return ( isset( $_REQUEST['pte-fit-crop-color'] ) && abs( $src_ar - $dst_ar ) > 0.01 );
+}
+
+/**
+ * Is the border transparent
+ */
+function pte_is_crop_border_opaque() {
+	return ( preg_match( "/^#[a-fA-F0-9]{6}$/", $_REQUEST['pte-fit-crop-color'] ) );
 }

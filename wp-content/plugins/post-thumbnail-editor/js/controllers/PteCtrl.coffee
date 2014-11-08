@@ -59,6 +59,7 @@ define [
       ###
       $scope.updateOptions = (update_options) ->
          update_options['pte-action'] = 'change-options'
+         update_options['pte-nonce'] = settings.options_nonce
          $log.log "Updating Options", update_options
 
          updated = $scope.thumbnailResource.get update_options, ->
@@ -216,7 +217,7 @@ define [
             return
 
          for aspectRatio in $scope.aspectRatios
-            if aspectRatio.size is ar
+            if ar - 0.01 < aspectRatio.size < ar + 0.01
                aspectRatio.thumbnails.push thumb.name
                return
          $scope.aspectRatios.push
