@@ -4,7 +4,7 @@ Donate link: https://yoast.com/donate/
 Tags: analytics, google analytics, statistics, tracking, stats, google, yoast
 Requires at least: 3.8
 Tested up to: 4.0
-Stable tag: 5.0.5
+Stable tag: 5.1
 
 Track your WordPress site easily with the latest tracking codes and lots added data for search result pages and error pages.
 
@@ -13,7 +13,7 @@ Track your WordPress site easily with the latest tracking codes and lots added d
 The Google Analytics by Yoast plugin for WordPress allows you to track your blog easily and always stays up to date with the newest features in Google Analytics.
 
 > <strong>Development on GitHub</strong><br>
-> The development of Google Analytics by Yoast [takes place on GitHub](https://github.com/Yoast/google-analytics-for-wordpress). Bugs and pull requests are welcomed there. For support, please refer to the forums. A premium version of Google Analytics by Yoast will be available soon which will give you access to email support.
+> The development of Google Analytics by Yoast [takes place on GitHub](https://github.com/Yoast/google-analytics-for-wordpress). Bugs and pull requests are welcomed there. For support, you have two options: either [buy the premium version of Google Analytics by Yoast on Yoast.com](https://yoast.com/wordpress/plugins/google-analytics/), this will give you access to our support team, or refer to the forums.
 
 Full list of features:
 
@@ -48,6 +48,46 @@ This section describes how to install the plugin and get it working.
 1. Go to the options panel under the 'Settings' menu and add your Analytics account number and set the settings you want.
 
 == Changelog ==
+
+= 5.1 =
+
+Release Date: October 30th, 2014
+
+* Bugfixes:
+	* Fixes a possible JavaScript conflict within the tracking code.
+	* Makes sure translations are loaded correctly.
+
+* Enhancements:
+	* Improved UX for help texts in form.
+	* Added "Google Analytics by Yoast Premium" to the extensions page.
+	* Makes sure the user returns to the original settings tab after saving.
+	* Added a filter `wp_nav_menu` to enable tracking outbound links from the menu.
+	* Added a filter `wp_list_bookmarks` to enable tracking for blogroll widgets.
+
+= 5.0.7 =
+Release Date: October 14th, 2014
+
+* Bugfixes:
+	* Fixes a bug where 404 tracking would not work when using ga.js tracking.
+
+* Enhancements:
+	* Refactored several bits of code.
+
+= 5.0.6 =
+Release Date: September 17th, 2014
+
+* Bugfixes:
+	* Fixed several notices.
+	* Improved support for premium extensions to this plugin.
+	* Fixed bug where on multi-site or subdirectory installs, settings wouldn't save.
+	* Fix the tracking of downloads in ga.js tracking.
+	* Fixed a bug where custom code would be output after the send pageview instead of before.
+	* Fixed an empty delimiter warning.
+
+* Enhancements:
+	* Improved admin icon.
+	* Added a filter `wpga_menu_on_top` which, when returned false, moves the analytics menu down.
+	* Added filters `yoast-ga-push-array-ga-js` and `yoast-ga-push-array-universal` to filter the push arrays.
 
 = 5.0.5 =
 Release Date: September 4th, 2014

@@ -13,12 +13,14 @@ settings_errors( 'yoast_google_analytics' );
 	<a class="nav-tab" id="general-tab" href="#top#general"><?php _e( 'General', 'google-analytics-for-wordpress' ); ?></a>
 	<a class="nav-tab" id="universal-tab" href="#top#universal"><?php _e( 'Universal', 'google-analytics-for-wordpress' ); ?></a>
 	<a class="nav-tab" id="advanced-tab" href="#top#advanced"><?php _e( 'Advanced', 'google-analytics-for-wordpress' ); ?></a>
+	<?php do_action( 'yst_ga_custom_tabs-tab' ); ?>
 	<a class="nav-tab" id="debugmode-tab" href="#top#debugmode"><?php _e( 'Debug mode', 'google-analytics-for-wordpress' ); ?></a>
 </h2>
 
 <?php
 echo $yoast_ga_admin->create_form( 'settings' );
 ?>
+<input type="hidden" name="return_tab" id="return_tab" value="general" />
 <div class="tabwrapper">
 	<div id="general" class="gatab">
 		<?php
@@ -40,7 +42,7 @@ echo $yoast_ga_admin->create_form( 'settings' );
 			echo '</div>';
 			echo '<div class="ga-form ga-form-input">';
 			echo '<label class="ga-form ga-form-text-label ga-form-label-left" id="yoast-ga-form-label-text-ga-authwithgoogle" />' . __( 'Current UA-profile', 'google-analytics-for-wordpress' ) . '</label>';
-			echo $yoast_ga_admin->get_setting( 'analytics_profile' );
+			echo $yoast_ga_admin->get_tracking_code();
 			echo '</div>';
 		} else {
 			echo $yoast_ga_admin->select( 'Analytics profile', 'analytics_profile', $profiles );
@@ -50,7 +52,7 @@ echo $yoast_ga_admin->create_form( 'settings' );
 			echo '<a class="button" href="' . $ga_url . '">' . __( 'Re-authenticate with your Google account', 'google-analytics-for-wordpress' ) . '</a>';
 			echo '</div>';
 		}
-		echo "</div>";
+		echo '</div>';
 
 		echo '<label class="ga-form ga-form-checkbox-label ga-form-label-left">';
 		echo $yoast_ga_admin->input( 'checkbox', null, 'manual_ua_code', __( 'Manually enter your UA code', 'google-analytics-for-wordpress' ) );
@@ -65,7 +67,7 @@ echo $yoast_ga_admin->create_form( 'settings' );
 		echo $yoast_ga_admin->input( 'checkbox', __( 'Track outbound click & downloads', 'google-analytics-for-wordpress' ), 'track_outbound', null, __( 'Clicks &amp; downloads will be tracked as events, you can find these under Content &raquo; Event Tracking in your Google Analytics reports.', 'google-analytics-for-wordpress' ) );
 		echo $yoast_ga_admin->input( 'checkbox', __( 'Allow tracking of anonymous data', 'google-analytics-for-wordpress' ), 'anonymous_data', null, __( 'By allowing us to track anonymous data we can better help you, because we know with which WordPress configurations, themes and plugins we should test. No personal data will be submitted.', 'google-analytics-for-wordpress' ) );
 		echo $yoast_ga_admin->input( 'checkbox', __( 'Anonymize IP\'s', 'google-analytics-for-wordpress' ), 'anonymize_ips', null, __( 'This adds <code><a href="http://code.google.com/apis/analytics/docs/gaJS/gaJSApi_gat.html#_gat._anonymizeIp" target="_blank">_anonymizeIp</a></code>, telling Google Analytics to anonymize the information sent by the tracker objects by removing the last octet of the IP address prior to its storage.', 'google-analytics-for-wordpress' ) );
-		echo $yoast_ga_admin->select( 'Ignore users', 'ignore_users', $yoast_ga_admin->get_userroles(), __( 'Hint: Select multiple roles by using CTRL or CMD.', 'google-analytics-for-wordpress' ) . '<br />' . __( 'Users of the role you select and higher will be ignored, so if you select Editor, all Editors and Administrators will be ignored.', 'google-analytics-for-wordpress' ), true );
+		echo $yoast_ga_admin->select( 'Ignore users', 'ignore_users', $yoast_ga_admin->get_userroles(), __( 'Users of the role you select will be ignored, so if you select Editor, all Editors will be ignored.', 'google-analytics-for-wordpress' ), true );
 		?>
 	</div>
 	<div id="universal" class="gatab">
@@ -84,14 +86,17 @@ echo $yoast_ga_admin->create_form( 'settings' );
 		echo $yoast_ga_admin->input( 'text', __( 'Subdomain tracking', 'google-analytics-for-wordpress' ), 'subdomain_tracking', null, __( 'This allows you to set the domain that\'s set by <code>setDomainName</code> for tracking subdomains, if empty this will not be set.', 'google-analytics-for-wordpress' ) );
 
 		echo $yoast_ga_admin->input( 'text', __( 'Set path for internal links to track as outbound links', 'google-analytics-for-wordpress' ), 'track_internal_as_outbound', null, 'If you want to track all internal links that begin with <code>/out/</code>, enter <code>/out/</code> in the box above. If you have multiple prefixes you can separate them with comma\'s: <code>/out/,/recommends/</code>' );
-		echo $yoast_ga_admin->input( 'text', __( 'Label for those links', 'google-analytics-for-wordpress' ), 'track_internal_as_label', null, "The label to use for these links, this will be added to where the click came from, so if the label is \"aff\", the label for a click from the content of an article becomes \"outbound-article-aff\"." );
+		echo $yoast_ga_admin->input( 'text', __( 'Label for those links', 'google-analytics-for-wordpress' ), 'track_internal_as_label', null, 'The label to use for these links, this will be added to where the click came from, so if the label is "aff", the label for a click from the content of an article becomes "outbound-article-aff".' );
 
 		echo $yoast_ga_admin->input( 'checkbox', __( 'Tag links in RSS feed with campaign variables', 'google-analytics-for-wordpress' ), 'tag_links_in_rss', null, __( 'Do not use this feature if you use FeedBurner, as FeedBurner can do this automatically, and better than this plugin can. Check <a href="http://www.google.com/support/feedburner/bin/answer.py?hl=en&amp;answer=165769" target="_blank">this help page</a> for info on how to enable this feature in FeedBurner.', 'google-analytics-for-wordpress' ) );
 		echo $yoast_ga_admin->input( 'checkbox', __( 'Allow anchor', 'google-analytics-for-wordpress' ), 'allow_anchor', null, __( 'This adds a <code><a href="http://code.google.com/apis/analytics/docs/gaJSApiCampaignTracking.html#_gat.GA_Tracker_._setAllowAnchor" target="_blank">_setAllowAnchor</a></code> call to your tracking code, and makes RSS link tagging use a # as well.', 'google-analytics-for-wordpress' ) );
 		echo $yoast_ga_admin->input( 'checkbox', __( 'Add <code>_setAllowLinker</code>', 'google-analytics-for-wordpress' ), 'add_allow_linker', null, __( 'This adds a <code><a href="http://code.google.com/apis/analytics/docs/gaJS/gaJSApiDomainDirectory.html#_gat.GA_Tracker_._setAllowLinker" target="_blank">_setAllowLinker</a></code> call to your tracking code,  allowing you to use <code>_link</code> and related functions.', 'google-analytics-for-wordpress' ) );
 		echo $yoast_ga_admin->textarea( 'Custom code', 'custom_code', __( 'Not for the average user: this allows you to add a line of code, to be added before the <code>trackPageview</code> call.', 'google-analytics-for-wordpress' ) );
+
+		do_action( 'yst_ga_advanced-tab' );
 		?>
 	</div>
+	<?php do_action( 'yst_ga_custom_tabs-content' ); ?>
 	<div id="debugmode" class="gatab">
 		<?php
 		echo '<h2>' . __( 'Debug settings', 'google-analytics-for-wordpress' ) . '</h2>';
