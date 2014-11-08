@@ -574,8 +574,15 @@ if ( ! class_exists( 'WPSEO_Option' ) ) {
 		protected function retain_variable_keys( $dirty, $clean ) {
 			if ( ( is_array( $this->variable_array_key_patterns ) && $this->variable_array_key_patterns !== array() ) && ( is_array( $dirty ) && $dirty !== array() ) ) {
 				foreach ( $dirty as $key => $value ) {
+
+					// do nothing if already in filtered options
+					if ( isset( $clean[ $key ] ) ) {
+						continue;
+					}
+
 					foreach ( $this->variable_array_key_patterns as $pattern ) {
-						if ( strpos( $key, $pattern ) === 0 && ! isset( $clean[ $key ] ) ) {
+
+						if ( strpos( $key, $pattern ) === 0 ) {
 							$clean[ $key ] = $value;
 							break;
 						}
@@ -1413,7 +1420,6 @@ if ( ! class_exists( 'WPSEO_Option_Titles' ) ) {
 			 * - 'metadesc-' . $pt->name      => ''; // text field
 			 * - 'metakey-' . $pt->name        => ''; // text field
 			 * - 'noindex-' . $pt->name        => false;
-			 * - 'noauthorship-' . $pt->name    => false;
 			 * - 'showdate-' . $pt->name      => false;
 			 * - 'hideeditbox-' . $pt->name      => false;
 			 *
@@ -1439,7 +1445,6 @@ if ( ! class_exists( 'WPSEO_Option_Titles' ) ) {
 			'metadesc-',
 			'metakey-',
 			'noindex-',
-			'noauthorship-',
 			'showdate-',
 			'hideeditbox-',
 			'bctitle-ptarchive-',
@@ -1564,12 +1569,6 @@ if ( ! class_exists( 'WPSEO_Option_Titles' ) ) {
 					$this->defaults[ 'metadesc-' . $pt ] = ''; // text area
 					$this->defaults[ 'metakey-' . $pt ]  = ''; // text field
 					$this->defaults[ 'noindex-' . $pt ]  = false;
-					if ( 'post' == $pt ) {
-						$this->defaults[ 'noauthorship-' . $pt ] = false;
-					} else {
-						$this->defaults[ 'noauthorship-' . $pt ] = true;
-					}
-
 					$this->defaults[ 'showdate-' . $pt ]    = false;
 					$this->defaults[ 'hideeditbox-' . $pt ] = false;
 				}
@@ -1704,7 +1703,6 @@ if ( ! class_exists( 'WPSEO_Option_Titles' ) ) {
 							 'noindex-ptarchive-' . $pt->name
 							 'noindex-tax-' . $tax->name */
 					case 'noindex-':
-					case 'noauthorship-': /* 'noauthorship-' . $pt->name */
 					case 'showdate-': /* 'showdate-'. $pt->name */
 						/* Covers:
 							 'hideeditbox-'. $pt->name
@@ -1883,7 +1881,6 @@ if ( ! class_exists( 'WPSEO_Option_Titles' ) ) {
 
 						/* boolean fields */
 						case 'noindex-':
-						case 'noauthorship-':
 						case 'showdate-':
 						case 'hideeditbox-':
 						default:
@@ -1925,8 +1922,14 @@ if ( ! class_exists( 'WPSEO_Option_Titles' ) ) {
 				$patterns = apply_filters( 'wpseo_option_titles_variable_array_key_patterns', $patterns );
 
 				foreach ( $dirty as $key => $value ) {
+
+					// do nothing if already in filtered option array
+					if ( isset( $clean[ $key ] ) ) {
+						continue;
+					}
+
 					foreach ( $patterns as $pattern ) {
-						if ( strpos( $key, $pattern ) === 0 && ! isset( $clean[ $key ] ) ) {
+						if ( strpos( $key, $pattern ) === 0 ) {
 							$clean[ $key ] = $value;
 							break;
 						}

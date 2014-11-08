@@ -141,7 +141,7 @@ if ( ! class_exists( 'WPSEO_Replace_Vars' ) ) {
 
 			// Let's see if we can bail super early.
 			if ( strpos( $string, '%%' ) === false ) {
-				return trim( preg_replace( '`\s+`', ' ', $string ) );
+				return wpseo_standardize_whitespace( $string );
 			}
 
 			$args = (array) $args;
@@ -197,7 +197,7 @@ if ( ! class_exists( 'WPSEO_Replace_Vars' ) ) {
 			}
 
 			// Remove superfluous whitespace
-			$string = preg_replace( '`\s+`', ' ', $string );
+			$string = wpseo_standardize_whitespace( $string );
 
 			return trim( $string );
 		}
@@ -238,7 +238,7 @@ if ( ! class_exists( 'WPSEO_Replace_Vars' ) ) {
 					$replacement = $this->$method_name();
 				} // Deal with externally defined variable names
 				elseif ( isset( self::$external_replacements[ $var ] ) && ! is_null( self::$external_replacements[ $var ] ) ) {
-					$replacement = call_user_func( self::$external_replacements[ $var ], $var );
+					$replacement = call_user_func( self::$external_replacements[ $var ], $var, $this->args );
 				}
 
 				// Replacement retrievals can return null if no replacement can be determined, root those outs
