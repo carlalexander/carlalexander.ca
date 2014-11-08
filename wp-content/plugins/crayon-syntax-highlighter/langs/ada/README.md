@@ -13,4 +13,4 @@ Installation:
 
 
 Aram (crayons creator) has added it to the crayon repo here on github. So you can simply pull the current repo to get it.
-https://github.com/aramkocharyan/crayon-syntax-highlighter
+https://github.com/aramk/crayon-syntax-highlighter

@@ -54,9 +54,9 @@ It also supports some neat features like:
 
 **Links**
 
-* <a href="https://github.com/aramkocharyan/crayon-syntax-highlighter" target="_blank">Beta Releases</a>
+* <a href="https://github.com/aramk/crayon-syntax-highlighter" target="_blank">Beta Releases</a>
 * <a href="http://aramk.com/blog/2012/12/27/crayon-theme-editor/" target="_blank">Themes Demo</a>
-* <a href="https://github.com/aramkocharyan/crayon-syntax-highlighter" target="_blank">GitHub Project</a>
+* <a href="https://github.com/aramk/crayon-syntax-highlighter" target="_blank">GitHub Project</a>
 
 **Contributions**
 
@@ -129,7 +129,8 @@ See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specifica
 **International Languages**
 
 * Arabic (thanks to <a href="http://djennadhamza.eb2a.com/" target="_blank">Djennad Hamza</a>)
-* Chinese (Simplified, thanks to <a href="http://smerpup.com/" target="_blank">Dezhi Liu</a> & <a href="http://neverno.me/" target="_blank">Jash Yin</a>)
+* Chinese Simplified (thanks to <a href="http://smerpup.com/" target="_blank">Dezhi Liu</a> & <a href="http://neverno.me/" target="_blank">Jash Yin</a>)
+* Chinese Traditional (thanks to <a href="http://www.arefly.com/" target="_blank">Arefly</a>)
 * Dutch (thanks to <a href="https://twitter.com/RobinRoelofsen" target="_blank">Robin Roelofsen</a> & <a href="https://twitter.com/#!/chilionsnoek" target="_blank">Chilion Snoek</a>)
 * Finnish (thanks to <a href="https://github.com/vahalan" target="_blank">vahalan</a>)
 * French (thanks to <a href="http://tech.dupeu.pl" target="_blank">Victor Felder</a>)
@@ -195,6 +196,8 @@ A handful of articles from others written about Crayon, thanks guys!
 
 Thanks to all those who donate to the project:
 
+* Raffael Vogler, Germany
+* Erdal Cicek, Turkey
 * Cloud-VPS, Poland
 * Łukasz Bereza, Poland
 * Laurence Scotford, UK
@@ -259,7 +262,7 @@ Thanks to all those who donate to the project:
 
 == Frequently Asked Questions ==
 
-Please see the <a href="https://github.com/aramkocharyan/crayon-syntax-highlighter" target="_blank">documentation</a> for all the details.
+Please see the <a href="https://github.com/aramk/crayon-syntax-highlighter" target="_blank">documentation</a> for all the details.
 
 = Support =
 
@@ -275,11 +278,28 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 
 == Changelog ==
 
+= 2.6.8 =
+* ADDED:
+    * OCaml langauge thanks to <a href="https://github.com/zhenjie" target="_blank">zhenjie</a>
+    * Added Capacitacionti theme
+* FIXED:
+    * SVN issue with old versions of JS and CSS resources being deployed instead of the latest from the dev repo.
+
+= 2.6.7 =
+* ADDED:
+    * Traditional Chinese translation (thanks to <a href="http://www.arefly.com/" target="_blank">Arefly</a>)
+    * Converting tabs to spaces setting is now off by default. The original tab size setting is used with the tab-size CSS style instead to preserve tabs in the source.
+    * "ignore:true" setting in the class of pre tags will prevent that code block from being parsed by Crayon.
+    * Obsidian theme thanks to <a href="http://rakcheev.ru/" target="_blank">Rakcheev Artem</a>.
+    * Visual Assist theme thanks to Brady Reuter.
+* FIXED:
+    * Styling for (?) buttons on settings page.
+
 = 2.6.6 =
 * ADDED:
     * Persian translation (thanks to MahdiY).
     * C1 language and themes (thanks to Oparin Pavel).
-* Fixed:
+* FIXED:
     * Improved Chinese translation and Go language statements (thanks to <a href="https://github.com/sumhat" target="_blank">sumhat</a>)
     * Theme editor failing to load.
     * Updated to WP 4.0
@@ -409,7 +429,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
     * Forced LTR for Crayon CSS, preventing the line numbers from appearing on the right
     * Added unhighlighted colour to theme editor and existing dark themes
     * New theme inputs not present in the loaded theme are added during save
-    * Fixed a bug related to IIS 7.5 and uniqid(): https://github.com/aramkocharyan/crayon-syntax-highlighter/issues/97
+    * Fixed a bug related to IIS 7.5 and uniqid(): https://github.com/aramk/crayon-syntax-highlighter/issues/97
 
 = 2.2.1 =
 * ADDED:
@@ -498,7 +518,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
     * Translation to Slovak
 * FIXED:
     * jQuery UI is no longer an external dependency; now using wpdialog(). Theme Editor updated to use wpdialog.
-    * Inline tags. See: https://github.com/aramkocharyan/crayon-syntax-highlighter/issues/57
+    * Inline tags. See: https://github.com/aramk/crayon-syntax-highlighter/issues/57
     * Tag Editor didn't work on front end
     * Improved legacy tag conversion functions by removing false positives arising from duplicate regex
     * Slightly faster conversion of legacy by delaying database writes until the end
@@ -933,7 +953,7 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 = 1.7.3 =
 * Added Mini Tags and Plain Tags into Crayon. http://aramk.com/blog/2011/12/27/mini-tags-in-crayon/
 * Fixed a bug causing RSS feeds to contain malformed HTML of Crayons, now it shows plain code with correct indentations. Thanks to Артём.
-* Updated help in Settings and https://github.com/aramkocharyan/crayon-syntax-highlighter
+* Updated help in Settings and https://github.com/aramk/crayon-syntax-highlighter
 
 = 1.7.2 =
 * Fixed a bug that prevented foreign languages from being initialised and used. Thanks to @west_323 for finding it.

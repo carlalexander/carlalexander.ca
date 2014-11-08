@@ -1075,6 +1075,7 @@ class Human {
         echo '<div class="crayon-hide-inline-only">';
         self::checkbox(array(CrayonSettings::SHOW_MIXED, crayon__('Show Mixed Language Icon (+)')));
         echo '</div>';
+        self::checkbox(array(CrayonSettings::TAB_CONVERT, crayon__('Convert tabs to spaces')));
         self::span(crayon__('Tab size in spaces') . ': ');
         self::textbox(array('id' => CrayonSettings::TAB_SIZE, 'size' => 2, 'break' => TRUE));
         self::span(crayon__('Blank lines before code:') . ' ');
@@ -1185,7 +1186,8 @@ class Human {
         $translators = '<strong>' . crayon__('Translators') . ':</strong> ' .
             '
             Arabic (<a href="http://djennadhamza.eb2a.com/" target="_blank">Djennad Hamza</a>),
-            Chinese (<a href="http://smerpup.com/" target="_blank">Dezhi Liu</a>, <a href="http://neverno.me/" target="_blank">Jash Yin</a>),
+            Chinese Simplified (<a href="http://smerpup.com/" target="_blank">Dezhi Liu</a>, <a href="http://neverno.me/" target="_blank">Jash Yin</a>),
+            Chinese Traditional (<a href="http://www.arefly.com/" target="_blank">Arefly</a>),
             Dutch (<a href="https://twitter.com/RobinRoelofsen" target="_blank">Robin Roelofsen</a>, <a href="https://twitter.com/#!/chilionsnoek" target="_blank">Chilion Snoek</a>),
             French (<a href="http://tech.dupeu.pl" target="_blank">Victor Felder</a>),
             Finnish (<a href="https://github.com/vahalan" target="_blank">vahalan</a>),
