@@ -105,6 +105,7 @@ if ( ! class_exists( 'WPSEO_Frontend' ) ) {
 			}
 			if ( $this->options['cleanreplytocom'] === true ) {
 				add_filter( 'comment_reply_link', array( $this, 'remove_reply_to_com' ) );
+				add_action( 'template_redirect', array( $this, 'replytocom_redirect' ), 1 );
 			}
 			add_filter( 'the_content_feed', array( $this, 'embed_rssfooter' ) );
 			add_filter( 'the_excerpt_rss', array( $this, 'embed_rssfooter_excerpt' ) );
@@ -116,10 +117,6 @@ if ( ! class_exists( 'WPSEO_Frontend' ) ) {
 
 			if ( $this->options['title_test'] > 0 ) {
 				add_filter( 'wpseo_title', array( $this, 'title_test_helper' ) );
-			}
-			if ( isset( $_GET['replytocom'] ) ) {
-				remove_action( 'wp_head', 'wp_no_robots' );
-				add_action( 'template_redirect', array( $this, 'replytocom_redirect' ), 1 );
 			}
 		}
 
@@ -877,7 +874,7 @@ if ( ! class_exists( 'WPSEO_Frontend' ) ) {
 			if ( is_string( $canonical ) && $canonical !== '' ) {
 				// Force canonical links to be absolute, relative is NOT an option.
 				if ( wpseo_is_url_relative( $canonical ) === true ) {
-					$canonical = home_url( $canonical );
+					$canonical = $this->base_url( $canonical );
 				}
 
 				if ( $echo !== false ) {
@@ -888,6 +885,27 @@ if ( ! class_exists( 'WPSEO_Frontend' ) ) {
 			} else {
 				return false;
 			}
+		}
+
+		/**
+		 * Parse the home URL setting to find the base URL for relative URLs.
+		 *
+		 * @param string $path
+		 *
+		 * @return string
+		 */
+		private function base_url( $path = null ) {
+			$url = get_option( 'home' );
+
+			$parts = parse_url( $url );
+
+			$base_url = trailingslashit( $parts['scheme'] . '://' . $parts['host'] );
+
+			if ( ! is_null( $path ) ) {
+				$base_url .= ltrim( $path, '/' );
+			}
+
+			return $base_url;
 		}
 
 		/**
@@ -1317,10 +1335,6 @@ if ( ! class_exists( 'WPSEO_Frontend' ) ) {
 		 * @return boolean
 		 */
 		function replytocom_redirect() {
-
-			if ( $this->options['cleanreplytocom'] !== true ) {
-				return false;
-			}
 
 			if ( isset( $_GET['replytocom'] ) && is_singular() ) {
 				global $post;

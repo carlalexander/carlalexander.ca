@@ -34,7 +34,7 @@ if ( ! class_exists( 'WPSEO_Meta' ) ) {
 	 * for get_post_meta(), get_post_custom() and the likes. That would have been the preferred solution.
 	 *
 	 * @internal all WP native get_meta() results get cached internally, so no need to cache locally.
-	 * @internal use $key when the key is the WPSEO internal name (without prefix), $meta_key when it 
+	 * @internal use $key when the key is the WPSEO internal name (without prefix), $meta_key when it
 	 *           includes the prefix
 	 */
 	class WPSEO_Meta {
@@ -232,45 +232,7 @@ if ( ! class_exists( 'WPSEO_Meta' ) ) {
 					'description'	=> '', // translation added later
 				),
 			),
-			'social'	=> array(
-				'opengraph-title'		=> array(
-					'type'			=> 'text',
-					'title' 		=> '', // translation added later
-					'default_value'	=> '',
-					'description'	=> '', // translation added later
-				),
-				'opengraph-description'		=> array(
-					'type'			=> 'textarea',
-					'title' 		=> '', // translation added later
-					'default_value'	=> '',
-					'description'	=> '', // translation added later
-				),
-				'opengraph-image'			=> array(
-					'type'			=> 'upload',
-					'title' 		=> '', // translation added later
-					'default_value'	=> '',
-					'description'	=> '', // translation added later
-				),
-				'google-plus-title'	=> array(
-					'type'			=> 'text',
-					'title' 		=> '', // translation added later
-					'default_value'	=> '',
-					'description'	=> '', // translation added later
-				),
-				'google-plus-description'	=> array(
-					'type'			=> 'textarea',
-					'title' 		=> '', // translation added later
-					'default_value'	=> '',
-					'description'	=> '', // translation added later
-				),
-				'google-plus-image'			=> array(
-					'type'			=> 'upload',
-					'title' 		=> '', // translation added later
-					'default_value'	=> '',
-					'description'	=> '', // translation added later
-				),
-
-			),
+			'social'	=> array(),
 
 			/* Fields we should validate & save, but not show on any form */
 			'non_form'	=> array(
@@ -307,6 +269,33 @@ if ( ! class_exists( 'WPSEO_Meta' ) ) {
 		 * @return void
 		 */
 		public static function init() {
+
+			$options = WPSEO_Options::get_all();
+
+			foreach (
+				array(
+					'opengraph'  => 'opengraph',
+					'twitter'    => 'twitter',
+					'googleplus' => 'google-plus',
+				) as $option => $network ) {
+				if ( true === $options[$option] ) {
+					foreach (
+						array(
+							'title'         => 'text',
+							'description'   => 'textarea',
+							'image'         => 'upload',
+						) as $box => $type
+					) {
+						self::$meta_fields['social'][$network.'-'.$box]	= array(
+							'type'			=> $type,
+							'title' 		=> '', // translation added later
+							'default_value'	=> '',
+							'description'	=> '', // translation added later
+						);
+					}
+				}
+			}
+
 			/**
 			 * Allow add-on plugins to register their meta fields for management by this class
 			 * add_filter() calls must be made before plugins_loaded prio 14
@@ -1007,6 +996,20 @@ if ( ! class_exists( 'WPSEO_Meta' ) ) {
 				unset( $key, $value );
 			}
 			return $merged;
+		}
+		
+		/**
+		 * Get a value from $_POST for a given key
+		 * Returns the $_POST value if exists, returns an empty string if key does not exist
+		 *
+		 * @static
+		 *
+		 * @param   string  $key		key of the value to get from $_POST
+		 * @return  string				returns $_POST value, which will be a string the majority of the time
+		 *							Will return empty string if key does not exists in $_POST
+		 */
+		public static function get_post_value( $key ) {
+			return ( array_key_exists( $key, $_POST ) ) ? $_POST[ $key ] : '';
 		}
 
 
