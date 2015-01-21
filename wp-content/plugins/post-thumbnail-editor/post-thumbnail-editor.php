@@ -4,7 +4,7 @@ Plugin name: Post Thumbnail Editor
 Plugin URI: http://sewpafly.github.io/post-thumbnail-editor/
 Author: sewpafly
 Author URI: http://sewpafly.github.io/post-thumbnail-editor/
-Version: 2.4.2
+Version: 2.4.4
 Description: Individually manage your post thumbnails
 
 LICENSE
@@ -34,7 +34,7 @@ Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 define( 'PTE_PLUGINURL', plugins_url(basename( dirname(__FILE__))) . "/");
 define( 'PTE_PLUGINPATH', dirname(__FILE__) . "/");
 define( 'PTE_DOMAIN', "post-thumbnail-editor");
-define( 'PTE_VERSION', "2.4.2");
+define( 'PTE_VERSION', "2.4.4");
 
 // TODO:
 // * Find the best place for the require log (only when it's really needed, create an init function?)
@@ -210,6 +210,7 @@ function pte_admin_media_scripts($post_type){
 		, 'pteL10n'
 		, array('PTE' => __('Post Thumbnail Editor', PTE_DOMAIN)
 			, 'url' => pte_url( "<%= id %>", true )
+			, 'fallbackUrl' => pte_url( "<%= id %>" )
 		)
 	);
 }
@@ -338,6 +339,7 @@ function pte_load_media_library() {
 		, 'pteL10n'
 		, array('PTE' => __('Post Thumbnail Editor', PTE_DOMAIN)
 			, 'url' => pte_url( "<%= id %>", true )
+			, 'fallbackUrl' => pte_url( "<%= id %>" )
 		)
 	);
 }
@@ -442,7 +444,6 @@ function pte_edit_setup() {
 	$title = __( "Post Thumbnail Editor", PTE_DOMAIN );
 
 	include_once( PTE_PLUGINPATH . "php/functions.php" );
-	$pte_body = pte_body( $post->ID );
 
 	// Add the scripts and styles
 	wp_enqueue_script( 'jquery' );
@@ -450,6 +451,8 @@ function pte_edit_setup() {
 	wp_enqueue_script( 'iris' );
 	wp_enqueue_style( 'colors' );
 	wp_enqueue_style( 'wp-jquery-ui-dialog' );
+
+	$pte_body = pte_body( $post->ID );
 }
 
 /**
