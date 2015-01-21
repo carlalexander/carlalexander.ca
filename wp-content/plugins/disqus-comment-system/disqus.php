@@ -4,7 +4,7 @@ Plugin Name: Disqus Comment System
 Plugin URI: http://disqus.com/
 Description: The Disqus comment system replaces your WordPress comment system with your comments hosted and powered by Disqus. Head over to the Comments admin page to set up your Disqus Comment System.
 Author: Disqus <team@disqus.com>
-Version: 2.83
+Version: 2.84
 Author URI: http://disqus.com/
 */
 
@@ -18,7 +18,7 @@ define('DISQUS_CAN_EXPORT',         is_file(dirname(__FILE__) . '/export.php'));
 if (!defined('DISQUS_DEBUG')) {
     define('DISQUS_DEBUG',          false);
 }
-define('DISQUS_VERSION',            '2.83');
+define('DISQUS_VERSION',            '2.84');
 define('DISQUS_SYNC_TIMEOUT',       30);
 
 /**
@@ -1193,7 +1193,7 @@ function dsq_output_count_js() {
             var nodes = document.getElementsByTagName('span');
             for (var i = 0, url; i < nodes.length; i++) {
                 if (nodes[i].className.indexOf('dsq-postid') != -1) {
-                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('rel'));
+                    nodes[i].parentNode.setAttribute('data-disqus-identifier', nodes[i].getAttribute('data-dsqidentifier'));
                     url = nodes[i].parentNode.href.split('#', 1);
                     if (url.length == 1) { url = url[0]; }
                     else { url = url[1]; }
