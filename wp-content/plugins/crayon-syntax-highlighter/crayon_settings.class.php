@@ -72,6 +72,7 @@ class CrayonSettings {
     const PLAIN_TOGGLE = 'plain-toggle';
     const SHOW_PLAIN = 'show-plain';
     const DISABLE_RUNTIME = 'runtime';
+    const DISABLE_DATE = 'disable-date';
     const TOUCHSCREEN = 'touchscreen';
     const DISABLE_ANIM = 'disable-anim';
     const ERROR_LOG = 'error-log';
@@ -107,6 +108,9 @@ class CrayonSettings {
     const RANGES = 'ranges';
     const TAG_EDITOR_FRONT = 'tag-editor-front';
     const TAG_EDITOR_SETTINGS = 'tag-editor-front-hide';
+    const TAG_EDITOR_ADD_BUTTON_TEXT = 'tag-editor-button-add-text';
+    const TAG_EDITOR_EDIT_BUTTON_TEXT = 'tag-editor-button-edit-text';
+    const TAG_EDITOR_QUICKTAG_BUTTON_TEXT = 'tag-editor-quicktag-button-text';
     const WRAP_TOGGLE = 'wrap-toggle';
     const WRAP = 'wrap';
     const EXPAND = 'expand';
@@ -210,6 +214,7 @@ class CrayonSettings {
             new CrayonSetting(self::DISABLE_ANIM, FALSE),
             new CrayonSetting(self::TOUCHSCREEN, TRUE),
             new CrayonSetting(self::DISABLE_RUNTIME, FALSE),
+            new CrayonSetting(self::DISABLE_DATE, ''),
             new CrayonSetting(self::ERROR_LOG, TRUE),
             new CrayonSetting(self::ERROR_LOG_SYS, TRUE),
             new CrayonSetting(self::ERROR_MSG_SHOW, TRUE),
@@ -242,6 +247,9 @@ class CrayonSettings {
             new CrayonSetting(self::RANGES, TRUE),
             new CrayonSetting(self::TAG_EDITOR_FRONT, FALSE),
             new CrayonSetting(self::TAG_EDITOR_SETTINGS, TRUE),
+            new CrayonSetting(self::TAG_EDITOR_ADD_BUTTON_TEXT, crayon__('Add Code')),
+            new CrayonSetting(self::TAG_EDITOR_EDIT_BUTTON_TEXT, crayon__('Edit Code')),
+            new CrayonSetting(self::TAG_EDITOR_QUICKTAG_BUTTON_TEXT, 'crayon'),
             new CrayonSetting(self::WRAP_TOGGLE, TRUE),
             new CrayonSetting(self::WRAP, FALSE),
             new CrayonSetting(self::EXPAND, FALSE),

@@ -4,7 +4,7 @@ Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=AW99E
 License: GPLv2 or later
 Tags: syntax highlighter, syntax, highlighter, highlighting, crayon, code highlighter, bbpress
 Requires at least: 3.0
-Tested up to: 4.0.0
+Tested up to: 4.1.0
 Stable tag: trunk
 
 Syntax Highlighter supporting multiple languages, themes, fonts, highlighting from a URL, local file or post text.
@@ -146,6 +146,7 @@ See the <a href="http://aramk.com/blog/2011/09/23/crayon-language-file-specifica
 * Slovak (thanks to Branco, <a href="https://twitter.com/#!/webhostgeeks" target="_blank">webhostgeeks/</a>)
 * Slovenian (thanks to Jan Su&#353;nik, <a href="http://jodlajodla.si/" target="_blank">http://jodlajodla.si/</a>)
 * Spanish (thanks to <a href="http://www.hbravo.com/" target="_blank">Hermann Bravo</a>)
+* Tamil (thanks to <a href="http://kks21199.mrgoogleglass.com/" target="_blank">KKS21199</a>)
 * Turkish (thanks to <a href="http://hakanertr.wordpress.com" target="_blank">Hakan</a>)
 * Ukrainian (thanks to <a href="http://getvoip.com/blog" target="_blank">Michael Yunat</a>)
 * Help from translators at improving/adding to this list greatly appreciated!
@@ -196,6 +197,11 @@ A handful of articles from others written about Crayon, thanks guys!
 
 Thanks to all those who donate to the project:
 
+* Helen McManus, (http://invisiblepixels.org/InvisibleWords/), Netherlands
+* Thomas Fee, UK
+* Julie Knowles, (http://knowlesfamily.com/), USA
+* Peter Kriegel, (http://www.powershell-group.eu/), Germany
+* Geo My WP, (http://geomywp.com), US
 * Raffael Vogler, Germany
 * Erdal Cicek, Turkey
 * Cloud-VPS, Poland
@@ -278,9 +284,24 @@ Contact me at http://twitter.com/crayonsyntax or crayon.syntax@gmail.com.
 
 == Changelog ==
 
+= 2.6.9 =
+* ADDED:
+    * Setting to disable Crayon for posts older than a given date (thanks to <a href="https://github.com/weismannweb" target="_blank">weismannweb</a>).
+    * Support for changing the text shown for "Add Code" and "Edit Code" buttons in the Tag Editor.
+    * Orange Code theme.
+    * Raygun theme.
+    * Tamil language.
+* FIXED:
+    * Missing PHP keywords thanks to <a href="https://github.com/tst" target="_blank">tst</a>.
+    * Error with undefined HTTP_USER_AGENT thanks to Enrique Cordero.
+    * Removed misused error control operator.
+    * HTTPS check for whether to use https://
+    * Selection CSS style for plain code.
+    * Reserved keywords in Ruby.
+
 = 2.6.8 =
 * ADDED:
-    * OCaml langauge thanks to <a href="https://github.com/zhenjie" target="_blank">zhenjie</a>
+    * OCaml language thanks to <a href="https://github.com/zhenjie" target="_blank">zhenjie</a>
     * Added Capacitacionti theme
 * FIXED:
     * SVN issue with old versions of JS and CSS resources being deployed instead of the latest from the dev repo.
@@ -1135,4 +1156,3 @@ http://wordpress.org/support/topic/plugin-crayon-syntax-highlighter-this-plugin-
 == Upgrade Notice ==
 
 Make sure to upgrade to the latest release when possible to ensure you avoid bugs others have found and enjoy new features.
-

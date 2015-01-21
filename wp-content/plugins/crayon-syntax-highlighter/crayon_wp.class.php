@@ -3,7 +3,7 @@
 Plugin Name: Crayon Syntax Highlighter
 Plugin URI: https://github.com/aramk/crayon-syntax-highlighter
 Description: Supports multiple languages, themes, highlighting from a URL, local file or post text.
-Version: 2.6.8
+Version: 2.6.9
 Author: Aram Kocharyan
 Author URI: http://aramk.com/
 Text Domain: crayon-syntax-highlighter
@@ -251,6 +251,12 @@ class CrayonWP {
         // Will contain captured crayons and altered $wp_content
         $capture = array('capture' => array(), 'content' => $wp_content, 'has_captured' => FALSE);
 
+        // Do not apply Crayon for posts older than a certain date.
+        $disable_date = trim(CrayonGlobalSettings::val(CrayonSettings::DISABLE_DATE));
+        if ($disable_date && get_post_time('U', true, $wp_id) <= strtotime($disable_date)) {
+            return $capture;
+        }
+
         // Flags for which Crayons to convert
         $in_flag = self::in_flag($flags);
 
@@ -346,7 +352,7 @@ class CrayonWP {
                     }
                 }
 
-                if (@$atts_array[CrayonSettings::IGNORE]) {
+                if (isset($atts_array[CrayonSettings::IGNORE]) && $atts_array[CrayonSettings::IGNORE]) {
                     // TODO(aramk) Revert to the original content.
                     continue;
                 }
