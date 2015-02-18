@@ -1,0 +1,344 @@
+# Copyright (C) 2014
+# This file is distributed under the same license as the  package.
+msgid ""
+msgstr ""
+"Project-Id-Version: Authy Two-Factor Authentication\n"
+"Report-Msgid-Bugs-To: http://wordpress.org/tag/authy-two-factor-"
+"authentication\n"
+"POT-Creation-Date: 2014-03-31 20:44:54+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2014-03-31 19:29-0500\n"
+"Last-Translator: JOHANNA MANTILLA <johanna@authy.com>\n"
+"Language-Team: AUTHY <support@authy.com>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: es_ES\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: authy-api.php:122
+msgid "Invalid Authy Token."
+msgstr "Token de Authy Inválido"
+
+#: authy-api.php:150
+msgid ""
+"SMS token was sent. Please allow at least 1 minute for the text to arrive."
+msgstr ""
+"El SMS con el token fue enviado. Por favor, espere al menos 1 minuto para "
+"que el mensaje llegue."
+
+#: authy.php:161 authy.php:364
+msgid "Authy Production API Key"
+msgstr "Authy API Key de producción"
+
+#: authy.php:167 authy.php:366
+msgid "Disable external apps that don't support Two-factor Authentication"
+msgstr ""
+"Deshabilitar aplicaciones externas que no soportan Autenticación de dos "
+"factores"
+
+#: authy.php:251
+msgid "Two-Factor Authentication"
+msgstr "Autenticación de dos factores"
+
+#: authy.php:252
+msgid "Enable/Disable Authy"
+msgstr "Habilitar/Deshabilitar Authy"
+
+#: authy.php:274
+msgid "Settings"
+msgstr "Ajustes"
+
+#: authy.php:365
+msgid "Allow Authy for the following roles"
+msgstr "Permitir Authy para los siguientes roles"
+
+#: authy.php:426
+msgid "Ensure Two-factor authentication is always respected."
+msgstr "Asegurar que la autenticación de dos factores sea siempre respetada."
+
+#: authy.php:428
+msgid ""
+"WordPress mobile app's don't support Two-Factor authentication. If you "
+"disable this option you will be able to use the apps but it will bypass Two-"
+"Factor Authentication."
+msgstr ""
+"La aplicación móvil de WordPress no soporte Autenticación en dos factores. "
+"Si deshabilita esta opción usted podrá utilizar las aplicaciones pero pasará "
+"por alto la autenticación de dos factores."
+
+#: authy.php:449
+msgid ""
+"Enter your Authy API key (get one on authy.com/signup). You can select which "
+"users can enable authy by their WordPress role. Users can then enable Authy "
+"on their individual accounts by visting their user profile pages."
+msgstr ""
+"Ingrese tu Authy API key (obtén uno en authy.com/signup). Puedes seleccionar "
+"qué usuarios pueden habilitar Authy por su rol de WordPress. Los usuarios "
+"pueden activar Authy en sus cuentas visitando sus páginas de perfil."
+
+#: authy.php:450
+msgid ""
+"You can also enable and force Two-Factor Authentication by editing the user "
+"on the Users page, and then clicking \"Enable Authy\" button on their "
+"settings."
+msgstr ""
+"También puede habilitar y forzar la autenticación en dos factores editando "
+"el usuario en la pagina de Usuarios y luego dando clic en el botón "
+"\"Habilitar Authy\" en los ajustes."
+
+#: authy.php:453
+msgid ""
+"To use the Authy service, you must register an account at <a href=\"%1$s"
+"\"><strong>%1$s</strong></a> and create an application for access to the "
+"Authy API."
+msgstr ""
+"Para utilizar el servicio de Authy, debes registrar una cuenta en <a href="
+"\"%1$s\"><strong>%1$s</strong></a> y crear una aplicación para acceder al "
+"API de Authy."
+
+#: authy.php:454
+msgid ""
+"Once you've created your application, enter your API keys in the fields "
+"below."
+msgstr ""
+"Una vez tengas creada la aplicación, ingrese el API key en el campo a "
+"continuación."
+
+#: authy.php:455
+msgid "Until your API keys are entered, the %s plugin cannot function."
+msgstr "Hasta que se ingrese API key, el plugin de %s no puede funcionar."
+
+#: authy.php:463
+msgid "Save Changes"
+msgstr "Guardar cambios"
+
+#: authy.php:471
+msgid "Application Details"
+msgstr "Detalles de la aplicación"
+
+#: authy.php:473
+msgid "Application name"
+msgstr "Nombre de la aplicación"
+
+#: authy.php:477
+msgid "Plan"
+msgstr "Plan"
+
+#: authy.php:484
+msgid ""
+"Warning: text-messages won't work on the current plan. Upgrade for free to "
+"the Starter plan on your authy.com dashboard to enable text-messages."
+msgstr ""
+"Advertencia: los mensajes de texto no funcionan en el plan actual. "
+"Actualícelo gratis al plan Starter en el Authy dashboard para habilitar los "
+"mensajes de texto."
+
+#: authy.php:983
+msgid "Error"
+msgstr "Error"
+
+#: authy.php:1139
+msgid "<strong>ERROR</strong> Authentication timed out. Please try again."
+msgstr ""
+"<strong>ERROR</strong> La autenticación excedió el tiempo de espera. Por "
+"favor intente de nuevo."
+
+#: authy.php:1153 authy.php:1157 authy.php:1195 authy.php:1199
+msgid "<strong>ERROR: Authentication failed</strong>"
+msgstr "<strong>ERROR: Falló la autenticación</strong>"
+
+#: authy.php:1263
+msgid "<strong>ERROR: missing credentials</strong>"
+msgstr "<strong>ERROR: Faltan las credenciales</strong>"
+
+#: helpers.php:52
+msgid ""
+"You can get this token from the Authy mobile app. If you are not using the "
+"Authy app we've automatically sent you a token via text-message to cellphone "
+"number: "
+msgstr ""
+"Puedes obtener el token usando la aplicación móvil de Authy. Si no estas "
+"usando la aplicación de Authy, nosotros automáticamente te enviaremos el "
+"token a través de un mensaje de texto a tu celular:"
+
+#: helpers.php:66 helpers.php:211
+msgid "Authy Token"
+msgstr "Token de Authy"
+
+#: helpers.php:77
+msgid "Login"
+msgstr "Iniciar sesión"
+
+#: helpers.php:97
+msgid "Enable Authy Two-Factor Authentication"
+msgstr "Habilitar Authenticación de dos factores con Authy"
+
+#: helpers.php:107
+msgid ""
+"Your administrator has requested that you add Two-Factor Authentication to "
+"your account, please enter your cellphone below to enable."
+msgstr ""
+"El administrador ha solicitado que agregues Autenticación en dos factores a "
+"tu cuenta, por favor ingresa tu número de celular a continuación para "
+"habilitarlo."
+
+#: helpers.php:109 helpers.php:136 helpers.php:259 helpers.php:300
+msgid "Country"
+msgstr "Código de País"
+
+#: helpers.php:112 helpers.php:142 helpers.php:265 helpers.php:306
+msgid "Cellphone number"
+msgstr "Número de celular"
+
+#: helpers.php:119
+msgid "Enable"
+msgstr "Habilitar"
+
+#: helpers.php:159
+msgid "Disable Two Factor Authentication?"
+msgstr "¿Deshabilitar Autenticación en dos factores?"
+
+#: helpers.php:162
+msgid "Yes, disable Authy for your account."
+msgstr "Si, deshabilitar Authy en mi cuenta."
+
+#: helpers.php:181
+msgid "ERROR: "
+msgstr "ERROR:"
+
+#: helpers.php:184
+msgid ""
+"To activate your account you need to setup Authy Two-Factor Authentication."
+msgstr ""
+"Para activar su cuenta necesitas configurar la Autenticación de dos factores."
+
+#: helpers.php:189
+msgid ""
+"On your phone browser go to <a href=\"%1$s\" alt=\"install authy\" style="
+"\"padding-left: 18px;\">%1$s</a>."
+msgstr ""
+"En el navegador de tu celular abre <a href=\"%1$s\" alt=\"instalar authy\" "
+"style=\"padding-left: 18px;\">%1$s</a>."
+
+#: helpers.php:197
+msgid "Open the App and register."
+msgstr "Abre la aplicación y regístrate."
+
+#: helpers.php:203
+msgid "If you don’t have an iPhone or Android "
+msgstr "SI no tienes un iPhone o Android"
+
+#: helpers.php:206
+msgid "click here to get the Token as a Text Message."
+msgstr "haz clic aquí para obtener el token en un mensaje de texto."
+
+#: helpers.php:221
+msgid "Verify Token"
+msgstr "Token de verificación"
+
+#: helpers.php:225
+msgid "Get the token via SMS"
+msgstr "Obtener un token a través de mensaje de texto"
+
+#: helpers.php:239
+msgid "Authy is not yet configured for your the <strong>%s</strong> account."
+msgstr ""
+"Authy no esta configurado para la cuenta de usuario <strong>%s</strong>."
+
+#: helpers.php:241
+msgid ""
+"To enable Authy for this account, complete the form below, then click "
+"<em>Continue</em>."
+msgstr ""
+"Para habilitar Authy en esta cuenta, diligencie el formulario a "
+"continuación, luego haz clic en <em>Continuar</em>."
+
+#: helpers.php:276
+msgid "Continue"
+msgstr "Continuar"
+
+#: helpers.php:286
+msgid "Two Factor Authentication"
+msgstr "Autenticación en dos factores"
+
+#: helpers.php:299
+msgid ""
+"To enable Authy enter the country and cellphone number of the person who is "
+"going to use this account."
+msgstr ""
+"Para habilitar Authy ingrese el código de país y el número de celular de la "
+"persona quién va a utilizar esta cuenta."
+
+#: helpers.php:313
+msgid "Force enable Authy"
+msgstr "Forzar a habilitar Authy"
+
+#: helpers.php:317
+msgid ""
+"Force this user to enable Authy Two-Factor Authentication on the next login."
+msgstr ""
+"Forzar a este usuario a habilitar la Autenticación en dos factores con Authy "
+"en el próximo inicio de sesión."
+
+#: helpers.php:328
+msgid "Authy is enabled for this account."
+msgstr "Authy esta habilitado para esta cuenta"
+
+#: helpers.php:329
+msgid ""
+"Click the button below to disable Two-Factor Authentication for <strong>%s</"
+"strong>"
+msgstr ""
+"Haz clic en el botón a continuación para deshabitar la Autenticación en dos "
+"factores para <strong>%s</strong>"
+
+#: helpers.php:332
+msgid "Disable Authy"
+msgstr "Deshabilitar Authy"
+
+#: helpers.php:346
+msgid ""
+"Congratulations, Authy is now configured for <strong>%s</strong> user "
+"account."
+msgstr ""
+"Felicitaciones, Authy está configurado para la cuenta de usuario <strong>%s</"
+"strong>."
+
+#: helpers.php:349
+msgid ""
+"We've sent you an e-mail and text-message with instruction on how to install "
+"the Authy App. If you do not install the App, we'll automatically send you a "
+"text-message to your cellphone "
+msgstr ""
+"Te hemos enviado un e-mail y un mensaje de texto con las instrucciones sobre "
+"cómo instalar la aplicación de Authy. Si no instala la aplicación, le "
+"enviaremos automáticamente un mensaje de texto a su celular "
+
+#: helpers.php:351
+msgid "on every login with the token that you need to use for when you login."
+msgstr ""
+"en cada inicio de sesión con el token que es necesario utilizar para iniciar "
+"sesión."
+
+#: helpers.php:353 helpers.php:370
+msgid "Return to your profile"
+msgstr "Regresar a tu perfil"
+
+#: helpers.php:355
+msgid "Authy could not be activated for the <strong>%s</strong> user account."
+msgstr ""
+"Authy no pude ser activado para el <strong>%s</strong> cuenta de usuario."
+
+#: helpers.php:356
+msgid "Please try again later."
+msgstr "Por favor intente de nuevo mas tarde."
+
+#: helpers.php:358
+msgid "Try again"
+msgstr "Intenta de nuevo"
+
+#: helpers.php:367
+msgid "Authy was disabled"
+msgstr "Authy fue deshabilitado"
