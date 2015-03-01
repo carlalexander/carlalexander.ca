@@ -73,6 +73,13 @@
 }
 
 /**
+ * oEmbeds
+ */
+.oembed.oembed-speaker-deck {
+  text-align: center;
+}
+
+/**
  * Call to action
  */
 .site-content .call-action {
@@ -92,6 +99,23 @@
 /**
  * Media Queries
  */
+@media screen and (max-width: 400px) {
+  .oembed.oembed-speaker-deck iframe {
+    width: 300px;
+    height: 232px;
+  }
+}
+
+/**
+ * iPhone 6 plus in portrait
+ */
+@media screen and (device-width: 414px) and (orientation: portrait) {
+  .oembed.oembed-speaker-deck iframe {
+    width: 394px;
+    height: 285px;
+  }
+}
+
 @media screen and (min-width: 401px) {
   .site-content .byline span:before {
     -webkit-font-smoothing: antialiased;
@@ -121,5 +145,10 @@
 
   .secondary-navigation + .primary-sidebar {
     padding-top: 0;
+  }
+
+  .oembed.oembed-speaker-deck iframe {
+      width: 574px;
+      height: 386px;
   }
 }
