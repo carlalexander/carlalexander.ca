@@ -5,6 +5,14 @@
  */
 
 /**
+ * Add custom favicon.
+ */
+function twentyfourteen_add_favicon() {
+	echo '<link rel="Shortcut Icon" type="image/x-icon" href="'.get_bloginfo('stylesheet_directory').'/favicon.ico" />' . "\n";
+}
+add_action('wp_head', 'twentyfourteen_add_favicon');
+
+/**
  * Add custom oEmbed providers.
  */
 function twentyfourteen_add_oembed_providers() {
