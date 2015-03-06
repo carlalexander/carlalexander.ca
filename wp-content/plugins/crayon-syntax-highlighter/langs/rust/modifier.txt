@@ -1,4 +1,0 @@
-mut
-priv
-pub
-static

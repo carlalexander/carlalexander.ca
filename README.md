@@ -1,3 +1,3 @@
-# carlalexander.ca
+# Blog of Carl Alexander
 
-WordPress Site
+Bedrock-based WordPress site for [carlalexander.ca](http://carlalexander.ca)
