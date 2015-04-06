@@ -55,6 +55,34 @@
 }
 
 /**
+ * Code
+ */
+code {
+  background: #f5f7f8;
+  border: solid 1px #e4e4e4;
+  border-radius: 3px;
+  padding: 4px 4px 1px;
+  font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-size: 14px;
+  word-wrap: break-word;
+}
+
+/**
+ * Links
+ */
+.entry-content a, .entry-summary a, .page-content a, .comment-content a {
+  text-decoration: none;
+  border-bottom: 1px solid #24890d;
+}
+.entry-content a:hover, .entry-summary a:hover, .page-content a:hover, .comment-content a:hover {
+  text-decoration: none;
+  border-bottom-color: transparent;
+}
+.entry-content a.button, .entry-summary a.button, .page-content a.button, .comment-content a.button {
+  border-bottom: 0;
+}
+
+/**
  * Seperator
  */
 .home span + .comments-link:before {
