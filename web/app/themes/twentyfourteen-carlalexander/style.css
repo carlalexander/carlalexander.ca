@@ -101,6 +101,13 @@ code {
 }
 
 /**
+ * Title
+ */
+.entry-title {
+  font-size: 31px;
+}
+
+/**
  * oEmbeds
  */
 .oembed.oembed-speaker-deck {
