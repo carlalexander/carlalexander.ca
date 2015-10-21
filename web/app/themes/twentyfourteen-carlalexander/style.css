@@ -87,6 +87,15 @@ code {
 }
 
 /**
+ * Widgets
+ */
+.widget .button:hover {
+    background-color: #41a62a;
+    color: #fff;
+}
+
+
+/**
  * Secondary navigation
  */
 .secondary-navigation {
