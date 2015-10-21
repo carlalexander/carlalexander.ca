@@ -13,6 +13,15 @@ function twentyfourteen_add_favicon() {
 add_action('wp_head', 'twentyfourteen_add_favicon');
 
 /**
+ * Enqueue the TwentyFourteen stylesheet.
+ */
+function twentyfourteen_parent_theme_enqueue_styles() {
+    wp_enqueue_style('parent-style', get_template_directory_uri() . '/style.css');
+
+}
+add_action('wp_enqueue_scripts', 'twentyfourteen_parent_theme_enqueue_styles');
+
+/**
  * Add custom oEmbed providers.
  */
 function twentyfourteen_add_oembed_providers() {
