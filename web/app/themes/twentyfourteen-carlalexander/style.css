@@ -112,6 +112,13 @@ code {
 }
 
 /**
+ * Images
+ */
+img.circle {
+    border-radius: 50%;
+}
+
+/**
  * Call to action
  */
 .site-content .call-action {
