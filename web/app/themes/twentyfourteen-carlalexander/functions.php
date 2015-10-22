@@ -22,6 +22,16 @@ function twentyfourteen_parent_theme_enqueue_styles() {
 add_action('wp_enqueue_scripts', 'twentyfourteen_parent_theme_enqueue_styles');
 
 /**
+ * Enqueue the TwentyFourteen child theme scripts.
+ */
+function twentyfourteen_enqueue_scripts() {
+    if (is_front_page() || is_single()) {
+        wp_enqueue_script('child-script-headerbar', get_stylesheet_directory_uri() . '/js/headerbar.js', array('jquery'));
+    }
+}
+add_action('wp_enqueue_scripts', 'twentyfourteen_enqueue_scripts');
+
+/**
  * Add custom oEmbed providers.
  */
 function twentyfourteen_add_oembed_providers() {
