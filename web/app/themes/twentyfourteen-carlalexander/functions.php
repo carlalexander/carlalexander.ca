@@ -71,3 +71,4 @@ function twentyfourteen_posted_on() {
 		get_the_author()
 	);
 }
+

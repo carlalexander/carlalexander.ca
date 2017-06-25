@@ -4,7 +4,7 @@ Description: Adds support for languages written in a Right To Left (RTL) directi
 It's easy, just a matter of overwriting all the horizontal positioning attributes
 of your CSS stylesheet in a separate stylesheet file named rtl.css.
 
-See http://codex.wordpress.org/Right_to_Left_Language_Support
+See https://codex.wordpress.org/Right_to_Left_Language_Support
 */
 
 /**
@@ -335,6 +335,10 @@ td {
 	margin: 0 20px 0 0;
 }
 
+.widget_text ul,
+.widget_text ol {
+	margin: 0 10px 12px 0;
+}
 
 /**
  * 7.2 Content Sidebar Widgets
