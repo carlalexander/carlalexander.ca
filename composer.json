@@ -1,56 +1,40 @@
 {
-  "name": "roots/bedrock",
+  "name": "carlalexander/carlalexander.ca",
   "type": "project",
-  "license": "MIT",
-  "description": "A modern WordPress stack",
-  "homepage": "http://roots.io/wordpress-stack/",
+  "homepage": "https://carlalexander.ca",
   "authors": [
     {
-      "name": "Scott Walkinshaw",
-      "email": "scott.walkinshaw@gmail.com",
-      "homepage": "https://github.com/swalkinshaw"
-    },
-    {
-      "name": "Ben Word",
-      "email": "ben@benword.com",
-      "homepage": "https://github.com/retlehs"
+      "name": "Carl Alexander",
+      "email": "contact@carlalexander.ca",
+      "homepage": "https://carlalexander.ca"
     }
   ],
-  "keywords": [
-    "wordpress", "stack", "capistrano", "composer", "vagrant", "wp"
-  ],
-  "support": {
-    "issues": "https://github.com/roots/bedrock/issues",
-    "forum": "http://discourse.roots.io/category/bedrock"
-  },
   "config": {
-    "preferred-install": "dist",
-    "generate-salts": true
-  },
-  "autoload": {
-    "psr-0": {"Roots\\Bedrock\\Installer": "scripts"}
-  },
-  "scripts": {
-    "post-root-package-install": ["Roots\\Bedrock\\Installer::addSalts"]
+    "preferred-install": "dist"
   },
   "repositories": [
     {
       "type": "composer",
-      "url": "http://wpackagist.org"
+      "url": "https://wpackagist.org"
     }
   ],
   "require": {
-    "php": ">=5.4",
-    "composer/installers": "~1.0.0",
-    "vlucas/phpdotenv": "~1.1.0",
-    "johnpbloch/wordpress": "*",
+    "php": ">=5.6",
+    "composer/installers": "~1.2.0",
+    "vlucas/phpdotenv": "^2.0.1",
+    "johnpbloch/wordpress": "4.8.0",
+    "oscarotero/env": "^1.0",
+    "roots/wp-password-bcrypt": "1.0.0",
     "wpackagist-plugin/akismet": "*",
     "wpackagist-plugin/crayon-syntax-highlighter": "*",
     "wpackagist-plugin/disqus-comment-system": "*",
     "wpackagist-plugin/google-analytics-for-wordpress": "*",
     "wpackagist-plugin/google-authenticator": "*",
-    "wpackagist-plugin/post-thumbnail-editor": "*",
     "wpackagist-plugin/jetpack": "*",
+    "wpackagist-plugin/post-thumbnail-editor": "*",
+    "wpackagist-plugin/redis-cache": "*",
+    "wpackagist-plugin/tiny-compress-images": "*",
+    "wpackagist-plugin/varnish-http-purge": "*",
     "wpackagist-plugin/wordpress-seo": "*"
   },
   "require-dev": {
@@ -63,5 +47,13 @@
       "web/app/themes/{$name}/": ["type:wordpress-theme"]
     },
     "wordpress-install-dir": "web/wp"
+  },
+  "scripts": {
+    "post-root-package-install": [
+      "php -r \"copy('.env.example', '.env');\""
+    ],
+    "test": [
+      "vendor/bin/phpcs"
+    ]
   }
 }

@@ -1,31 +1,25 @@
 # Application
 web/app/plugins/*
-web/app/mu-plugins/*
+!web/app/plugins/.gitkeep
+web/app/mu-plugins/*/
 web/app/upgrade
 web/app/uploads/*
-!web/app/mu-plugins/disallow-indexing.php
-!web/app/mu-plugins/register-theme-directory.php
-!web/app/mu-plugins/bedrock-autoloader.php
+!web/app/uploads/.gitkeep
 
 # WordPress
 web/wp
 web/.htaccess
-
-# WP-CLI
-db-sync
-sql-dump-*.sql
 
 # Dotenv
 .env
 .env.*
 !.env.example
 
-# Vendor (e.g. Composer)
+# Composer
+composer.lock
 vendor/*
+!vendor/.gitkeep
 
-# Node Package Manager
-node_modules
+# Deployer
+servers.yml
 
-# Vagrant
-bin
-.vagrant
