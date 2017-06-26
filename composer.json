@@ -35,7 +35,8 @@
     "wpackagist-plugin/redis-cache": "*",
     "wpackagist-plugin/tiny-compress-images": "*",
     "wpackagist-plugin/varnish-http-purge": "*",
-    "wpackagist-plugin/wordpress-seo": "*"
+    "wpackagist-plugin/wordpress-seo": "*",
+    "wpackagist-theme/twentyfourteen": "~2.0"
   },
   "require-dev": {
     "wpackagist-plugin/query-monitor": "*"
