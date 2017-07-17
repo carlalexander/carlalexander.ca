@@ -39,7 +39,8 @@
     "wpackagist-theme/twentyfourteen": "~2.0"
   },
   "require-dev": {
-    "wpackagist-plugin/query-monitor": "*"
+    "wpackagist-plugin/query-monitor": "*",
+    "wpackagist-plugin/wp-mail-smtp": "*"
   },
   "extra": {
     "installer-paths": {
