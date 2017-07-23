@@ -30,6 +30,7 @@
     "wpackagist-plugin/disqus-comment-system": "*",
     "wpackagist-plugin/google-analytics-for-wordpress": "*",
     "wpackagist-plugin/google-authenticator": "*",
+    "wpackagist-plugin/elasticpress": "*",
     "wpackagist-plugin/jetpack": "*",
     "wpackagist-plugin/post-thumbnail-editor": "*",
     "wpackagist-plugin/redis-cache": "*",
