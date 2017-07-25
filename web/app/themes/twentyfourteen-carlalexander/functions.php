@@ -72,3 +72,19 @@ function twentyfourteen_posted_on() {
 	);
 }
 
+/**
+ * Remove separator on the homepage.
+ *
+ * @param string $title
+ * @param string $separator
+ *
+ * @return string
+ */
+function twentyfourteen_homepage_title($title, $separator) {
+    if (!is_home()) {
+        return $title;
+    }
+
+    return str_ireplace(" $separator ", ' ', $title);
+}
+add_filter('wp_title', 'twentyfourteen_homepage_title', 99, 2);
