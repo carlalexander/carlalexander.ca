@@ -39,6 +39,17 @@ define('WP_HOME', env('WP_HOME'));
 define('WP_SITEURL', env('WP_SITEURL'));
 
 /**
+ * Multisite
+ */
+define('WP_ALLOW_MULTISITE', true);
+define('MULTISITE', true);
+define('SUBDOMAIN_INSTALL', true);
+define('DOMAIN_CURRENT_SITE', parse_url(WP_HOME,  PHP_URL_HOST));
+define('PATH_CURRENT_SITE', '/');
+define('SITE_ID_CURRENT_SITE', 1);
+define('BLOG_ID_CURRENT_SITE', 1);
+
+/**
  * Custom Content Directory
  */
 define('CONTENT_DIR', '/app');
