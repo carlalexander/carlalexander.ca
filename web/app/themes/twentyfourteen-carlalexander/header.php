@@ -61,7 +61,7 @@
 			</div>
 		</div>
 
-        <?php if (is_front_page() || is_single()) : ?>
+        <?php if (get_current_blog_id() === 1 && (is_front_page() || is_single())) : ?>
             <div id="headerbar-container" class="headerbar-wrapper">
                 <div class="headerbar-content">
                     <p>Want to learn object-oriented programmming? <a href="https://carlalexander.ca/discover-object-oriented-programming/">Get my <span class="hidden-mobile">free</span> course</a></p>
