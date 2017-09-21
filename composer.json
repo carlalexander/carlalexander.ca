@@ -33,6 +33,7 @@
     "wpackagist-plugin/google-authenticator": "*",
     "wpackagist-plugin/elasticpress": "*",
     "wpackagist-plugin/jetpack-markdown": "*",
+    "wpackagist-plugin/jetpack-sharing": "*",
     "wpackagist-plugin/post-thumbnail-editor": "*",
     "wpackagist-plugin/redis-cache": "*",
     "wpackagist-plugin/tiny-compress-images": "*",

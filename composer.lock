@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3cd13e43c556641fa9d89eef00a1ad3b",
+    "content-hash": "e85ed80c85c96161b559aaaa4f6d4277",
     "packages": [
         {
             "name": "composer/installers",
@@ -549,6 +549,26 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/jetpack-markdown/"
+        },
+        {
+            "name": "wpackagist-plugin/jetpack-sharing",
+            "version": "3.9.6",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/jetpack-sharing/",
+                "reference": "tags/3.9.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/jetpack-sharing.3.9.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/jetpack-sharing/"
         },
         {
             "name": "wpackagist-plugin/post-thumbnail-editor",
