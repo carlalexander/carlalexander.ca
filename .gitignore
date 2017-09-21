@@ -18,7 +18,6 @@ web/.htaccess
 !.env.example
 
 # Composer
-composer.lock
 vendor/*
 !vendor/.gitkeep
 
