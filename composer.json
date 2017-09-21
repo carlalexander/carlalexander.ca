@@ -32,11 +32,11 @@
     "wpackagist-plugin/google-analytics-for-wordpress": "*",
     "wpackagist-plugin/google-authenticator": "*",
     "wpackagist-plugin/elasticpress": "*",
+    "wpackagist-plugin/jetpack-markdown": "*",
     "wpackagist-plugin/post-thumbnail-editor": "*",
     "wpackagist-plugin/redis-cache": "*",
     "wpackagist-plugin/tiny-compress-images": "*",
     "wpackagist-plugin/varnish-http-purge": "*",
-    "wpackagist-plugin/wp-markdown": "*",
     "wpackagist-theme/twentyfourteen": "~2.0"
   },
   "require-dev": {

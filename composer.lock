@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "c1d5d5a4c4427518cfb0955b92100136",
+    "content-hash": "3cd13e43c556641fa9d89eef00a1ad3b",
     "packages": [
         {
             "name": "composer/installers",
@@ -440,7 +440,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/crayon-syntax-highlighter.zip",
+                "url": "https://downloads.wordpress.org/plugin/crayon-syntax-highlighter.zip?timestamp=1462880237",
                 "reference": null,
                 "shasum": null
             },
@@ -531,6 +531,26 @@
             "homepage": "https://wordpress.org/plugins/google-authenticator/"
         },
         {
+            "name": "wpackagist-plugin/jetpack-markdown",
+            "version": "3.9.6",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/jetpack-markdown/",
+                "reference": "tags/3.9.6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/jetpack-markdown.3.9.6.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/jetpack-markdown/"
+        },
+        {
             "name": "wpackagist-plugin/post-thumbnail-editor",
             "version": "2.4.8",
             "source": {
@@ -609,26 +629,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/varnish-http-purge/"
-        },
-        {
-            "name": "wpackagist-plugin/wp-markdown",
-            "version": "1.5.1",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/wp-markdown/",
-                "reference": "tags/1.5.1"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/wp-markdown.1.5.1.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/wp-markdown/"
         },
         {
             "name": "wpackagist-theme/twentyfourteen",
