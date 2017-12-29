@@ -5,6 +5,14 @@
  */
 
 /**
+ * Overwrite feature image size.
+ */
+function twentyfourteen_add_image_size() {
+    add_image_size('twentyfourteen-full-width', 1038, 576);
+}
+add_action('after_setup_theme', 'twentyfourteen_add_image_size', 99);
+
+/**
  * Add custom favicon.
  */
 function twentyfourteen_add_favicon() {
