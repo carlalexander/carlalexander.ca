@@ -34,6 +34,7 @@
     "wpackagist-plugin/elasticpress": "*",
     "wpackagist-plugin/jetpack-markdown": "*",
     "wpackagist-plugin/jetpack-sharing": "*",
+    "wpackagist-plugin/passwords-evolved": "*",
     "wpackagist-plugin/post-thumbnail-editor": "*",
     "wpackagist-plugin/redis-cache": "*",
     "wpackagist-plugin/tiny-compress-images": "*",
@@ -55,9 +56,6 @@
   "scripts": {
     "post-root-package-install": [
       "php -r \"copy('.env.example', '.env');\""
-    ],
-    "test": [
-      "vendor/bin/phpcs"
     ]
   }
 }
