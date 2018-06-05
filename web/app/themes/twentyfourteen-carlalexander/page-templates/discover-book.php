@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 
     <link href="<?php echo get_stylesheet_directory_uri(); ?>/css/material-kit.min.css" rel="stylesheet" />
+    <link href="<?php echo get_stylesheet_directory_uri(); ?>/css/discover.css" rel="stylesheet" />
 </head>
 
 <body <?php body_class(); ?>>
