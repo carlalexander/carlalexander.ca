@@ -137,7 +137,8 @@
         </div>
     </div>
 </div>
-<footer class="footer footer-default" >
+<footer class="footer footer-default">
+    <div class="container copyright">&copy; <?php echo date('Y'); ?> Carl Alexander. All Rights Reserved.</div>
 </footer>
 </body>
 
