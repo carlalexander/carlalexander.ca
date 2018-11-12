@@ -1,0 +1,112 @@
+# Translation of Plugins - Google Authenticator - Stable (latest release) in Spanish (Spain)
+# This file is distributed under the same license as the Plugins - Google Authenticator - Stable (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2018-06-11 16:23:01+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: GlotPress/2.4.0-alpha\n"
+"Language: es\n"
+"Project-Id-Version: Plugins - Google Authenticator - Stable (latest release)\n"
+
+#. Author URI of the plugin/theme
+msgid "http://henrik.schack.dk/"
+msgstr "http://henrik.schack.dk/"
+
+#. Author of the plugin/theme
+msgid "Henrik Schack"
+msgstr "Henrik Schack"
+
+#. Description of the plugin/theme
+msgid "Two-Factor Authentication for WordPress using the Android/iPhone/Blackberry app as One Time Password generator."
+msgstr "La autentificación en dos pasos por wordpress utiliza una app Android/iPhone/Blackberry como 'One Time Password generator.'"
+
+#. Plugin URI of the plugin/theme
+msgid "http://henrik.schack.dk/google-authenticator-for-wordpress"
+msgstr "http://henrik.schack.dk/google-authenticator-for-wordpress"
+
+#. Plugin Name of the plugin/theme
+msgid "Google Authenticator"
+msgstr "Google Authenticator"
+
+#: google-authenticator.php:482
+msgid "Hide settings from user"
+msgstr "Ocultar ajustes al usuario"
+
+#: google-authenticator.php:337
+msgid " Password is not stored in cleartext, this is your only chance to see it."
+msgstr "La contraseña no está almacenada en formato de texto, es su única oportunidad de verla."
+
+#: google-authenticator.php:336
+msgid "Create new password"
+msgstr "Crear nueva contraseña"
+
+#: google-authenticator.php:328
+msgid " Enabling an App password will decrease your overall login security."
+msgstr "Permitir una contraseña de aplicación disminuirá su seguridad global."
+
+#: google-authenticator.php:326
+msgid "Enable App password"
+msgstr "Permitir contraseña de aplicación"
+
+#: google-authenticator.php:321
+msgid "Scan this with the Google Authenticator app."
+msgstr "Escanear esto con la aplicación Google Authenticator."
+
+#: google-authenticator.php:312
+msgid "Show/Hide QR code"
+msgstr "Mostar/Esconder QR Code"
+
+#: google-authenticator.php:311
+msgid "Create new secret"
+msgstr "Crear nueva clave secreta"
+
+#: google-authenticator.php:308
+msgid "Secret"
+msgstr "Secreto"
+
+#: google-authenticator.php:304
+msgid " Description that you'll see in the Google Authenticator app on your phone."
+msgstr "Descripción que se verá en la aplicación Google Authenticator en su teléfono."
+
+#: google-authenticator.php:303
+msgid "Description"
+msgstr "Descripción"
+
+#: google-authenticator.php:298
+msgid " Relaxed mode allows for more time drifting on your phone clock (&#177;4 min)."
+msgstr "El modo relajado permite tener más tiempo de reloj en su teléfono (&#177;4 min)."
+
+#: google-authenticator.php:296
+msgid "Relaxed mode"
+msgstr "Modo relajado"
+
+#: google-authenticator.php:288 google-authenticator.php:489
+msgid "Active"
+msgstr "Activar"
+
+#: google-authenticator.php:283 google-authenticator.php:477
+msgid "Google Authenticator Settings"
+msgstr "Opciones Google Authenticator"
+
+#: google-authenticator.php:280
+msgid "WordPressBlog"
+msgstr "WordPressBlog"
+
+#: google-authenticator.php:240
+msgid "<strong>ERROR</strong>: The Google Authenticator code is incorrect or has expired."
+msgstr "<strong>ERROR</strong>: El código es incorrecto o caducado."
+
+#: google-authenticator.php:237
+msgid "<strong>ERROR</strong>: The Google Authenticator password is incorrect."
+msgstr "<strong>ERROR</strong>: El codigo es incorrecto."
+
+#: google-authenticator.php:168
+msgid "Google Authenticator code"
+msgstr "Código Google Authenticator"
+
+#: google-authenticator.php:168
+msgid "If you don't have Google Authenticator enabled for your WordPress account, leave this field empty."
+msgstr "Si no tiene Google Authenticator habilitado en su cuenta de WordPress, deje este campo vacío."
