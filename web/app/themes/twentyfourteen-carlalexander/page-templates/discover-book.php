@@ -36,7 +36,7 @@
                 <h1 class="title">Wish you could learn object-oriented programming?</h1>
                 <p class="h4"><em>"Discover object-oriented programming using WordPress"</em> is a book and video course <u><span class="font-weight-bold">designed for WordPress developers.</span></u> It'll teach you the fundamentals of object-oriented programming using WordPress concepts and terminology. This way you can get the hang of this important topic so that you can <u><span class="font-weight-bold">start using it in your WordPress projects.</span></u></p>
                 <p>
-                    <a href="" class="btn btn-primary btn-raised btn-round btn-lg font-weight-bold">View packages</a> <a href="" class="bg-light btn btn-outline-primary btn-round btn-lg font-weight-bold border-0">Get a sample</a>
+                    <a href="#packages" class="btn btn-primary btn-raised btn-round btn-lg font-weight-bold">View packages</a> <a href="#sample" class="bg-light btn btn-outline-primary btn-round btn-lg font-weight-bold border-0">Get a sample</a>
                 </p>
             </div>
         </div>
@@ -63,7 +63,7 @@
             </div>
             <div class="features text-center">
                 <div class="row">
-                    <div class="col-md-8 ml-auto mr-auto">
+                    <div class="col-md-7 ml-auto mr-auto">
                         <h2 class="title">What do you get?</h2>
                     </div>
                 </div>
@@ -102,12 +102,12 @@
     <div class="section">
         <div class="subscribe-line subscribe-line-image" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/images/escheresque_ste.png');">
             <div class="container">
-                <div class="row">
+                <div id="sample" class="row">
                     <div class="col-md-7 ml-auto mr-auto">
                         <div class="text-center">
                             <h3 class="title text-white">Get a free sample</h3>
                             <p class="description text-white">
-                                You'll also join my book launch list. This will give you access to free lessons and an early discount when I release the book.
+                                [You'll also join my book launch list. This will give you access to free lessons and an early discount when I release the book.]
                             </p>
                         </div>
                         <div class="card card-raised card-form-horizontal">
@@ -116,7 +116,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <span class="form-group bmd-form-group">
-                                                <input type="text" name="first_name" id="ck_firstNameField" placeholder="First name" class="form-control">
+                                                <input type="text" name="first_name" id="ck_firstNameField" placeholder="First name (optional)" class="form-control">
                                             </span>
                                         </div>
                                         <div class="col-md-4">
@@ -132,6 +132,164 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <h2 class="title">Testimonials</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="team-player">
+                        <div class="card card-plain">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
+                            </div>
+                            <h4 class="card-title">Rachel Cherry</h4>
+                            <div class="card-body">
+                                <p class="card-description">[Testimonial]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-player">
+                        <div class="card card-plain">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
+                            </div>
+                            <h4 class="card-title">Tom McFarlin</h4>
+                            <div class="card-body">
+                                <p class="card-description">[Testimonial]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-player">
+                        <div class="card card-plain">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
+                            </div>
+                            <h4 class="card-title">Tonya Mork</h4>
+                            <div class="card-body">
+                                <p class="card-description">[Testimonial]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-player">
+                        <div class="card card-plain">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
+                            </div>
+                            <h4 class="card-title">Josh Pollock</h4>
+                            <div class="card-body">
+                                <p class="card-description">[Testimonial]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-player">
+                        <div class="card card-plain">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
+                            </div>
+                            <h4 class="card-title">Tessa Kriesel</h4>
+                            <div class="card-body">
+                                <p class="card-description">[Testimonial]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="team-player">
+                        <div class="card card-plain">
+                            <div class="col-md-6 ml-auto mr-auto">
+                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
+                            </div>
+                            <h4 class="card-title">Alain Schlesser</h4>
+                            <div class="card-body">
+                                <p class="card-description">[Testimonial]</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="packages" class="row">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <h2 class="title">Packages</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card card-pricing card-plain">
+                        <div class="card-body">
+                            <h6 class="card-category text-info">The book</h6>
+                            <h1 class="card-title"><small class="currency">$</small>39</h1>
+                            <ul class="list-unstyled">
+                                <li>[The 158-page book in PDF format]</li>
+                            </ul>
+                            <a href="" class="btn btn-primary btn-round">Buy now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-pricing card-raised bg-primary">
+                        <div class="card-body">
+                            <h6 class="card-category text-white">The book + Exercises</h6>
+                            <h1 class="card-title"><small class="currency">$</small>99</h1>
+                            <ul class="list-unstyled">
+                                <li>[The 158-page book in PDF format]</li>
+                                <li>Comprehensive set of exercises and solutions</li>
+                            </ul>
+                            <a href="#pablo" class="btn bg-light btn-outline-primary btn-round">Buy now</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card card-pricing card-plain">
+                        <div class="card-body">
+                            <h6 class="card-category text-info">Complete package</h6>
+                            <h1 class="card-title"><small class="currency">$</small>249</h1>
+                            <ul class="list-unstyled">
+                                <li>[The 158-page book in PDF format]</li>
+                                <li>Comprehensive set of exercises and their solutions</li>
+                                <li>[Over 4 hours of screencasts, covering all of the book examples + 3 additional advanced tutorials]</li>
+                            </ul>
+                            <a href="#pablo" class="btn btn-primary btn-round">Buy now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="offset-md-2 col-md-6 text-left">
+                    <h3>Looking to get this for your team?</h3>
+                    <p>You can get unlimited licenses of the complete package as well as a <strong>4 hour code review package</strong> (an $800 value) for $999. A great value if you're looking to improve your team's development practices!</p>
+                </div>
+                <div class="col-md-4 text-center d-flex">
+                    <button type="button" class="btn btn-primary btn-round align-self-center mx-auto">Buy for your team</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <div class="text-center">
+                        <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" alt="Carl Alexander" class="img-raised rounded-circle img-fluid">
+                        <h2 class="title">About the author</h2>
+                    </div>
+                    <p class="h5">Heya, I’m Carl Alexander!</p>
+                    <p class="h5">I'm the charming guy that you can see above. I've been teaching everything I know about programming to the WordPress community for a few years now. Most of it you can find on <a href="https://carlalexander.ca">my site</a> but I've also done a fair share of <a href="https://wordpress.tv/speakers/carl-alexander/">speaking at WordCamps</a> as well.</p>
                 </div>
             </div>
         </div>
