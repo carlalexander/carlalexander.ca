@@ -235,7 +235,8 @@
                             <h6 class="card-category text-info">The book</h6>
                             <h1 class="card-title"><small class="currency">$</small>39</h1>
                             <ul class="list-unstyled">
-                                <li>[The 158-page book in PDF format]</li>
+                                <li><strong>The 166-page</strong> book in PDF format</li>
+                                <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
                             <a href="" class="btn btn-primary btn-round">Buy now</a>
                         </div>
@@ -244,11 +245,12 @@
                 <div class="col-md-4">
                     <div class="card card-pricing card-raised bg-primary">
                         <div class="card-body">
-                            <h6 class="card-category text-white">The book + Exercises</h6>
+                            <h6 class="card-category text-white">Premium package</h6>
                             <h1 class="card-title"><small class="currency">$</small>99</h1>
                             <ul class="list-unstyled">
-                                <li>[The 158-page book in PDF format]</li>
-                                <li>Comprehensive set of exercises and solutions</li>
+                                <li>Set of <strong>18 exercises</strong> + <strong>solutions</strong></li>
+                                <li><strong>The 166-page</strong> book in PDF format</li>
+                                <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
                             <a href="#pablo" class="btn bg-light btn-outline-primary btn-round">Buy now</a>
                         </div>
@@ -260,9 +262,10 @@
                             <h6 class="card-category text-info">Complete package</h6>
                             <h1 class="card-title"><small class="currency">$</small>249</h1>
                             <ul class="list-unstyled">
-                                <li>[The 158-page book in PDF format]</li>
-                                <li>Comprehensive set of exercises and their solutions</li>
-                                <li>[Over 4 hours of screencasts, covering all of the book examples + 3 additional advanced tutorials]</li>
+                                <li><strong>In-depth screencasts</strong> covering all the exercises</li>
+                                <li>Set of <strong>18 exercises</strong> + <strong>solutions</strong></li>
+                                <li><strong>The 166-page</strong> book in PDF format</li>
+                                <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
                             <a href="#pablo" class="btn btn-primary btn-round">Buy now</a>
                         </div>
@@ -272,7 +275,7 @@
             <div class="row">
                 <div class="offset-md-2 col-md-6 text-left">
                     <h3>Looking to get this for your team?</h3>
-                    <p>You can get unlimited licenses of the complete package as well as a <strong>4 hour code review package</strong> (an $800 value) for $999. A great value if you're looking to improve your team's development practices!</p>
+                    <p>You can get <strong>unlimited licenses of the complete package</strong> as well as a <strong>4 hour code review package</strong> (an $800 value) for <strong>$999</strong>. A great value if you're looking to improve your team's development practices!</p>
                 </div>
                 <div class="col-md-4 text-center d-flex">
                     <button type="button" class="btn btn-primary btn-round align-self-center mx-auto">Buy for your team</button>
