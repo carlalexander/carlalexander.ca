@@ -23,13 +23,13 @@
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
 
-    <link href="<?php echo get_stylesheet_directory_uri(); ?>/css/material-kit.min.css" rel="stylesheet" />
-    <link href="<?php echo get_stylesheet_directory_uri(); ?>/css/discover.css" rel="stylesheet" />
+    <link href="<?= get_stylesheet_directory_uri(); ?>/css/material-kit.min.css" rel="stylesheet" />
+    <link href="<?= get_stylesheet_directory_uri(); ?>/css/discover.css" rel="stylesheet" />
 </head>
 
 <body <?php body_class(); ?>>
 
-<div class="page-header header-filter" data-parallax="true" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/images/discover-top-desk.jpg');">
+<div class="page-header header-filter" data-parallax="true" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/images/discover-top-desk.jpg');">
     <div class="container">
         <div class="row">
             <div class="offset-md-6 col-md-6">
@@ -100,7 +100,7 @@
         </div>
     </div>
     <div class="section">
-        <div class="subscribe-line subscribe-line-image" style="background-image: url('<?php echo get_stylesheet_directory_uri(); ?>/images/escheresque_ste.png');">
+        <div class="subscribe-line subscribe-line-image" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/images/escheresque_ste.png');">
             <div class="container">
                 <div id="sample" class="row">
                     <div class="col-md-7 ml-auto mr-auto">
@@ -296,7 +296,7 @@
     </div>
 </div>
 <footer class="footer footer-default">
-    <div class="container copyright">&copy; <?php echo date('Y'); ?> Carl Alexander. All Rights Reserved.</div>
+    <div class="container copyright">&copy; <?= date('Y'); ?> Carl Alexander. All Rights Reserved.</div>
 </footer>
 </body>
 
