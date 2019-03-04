@@ -288,11 +288,11 @@
             <div class="row">
                 <div class="col-md-7 ml-auto mr-auto">
                     <div class="text-center">
-                        <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" alt="Carl Alexander" class="img-raised rounded-circle img-fluid">
+                        <img src="<?= get_stylesheet_directory_uri(); ?>/images/carl-alexander.jpg" width="150" height="150" alt="Carl Alexander" class="img-raised rounded-circle img-fluid">
                         <h2 class="title">About the author</h2>
                     </div>
-                    <p class="h5">Heya, I’m Carl Alexander!</p>
-                    <p class="h5">I'm the charming guy that you can see above. I've been teaching everything I know about programming to the WordPress community for a few years now. Most of it you can find on <a href="https://carlalexander.ca">my site</a> but I've also done a fair share of <a href="https://wordpress.tv/speakers/carl-alexander/">speaking at WordCamps</a> as well.</p>
+                    <p>Heya, I’m Carl Alexander!</p>
+                    <p>I'm the charming guy that you can see above. I've been teaching everything I know about programming to the WordPress community for a few years now. Most of it you can find on <a href="https://carlalexander.ca">my site</a> but I've also done a fair share of <a href="https://wordpress.tv/speakers/carl-alexander/">speaking at WordCamps</a> as well.</p>
                 </div>
             </div>
         </div>
