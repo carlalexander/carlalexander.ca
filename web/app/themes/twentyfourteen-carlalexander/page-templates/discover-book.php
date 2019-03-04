@@ -275,9 +275,9 @@
             <div class="row">
                 <div class="offset-md-2 col-md-6 text-left">
                     <h3>Looking to get this for your team?</h3>
-                    <p>You can get <strong>unlimited licenses of the complete package</strong> as well as a <strong>4 hour code review package</strong> (an $800 value) for <strong>$999</strong>. A great value if you're looking to improve your team's development practices!</p>
+                    <p>You can get <strong>unlimited licenses of the complete package</strong> as well as a <strong>two code review sessions</strong> (a $400 value) for <strong>$999</strong>. A great deal if you're looking to improve your team's development practices!</p>
                 </div>
-                <div class="col-md-4 text-center d-flex">
+                <div class="col-md-3 text-center d-flex">
                     <button type="button" class="btn btn-primary btn-round align-self-center mx-auto">Buy for your team</button>
                 </div>
             </div>
