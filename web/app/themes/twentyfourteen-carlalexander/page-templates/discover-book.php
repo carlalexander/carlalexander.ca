@@ -99,7 +99,7 @@
             </div>
         </div>
     </div>
-    <div class="section">
+    <div>
         <div class="subscribe-line subscribe-line-image" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/images/escheresque_ste.png');">
             <div class="container">
                 <div id="sample" class="row">
@@ -136,7 +136,7 @@
             </div>
         </div>
     </div>
-    <div>
+    <div class="section">
         <div class="container text-center">
             <div class="row">
                 <div class="col-md-7 ml-auto mr-auto">
