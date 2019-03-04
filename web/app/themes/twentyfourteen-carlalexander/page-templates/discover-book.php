@@ -50,7 +50,7 @@
                 <div class="col-md-7 ml-auto mr-auto">
                     <h3 class="title">[Need a title]</h3>
                     <p class="h5">It’s no secret that programming requires a lot of work. You have plenty of things to stay on top of. Your work has deadlines, bosses, clients, prospects, you name it. As WordPress developer (or any developer really), it’s hard to catch a break.</p>
-                    <p class="h5">Meanwhile, the tools and technologies you use change all the time. The tech world isn’t going to stop for you after all. There’s Backbone, Sass, Vagrant, APIs, just to name a few. That’s without touching the server stuff. It’s a full time job just staying ahead.</p>
+                    <p class="h5">Meanwhile, the tools and technologies you use change all the time. The tech world isn’t going to stop for you after all. There’s React, Sass, Vagrant, APIs, just to name a few. That’s without touching the server stuff. It’s a full time job just staying ahead.</p>
                     <p class="h5">This leaves you with little time to learn advanced programming concepts like object-oriented programming. It doesn’t help that that stuff is hard. Even if there’s plenty of tutorials out there.</p>
                     <h3 class="title">Most of those tutorials suck too</h3>
                     <p class="h5">You’ve probably read some of them already. They talk of dogs and cars. When’s the last time you coded a car? That’s just not how real life works. Where are those practical examples that you can use at work or on your personal project?</p>
