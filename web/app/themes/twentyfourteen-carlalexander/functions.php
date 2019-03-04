@@ -96,3 +96,28 @@ function twentyfourteen_homepage_title($title, $separator) {
     return str_ireplace(" $separator ", ' ', $title);
 }
 add_filter('wp_title', 'twentyfourteen_homepage_title', 99, 2);
+
+/**
+ * Manually outputs the SEO metadata.
+ */
+function twentyfourteen_output_seo() {
+    if (!function_exists('\The_SEO_Framework\_init_tsf'))
+        return;
+
+    $tsf =  \The_SEO_Framework\_init_tsf();
+
+    if (!$tsf instanceof \The_SEO_Framework\Init)
+        return;
+
+    $tsf->html_output();
+}
+
+/**
+ * Manually outputs the Google Analytics metadata.
+ */
+function twentyfourteen_output_analytics() {
+    if (!function_exists('monsterinsights_tracking_script'))
+        return;
+
+    monsterinsights_tracking_script();
+}

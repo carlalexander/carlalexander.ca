@@ -25,6 +25,8 @@
 
     <link href="<?= get_stylesheet_directory_uri(); ?>/css/material-kit.min.css" rel="stylesheet" />
     <link href="<?= get_stylesheet_directory_uri(); ?>/css/discover.css" rel="stylesheet" />
+    <?php twentyfourteen_output_seo(); ?>
+    <?php twentyfourteen_output_analytics(); ?>
 </head>
 
 <body <?php body_class(); ?>>
