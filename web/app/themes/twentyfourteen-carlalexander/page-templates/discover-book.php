@@ -295,6 +295,29 @@
                     <p>I'm the charming guy that you can see above. I've been teaching everything I know about programming to the WordPress community for a few years now. Most of it you can find on <a href="https://carlalexander.ca">my site</a> but I've also done a fair share of <a href="https://wordpress.tv/speakers/carl-alexander/">speaking at WordCamps</a> as well.</p>
                 </div>
             </div>
+            <div class="text-center">
+                <h2 class="title">Frequently Asked Questions</h2>
+            </div>
+            <div class="row">
+                <div class="col-md-5 ml-auto">
+                    <h4 class="info-title">Is there a physical copy of the book?</h4>
+                    <p>I might look into making a physical version of the book in the future. But for now, you can only get the book as a PDF.</p>
+                </div>
+                <div class="col-md-5 mr-auto">
+                    <h4 class="info-title">Can I upgrade to another package later?</h4>
+                    <p>Yup, that's not a problem at all! You can send me an email at <a href="mailto:carl@carlalexander.ca">carl@carlalexander.ca</a> and I'll help you out with that.</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 ml-auto">
+                    <h4 class="info-title">What if I end up not liking it?</h4>
+                    <p>Then I don't want your money. Seriously! Just email me at <a href="mailto:carl@carlalexander.ca">carl@carlalexander.ca</a> and I'll refund your purchase. No questions asked.</p>
+                </div>
+                <div class="col-md-5 mr-auto">
+                    <h4 class="info-title">I still have a question!</h4>
+                    <p>I'm happy to answer any other questions you might have! You can reach me at <a href="mailto:carl@carlalexander.ca">carl@carlalexander.ca</a> and I'll answer you as soon as possible.</p>
+                </div>
+            </div>
         </div>
     </div>
 </div>
