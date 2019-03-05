@@ -75,7 +75,7 @@
                             <div class="icon" style="height: 68px">
                                 <i class="fa fa-book"></i>
                             </div>
-                            <h4 class="info-title">166-page book</h4>
+                            <h4 class="info-title">164-page book</h4>
                             <p>Everything that you need to familiarize yourself with object-oriented programming explained with WordPress terminology.</p>
                         </div>
                     </div>
@@ -265,7 +265,7 @@
                             <div class="h6 card-category text-info">The book</div>
                             <div class="h1 card-title"><small class="currency">$</small>39</div>
                             <ul class="list-unstyled">
-                                <li><strong>The 166-page</strong> book in PDF format</li>
+                                <li><strong>The 164-page</strong> book in PDF format</li>
                                 <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
                             <a href="" class="btn btn-primary btn-round">Buy now</a>
@@ -279,7 +279,7 @@
                             <div class="h1 card-title"><small class="currency">$</small>99</div>
                             <ul class="list-unstyled">
                                 <li>Set of <strong>18 exercises</strong> + <strong>solutions</strong></li>
-                                <li><strong>The 166-page</strong> book in PDF format</li>
+                                <li><strong>The 164-page</strong> book in PDF format</li>
                                 <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
                             <a href="#pablo" class="btn bg-light btn-outline-primary btn-round">Buy now</a>
@@ -294,7 +294,7 @@
                             <ul class="list-unstyled">
                                 <li><strong>In-depth screencasts</strong> covering all the exercises</li>
                                 <li>Set of <strong>18 exercises</strong> + <strong>solutions</strong></li>
-                                <li><strong>The 166-page</strong> book in PDF format</li>
+                                <li><strong>The 164-page</strong> book in PDF format</li>
                                 <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
                             <a href="#pablo" class="btn btn-primary btn-round">Buy now</a>
