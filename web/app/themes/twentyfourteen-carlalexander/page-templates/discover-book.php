@@ -51,16 +51,16 @@
             <div class="row">
                 <div class="col-md-7 ml-auto mr-auto">
                     <h3 class="title text-center">“I know I should learn this. I just don't have the time.”</h3>
-                    <p class="h5">It’s no secret that programming requires a lot of work. You have plenty of things to stay on top of. Your work has deadlines, bosses, clients, prospects, you name it. As WordPress developer (or any developer really), it’s hard to catch a break.</p>
-                    <p class="h5">Meanwhile, the tools and technologies you use change all the time. The tech world isn’t going to stop for you after all. There’s React, Sass, Vagrant, APIs, just to name a few. That’s without touching the server stuff. It’s a full time job just staying ahead.</p>
-                    <p class="h5">This leaves you with little time to learn advanced programming concepts like object-oriented programming. It doesn’t help that that stuff is hard. Even if there’s plenty of tutorials out there.</p>
+                    <p class="h5">It’s no secret that programming requires a lot of work. You have plenty of things to manage, too. Your work has deadlines, bosses, clients, prospects, you name it. As a WordPress developer (or any developer, really), it’s hard to catch a break.</p>
+                    <p class="h5">Meanwhile, the tools and technologies you use are always changing. The tech world isn’t going to stop. There’s React, Sass, Vagrant, APIs, just to name a few. And that doesn't even touch the server-side of our work. It’s a full time job just staying ahead.</p>
+                    <p class="h5">This leaves you with little time to learn advanced programming concepts like object-oriented programming. It doesn’t help that that stuff is hard even if there’s plenty of tutorials out there.</p>
                     <h3 class="title">Most of those tutorials suck too</h3>
-                    <p class="h5">You’ve probably read some of them already. They talk of dogs and cars. When’s the last time you coded a car? That’s just not how real life works. Where are those practical examples that you can use at work or on your personal project?</p>
+                    <p class="h5">You’ve probably read some of them already. They talk about dogs and cars. When’s the last time you coded a car? That's not how the real world works. Where are those practical examples that you can use at work or on your personal project?</p>
                     <p class="h5">So you end up with the same result. The whole thing makes no sense to you! You end up telling yourself it’s not useful or worth the trouble.</p>
                     <h3 class="title">There’s plenty of reasons to learn object-oriented programming</h3>
-                    <p class="h5">Whether it’s to make more money, save time or just to build expertise so you can move on to something else in your career. Object-oriented programming is worth your time.</p>
+                    <p class="h5">Whether it’s to make more money, save time or just to build expertise so you can move on to something else in your career, object-oriented programming is worth your time.</p>
                     <p class="h5"><strong>It’s just that object-oriented programming isn’t easy.</strong></p>
-                    <p class="h5">But, if you're ready to get started with object-oriented programming, look no further. You've found the right resource to help you with that.</p>
+                    <p class="h5">But, if you're ready to really get started with object-oriented programming, look no further. You've found the right resource to help you with that.</p>
                 </div>
             </div>
             <div class="features text-center">
@@ -322,7 +322,7 @@
                         <h2 class="title">About the author</h2>
                     </div>
                     <p>Heya, I’m Carl Alexander!</p>
-                    <p>I'm the charming guy that you can see above. I've been teaching everything I know about programming to the WordPress community for a few years now. Most of it you can find on <a href="https://carlalexander.ca">my site</a> but I've also done a fair share of <a href="https://wordpress.tv/speakers/carl-alexander/">speaking at WordCamps</a> as well.</p>
+                    <p>I'm the charming guy that you can see above. I've been teaching everything I know about programming to the WordPress community for a few years now. Most of it you can find on <a href="https://carlalexander.ca">my site</a>, but I've also done a fair share of <a href="https://wordpress.tv/speakers/carl-alexander/">speaking at WordCamps</a> as well.</p>
                 </div>
             </div>
             <div class="text-center">
@@ -335,17 +335,17 @@
                 </div>
                 <div class="col-md-5 mr-auto">
                     <h4 class="info-title">Can I upgrade to another package later?</h4>
-                    <p>Yup, that's not a problem at all! You can send me an email at <a href="mailto:carl@carlalexander.ca">carl@carlalexander.ca</a> and I'll help you out with that.</p>
+                    <p>Yup, that's not a problem at all! You can send me an email at <a href="mailto:carl@carlalexander.ca">carl@carlalexander.ca</a>, and I'll help you out with that.</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-5 ml-auto">
                     <h4 class="info-title">What if I end up not liking it?</h4>
-                    <p>Then I don't want your money. Seriously! Just email me at <a href="mailto:carl@carlalexander.ca">carl@carlalexander.ca</a> and I'll refund your purchase. No questions asked.</p>
+                    <p>Then I don't want your money. Seriously! Just email me at <a href="mailto:carl@carlalexander.ca">carl@carlalexander.ca</a>, and I'll refund your purchase. No questions asked.</p>
                 </div>
                 <div class="col-md-5 mr-auto">
                     <h4 class="info-title">I still have a question!</h4>
-                    <p>I'm happy to answer any other questions you might have! You can reach me at <a href="mailto:carl@carlalexander.ca">carl@carlalexander.ca</a> and I'll answer you as soon as possible.</p>
+                    <p>I'm happy to answer any other questions you might have! You can reach me at <a href="mailto:carl@carlalexander.ca">carl@carlalexander.ca</a>, and I'll answer you as soon as possible.</p>
                 </div>
             </div>
         </div>
