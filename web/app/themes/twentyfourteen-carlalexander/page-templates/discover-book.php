@@ -50,7 +50,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-7 ml-auto mr-auto">
-                    <h3 class="title">[Need a title]</h3>
+                    <h3 class="title text-center">“I know I should learn this. I just don't have the time.”</h3>
                     <p class="h5">It’s no secret that programming requires a lot of work. You have plenty of things to stay on top of. Your work has deadlines, bosses, clients, prospects, you name it. As WordPress developer (or any developer really), it’s hard to catch a break.</p>
                     <p class="h5">Meanwhile, the tools and technologies you use change all the time. The tech world isn’t going to stop for you after all. There’s React, Sass, Vagrant, APIs, just to name a few. That’s without touching the server stuff. It’s a full time job just staying ahead.</p>
                     <p class="h5">This leaves you with little time to learn advanced programming concepts like object-oriented programming. It doesn’t help that that stuff is hard. Even if there’s plenty of tutorials out there.</p>
@@ -75,8 +75,8 @@
                             <div class="icon" style="height: 68px">
                                 <i class="fa fa-book"></i>
                             </div>
-                            <h4 class="info-title">[148-page book]</h4>
-                            <p>[No introduction, personal anecdotes or stories about my childhood. Just real-world, practical refactoring content, right from page one.]</p>
+                            <h4 class="info-title">166-page book</h4>
+                            <p>Everything that you need to familiarize yourself with object-oriented programming explained with WordPress terminology.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -85,7 +85,7 @@
                                 <i class="material-icons">code</i>
                             </div>
                             <h4 class="info-title">Exercises</h4>
-                            <p>[A comprehensive set of 25 exercises in the form of unit tests, to practice your chops and make sure you have these patterns under your fingers.]</p>
+                            <p>A comprehensive set of 18 exercises as well as their solutions so that you can practice the fundamentals of object-oriented programming.</p>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -93,8 +93,8 @@
                             <div class="icon">
                                 <i class="material-icons">ondemand_video</i>
                             </div>
-                            <h4 class="info-title">[4 hours of video]</h4>
-                            <p>[Every refactoring example from the book covered in even more depth, as well as three additional advanced tutorials, making up almost 2 hours of content on their own.]</p>
+                            <h4 class="info-title">In-depth screencasts</h4>
+                            <p>Every solution to the exercises from the book explained in detail giving you all the context that you need to understand how object-oriented programming works.</p>
                         </div>
                     </div>
                 </div>
