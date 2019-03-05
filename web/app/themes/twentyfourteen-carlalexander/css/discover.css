@@ -17,6 +17,10 @@ p {
     font-size: 26px;
 }
 
+.card-raised .currency {
+    color: hsla(0,0%,100%,.8);
+}
+
 .card-testimonial .card-body p {
     font-style: italic;
 }

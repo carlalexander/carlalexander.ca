@@ -172,7 +172,7 @@
                                     <p>
                                         Carl has a zest for teaching that is a joy to experience. With his depth of knowledge and experience, he breaks down complex topics in a manner that’s both encouraging and inviting. If you want to increase the quality of your WordPress code, this book is a must-read.
                                     </p>
-                                    <h4 class="card-title">Rachel Cherry</h4>
+                                    <div class="h4 card-title">Rachel Cherry</div>
                                 </div>
                             </div>
                         </div>
@@ -193,7 +193,7 @@
                                     <p>
                                         I love learning from Carl. He has a command of some very advanced topics and always gets into how things work and why certain approaches might be better than others. Top notch!
                                     </p>
-                                    <h4 class="card-title">Zac Gordon</h4>
+                                    <div class="h4 card-title">Zac Gordon</div>
                                 </div>
                             </div>
                             <div class="col-md-3 hidden-sm-down">
@@ -219,7 +219,7 @@
                                     <p>
                                         Carl is a fantastic instructor. He breaks things down in a way that no matter what your skill set is, you can understand. When presenting in person, he breaks often and allows for questions to ensure that people are able to follow along and not get lost in the deep content he is sharing. He is able to explain very complex topics easily.
                                     </p>
-                                    <h4 class="card-title">Tessa Kriesel</h4>
+                                    <div class="h4 card-title">Tessa Kriesel</div>
                                 </div>
                             </div>
                         </div>
@@ -240,7 +240,7 @@
                                     <p>
                                         I wish that this book had existed when I first got serious about learning PHP for WordPress development. What I did have was Carl's blog, his post about of polymorphism was my introduction to what PHP is capable of and the importance of understanding language and programming fundamentals.
                                     </p>
-                                    <h4 class="card-title">Josh Pollock</h4>
+                                    <div class="h4 card-title">Josh Pollock</div>
                                 </div>
                             </div>
                             <div class="col-md-3 hidden-sm-down">
@@ -262,8 +262,8 @@
                 <div class="col-md-4">
                     <div class="card card-pricing card-plain">
                         <div class="card-body">
-                            <h6 class="card-category text-info">The book</h6>
-                            <h1 class="card-title"><small class="currency">$</small>39</h1>
+                            <div class="h6 card-category text-info">The book</div>
+                            <div class="h1 card-title"><small class="currency">$</small>39</div>
                             <ul class="list-unstyled">
                                 <li><strong>The 166-page</strong> book in PDF format</li>
                                 <li><strong>Lifetime access</strong> to book updates</li>
@@ -275,8 +275,8 @@
                 <div class="col-md-4">
                     <div class="card card-pricing card-raised bg-primary">
                         <div class="card-body">
-                            <h6 class="card-category text-white">Premium package</h6>
-                            <h1 class="card-title"><small class="currency">$</small>99</h1>
+                            <div class="h6 card-category text-white">Premium package</div>
+                            <div class="h1 card-title"><small class="currency">$</small>99</div>
                             <ul class="list-unstyled">
                                 <li>Set of <strong>18 exercises</strong> + <strong>solutions</strong></li>
                                 <li><strong>The 166-page</strong> book in PDF format</li>
@@ -289,8 +289,8 @@
                 <div class="col-md-4">
                     <div class="card card-pricing card-plain">
                         <div class="card-body">
-                            <h6 class="card-category text-info">Complete package</h6>
-                            <h1 class="card-title"><small class="currency">$</small>249</h1>
+                            <div class="h6 card-category text-info">Complete package</div>
+                            <div class="h1 card-title"><small class="currency">$</small>249</div>
                             <ul class="list-unstyled">
                                 <li><strong>In-depth screencasts</strong> covering all the exercises</li>
                                 <li>Set of <strong>18 exercises</strong> + <strong>solutions</strong></li>
