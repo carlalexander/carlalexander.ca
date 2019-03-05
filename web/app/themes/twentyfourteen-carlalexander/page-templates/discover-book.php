@@ -109,12 +109,15 @@
                         <div class="text-center">
                             <h3 class="title text-white">Get a free sample</h3>
                             <p class="description text-white">
-                                [You'll also join my book launch list. This will give you access to free lessons and an early discount when I release the book.]
+                                Get a sneak peek at the book. Enter your email address below, and you'll get a sample chapter of the book as well as the table of contents.
                             </p>
                         </div>
                         <div class="card card-raised card-form-horizontal">
                             <div class="card-body">
-                                <form id="ck_subscribe_form" action="https://forms.convertkit.com/landing_pages/167881/subscribe" data-remote="true">
+                                <form id="ck_subscribe_form" action="https://app.convertkit.com/landing_pages/167881/subscribe" data-remote="true">
+                                    <input type="hidden" name="id" value="167881" id="landing_page_id">
+                                    <input type="hidden" name="ck_form_recaptcha" value="" id="ck_form_recaptcha">
+
                                     <div class="row">
                                         <div class="col-md-4">
                                             <span class="form-group bmd-form-group">
@@ -123,14 +126,24 @@
                                         </div>
                                         <div class="col-md-4">
                                             <span class="form-group bmd-form-group">
-                                                <input type="email" name="email" id="ck_emailField" placeholder="Email address" class="form-control" required="">
+                                                <input type="email" name="email" id="ck_emailField" placeholder="Email address" class="form-control" required>
                                             </span>
                                         </div>
                                         <div class="col-md-4 text-center">
-                                            <button type="button" class="btn btn-primary btn-round">Get it now</button>
+                                            <button class="subscribe_button ck_subscribe_button btn btn-primary btn-round" id="ck_subscribe_button">
+                                                Get it now
+                                            </button>
                                         </div>
                                     </div>
                                 </form>
+                                <div class="row">
+                                    <div id="ck_error_msg" class="col-md-12 text-center" style="display: none;">
+                                        <span class="font-weight-bold text-danger">Something went wrong, please try again.</span>
+                                    </div>
+                                    <div id="ck_success_msg" class="col-md-12 text-center" style="display: none;">
+                                        <span class="font-weight-bold text-success">Yay! Check your email for a download link.</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -326,6 +339,6 @@
 <footer class="footer footer-default">
     <div class="container copyright">&copy; <?= date('Y'); ?> Carl Alexander. All Rights Reserved.</div>
 </footer>
+<script src="https://cdn.convertkit.com/assets/CKJS4.js?v=21"></script>
 </body>
-
 </html>
