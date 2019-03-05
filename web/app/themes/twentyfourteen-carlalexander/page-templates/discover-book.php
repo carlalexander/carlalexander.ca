@@ -159,80 +159,95 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-4">
-                    <div class="team-player">
-                        <div class="card card-plain">
-                            <div class="col-md-6 ml-auto mr-auto">
-                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <div class="card card-profile card-plain card-testimonial">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card-header card-header-image">
+                                    <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/images/rachel-cherry.jpg">
+                                    <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/images/rachel-cherry.jpg'); opacity: 1;"></div></div>
                             </div>
-                            <h4 class="card-title">Rachel Cherry</h4>
-                            <div class="card-body">
-                                <p class="card-description">[Testimonial]</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="team-player">
-                        <div class="card card-plain">
-                            <div class="col-md-6 ml-auto mr-auto">
-                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
-                            </div>
-                            <h4 class="card-title">Tom McFarlin</h4>
-                            <div class="card-body">
-                                <p class="card-description">[Testimonial]</p>
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <p>
+                                        Carl has a zest for teaching that is a joy to experience. With his depth of knowledge and experience, he breaks down complex topics in a manner that’s both encouraging and inviting. If you want to increase the quality of your WordPress code, this book is a must-read.
+                                    </p>
+                                    <h4 class="card-title">Rachel Cherry</h4>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="team-player">
-                        <div class="card card-plain">
-                            <div class="col-md-6 ml-auto mr-auto">
-                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
+            </div>
+            <div class="row">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <div class="card card-profile card-plain card-testimonial">
+                        <div class="row">
+                            <div class="col-md-3 hidden-md-up">
+                                <div class="card-header card-header-image">
+                                    <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/images/zac-gordon.jpg">
+                                    <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/images/zac-gordon.jpg'); opacity: 1;"></div></div>
                             </div>
-                            <h4 class="card-title">Tonya Mork</h4>
-                            <div class="card-body">
-                                <p class="card-description">[Testimonial]</p>
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <p>
+                                        I love learning from Carl. He has a command of some very advanced topics and always gets into how things work and why certain approaches might be better than others. Top notch!
+                                    </p>
+                                    <h4 class="card-title">Zac Gordon</h4>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="team-player">
-                        <div class="card card-plain">
-                            <div class="col-md-6 ml-auto mr-auto">
-                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
-                            </div>
-                            <h4 class="card-title">Josh Pollock</h4>
-                            <div class="card-body">
-                                <p class="card-description">[Testimonial]</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="team-player">
-                        <div class="card card-plain">
-                            <div class="col-md-6 ml-auto mr-auto">
-                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
-                            </div>
-                            <h4 class="card-title">Tessa Kriesel</h4>
-                            <div class="card-body">
-                                <p class="card-description">[Testimonial]</p>
+                            <div class="col-md-3 hidden-sm-down">
+                                <div class="card-header card-header-image">
+                                    <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/images/zac-gordon.jpg">
+                                    <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/images/zac-gordon.jpg'); opacity: 1;"></div></div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <div class="team-player">
-                        <div class="card card-plain">
-                            <div class="col-md-6 ml-auto mr-auto">
-                                <img src="https://carlalexander.ca/app/uploads/2015/10/carl-120px.jpg" class="img-raised rounded-circle img-fluid">
+            </div>
+            <div class="row">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <div class="card card-profile card-plain card-testimonial">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card-header card-header-image">
+                                    <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/images/tessa-kriesel.jpg">
+                                    <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/images/tessa-kriesel.jpg'); opacity: 1;"></div></div>
                             </div>
-                            <h4 class="card-title">Alain Schlesser</h4>
-                            <div class="card-body">
-                                <p class="card-description">[Testimonial]</p>
+                            <div class="col-md-9">
+                                <div class="card-body">
+                                    <p>
+                                        Carl is a fantastic instructor. He breaks things down in a way that no matter what your skill set is, you can understand. When presenting in person, he breaks often and allows for questions to ensure that people are able to follow along and not get lost in the deep content he is sharing. He is able to explain very complex topics easily.
+                                    </p>
+                                    <h4 class="card-title">Tessa Kriesel</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-7 ml-auto mr-auto">
+                    <div class="card card-profile card-plain card-testimonial">
+                        <div class="row">
+                            <div class="col-md-9">
+                                <div class="col-md-3 hidden-md-up">
+                                    <div class="card-header card-header-image">
+                                        <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/images/josh-pollock.jpg">
+                                        <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/images/josh-pollock.jpg'); opacity: 1;"></div></div>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        I wish that this book had existed when I first got serious about learning PHP for WordPress development. What I did have was Carl's blog, his post about of polymorphism was my introduction to what PHP is capable of and the importance of understanding language and programming fundamentals.
+                                    </p>
+                                    <h4 class="card-title">Josh Pollock</h4>
+                                </div>
+                            </div>
+                            <div class="col-md-3 hidden-sm-down">
+                                <div class="card-header card-header-image">
+                                    <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/images/josh-pollock.jpg">
+                                    <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/images/josh-pollock.jpg'); opacity: 1;"></div>
+                                </div>
                             </div>
                         </div>
                     </div>

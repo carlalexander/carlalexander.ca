@@ -17,6 +17,10 @@ p {
     font-size: 26px;
 }
 
+.card-testimonial .card-body p {
+    font-style: italic;
+}
+
 .icon > i {
     color: #555;
 }
