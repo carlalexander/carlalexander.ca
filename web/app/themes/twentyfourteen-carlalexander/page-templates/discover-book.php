@@ -269,7 +269,7 @@
                                 <li><strong>The 164-page</strong> book in PDF format</li>
                                 <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
-                            <a href="https://gum.co/wordpress-oop-book" class="btn btn-primary btn-round">Buy now</a>
+                            <a href="https://gum.co/wordpress-oop-book" class="btn btn-primary btn-round" data-gumroad-single-product="true">Buy now</a>
                         </div>
                     </div>
                 </div>
@@ -283,7 +283,7 @@
                                 <li><strong>The 164-page</strong> book in PDF format</li>
                                 <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
-                            <a href="https://gum.co/wordpress-oop-premium" class="btn bg-light btn-outline-primary btn-round">Buy now</a>
+                            <a href="https://gum.co/wordpress-oop-premium" class="btn bg-light btn-outline-primary btn-round" data-gumroad-single-product="true">Buy now</a>
                         </div>
                     </div>
                 </div>
@@ -298,7 +298,7 @@
                                 <li><strong>The 164-page</strong> book in PDF format</li>
                                 <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
-                            <a href="https://gum.co/wordpress-oop-complete" class="btn btn-primary btn-round">Buy now</a>
+                            <a href="https://gum.co/wordpress-oop-complete" class="btn btn-primary btn-round" data-gumroad-single-product="true">Buy now</a>
                         </div>
                     </div>
                 </div>
@@ -309,7 +309,7 @@
                     <p>You can get <strong>unlimited licenses of the complete package</strong> as well as a <strong>two code review sessions</strong> (a $400 value) for <strong>$999</strong>. A great deal if you're looking to improve your team's development practices!</p>
                 </div>
                 <div class="col-md-3 text-center d-flex">
-                    <a href="https://gum.co/wordpress-oop-team" class="btn btn-primary btn-round align-self-center mx-auto">Buy for your team</a>
+                    <a href="https://gum.co/wordpress-oop-team" class="btn btn-primary btn-round align-self-center mx-auto" data-gumroad-single-product="true">Buy for your team</a>
                 </div>
             </div>
         </div>
