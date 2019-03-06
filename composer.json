@@ -35,6 +35,7 @@
     "wpackagist-plugin/jetpack-sharing": "*",
     "wpackagist-plugin/passwords-evolved": "*",
     "wpackagist-plugin/post-thumbnail-editor": "*",
+    "wpackagist-plugin/redirection": "^4.0",
     "wpackagist-plugin/redis-cache": "*",
     "wpackagist-plugin/tiny-compress-images": "*",
     "wpackagist-plugin/varnish-http-purge": "*",
