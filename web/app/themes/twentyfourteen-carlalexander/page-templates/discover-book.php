@@ -266,7 +266,8 @@
                             <div class="h6 card-category text-info">The book</div>
                             <div class="h1 card-title"><small class="currency">$</small>39</div>
                             <ul class="list-unstyled">
-                                <li><strong>The 164-page</strong> book in PDF format</li>
+                                <li>The <strong>164-page</strong> book in PDF format</li>
+                                <li><strong>EPUB version</strong> for e-book readers</li>
                                 <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
                             <a href="https://gum.co/wordpress-oop-book" class="btn btn-primary btn-round" data-gumroad-single-product="true">Buy now</a>
@@ -280,7 +281,8 @@
                             <div class="h1 card-title"><small class="currency">$</small>99</div>
                             <ul class="list-unstyled">
                                 <li>Set of <strong>18 exercises</strong> + <strong>solutions</strong></li>
-                                <li><strong>The 164-page</strong> book in PDF format</li>
+                                <li>The <strong>164-page</strong> book in PDF format</li>
+                                <li><strong>EPUB version</strong> for e-book readers</li>
                                 <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
                             <a href="https://gum.co/wordpress-oop-premium" class="btn bg-light btn-outline-primary btn-round" data-gumroad-single-product="true">Buy now</a>
@@ -295,7 +297,8 @@
                             <ul class="list-unstyled">
                                 <li><strong>In-depth screencasts</strong> covering all the exercises</li>
                                 <li>Set of <strong>18 exercises</strong> + <strong>solutions</strong></li>
-                                <li><strong>The 164-page</strong> book in PDF format</li>
+                                <li>The <strong>164-page</strong> book in PDF format</li>
+                                <li><strong>EPUB version</strong> for e-book readers</li>
                                 <li><strong>Lifetime access</strong> to book updates</li>
                             </ul>
                             <a href="https://gum.co/wordpress-oop-complete" class="btn btn-primary btn-round" data-gumroad-single-product="true">Buy now</a>
