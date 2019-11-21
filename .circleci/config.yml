@@ -1,0 +1,21 @@
+version: 2
+jobs:
+  deploy:
+    docker:
+      - image: circleci/php:7.3
+    steps:
+      - checkout
+      - run:
+          name: Install deployer
+          command: composer global require deployer/deployer:^6.4
+      - run:
+          name: Add Composer global bin folder
+          command: echo 'export export PATH=$HOME/.composer/vendor/bin:$PATH' >> $BASH_ENV
+      - run:
+          name: Deploy WordPress site
+          command: dep deploy
+workflows:
+  version: 2
+  deploy:
+    jobs:
+      - deploy
