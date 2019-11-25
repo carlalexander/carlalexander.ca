@@ -1,0 +1,6 @@
+# servers.yml
+
+www.carlalexander.ca:
+  stage: production
+  deploy_path: '/var/www/carlalexander.ca'
+  branch: master

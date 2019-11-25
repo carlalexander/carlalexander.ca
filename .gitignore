@@ -21,6 +21,3 @@ web/.htaccess
 vendor/*
 !vendor/.gitkeep
 
-# Deployer
-servers.yml
-

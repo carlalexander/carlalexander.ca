@@ -9,8 +9,9 @@
 
 namespace Deployer;
 
-require 'recipe/common.php';
+use Deployer\Task\Context;
 
+require 'recipe/common.php';
 
 /**
  * Server Configuration
@@ -48,6 +49,17 @@ set('shared_dirs', ['web/app/uploads']);
 // Bedrock writable directories
 set('writable_dirs', ['web/app/uploads']);
 
+
+/**
+ * Load environment variables
+ */
+task('load-environment-variables', function () {
+    $host = Context::get()->getHost();
+
+    if (empty($host->getUser()) && getenv('DEP_USER')) {
+        $host->user((string) getenv('DEP_USER'));
+    }
+});
 
 /**
  * Backup all shared files and directories
@@ -163,6 +175,7 @@ task('varnish:reload', function () {
  * Deploy task
  */
 task('deploy', [
+    'load-environment-variables',
     'deploy:prepare',
     'deploy:lock',
     'deploy:release',
