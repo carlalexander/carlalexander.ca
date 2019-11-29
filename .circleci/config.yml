@@ -12,6 +12,9 @@ jobs:
           name: Add Composer global bin folder
           command: echo 'export export PATH=$HOME/.composer/vendor/bin:$PATH' >> $BASH_ENV
       - run:
+          name: Add WordPress server to known hosts
+          command: ssh-keyscan -H www.carlalexander.ca >> ~/.ssh/known_hosts
+      - run:
           name: Deploy WordPress site
           command: dep deploy
 workflows:
