@@ -45,7 +45,8 @@
   },
   "require-dev": {
     "wpackagist-plugin/query-monitor": "*",
-    "wpackagist-plugin/wp-mail-smtp": "*"
+    "wpackagist-plugin/wp-mail-smtp": "*",
+    "deployer/deployer": "^6.6"
   },
   "extra": {
     "installer-paths": {
