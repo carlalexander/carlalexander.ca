@@ -22,7 +22,7 @@
     "php": ">=7.0",
     "composer/installers": "^1.4",
     "oscarotero/env": "^1.1.0",
-    "roots/wordpress": "5.2.1",
+    "roots/wordpress": "*",
     "roots/wp-config": "1.0.0",
     "vlucas/phpdotenv": "^3.0.0",
     "wpackagist-plugin/akismet": "*",
