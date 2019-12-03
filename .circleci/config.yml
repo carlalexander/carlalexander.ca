@@ -17,6 +17,17 @@ jobs:
       - run:
           name: Deploy WordPress site
           command: dep deploy
+  test:
+    docker:
+      - image: circleci/php:7.3
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: composer install
+      - run:
+          name: Run tests
+          command: composer test
 workflows:
   version: 2
   deploy:
@@ -26,3 +37,6 @@ workflows:
             branches:
               only:
                 - master
+  test:
+    jobs:
+      - test
