@@ -584,15 +584,15 @@
         },
         {
             "name": "wpackagist-plugin/google-analytics-for-wordpress",
-            "version": "7.10.0",
+            "version": "7.10.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/google-analytics-for-wordpress/",
-                "reference": "tags/7.10.0"
+                "reference": "tags/7.10.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/google-analytics-for-wordpress.7.10.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/google-analytics-for-wordpress.7.10.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
