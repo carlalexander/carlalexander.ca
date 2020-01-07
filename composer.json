@@ -41,7 +41,8 @@
     "wpackagist-plugin/redis-cache": "*",
     "wpackagist-plugin/tiny-compress-images": "*",
     "wpackagist-plugin/varnish-http-purge": "*",
-    "wpackagist-theme/twentyfourteen": "~2.0"
+    "wpackagist-theme/twentyfourteen": "~2.0",
+    "wpackagist-theme/mcluhan": "^1.20"
   },
   "require-dev": {
     "wpackagist-plugin/query-monitor": "*",

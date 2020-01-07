@@ -1,0 +1,42 @@
+p {
+    font-size: 16px;
+}
+
+.btn {
+    font-size: 13px;
+}
+
+.card li ,
+.card .card-category {
+    font-size: 15px;
+}
+
+.card-pricing .currency {
+    position: relative;
+    top: -17px;
+    font-size: 26px;
+}
+
+.card-raised .currency {
+    color: hsla(0,0%,100%,.8);
+}
+
+.card-testimonial .card-body p {
+    font-style: italic;
+}
+
+.icon > i {
+    color: #555;
+}
+
+@media (max-width:767px){
+    .hidden-sm-down{
+        display:none !important
+    }
+}
+
+@media (min-width:768px){
+    .hidden-md-up{
+        display:none !important
+    }
+}

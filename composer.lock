@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "75dc8d99e8621aea9ed44160940a9661",
+    "content-hash": "35d6c44239040d3ec0ffafba8d5d21d5",
     "packages": [
         {
             "name": "composer/installers",
@@ -796,6 +796,26 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/varnish-http-purge/"
+        },
+        {
+            "name": "wpackagist-theme/mcluhan",
+            "version": "1.20",
+            "source": {
+                "type": "svn",
+                "url": "https://themes.svn.wordpress.org/mcluhan/",
+                "reference": "1.20"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/theme/mcluhan.1.20.zip",
+                "reference": null,
+                "shasum": null
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-theme",
+            "homepage": "https://wordpress.org/themes/mcluhan/"
         },
         {
             "name": "wpackagist-theme/twentyfourteen",
