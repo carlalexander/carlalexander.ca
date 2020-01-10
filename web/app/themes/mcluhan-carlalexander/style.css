@@ -154,6 +154,13 @@ img.circle {
 }
 
 @media (max-width: 500px) {
+    blockquote.alignright {
+        float: none;
+        margin-left: 0;
+        padding-left: 0;
+        max-width: 100%;
+    }
+
     code {
         font-size: 14px;
     }
