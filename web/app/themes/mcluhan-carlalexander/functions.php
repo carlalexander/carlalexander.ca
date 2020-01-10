@@ -64,3 +64,9 @@ function mcluhan_search_only_posts(WP_Query $query)
     }
 }
 add_action('pre_get_posts', 'mcluhan_search_only_posts');
+
+function mcluhan_remove_actions()
+{
+    remove_action('pre_get_posts', 'mcluhan_sort_search_posts_by_date');
+}
+add_action('after_setup_theme', 'mcluhan_remove_actions');

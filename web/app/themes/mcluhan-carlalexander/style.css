@@ -110,6 +110,10 @@ img.circle {
     margin-bottom: 50px;
 }
 
+.search-results .posts ul > li:last-of-type {
+    border-bottom: 1px solid rgba(0, 0, 4, .125);
+}
+
 .section-inner {
     max-width: 600px;
 }
