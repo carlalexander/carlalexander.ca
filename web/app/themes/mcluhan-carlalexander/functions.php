@@ -56,3 +56,11 @@ function mcluhan_output_analytics()
 
     monsterinsights_tracking_script();
 }
+
+function mcluhan_search_only_posts(WP_Query $query)
+{
+    if (!is_admin() && $query->is_main_query() && $query->is_search()) {
+        $query->set('post_type', 'post');
+    }
+}
+add_action('pre_get_posts', 'mcluhan_search_only_posts');
