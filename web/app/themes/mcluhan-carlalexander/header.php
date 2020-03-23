@@ -162,10 +162,14 @@
 
 		</div><!-- .search-overlay -->
 
-        <?php if (get_current_blog_id() === 1 && (is_front_page() || is_single())) : ?>
+        <?php if (get_current_blog_id() === 1) : ?>
             <div id="headerbar-container" class="headerbar-wrapper">
                 <div class="headerbar-content">
-                    <p>Want to learn object-oriented programmming? <a href="https://carlalexander.ca/discover-object-oriented-programming/">Get my <span class="hidden-mobile">free</span> course</a></p>
+                    <?php if (mcluhan_promote_course()) : ?>
+                        <p>Want to learn object-oriented programmming? <a href="/discover-object-oriented-programming/">Get my <span class="hidden-mobile">free</span> course</a></p>
+                    <?php else : ?>
+                        <p>Want to get more articles like this one? <a href="/newsletter/">Join my newsletter</a></p>
+                    <?php endif; ?>
                 </div>
             </div>
         <?php endif; ?>

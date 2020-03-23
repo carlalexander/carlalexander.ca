@@ -70,3 +70,20 @@ function mcluhan_remove_actions()
     remove_action('pre_get_posts', 'mcluhan_sort_search_posts_by_date');
 }
 add_action('after_setup_theme', 'mcluhan_remove_actions');
+
+function mcluhan_promote_course()
+{
+    if (is_front_page()) {
+        return true;
+    }
+
+    $tags = wp_get_post_tags(get_the_ID());
+
+    if (!is_array($tags) || empty($tags)) {
+        return false;
+    }
+
+    return 2 === count(array_filter($tags, function (WP_Term $tag) {
+        return in_array($tag->slug, ['object-oriented-programming', 'wordpress']);
+    }));
+}
