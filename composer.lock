@@ -703,11 +703,11 @@
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/redirection/",
-                "reference": "trunk"
+                "reference": "tags/4.7.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/redirection.zip?timestamp=1585719408"
+                "url": "https://downloads.wordpress.org/plugin/redirection.4.7.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -1375,15 +1375,15 @@
         },
         {
             "name": "wpackagist-plugin/query-monitor",
-            "version": "3.5.2",
+            "version": "3.6.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/query-monitor/",
-                "reference": "tags/3.5.2"
+                "reference": "tags/3.6.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/query-monitor.3.5.2.zip"
+                "url": "https://downloads.wordpress.org/plugin/query-monitor.3.6.0.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
