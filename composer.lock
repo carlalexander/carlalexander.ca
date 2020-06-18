@@ -573,15 +573,15 @@
         },
         {
             "name": "wpackagist-plugin/elasticpress",
-            "version": "3.4",
+            "version": "3.4.2",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/elasticpress/",
-                "reference": "tags/3.4"
+                "reference": "tags/3.4.2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/elasticpress.3.4.zip"
+                "url": "https://downloads.wordpress.org/plugin/elasticpress.3.4.2.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
@@ -703,11 +703,11 @@
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/redirection/",
-                "reference": "trunk"
+                "reference": "tags/4.7.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/redirection.zip?timestamp=1585719408"
+                "url": "https://downloads.wordpress.org/plugin/redirection.4.7.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
