@@ -11,6 +11,10 @@
 
 		<?php wp_head(); ?>
 
+		<!-- Fathom - beautiful, simple website analytics -->
+		<script src="https://cdn.usefathom.com/script.js" data-site="JWKMEKLG" defer></script>
+		<!-- / Fathom -->
+
 	</head>
 
 	<body <?php body_class(); ?>>

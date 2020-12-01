@@ -27,7 +27,10 @@
     <link href="<?= get_stylesheet_directory_uri(); ?>/assets/css/discover.css" rel="stylesheet" />
     <script async src="https://gumroad.com/js/gumroad.js"></script>
     <?php mcluhan_output_seo(); ?>
-    <?php mcluhan_output_analytics(); ?>
+
+    <!-- Fathom - beautiful, simple website analytics -->
+    <script src="https://cdn.usefathom.com/script.js" data-site="JWKMEKLG" defer></script>
+    <!-- / Fathom -->
 </head>
 
 <body <?php body_class(); ?>>

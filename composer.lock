@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "35d6c44239040d3ec0ffafba8d5d21d5",
+    "content-hash": "0544158685c11e1201158c43b5158ea0",
     "packages": [
         {
             "name": "composer/installers",
@@ -628,24 +628,6 @@
             "homepage": "https://wordpress.org/plugins/crayon-syntax-highlighter/"
         },
         {
-            "name": "wpackagist-plugin/disqus-comment-system",
-            "version": "3.0.17",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/disqus-comment-system/",
-                "reference": "tags/3.0.17"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/disqus-comment-system.3.0.17.zip"
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/disqus-comment-system/"
-        },
-        {
             "name": "wpackagist-plugin/elasticpress",
             "version": "3.4.3",
             "source": {
@@ -662,24 +644,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/elasticpress/"
-        },
-        {
-            "name": "wpackagist-plugin/google-analytics-for-wordpress",
-            "version": "7.12.2",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/google-analytics-for-wordpress/",
-                "reference": "tags/7.12.2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/google-analytics-for-wordpress.7.12.2.zip"
-            },
-            "require": {
-                "composer/installers": "~1.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/google-analytics-for-wordpress/"
         },
         {
             "name": "wpackagist-plugin/google-authenticator",
@@ -806,6 +770,24 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/redis-cache/"
+        },
+        {
+            "name": "wpackagist-plugin/replybox",
+            "version": "0.4.1",
+            "source": {
+                "type": "svn",
+                "url": "https://plugins.svn.wordpress.org/replybox/",
+                "reference": "tags/0.4.1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://downloads.wordpress.org/plugin/replybox.0.4.1.zip"
+            },
+            "require": {
+                "composer/installers": "~1.0"
+            },
+            "type": "wordpress-plugin",
+            "homepage": "https://wordpress.org/plugins/replybox/"
         },
         {
             "name": "wpackagist-plugin/tiny-compress-images",
@@ -1996,5 +1978,5 @@
         "php": ">=7.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }

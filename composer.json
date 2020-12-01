@@ -29,8 +29,6 @@
     "wpackagist-plugin/autodescription": "*",
     "wpackagist-plugin/classic-editor": "*",
     "wpackagist-plugin/crayon-syntax-highlighter": "*",
-    "wpackagist-plugin/disqus-comment-system": "*",
-    "wpackagist-plugin/google-analytics-for-wordpress": "*",
     "wpackagist-plugin/google-authenticator": "*",
     "wpackagist-plugin/elasticpress": "*",
     "wpackagist-plugin/jetpack-markdown": "*",
@@ -42,7 +40,8 @@
     "wpackagist-plugin/tiny-compress-images": "*",
     "wpackagist-plugin/varnish-http-purge": "*",
     "wpackagist-theme/twentyfourteen": "~2.0",
-    "wpackagist-theme/mcluhan": "^1.20"
+    "wpackagist-theme/mcluhan": "^1.20",
+    "wpackagist-plugin/replybox": "^0.4.1"
   },
   "require-dev": {
     "wpackagist-plugin/query-monitor": "*",
