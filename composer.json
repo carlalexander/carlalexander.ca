@@ -28,25 +28,19 @@
     "wpackagist-plugin/akismet": "*",
     "wpackagist-plugin/autodescription": "*",
     "wpackagist-plugin/classic-editor": "*",
-    "wpackagist-plugin/crayon-syntax-highlighter": "*",
     "wpackagist-plugin/google-authenticator": "*",
-    "wpackagist-plugin/elasticpress": "*",
-    "wpackagist-plugin/jetpack-markdown": "*",
-    "wpackagist-plugin/jetpack-sharing": "*",
     "wpackagist-plugin/passwords-evolved": "*",
     "wpackagist-plugin/post-thumbnail-editor": "*",
     "wpackagist-plugin/redirection": "*",
-    "wpackagist-plugin/redis-cache": "*",
+    "wpackagist-plugin/replybox": "^0.4.1",
     "wpackagist-plugin/tiny-compress-images": "*",
-    "wpackagist-plugin/varnish-http-purge": "*",
     "wpackagist-theme/twentyfourteen": "~2.0",
     "wpackagist-theme/mcluhan": "^1.20",
-    "wpackagist-plugin/replybox": "^0.4.1"
+    "ymirapp/wordpress-plugin": "^1.0"
   },
   "require-dev": {
     "wpackagist-plugin/query-monitor": "*",
-    "wpackagist-plugin/wp-mail-smtp": "*",
-    "deployer/deployer": "^6.6"
+    "wpackagist-plugin/wp-mail-smtp": "*"
   },
   "extra": {
     "installer-paths": {

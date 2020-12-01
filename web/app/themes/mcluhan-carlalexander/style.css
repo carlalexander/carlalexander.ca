@@ -11,14 +11,22 @@ body {
     hyphens: auto;
 }
 
+code, pre {
+    font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    font-size: 12px;
+}
+
 code {
     border: solid 1px #e4e4e4;
     border-radius: 3px;
     padding: 3px 4px;
-    font-family: Consolas, 'Liberation Mono', Menlo, Courier, monospace;
     font-size: 16px;
     hyphens: none;
     word-wrap: break-word;
+}
+
+pre {
+    border-radius: .375rem;
 }
 
 img.circle {
@@ -132,6 +140,7 @@ img.circle {
 
     .site-header {
         width: 310px;
+        z-index: 4999;
     }
 
     .site-logo {

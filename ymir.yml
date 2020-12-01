@@ -1,0 +1,26 @@
+id: 1
+name: carlalexander
+type: bedrock
+environments:
+  production:
+    domain: carlalexander.ca
+    build:
+      commands:
+        - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
+      include:
+        - web/app/plugins/jetpack-markdown
+        - web/app/themes/mcluhan-carlalexander
+        - web/app/themes/twentyfourteen-carlalexander
+    database:
+      server: ymir
+      name: carlalexander_production
+  staging:
+    cdn:
+      caching: assets
+    cron: false
+    warmup: false
+    build:
+      - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
+    database:
+      server: ymir
+      name: carlalexander_staging

@@ -16,6 +16,10 @@ function mcluhan_load_style()
 
     wp_enqueue_style('mcluhan-style', get_template_directory_uri().'/style.css', $dependencies);
     wp_enqueue_style('carlalexander-style', get_stylesheet_directory_uri().'/style.css', array('mcluhan-style'));
+
+    if (is_single()) {
+        wp_enqueue_style('highlight-style', get_stylesheet_directory_uri().'/assets/css/highlight.min.css');
+    }
 }
 
 function mcluhan_add_arrow_main_menu($item_output, $item, $depth, $args)
@@ -32,6 +36,9 @@ function mcluhan_enqueue_headerbar_script()
 {
     if (is_front_page() || is_single()) {
         wp_enqueue_script('child-script-headerbar', get_stylesheet_directory_uri() . '/assets/js/headerbar.js', array('jquery'));
+    }
+    if (is_single()) {
+        wp_enqueue_script('child-script-highlight', get_stylesheet_directory_uri() . '/assets/js/highlight.js');
     }
 }
 add_action('wp_enqueue_scripts', 'mcluhan_enqueue_headerbar_script');

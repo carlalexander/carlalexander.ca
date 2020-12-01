@@ -51,10 +51,10 @@ Config::define('WP_SITEURL', env('WP_SITEURL'));
 Config::define('WP_ALLOW_MULTISITE', true);
 Config::define('MULTISITE', true);
 Config::define('SUBDOMAIN_INSTALL', true);
-Config::define('DOMAIN_CURRENT_SITE', parse_url(Config::get('WP_HOME'),  PHP_URL_HOST));
-Config::define('PATH_CURRENT_SITE', '/');
-Config::define('SITE_ID_CURRENT_SITE', 1);
-Config::define('BLOG_ID_CURRENT_SITE', 1);
+Config::define('DOMAIN_CURRENT_SITE', env('DOMAIN_CURRENT_SITE'));
+Config::define('PATH_CURRENT_SITE', env('PATH_CURRENT_SITE') ?: '/');
+Config::define('SITE_ID_CURRENT_SITE', env('SITE_ID_CURRENT_SITE') ?: 1);
+Config::define('BLOG_ID_CURRENT_SITE', env('BLOG_ID_CURRENT_SITE') ?: 1);
 
 /**
  * Custom Content Directory
