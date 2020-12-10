@@ -28,6 +28,10 @@
 	<script src="<?php echo get_template_directory_uri(); ?>/js/html5.js"></script>
 	<![endif]-->
 	<?php wp_head(); ?>
+
+    <!-- Fathom - beautiful, simple website analytics -->
+    <script src="https://cdn.usefathom.com/script.js" data-site="JOHCBCUE" defer></script>
+    <!-- / Fathom -->
 </head>
 
 <body <?php body_class(); ?>>
