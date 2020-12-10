@@ -16,7 +16,7 @@ code, pre {
     font-size: 12px;
 }
 
-code {
+p > code {
     border: solid 1px #e4e4e4;
     border-radius: 3px;
     padding: 3px 4px;
@@ -25,8 +25,13 @@ code {
     word-wrap: break-word;
 }
 
+pre > code {
+    background: none;
+}
+
 pre {
     border-radius: .375rem;
+    white-space: pre;
 }
 
 img.circle {
