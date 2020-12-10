@@ -7,7 +7,7 @@
                 <ul>
                     <li><h2 class="page-subtitle">Recent Articles</h2></li>
                     <?php while (have_posts()) : the_post(); ?>
-                    <li <?php post_class( 'post-preview' . $extra_classes ); ?> id="post-<?php the_ID(); ?>">
+                    <li <?php post_class( 'post-preview' ); ?> id="post-<?php the_ID(); ?>">
                         <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute( $title_args ); ?>">
                             <?php the_title('<h2 class="title"><span>', '</span></h2>'); ?>
                         </a>
