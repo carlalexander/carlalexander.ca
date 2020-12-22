@@ -3,7 +3,10 @@ name: carlalexander
 type: bedrock
 environments:
   production:
-    domain: carlalexander.ca
+    domain:
+      - carlalexander.ca
+      - www.carlalexander.ca
+      - es.carlalexander.ca
     build:
       commands:
         - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
@@ -14,6 +17,7 @@ environments:
     database:
       server: ymir
       name: carlalexander_production
+    gateway: rest
   staging:
     cdn:
       caching: assets
