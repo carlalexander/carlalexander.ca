@@ -21,6 +21,7 @@
         "oscarotero/env": "^1.1.0",
         "roots/wordpress": "*",
         "roots/wp-config": "1.0.0",
+        "stayallive/wp-sentry": "^3.11",
         "vlucas/phpdotenv": "^3.0.0",
         "wpackagist-plugin/akismet": "*",
         "wpackagist-plugin/autodescription": "*",
@@ -31,10 +32,9 @@
         "wpackagist-plugin/redirection": "*",
         "wpackagist-plugin/replybox": "^0.4.1",
         "wpackagist-plugin/tiny-compress-images": "*",
-        "wpackagist-theme/twentyfourteen": "~2.0",
         "wpackagist-theme/mcluhan": "^1.20",
-        "ymirapp/wordpress-plugin": "^1.0",
-        "stayallive/wp-sentry": "^3.11"
+        "wpackagist-theme/twentyfourteen": "~2.0",
+        "ymirapp/wordpress-plugin": "^1.0"
     },
     "require-dev": {
         "wpackagist-plugin/query-monitor": "*",
