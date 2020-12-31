@@ -11,6 +11,19 @@
 
 		<?php wp_head(); ?>
 
+        <link rel="preload" as="font" type="font/woff2" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-400.woff2" crossorigin>
+        <link rel="preload" as="font" type="font/woff2" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-400italic.woff2" crossorigin>
+        <link rel="preload" as="font" type="font/woff2" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-600.woff2" crossorigin>
+        <link rel="preload" as="font" type="font/woff2" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-600italic.woff2" crossorigin>
+        <link rel="preload" as="font" type="font/woff2" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-700.woff2" crossorigin>
+        <link rel="preload" as="font" type="font/woff2" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-700italic.woff2" crossorigin><link rel="preload" as="font" type="font/woff2" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-400.woff2" crossorigin>
+
+        <link rel="preload" as="font" type="font/woff" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-400italic.woff" crossorigin>
+        <link rel="preload" as="font" type="font/woff" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-600.woff" crossorigin>
+        <link rel="preload" as="font" type="font/woff" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-600italic.woff" crossorigin>
+        <link rel="preload" as="font" type="font/woff" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-700.woff" crossorigin>
+        <link rel="preload" as="font" type="font/woff" href="<?= get_template_directory_uri() ?>/assets/fonts/nunito-sans-700italic.woff" crossorigin>
+
 		<!-- Fathom - beautiful, simple website analytics -->
 		<script src="https://cdn.usefathom.com/script.js" data-site="JWKMEKLG" defer></script>
 		<!-- / Fathom -->

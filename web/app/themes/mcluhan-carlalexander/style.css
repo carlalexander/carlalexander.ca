@@ -6,6 +6,73 @@
  Template:     mcluhan
 */
 
+/* nunito-sans-regular - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 400;
+    src: local(''),
+    url('assets/fonts/nunito-sans-400.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('assets/fonts/nunito-sans-400.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* nunito-sans-italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito Sans';
+    font-style: italic;
+    font-weight: 400;
+    src: local(''),
+    url('assets/fonts/nunito-sans-400italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('assets/fonts/nunito-sans-400italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* nunito-sans-600 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 600;
+    src: local(''),
+    url('assets/fonts/nunito-sans-600.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('assets/fonts/nunito-sans-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* nunito-sans-600italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito Sans';
+    font-style: italic;
+    font-weight: 600;
+    src: local(''),
+    url('assets/fonts/nunito-sans-600italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('assets/fonts/nunito-sans-600italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* nunito-sans-700 - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito Sans';
+    font-style: normal;
+    font-weight: 700;
+    src: local(''),
+    url('assets/fonts/nunito-sans-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('assets/fonts/nunito-sans-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+/* nunito-sans-700italic - latin */
+@font-face {
+    font-display: swap;
+    font-family: 'Nunito Sans';
+    font-style: italic;
+    font-weight: 700;
+    src: local(''),
+    url('assets/fonts/nunito-sans-700italic.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+    url('assets/fonts/nunito-sans-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+
 body {
     font-family: 'Nunito Sans', 'Helvetica Neue', sans-serif;
     hyphens: auto;

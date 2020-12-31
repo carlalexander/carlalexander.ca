@@ -8,9 +8,6 @@ function mcluhan_load_style()
 
     $dependencies = array();
 
-    wp_register_style('mcluhan-fonts', '//fonts.googleapis.com/css?family=Nunito+Sans:400,400i,600,600i,700,700i&amp;display=swap&amp;subset=latin-ext', false, 1.0, 'all');
-    $dependencies[] = 'mcluhan-fonts';
-
     wp_register_style('fontawesome', get_template_directory_uri().'/assets/css/font-awesome.css', null);
     $dependencies[] = 'fontawesome';
 
