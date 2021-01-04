@@ -105,6 +105,10 @@ img.circle {
     border-radius: 50%;
 }
 
+.copyright p {
+    margin-bottom: 0.75rem;
+}
+
 .entry-content h1,
 .entry-content h2,
 .entry-content h3,
@@ -203,6 +207,10 @@ img.circle {
 }
 
 .social-menu a[href*="/feed"]:after { content: '\f09e'; }
+
+.ymir-powered {
+    font-size: 14px;
+}
 
 @media (min-width: 1000px) {
     body,
