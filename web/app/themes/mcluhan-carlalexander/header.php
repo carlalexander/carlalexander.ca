@@ -183,9 +183,9 @@
             <div id="headerbar-container" class="headerbar-wrapper">
                 <div class="headerbar-content">
                     <?php if (mcluhan_promote_course()) : ?>
-                        <p>Want to learn object-oriented programmming? <a href="/discover-object-oriented-programming/">Get my <span class="hidden-mobile">free</span> course</a></p>
+                        <p>Want to learn object-oriented programmming? <a href="/discover-object-oriented-programming/" onclick="fathom.trackGoal('O4A7B9RB', 0);">Get my <span class="hidden-mobile">free</span> course</a></p>
                     <?php else : ?>
-                        <p>Want to get more articles like this one? <a href="/newsletter/">Join my newsletter</a></p>
+                        <p>Want to get more articles like this one? <a href="/newsletter/" onclick="fathom.trackGoal('F3U6YNWZ', 0);">Join my newsletter</a></p>
                     <?php endif; ?>
                 </div>
             </div>
