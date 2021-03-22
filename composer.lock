@@ -673,15 +673,15 @@
         },
         {
             "name": "wpackagist-plugin/passwords-evolved",
-            "version": "1.2.0",
+            "version": "1.3.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/passwords-evolved/",
-                "reference": "tags/1.2.0"
+                "reference": "tags/1.3.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/passwords-evolved.1.2.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/passwords-evolved.1.3.0.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
