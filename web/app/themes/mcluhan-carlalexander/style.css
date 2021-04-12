@@ -194,6 +194,16 @@ img.circle {
     margin-bottom: 50px;
 }
 
+.home .post-preview a {
+    justify-content: normal;
+}
+
+.post-preview a img {
+    height:22px;
+    margin: auto 0;
+    padding-right: 6px;
+}
+
 .search-results .posts ul > li:last-of-type {
     border-bottom: 1px solid rgba(0, 0, 4, .125);
 }

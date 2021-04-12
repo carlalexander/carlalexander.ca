@@ -1,5 +1,11 @@
 <?php
 
+function mcluhan_setup_carlalexander()
+{
+    add_theme_support('post-formats', ['link']);
+}
+add_action('after_setup_theme', 'mcluhan_setup_carlalexander');
+
 function mcluhan_load_style()
 {
     if (is_admin()) {
@@ -53,14 +59,6 @@ function mcluhan_output_seo()
     $tsf->html_output();
 }
 
-function mcluhan_output_analytics()
-{
-    if (!function_exists('monsterinsights_tracking_script'))
-        return;
-
-    monsterinsights_tracking_script();
-}
-
 function mcluhan_search_only_posts(WP_Query $query)
 {
     if (!is_admin() && $query->is_main_query() && $query->is_search()) {
@@ -90,4 +88,20 @@ function mcluhan_promote_course()
     return 2 === count(array_filter($tags, function (WP_Term $tag) {
         return in_array($tag->slug, ['object-oriented-programming', 'wordpress']);
     }));
+}
+
+function mcluhan_get_first_url()
+{
+    $content = get_the_content();
+    $link = get_url_in_content($content);
+    $matches = [];
+
+    if (!is_string($link) && preg_match('/(https:\/\/[^\s]+)/is', $content, $matches)) {
+        $link = esc_url_raw($matches[1]);
+    }
+    if (empty($link)) {
+        $link = get_the_permalink();
+    }
+
+    return $link;
 }

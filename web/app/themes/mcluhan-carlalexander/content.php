@@ -12,6 +12,7 @@ if ( ! get_the_title() ) {
 
 	<?php
 
+    $isLink = has_post_format('link');
 	$title_args = array();
 
 	if ( is_sticky() ) {
@@ -22,8 +23,12 @@ if ( ! get_the_title() ) {
 
 	?>
 
-	<a href="<?php the_permalink(); ?>" title="<?php the_title_attribute( $title_args ); ?>">
-		<?php
+	<a href="<?= $isLink ? mcluhan_get_first_url() : get_the_permalink(); ?>" title="<?php the_title_attribute( $title_args ); ?>">
+        <?php
+        if ($isLink) {
+            echo sprintf('<span style="display: flex"><img src="%s" alt="External link" title="External link" />', get_stylesheet_directory_uri() . '/assets/images/external.svg');
+        }
+
 		$sticky = is_sticky() ? '<div class="sticky-arrow"></div>'  : '';
 		the_title( '<h2 class="title">' . $sticky . '<span>', '</span></h2>' );
 
@@ -37,6 +42,10 @@ if ( ! get_the_title() ) {
 		if ( get_theme_mod( 'mcluhan_preview_date_lowercase' ) ) {
 			$date = strtolower( $date );
 		}
+
+        if ($isLink) {
+            echo '</span>';
+        }
 
 		// Output date
         if (!is_search()) {

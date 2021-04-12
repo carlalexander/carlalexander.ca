@@ -7,11 +7,15 @@
                 <ul>
                     <li><h2 class="page-subtitle">Recent Articles</h2></li>
                     <?php while (have_posts()) : the_post(); ?>
-                    <li <?php post_class( 'post-preview' ); ?> id="post-<?php the_ID(); ?>">
-                        <a href="<?php the_permalink(); ?>" title="<?php the_title_attribute( $title_args ); ?>">
-                            <?php the_title('<h2 class="title"><span>', '</span></h2>'); ?>
-                        </a>
-                    </li>
+                        <?php $isLink = has_post_format('link'); ?>
+                        <li <?php post_class('post-preview'); ?> id="post-<?php the_ID(); ?>">
+                            <a href="<?= $isLink ? mcluhan_get_first_url() : get_the_permalink(); ?>" title="<?php the_title_attribute($title_args); ?>">
+                                <?php if ($isLink) : ?>
+                                    <img src="<?= get_stylesheet_directory_uri().'/assets/images/external.svg' ?>" alt="External link" title="External link" />
+                                <?php endif; ?>
+                                <?php the_title('<h2 class="title"><span>', '</span></h2>'); ?>
+                            </a>
+                        </li>
                     <?php endwhile; ?>
                 </ul>
             </div>
