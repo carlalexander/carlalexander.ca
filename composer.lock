@@ -709,15 +709,15 @@
         },
         {
             "name": "wpackagist-plugin/redirection",
-            "version": "5.0.1",
+            "version": "5.1.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/redirection/",
-                "reference": "tags/5.0.1"
+                "reference": "tags/5.1.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/redirection.5.0.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/redirection.5.1.1.zip"
             },
             "require": {
                 "composer/installers": "~1.0"
