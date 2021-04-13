@@ -126,6 +126,16 @@ img.circle {
     hyphens: none;
 }
 
+.entry-content li span {
+    display: inline-flex;
+    height: 27px;
+}
+
+.entry-content li img {
+    height:22px;
+    padding-right: 6px;
+}
+
 .entry-header .meta {
     margin: 0 0 10px 0;
 }
