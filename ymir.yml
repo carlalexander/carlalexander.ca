@@ -17,7 +17,6 @@ environments:
     database:
       server: ymir
       name: carlalexander_production
-    gateway: rest
   staging:
     cdn:
       caching: assets
