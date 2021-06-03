@@ -1,11 +1,11 @@
 # Application
 web/app/plugins/*
 !web/app/plugins/.gitkeep
-!web/app/plugins/jetpack-markdown
+!web/app/plugins/jetpack-markdown/**
 web/app/mu-plugins/*/
 web/app/themes/*
-!web/app/themes/mcluhan-carlalexander
-!web/app/themes/twentyfourteen-carlalexander
+!web/app/themes/mcluhan-carlalexander/**
+!web/app/themes/twentyfourteen-carlalexander/**
 web/app/upgrade
 web/app/uploads/*
 !web/app/uploads/.gitkeep
