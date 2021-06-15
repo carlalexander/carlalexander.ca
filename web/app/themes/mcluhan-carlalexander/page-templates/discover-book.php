@@ -187,23 +187,24 @@
                 <div class="col-md-7 ml-auto mr-auto">
                     <div class="card card-profile card-plain card-testimonial">
                         <div class="row">
-                            <div class="col-md-3 hidden-md-up">
-                                <div class="card-header card-header-image">
-                                    <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/assets/images/zac-gordon.jpg">
-                                    <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/assets/images/zac-gordon.jpg'); opacity: 1;"></div></div>
-                            </div>
                             <div class="col-md-9">
+                                <div class="col-md-3 hidden-md-up">
+                                    <div class="card-header card-header-image">
+                                        <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/assets/images/josh-pollock.jpg">
+                                        <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/assets/images/josh-pollock.jpg'); opacity: 1;"></div></div>
+                                </div>
                                 <div class="card-body">
                                     <p>
-                                        I love learning from Carl. He has a command of some very advanced topics and always gets into how things work and why certain approaches might be better than others. Top notch!
+                                        I wish that this book had existed when I first got serious about learning PHP for WordPress development. What I did have was Carl's blog, his post about of polymorphism was my introduction to what PHP is capable of and the importance of understanding language and programming fundamentals.
                                     </p>
-                                    <div class="h4 card-title">Zac Gordon</div>
+                                    <div class="h4 card-title">Josh Pollock</div>
                                 </div>
                             </div>
                             <div class="col-md-3 hidden-sm-down">
                                 <div class="card-header card-header-image">
-                                    <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/assets/images/zac-gordon.jpg">
-                                    <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/assets/images/zac-gordon.jpg'); opacity: 1;"></div></div>
+                                    <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/assets/images/josh-pollock.jpg">
+                                    <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/assets/images/josh-pollock.jpg'); opacity: 1;"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -224,33 +225,6 @@
                                         Carl is a fantastic instructor. He breaks things down in a way that no matter what your skill set is, you can understand. When presenting in person, he breaks often and allows for questions to ensure that people are able to follow along and not get lost in the deep content he is sharing. He is able to explain very complex topics easily.
                                     </p>
                                     <div class="h4 card-title">Tessa Kriesel</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-7 ml-auto mr-auto">
-                    <div class="card card-profile card-plain card-testimonial">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <div class="col-md-3 hidden-md-up">
-                                    <div class="card-header card-header-image">
-                                        <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/assets/images/josh-pollock.jpg">
-                                        <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/assets/images/josh-pollock.jpg'); opacity: 1;"></div></div>
-                                </div>
-                                <div class="card-body">
-                                    <p>
-                                        I wish that this book had existed when I first got serious about learning PHP for WordPress development. What I did have was Carl's blog, his post about of polymorphism was my introduction to what PHP is capable of and the importance of understanding language and programming fundamentals.
-                                    </p>
-                                    <div class="h4 card-title">Josh Pollock</div>
-                                </div>
-                            </div>
-                            <div class="col-md-3 hidden-sm-down">
-                                <div class="card-header card-header-image">
-                                    <img class="img" src="<?= get_stylesheet_directory_uri(); ?>/assets/images/josh-pollock.jpg">
-                                    <div class="colored-shadow" style="background-image: url('<?= get_stylesheet_directory_uri(); ?>/assets/images/josh-pollock.jpg'); opacity: 1;"></div>
                                 </div>
                             </div>
                         </div>
