@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: composer
+    directory: "/"
+    schedule:
+      interval: daily
+    open-pull-requests-limit: 10
+    versioning-strategy: lockfile-only
+    allow:
+      - dependency-name: roots/wordpress
+      - dependency-name: ymirapp/wordpress-plugin
