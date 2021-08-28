@@ -1,8 +1,6 @@
 name: Deploy to production
 
 on:
-  pull_request:
-    types: [closed]
   push:
     branches:
       - master
