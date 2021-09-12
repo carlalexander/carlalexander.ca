@@ -12,6 +12,7 @@ environments:
     database:
       server: ymir
       name: carlalexander_production
+    php: 8.0
   staging:
     cdn:
       caching: assets
