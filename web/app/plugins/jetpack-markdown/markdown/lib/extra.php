@@ -1523,9 +1523,9 @@ class Markdown_Parser {
 	# regular expression.
 	#
 		if (function_exists($this->utf8_strlen)) return;
-		$this->utf8_strlen = create_function('$text', 'return preg_match_all(
-			"/[\\\\x00-\\\\xBF]|[\\\\xC0-\\\\xFF][\\\\x80-\\\\xBF]*/",
-			$text, $m);');
+        $this->utf8_strlen = function ($text) {
+            return preg_match_all("/[\\\\x00-\\\\xBF]|[\\\\xC0-\\\\xFF][\\\\x80-\\\\xBF]*/", $text);
+        };
 	}
 
 
@@ -2009,7 +2009,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 				# Increase/decrease nested tag count.
 				#
 				if ($tag[1] == '/')						$depth--;
-				else if ($tag{strlen($tag)-2} != '/')	$depth++;
+				else if ($tag[strlen($tag)-2] != '/')	$depth++;
 
 				if ($depth < 0) {
 					#
@@ -2137,7 +2137,7 @@ class MarkdownExtra_Parser extends Markdown_Parser {
 				#
 				if (preg_match('{^</?'.$base_tag_name_re.'\b}', $tag)) {
 					if ($tag[1] == '/')						$depth--;
-					else if ($tag{strlen($tag)-2} != '/')	$depth++;
+					else if ($tag[strlen($tag)-2] != '/')	$depth++;
 				}
 
 				#
