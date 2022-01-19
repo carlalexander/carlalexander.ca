@@ -132,8 +132,8 @@ img.circle {
 }
 
 .entry-content li img {
+    display: inline-block;
     height:22px;
-    padding-right: 6px;
 }
 
 .entry-header .meta {
