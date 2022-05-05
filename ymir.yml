@@ -3,6 +3,8 @@ name: carlalexander
 type: bedrock
 environments:
   production:
+    cdn:
+      process_images: true
     domain:
       - carlalexander.ca
       - www.carlalexander.ca
