@@ -4,6 +4,7 @@ type: bedrock
 environments:
   production:
     cdn:
+      image_processing_memory: 512
       process_images: true
     domain:
       - carlalexander.ca
