@@ -15,6 +15,7 @@ environments:
     database:
       server: ymir
       name: carlalexander_production
+    gateway: false
     php: 8.0
   staging:
     cdn:
