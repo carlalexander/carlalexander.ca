@@ -12,6 +12,7 @@ environments:
       - es.carlalexander.ca
     build:
       - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install --no-dev'
+    concurrency: 20
     database:
       server: ymir
       name: carlalexander_production
