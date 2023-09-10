@@ -9,7 +9,7 @@
                     <?php while (have_posts()) : the_post(); ?>
                         <?php $isLink = has_post_format('link'); ?>
                         <li <?php post_class('post-preview'); ?> id="post-<?php the_ID(); ?>">
-                            <a href="<?= $isLink ? mcluhan_get_first_url() : get_the_permalink(); ?>" title="<?php the_title_attribute($title_args); ?>">
+                            <a href="<?= $isLink ? mcluhan_get_first_url() : get_the_permalink(); ?>" title="<?php the_title_attribute($title_args ?? ''); ?>">
                                 <?php if ($isLink) : ?>
                                     <img src="<?= get_stylesheet_directory_uri().'/assets/images/external.svg' ?>" alt="External link" title="External link" />
                                 <?php endif; ?>
