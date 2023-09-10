@@ -3,6 +3,7 @@ name: carlalexander
 type: bedrock
 environments:
   production:
+    architecture: arm64
     cdn:
       image_processing_memory: 512
       process_images: true
@@ -19,6 +20,7 @@ environments:
     gateway: false
     php: 8.0
   staging:
+    architecture: arm64
     cdn:
       caching: assets
     cron: false
