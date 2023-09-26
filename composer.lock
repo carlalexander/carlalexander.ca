@@ -862,16 +862,16 @@
         },
         {
             "name": "ymirapp/wordpress-plugin",
-            "version": "v1.19.3",
+            "version": "v1.20.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ymirapp/wordpress-plugin.git",
-                "reference": "c231d891e4e73a1554b7b9322acae5636173dfa8"
+                "reference": "d808633fd005c122277010c7f10765c1fdc22a86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ymirapp/wordpress-plugin/zipball/c231d891e4e73a1554b7b9322acae5636173dfa8",
-                "reference": "c231d891e4e73a1554b7b9322acae5636173dfa8",
+                "url": "https://api.github.com/repos/ymirapp/wordpress-plugin/zipball/d808633fd005c122277010c7f10765c1fdc22a86",
+                "reference": "d808633fd005c122277010c7f10765c1fdc22a86",
                 "shasum": ""
             },
             "require": {
@@ -897,6 +897,9 @@
                 "ext-redis": "Required to use the Redis object cache."
             },
             "type": "wordpress-plugin",
+            "extra": {
+                "installer-name": "ymir-wordpress-plugin"
+            },
             "autoload": {
                 "psr-4": {
                     "Ymir\\Plugin\\": "src/"
@@ -920,9 +923,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ymirapp/wordpress-plugin/issues",
-                "source": "https://github.com/ymirapp/wordpress-plugin/tree/v1.19.3"
+                "source": "https://github.com/ymirapp/wordpress-plugin/tree/v1.20.0"
             },
-            "time": "2023-08-03T17:12:53+00:00"
+            "time": "2023-09-25T16:50:16+00:00"
         }
     ],
     "packages-dev": [
