@@ -862,16 +862,16 @@
         },
         {
             "name": "ymirapp/wordpress-plugin",
-            "version": "v1.20.2",
+            "version": "v1.21.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ymirapp/wordpress-plugin.git",
-                "reference": "e160341b69923ad08e0b2aa8b183e2281f68fcda"
+                "reference": "9e849001e8c3719423f4dcbeafc1f84839641174"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ymirapp/wordpress-plugin/zipball/e160341b69923ad08e0b2aa8b183e2281f68fcda",
-                "reference": "e160341b69923ad08e0b2aa8b183e2281f68fcda",
+                "url": "https://api.github.com/repos/ymirapp/wordpress-plugin/zipball/9e849001e8c3719423f4dcbeafc1f84839641174",
+                "reference": "9e849001e8c3719423f4dcbeafc1f84839641174",
                 "shasum": ""
             },
             "require": {
@@ -887,6 +887,8 @@
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "php-mock/php-mock-phpunit": "^2.6",
                 "php-parallel-lint/php-parallel-lint": "^1.2",
+                "php-stubs/wp-cli-stubs": "^2.8",
+                "phpmailer/phpmailer": "^5.2",
                 "phpmd/phpmd": "^2.8",
                 "phpro/grumphp": "^1.0",
                 "phpunit/phpunit": "^8.0 || ^9.0",
@@ -924,9 +926,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ymirapp/wordpress-plugin/issues",
-                "source": "https://github.com/ymirapp/wordpress-plugin/tree/v1.20.2"
+                "source": "https://github.com/ymirapp/wordpress-plugin/tree/v1.21.0"
             },
-            "time": "2023-10-17T09:08:36+00:00"
+            "time": "2023-11-17T15:32:18+00:00"
         }
     ],
     "packages-dev": [
