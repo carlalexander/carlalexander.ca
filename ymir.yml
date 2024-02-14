@@ -18,7 +18,7 @@ environments:
       server: ymir
       name: carlalexander_production
     gateway: false
-    php: 8.0
+    php: 8.3
   staging:
     architecture: arm64
     cdn:
