@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3685abfbc47a18f5ed95e142d4efbcb",
+    "content-hash": "62e190e659879a000860c59fccbc0ec3",
     "packages": [
         {
             "name": "composer/installers",
@@ -787,24 +787,6 @@
             },
             "type": "wordpress-plugin",
             "homepage": "https://wordpress.org/plugins/redirection/"
-        },
-        {
-            "name": "wpackagist-plugin/replybox",
-            "version": "0.4.2",
-            "source": {
-                "type": "svn",
-                "url": "https://plugins.svn.wordpress.org/replybox/",
-                "reference": "tags/0.4.2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/replybox.0.4.2.zip"
-            },
-            "require": {
-                "composer/installers": "^1.0 || ^2.0"
-            },
-            "type": "wordpress-plugin",
-            "homepage": "https://wordpress.org/plugins/replybox/"
         },
         {
             "name": "wpackagist-plugin/tiny-compress-images",

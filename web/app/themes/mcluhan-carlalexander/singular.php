@@ -91,15 +91,6 @@ if ( have_posts() ) :
 
 				</div><!-- .post-pagination -->
 
-			<?php endif;
-
-			// Output comments wrapper if it's a post, or if comments are open, or if there's a comment number – and check for password
-			if ( ( $post_type == 'post' || comments_open() || get_comments_number() ) && ! post_password_required() ) : ?>
-
-				<div class="comments-section-inner section-inner">
-					<?php comments_template(); ?>
-				</div><!-- .comments-section-inner -->
-
 			<?php endif; ?>
 
 		</div> <!-- .post -->
