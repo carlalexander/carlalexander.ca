@@ -844,16 +844,16 @@
         },
         {
             "name": "ymirapp/wordpress-plugin",
-            "version": "v1.22.1",
+            "version": "v1.23.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ymirapp/wordpress-plugin.git",
-                "reference": "43a979f53cc0213dac658ef8c5d3c1541ce8be2c"
+                "reference": "c1fef7eea4978dfe2133b1cc3e13943de9096e5b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ymirapp/wordpress-plugin/zipball/43a979f53cc0213dac658ef8c5d3c1541ce8be2c",
-                "reference": "43a979f53cc0213dac658ef8c5d3c1541ce8be2c",
+                "url": "https://api.github.com/repos/ymirapp/wordpress-plugin/zipball/c1fef7eea4978dfe2133b1cc3e13943de9096e5b",
+                "reference": "c1fef7eea4978dfe2133b1cc3e13943de9096e5b",
                 "shasum": ""
             },
             "require": {
@@ -908,9 +908,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ymirapp/wordpress-plugin/issues",
-                "source": "https://github.com/ymirapp/wordpress-plugin/tree/v1.22.1"
+                "source": "https://github.com/ymirapp/wordpress-plugin/tree/v1.23.0"
             },
-            "time": "2024-08-19T17:28:09+00:00"
+            "time": "2024-08-27T19:11:47+00:00"
         }
     ],
     "packages-dev": [
