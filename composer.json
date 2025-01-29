@@ -45,7 +45,7 @@
         "optimize-autoloader": true,
         "preferred-install": "dist",
         "platform": {
-            "php": "8.3"
+            "php": "8.4"
         },
         "sort-packages": true
     },
