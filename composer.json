@@ -27,7 +27,6 @@
         "wpackagist-plugin/classic-editor": "*",
         "wpackagist-plugin/google-authenticator": "*",
         "wpackagist-plugin/passwords-evolved": "*",
-        "wpackagist-plugin/post-thumbnail-editor": "*",
         "wpackagist-plugin/redirection": "*",
         "wpackagist-plugin/tiny-compress-images": "*",
         "wpackagist-theme/mcluhan": "^1.20",
