@@ -823,16 +823,16 @@
         },
         {
             "name": "ymirapp/wordpress-plugin",
-            "version": "v1.26.4",
+            "version": "v1.27.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ymirapp/wordpress-plugin.git",
-                "reference": "e0f9c666d222b6c1bbeeb44ec968d0205dc0918f"
+                "reference": "24d14fdf641af59823b75071d1a3862665ac00a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ymirapp/wordpress-plugin/zipball/e0f9c666d222b6c1bbeeb44ec968d0205dc0918f",
-                "reference": "e0f9c666d222b6c1bbeeb44ec968d0205dc0918f",
+                "url": "https://api.github.com/repos/ymirapp/wordpress-plugin/zipball/24d14fdf641af59823b75071d1a3862665ac00a8",
+                "reference": "24d14fdf641af59823b75071d1a3862665ac00a8",
                 "shasum": ""
             },
             "require": {
@@ -847,13 +847,9 @@
                 "fakerphp/faker": "^1.12",
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "php-mock/php-mock-phpunit": "^2.6",
-                "php-parallel-lint/php-parallel-lint": "^1.2",
                 "php-stubs/wp-cli-stubs": "^2.8",
                 "phpmailer/phpmailer": "^5.2",
-                "phpmd/phpmd": "^2.8",
-                "phpro/grumphp": "^1.0",
                 "phpunit/phpunit": "^8.0 || ^9.0",
-                "sebastian/phpcpd": "^4.1 || ^5.0 || ^6.0",
                 "symfony/polyfill-php80": "^1.28",
                 "szepeviktor/phpstan-wordpress": "^1.0"
             },
@@ -887,9 +883,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ymirapp/wordpress-plugin/issues",
-                "source": "https://github.com/ymirapp/wordpress-plugin/tree/v1.26.4"
+                "source": "https://github.com/ymirapp/wordpress-plugin/tree/v1.27.0"
             },
-            "time": "2025-07-16T05:03:22+00:00"
+            "time": "2025-10-05T18:32:16+00:00"
         }
     ],
     "packages-dev": [
