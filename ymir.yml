@@ -17,6 +17,7 @@ environments:
     database:
       server: ymir
       name: carlalexander_production
+    deployment: zip
     gateway: false
     php: 8.4
   staging:
