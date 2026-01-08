@@ -17,14 +17,14 @@ environments:
     database:
       server: ymir
       name: carlalexander_production
-    deployment: zip
+    deployment: image
     gateway: false
-    php: 8.4
   staging:
     architecture: arm64
     cdn:
       caching: assets
     cron: false
+    deployment: image
     warmup: false
     build:
       - 'COMPOSER_MIRROR_PATH_REPOS=1 composer install'
