@@ -23,7 +23,7 @@
         "roots/wp-config": "1.0.0",
         "vlucas/phpdotenv": "^3.0.0",
         "wpackagist-plugin/akismet": "*",
-        "wpackagist-plugin/autodescription": "^4.0",
+        "wpackagist-plugin/autodescription": "^5.0",
         "wpackagist-plugin/classic-editor": "*",
         "wpackagist-plugin/google-authenticator": "*",
         "wpackagist-plugin/passwords-evolved": "*",
