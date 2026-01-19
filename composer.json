@@ -19,6 +19,7 @@
         "php": "^8.0",
         "composer/installers": "^1.4",
         "oscarotero/env": "^1.1.0",
+        "roots/post-content-to-markdown": "^1.2",
         "roots/wordpress": "*",
         "roots/wp-config": "1.0.0",
         "vlucas/phpdotenv": "^3.0.0",
