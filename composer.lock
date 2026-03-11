@@ -943,16 +943,16 @@
         },
         {
             "name": "ymirapp/wordpress-plugin",
-            "version": "v1.27.0",
+            "version": "v1.28.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ymirapp/wordpress-plugin.git",
-                "reference": "24d14fdf641af59823b75071d1a3862665ac00a8"
+                "reference": "d83f1737275a64d23d1cccba7e3f43f05923bebd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ymirapp/wordpress-plugin/zipball/24d14fdf641af59823b75071d1a3862665ac00a8",
-                "reference": "24d14fdf641af59823b75071d1a3862665ac00a8",
+                "url": "https://api.github.com/repos/ymirapp/wordpress-plugin/zipball/d83f1737275a64d23d1cccba7e3f43f05923bebd",
+                "reference": "d83f1737275a64d23d1cccba7e3f43f05923bebd",
                 "shasum": ""
             },
             "require": {
@@ -968,10 +968,11 @@
                 "friendsofphp/php-cs-fixer": "^3.0",
                 "php-mock/php-mock-phpunit": "^2.6",
                 "php-stubs/wp-cli-stubs": "^2.8",
-                "phpmailer/phpmailer": "^5.2",
+                "phpmailer/phpmailer": "^7.0",
                 "phpunit/phpunit": "^8.0 || ^9.0",
                 "symfony/polyfill-php80": "^1.28",
-                "szepeviktor/phpstan-wordpress": "^1.0"
+                "szepeviktor/phpstan-wordpress": "^2.0",
+                "vlucas/phpdotenv": "^5.6"
             },
             "suggest": {
                 "ext-redis": "Required to use the Redis object cache."
@@ -1003,9 +1004,9 @@
             ],
             "support": {
                 "issues": "https://github.com/ymirapp/wordpress-plugin/issues",
-                "source": "https://github.com/ymirapp/wordpress-plugin/tree/v1.27.0"
+                "source": "https://github.com/ymirapp/wordpress-plugin/tree/v1.28.0"
             },
-            "time": "2025-10-05T18:32:16+00:00"
+            "time": "2026-03-10T18:49:51+00:00"
         }
     ],
     "packages-dev": [
@@ -1058,5 +1059,5 @@
     "platform-overrides": {
         "php": "8.4"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
