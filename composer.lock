@@ -367,16 +367,16 @@
         },
         {
             "name": "roots/post-content-to-markdown",
-            "version": "v1.2.1",
+            "version": "v1.7.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/roots/post-content-to-markdown.git",
-                "reference": "04c45353a6d0ee4d90c639ea501473ec4eead210"
+                "reference": "c10471fbeb2758bc797e4ecbf2d4f12dd2b039a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/roots/post-content-to-markdown/zipball/04c45353a6d0ee4d90c639ea501473ec4eead210",
-                "reference": "04c45353a6d0ee4d90c639ea501473ec4eead210",
+                "url": "https://api.github.com/repos/roots/post-content-to-markdown/zipball/c10471fbeb2758bc797e4ecbf2d4f12dd2b039a0",
+                "reference": "c10471fbeb2758bc797e4ecbf2d4f12dd2b039a0",
                 "shasum": ""
             },
             "require": {
@@ -404,7 +404,7 @@
             "homepage": "https://roots.io/sage/",
             "support": {
                 "issues": "https://github.com/roots/post-content-to-markdown/issues",
-                "source": "https://github.com/roots/post-content-to-markdown/tree/v1.2.1"
+                "source": "https://github.com/roots/post-content-to-markdown/tree/v1.7.1"
             },
             "funding": [
                 {
@@ -412,7 +412,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-27T03:08:40+00:00"
+            "time": "2026-04-18T19:52:05+00:00"
         },
         {
             "name": "roots/wordpress",
@@ -799,15 +799,15 @@
         },
         {
             "name": "wpackagist-plugin/akismet",
-            "version": "4.2.1",
+            "version": "5.7",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/akismet/",
-                "reference": "tags/4.2.1"
+                "reference": "tags/5.7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/akismet.4.2.1.zip"
+                "url": "https://downloads.wordpress.org/plugin/akismet.5.7.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -835,15 +835,15 @@
         },
         {
             "name": "wpackagist-plugin/classic-editor",
-            "version": "1.6.7",
+            "version": "1.7.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/classic-editor/",
-                "reference": "tags/1.6.7"
+                "reference": "tags/1.7.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/classic-editor.1.6.7.zip"
+                "url": "https://downloads.wordpress.org/plugin/classic-editor.1.7.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -853,15 +853,15 @@
         },
         {
             "name": "wpackagist-plugin/google-authenticator",
-            "version": "0.54",
+            "version": "0.55",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/google-authenticator/",
-                "reference": "tags/0.54"
+                "reference": "tags/0.55"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/google-authenticator.0.54.zip"
+                "url": "https://downloads.wordpress.org/plugin/google-authenticator.0.55.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -889,15 +889,15 @@
         },
         {
             "name": "wpackagist-plugin/redirection",
-            "version": "5.6.0",
+            "version": "5.9.0",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/redirection/",
-                "reference": "tags/5.6.0"
+                "reference": "tags/5.9.0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/redirection.5.6.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/redirection.5.9.0.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
