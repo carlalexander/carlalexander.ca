@@ -17,7 +17,9 @@ environments:
     database:
       server: ymir
       name: carlalexander_production
-    deployment: image
+    deployment:
+      type: image
+      healthcheck: /ymir/health
     gateway: false
   staging:
     architecture: arm64
